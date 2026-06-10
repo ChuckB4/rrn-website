@@ -446,6 +446,31 @@ window.REFINED_RADIO = {
         "title": "Spoken For Refined",
         "src": "music/Worship/Spoken-For-Refined.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Spoken For",
+        "src": "music/Worship/Spoken-For.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Started With a Dream Edit",
+        "src": "music/Worship/Started-With-a-Dream-Edit.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Still Standin",
+        "src": "music/Worship/Still-Standin.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Straped",
+        "src": "music/Worship/Straped.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Stronger Than the Pain bass drums",
+        "src": "music/Worship/Stronger-Than-the-Pain-bass-drums.mp3",
+        "bpm": 0
       }
     ]
   },
