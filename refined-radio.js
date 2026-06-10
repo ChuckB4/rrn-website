@@ -615,6 +615,31 @@ window.REFINED_RADIO = {
         "title": "Grace This Place Outlaw Country Rock",
         "src": "music/Southern Rock/Grace-This-Place-Outlaw-Country-Rock.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Hallelujah in the Fire Cowboy Outlaw Rock",
+        "src": "music/Southern Rock/Hallelujah-in-the-Fire-Cowboy-Outlaw-Rock.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "In a Dry and Weary Land Country Rock",
+        "src": "music/Southern Rock/In-a-Dry-and-Weary-Land-Country-Rock.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Locust Years Cowboy Outlaw Rock",
+        "src": "music/Southern Rock/Locust-Years-Cowboy-Outlaw-Rock.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Nightlight Salvation Band Southern Rock",
+        "src": "music/Southern Rock/Nightlight-Salvation-Band-Southern-Rock.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Out of the Depths Country Rock 1",
+        "src": "music/Southern Rock/Out-of-the-Depths-Country-Rock-1.mp3",
+        "bpm": 0
       }
     ]
   },
