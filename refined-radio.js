@@ -361,6 +361,31 @@ window.REFINED_RADIO = {
         "title": "Joyful Noise Celebrate His Name Mix",
         "src": "music/Worship/Joyful-Noise-Celebrate-His-Name-Mix.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Joyful Noise",
+        "src": "music/Worship/Joyful-Noise.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Lift my head",
+        "src": "music/Worship/Lift-my-head.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Lord Do Not Rebuke Me in Your Anger",
+        "src": "music/Worship/Lord-Do-Not-Rebuke-Me-in-Your-Anger.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Mercy Sorrow Crucible",
+        "src": "music/Worship/Mercy-Sorrow-Crucible.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Not The Devil I used to Be",
+        "src": "music/Worship/Not-The-Devil-I-used-to-Be.mp3",
+        "bpm": 0
       }
     ]
   },
