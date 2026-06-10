@@ -157,6 +157,65 @@ window.REFINED_RADIO = {
         "title": "Proven Armor Radio",
         "src": "music/Radio/Proven-Armor-Radio.mp3",
         "bpm": 0
+      },
+      {
+        "title": "You Hold Mde Up Radio",
+        "src": "music/Radio/You-Hold-Mde-Up-Radio.mp3",
+        "bpm": 0
+      }
+    ],
+    "Trance": [
+      {
+        "title": "Hallelujah Lamb Trance",
+        "src": "music/Trance/Hallelujah-Lamb-Trance.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Standing in the fire Trance",
+        "src": "music/Trance/Standing-in-the-fire-Trance.mp3",
+        "bpm": 0
+      }
+    ],
+    "Worship": [
+      {
+        "title": "A Vapor Breath",
+        "src": "music/Worship/A-Vapor-Breath.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "AFTER THE STORM",
+        "src": "music/Worship/AFTER-THE-STORM.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Beauty for Ashes",
+        "src": "music/Worship/Beauty-for-Ashes.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Beyond the Shadows",
+        "src": "music/Worship/Beyond-the-Shadows.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Break the Silence",
+        "src": "music/Worship/Break-the-Silence.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Breath on Glass",
+        "src": "music/Worship/Breath-on-Glass.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "CALLED BY NAME I AM YOURS",
+        "src": "music/Worship/CALLED-BY-NAME-I-AM-YOURS.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "CHAOS VS CALLING",
+        "src": "music/Worship/CHAOS-VS-CALLING.mp3",
+        "bpm": 0
       }
     ]
   },
