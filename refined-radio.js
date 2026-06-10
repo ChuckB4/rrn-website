@@ -68,6 +68,36 @@ window.REFINED_RADIO = {
         "title": "Proven Armor Radio edm",
         "src": "music/EDM-Club/Proven-Armor-Radio-edm.mp3",
         "bpm": 0
+      },
+      {
+        "title": "River of Grace 808",
+        "src": "music/EDM-Club/River-of-Grace-808.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Spoken For euro rave bounce",
+        "src": "music/EDM-Club/Spoken-For-euro-rave-bounce.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Step Strong euro hop",
+        "src": "music/EDM-Club/Step-Strong-euro-hop.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Straped x Fire in My Bones Mashup 0 89x",
+        "src": "music/EDM-Club/Straped-x-Fire-in-My-Bones-Mashup-0-89x.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Stronger Than the Pain ClubMix",
+        "src": "music/EDM-Club/Stronger-Than-the-Pain-ClubMix.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Stronger Than the Pain Rap version",
+        "src": "music/EDM-Club/Stronger-Than-the-Pain-Rap-version.mp3",
+        "bpm": 0
       }
     ]
   },
