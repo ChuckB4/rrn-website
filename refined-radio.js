@@ -541,6 +541,16 @@ window.REFINED_RADIO = {
         "title": "You Hold Me Up",
         "src": "music/Worship/You-Hold-Me-Up.mp3",
         "bpm": 0
+      },
+      {
+        "title": "You answer when I call",
+        "src": "music/Worship/You-answer-when-I-call.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "You speak for me",
+        "src": "music/Worship/You-speak-for-me.mp3",
+        "bpm": 0
       }
     ]
   },
