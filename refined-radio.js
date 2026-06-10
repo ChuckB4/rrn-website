@@ -575,6 +575,26 @@ window.REFINED_RADIO = {
         "title": "A Whisper From Hannah Country Rock",
         "src": "music/Southern Rock/A-Whisper-From-Hannah-Country-Rock.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Broken Chains Psychedelic Rock Version 1",
+        "src": "music/Southern Rock/Broken-Chains-Psychedelic-Rock-Version-1.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Broken Chains Psychedelic Rock Version",
+        "src": "music/Southern Rock/Broken-Chains-Psychedelic-Rock-Version.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Foot on His Neck Country Rock 1",
+        "src": "music/Southern Rock/Foot-on-His-Neck-Country-Rock-1.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Foot on His Neck Country Rock",
+        "src": "music/Southern Rock/Foot-on-His-Neck-Country-Rock.mp3",
+        "bpm": 0
       }
     ]
   },
