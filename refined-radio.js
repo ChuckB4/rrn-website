@@ -281,6 +281,36 @@ window.REFINED_RADIO = {
         "title": "HE TOOK MY PLACE",
         "src": "music/Worship/HE-TOOK-MY-PLACE.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Hair Down Glory",
+        "src": "music/Worship/Hair-Down-Glory.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Hard to See Lines",
+        "src": "music/Worship/Hard-to-See-Lines.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "He Is My Salvation",
+        "src": "music/Worship/He-Is-My-Salvation.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "He Lifts the Lowly",
+        "src": "music/Worship/He-Lifts-the-Lowly.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "He Still Calls My Name",
+        "src": "music/Worship/He-Still-Calls-My-Name.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "He Sustains Me Through the Storm",
+        "src": "music/Worship/He-Sustains-Me-Through-the-Storm.mp3",
+        "bpm": 0
       }
     ]
   },
