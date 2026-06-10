@@ -2711,5 +2711,90 @@ rrA.volume=0.8;
 window.addEventListener('load',function(){setTimeout(function(){document.getElementById('rrPlayer').classList.add('rrShow');},1400);if(RR_LIBRARY.length)rrHour=new Date().getHours();});
 
 </script>
+<!-- ===== Refined Radio (auto-injected) ===== -->
+<script src="refined-radio.js"></script>
+<style>
+#rr-bar{position:fixed;left:0;right:0;bottom:0;z-index:9999;display:flex;align-items:center;gap:14px;
+  padding:10px max(16px,4vw);background:var(--ink,#060d18);color:var(--off,#f8f6f3);
+  border-top:1px solid var(--gold-br,rgba(200,145,58,0.22));box-shadow:0 -6px 24px rgba(0,0,0,.35);
+  font-family:var(--fb,system-ui,sans-serif)}
+#rr-bar button{flex:0 0 auto;width:42px;height:42px;border-radius:50%;border:1px solid var(--gold,#c8913a);
+  background:transparent;color:var(--gold-hi,#f0c060);font-size:16px;cursor:pointer;line-height:1;
+  display:flex;align-items:center;justify-content:center;transition:.15s}
+#rr-bar button:hover{background:var(--gold-lo,rgba(200,145,58,0.14))}
+#rr-bar #rr-toggle{background:var(--gold,#c8913a);color:var(--ink,#060d18);font-size:18px}
+#rr-meta{flex:1 1 auto;min-width:0}
+#rr-name{font-family:var(--fd,'Cormorant Garamond',serif);font-size:18px;color:var(--gold-hi,#f0c060);
+  letter-spacing:.04em;line-height:1.1}
+#rr-now{font-size:13px;color:var(--hint,#a0a0b8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#rr-live{display:inline-block;width:8px;height:8px;border-radius:50%;background:#888;margin-right:6px;vertical-align:middle}
+#rr-live.on{background:#5ad17a;box-shadow:0 0 8px #5ad17a}
+@media(max-width:560px){#rr-name{font-size:16px}#rr-now{font-size:12px}}
+</style>
+<div id="rr-bar" role="region" aria-label="Refined Radio player">
+  <button id="rr-toggle" aria-label="Play Refined Radio">&#9654;</button>
+  <div id="rr-meta">
+    <div id="rr-name"><span id="rr-live"></span>Refined Radio</div>
+    <div id="rr-now">Press play to begin</div>
+  </div>
+  <button id="rr-next" aria-label="Skip to next">&#9197;</button>
+  <audio id="rr-audio" preload="none"></audio>
+</div>
+<script>
+(function(){
+  var R = window.REFINED_RADIO || {music:{},ids:[],ads:[]};
+  var SONGS_PER_BREAK = 4;
+  var audio = document.getElementById('rr-audio');
+  var nowEl = document.getElementById('rr-now');
+  var live  = document.getElementById('rr-live');
+  var toggle= document.getElementById('rr-toggle');
+  var nextB = document.getElementById('rr-next');
+  var playing=false, songCount=0, lastHour=-1, lastSrc='';
+  function blend(h){
+    if(h<6)  return [['Chill',2],['Acoustic',2],['Worship',3]];
+    if(h<10) return [['Worship',4],['Radio',2]];
+    if(h<12) return [['Radio',3],['Worship',3]];
+    if(h<15) return [['Worship',4],['Country',1]];
+    if(h<18) return [['EDM-Club',3],['Radio',2],['Worship',2]];
+    if(h<21) return [['Worship',3],['Acoustic',2]];
+    return     [['EDM-Club',2],['Trance',2],['Worship',2]];
+  }
+  function pool(cls){ return (R.music&&R.music[cls])?R.music[cls]:[]; }
+  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+  function pickSong(){
+    var h=new Date().getHours();
+    var weighted=[];
+    blend(h).forEach(function(p){ if(pool(p[0]).length) for(var i=0;i<p[1];i++) weighted.push(p[0]); });
+    if(!weighted.length){ for(var c in R.music){ if(pool(c).length){ weighted.push(c); } } }
+    if(!weighted.length) return null;
+    var tries=0, t;
+    do{ t=pick(pool(pick(weighted))); tries++; }while(t&&t.src===lastSrc&&tries<6);
+    return t;
+  }
+  function play(src,label){
+    if(!src) return;
+    lastSrc=src; audio.src=src; nowEl.textContent=label;
+    audio.play().then(function(){playing=true;live.classList.add('on');toggle.innerHTML='&#10073;&#10073;';})
+      .catch(function(){playing=false;live.classList.remove('on');toggle.innerHTML='&#9654;';nowEl.textContent='Tap play to start';});
+  }
+  function advance(){
+    var h=new Date().getHours();
+    if(h!==lastHour && R.ids && R.ids.length){ lastHour=h; play(pick(R.ids),'Station ID'); return; }
+    if(songCount>0 && songCount%SONGS_PER_BREAK===0 && R.ads && R.ads.length){ songCount++; play(pick(R.ads),'Sponsor message'); return; }
+    var s=pickSong();
+    if(!s){ nowEl.textContent='No tracks found'; return; }
+    songCount++; play(s.src, s.title);
+  }
+  audio.addEventListener('ended', advance);
+  audio.addEventListener('error', advance);
+  toggle.addEventListener('click', function(){
+    if(playing){ audio.pause(); playing=false; live.classList.remove('on'); toggle.innerHTML='&#9654;'; }
+    else if(audio.src){ audio.play(); playing=true; live.classList.add('on'); toggle.innerHTML='&#10073;&#10073;'; }
+    else { lastHour=new Date().getHours(); advance(); }
+  });
+  nextB.addEventListener('click', advance);
+})();
+</script>
+<!-- ===== /Refined Radio ===== -->
 </body>
 </html>
