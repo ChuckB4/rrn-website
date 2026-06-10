@@ -471,6 +471,41 @@ window.REFINED_RADIO = {
         "title": "Stronger Than the Pain bass drums",
         "src": "music/Worship/Stronger-Than-the-Pain-bass-drums.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Stronger Than the Pain",
+        "src": "music/Worship/Stronger-Than-the-Pain.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Sword I Carry Now",
+        "src": "music/Worship/Sword-I-Carry-Now.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Tear the Roof",
+        "src": "music/Worship/Tear-the-Roof.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "The Horse and Rider",
+        "src": "music/Worship/The-Horse-and-Rider.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "The Rider in the Sky",
+        "src": "music/Worship/The-Rider-in-the-Sky.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Those nail scarred hands",
+        "src": "music/Worship/Those-nail-scarred-hands.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Use this pain",
+        "src": "music/Worship/Use-this-pain.mp3",
+        "bpm": 0
       }
     ]
   },
