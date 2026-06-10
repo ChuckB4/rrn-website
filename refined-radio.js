@@ -311,6 +311,31 @@ window.REFINED_RADIO = {
         "title": "He Sustains Me Through the Storm",
         "src": "music/Worship/He-Sustains-Me-Through-the-Storm.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Hear My Cause O Lord",
+        "src": "music/Worship/Hear-My-Cause-O-Lord.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Here Comes the Pain",
+        "src": "music/Worship/Here-Comes-the-Pain.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Hes comming back",
+        "src": "music/Worship/Hes-comming-back.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Hes comming backt",
+        "src": "music/Worship/Hes-comming-backt.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Hope Over Despair",
+        "src": "music/Worship/Hope-Over-Despair.mp3",
+        "bpm": 0
       }
     ]
   },
