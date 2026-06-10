@@ -216,6 +216,41 @@ window.REFINED_RADIO = {
         "title": "CHAOS VS CALLING",
         "src": "music/Worship/CHAOS-VS-CALLING.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Called From the Low Places",
+        "src": "music/Worship/Called-From-the-Low-Places.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Come Alive Chains Fall Down",
+        "src": "music/Worship/Come-Alive-Chains-Fall-Down.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Consuming Fire",
+        "src": "music/Worship/Consuming-Fire.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Divine Control",
+        "src": "music/Worship/Divine-Control.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Double Portion",
+        "src": "music/Worship/Double-Portion.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "FAITHFULLY",
+        "src": "music/Worship/FAITHFULLY.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "FRAGILE HEART ETERNAL LIGHT",
+        "src": "music/Worship/FRAGILE-HEART-ETERNAL-LIGHT.mp3",
+        "bpm": 0
       }
     ]
   },
