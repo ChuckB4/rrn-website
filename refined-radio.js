@@ -48,6 +48,26 @@ window.REFINED_RADIO = {
         "title": "Grace Fever",
         "src": "music/EDM-Club/Grace-Fever.mp3",
         "bpm": 0
+      },
+      {
+        "title": "I Will Walk On Water Remix",
+        "src": "music/EDM-Club/I-Will-Walk-On-Water-Remix.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "KINGDOM DRILL NO EXCUSES",
+        "src": "music/EDM-Club/KINGDOM-DRILL-NO-EXCUSES.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Kingdom beat",
+        "src": "music/EDM-Club/Kingdom-beat.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Proven Armor Radio edm",
+        "src": "music/EDM-Club/Proven-Armor-Radio-edm.mp3",
+        "bpm": 0
       }
     ]
   },
