@@ -552,6 +552,30 @@ window.REFINED_RADIO = {
         "src": "music/Worship/You-speak-for-me.mp3",
         "bpm": 0
       }
+    ],
+    "Jazz": [
+      {
+        "title": "Consuming Fire Jazz",
+        "src": "music/Jazz/Consuming-Fire-Jazz.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Light Breaks the Chain Blues Jazz 1",
+        "src": "music/Jazz/Light-Breaks-the-Chain-Blues-Jazz-1.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Light Breaks the Chain Blues Jazz",
+        "src": "music/Jazz/Light-Breaks-the-Chain-Blues-Jazz.mp3",
+        "bpm": 0
+      }
+    ],
+    "Southern Rock": [
+      {
+        "title": "A Whisper From Hannah Country Rock",
+        "src": "music/Southern Rock/A-Whisper-From-Hannah-Country-Rock.mp3",
+        "bpm": 0
+      }
     ]
   },
   "ids": [
