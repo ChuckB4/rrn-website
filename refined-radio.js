@@ -98,6 +98,35 @@ window.REFINED_RADIO = {
         "title": "Stronger Than the Pain Rap version",
         "src": "music/EDM-Club/Stronger-Than-the-Pain-Rap-version.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Stronger than The Pain Tear The Roof Club Mix",
+        "src": "music/EDM-Club/Stronger-than-The-Pain-Tear-The-Roof-Club-Mix.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Tear the Roof x Stronger Than the Pain Mashup",
+        "src": "music/EDM-Club/Tear-the-Roof-x-Stronger-Than-the-Pain-Mashup.mp3",
+        "bpm": 0
+      }
+    ],
+    "R&B": [
+      {
+        "title": "Hidden Glory R B",
+        "src": "music/R&B/Hidden-Glory-R-B.mp3",
+        "bpm": 0
+      }
+    ],
+    "Radio": [
+      {
+        "title": "Beauty Holiness Radio",
+        "src": "music/Radio/Beauty-Holiness-Radio.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Come Alive Chains Fall Down Radio",
+        "src": "music/Radio/Come-Alive-Chains-Fall-Down-Radio.mp3",
+        "bpm": 0
       }
     ]
   },
