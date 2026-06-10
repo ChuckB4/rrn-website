@@ -127,6 +127,36 @@ window.REFINED_RADIO = {
         "title": "Come Alive Chains Fall Down Radio",
         "src": "music/Radio/Come-Alive-Chains-Fall-Down-Radio.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Double Portion Radio",
+        "src": "music/Radio/Double-Portion-Radio.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Fall on Us Radio",
+        "src": "music/Radio/Fall-on-Us-Radio.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Fire in My Bones Radio",
+        "src": "music/Radio/Fire-in-My-Bones-Radio.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Overcome in Rest Radio",
+        "src": "music/Radio/Overcome-in-Rest-Radio.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Pain and Rpride Radio",
+        "src": "music/Radio/Pain-and-Rpride-Radio.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Proven Armor Radio",
+        "src": "music/Radio/Proven-Armor-Radio.mp3",
+        "bpm": 0
       }
     ]
   },
