@@ -640,6 +640,26 @@ window.REFINED_RADIO = {
         "title": "Out of the Depths Country Rock 1",
         "src": "music/Southern Rock/Out-of-the-Depths-Country-Rock-1.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Out of the Depths Country Rock",
+        "src": "music/Southern Rock/Out-of-the-Depths-Country-Rock.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Save My Marriage Jesus Country Rock",
+        "src": "music/Southern Rock/Save-My-Marriage-Jesus-Country-Rock.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Strong and Brave Psychedelic Rock Version 1",
+        "src": "music/Southern Rock/Strong-and-Brave-Psychedelic-Rock-Version-1.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Strong and Brave Psychedelic Rock Version",
+        "src": "music/Southern Rock/Strong-and-Brave-Psychedelic-Rock-Version.mp3",
+        "bpm": 0
       }
     ]
   },
