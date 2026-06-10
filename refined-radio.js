@@ -25,6 +25,30 @@ window.REFINED_RADIO = {
         "src": "music/Chill/Fire-in-My-Bones-Chill.mp3",
         "bpm": 0
       }
+    ],
+    "Country": [
+      {
+        "title": "Granpa was a Preacher Man",
+        "src": "music/Country/Granpa-was-a-Preacher-Man.mp3",
+        "bpm": 0
+      }
+    ],
+    "EDM-Club": [
+      {
+        "title": "Bounce in His grace l",
+        "src": "music/EDM-Club/Bounce-in-His-grace-l.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Fever",
+        "src": "music/EDM-Club/Fever.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Grace Fever",
+        "src": "music/EDM-Club/Grace-Fever.mp3",
+        "bpm": 0
+      }
     ]
   },
   "ids": [
