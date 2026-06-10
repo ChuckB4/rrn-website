@@ -336,6 +336,31 @@ window.REFINED_RADIO = {
         "title": "Hope Over Despair",
         "src": "music/Worship/Hope-Over-Despair.mp3",
         "bpm": 0
+      },
+      {
+        "title": "I M FREE",
+        "src": "music/Worship/I-M-FREE.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "I am the bride",
+        "src": "music/Worship/I-am-the-bride.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "If I Could Walk in His Boots",
+        "src": "music/Worship/If-I-Could-Walk-in-His-Boots.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Intro Build Up",
+        "src": "music/Worship/Intro-Build-Up.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Joyful Noise Celebrate His Name Mix",
+        "src": "music/Worship/Joyful-Noise-Celebrate-His-Name-Mix.mp3",
+        "bpm": 0
       }
     ]
   },
