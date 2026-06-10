@@ -695,6 +695,12 @@ window.REFINED_RADIO = {
   ],
   "ads": [
     "ads/Beta-Tester-Invitation.mp3",
-    "ads/Chariot-With-Purpose.mp3"
+    "ads/Chariot-With-Purpose.mp3",
+    "ads/Encouragement-Ad-1.mp3",
+    "ads/Encouragement-Ad-3.mp3",
+    "ads/Encouragement-Ad-4.mp3",
+    "ads/Encouragement-Ad-5.mp3",
+    "ads/Encouragement-Ad-6-1.mp3",
+    "ads/Encouragement-Ad-6.mp3"
   ]
 };
