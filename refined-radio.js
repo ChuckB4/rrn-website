@@ -660,6 +660,31 @@ window.REFINED_RADIO = {
         "title": "Strong and Brave Psychedelic Rock Version",
         "src": "music/Southern Rock/Strong-and-Brave-Psychedelic-Rock-Version.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Sweeter Than the Chains Southern Rock 1",
+        "src": "music/Southern Rock/Sweeter-Than-the-Chains-Southern-Rock-1.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Sweeter Than the Chains Southern Rock",
+        "src": "music/Southern Rock/Sweeter-Than-the-Chains-Southern-Rock.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "The Nitty Gritty Devil Country Rock 1",
+        "src": "music/Southern Rock/The-Nitty-Gritty-Devil-Country-Rock-1.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "The Nitty Gritty Devil Country Rock 2",
+        "src": "music/Southern Rock/The-Nitty-Gritty-Devil-Country-Rock-2.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "The Nitty Gritty Devil Country Rock",
+        "src": "music/Southern Rock/The-Nitty-Gritty-Devil-Country-Rock.mp3",
+        "bpm": 0
       }
     ]
   },
