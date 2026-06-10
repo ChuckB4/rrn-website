@@ -386,6 +386,66 @@ window.REFINED_RADIO = {
         "title": "Not The Devil I used to Be",
         "src": "music/Worship/Not-The-Devil-I-used-to-Be.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Old Warrior at the Water",
+        "src": "music/Worship/Old-Warrior-at-the-Water.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Overcome in Rest",
+        "src": "music/Worship/Overcome-in-Rest.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Pain and Pride Best",
+        "src": "music/Worship/Pain-and-Pride-Best.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Pain and Pride",
+        "src": "music/Worship/Pain-and-Pride.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Pressing Through the Thorn Still Sent",
+        "src": "music/Worship/Pressing-Through-the-Thorn-Still-Sent.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Proven Armor",
+        "src": "music/Worship/Proven-Armor.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Quiet Pain",
+        "src": "music/Worship/Quiet-Pain.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "RUNNING ON EMPTY",
+        "src": "music/Worship/RUNNING-ON-EMPTY.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Road Home Mercy",
+        "src": "music/Worship/Road-Home-Mercy.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Selah",
+        "src": "music/Worship/Selah.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Seven Times I Rise",
+        "src": "music/Worship/Seven-Times-I-Rise.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Spoken For Refined",
+        "src": "music/Worship/Spoken-For-Refined.mp3",
+        "bpm": 0
       }
     ]
   },
