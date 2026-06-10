@@ -506,6 +506,41 @@ window.REFINED_RADIO = {
         "title": "Use this pain",
         "src": "music/Worship/Use-this-pain.mp3",
         "bpm": 0
+      },
+      {
+        "title": "Valley Nightlight",
+        "src": "music/Worship/Valley-Nightlight.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Vapor in the Wind",
+        "src": "music/Worship/Vapor-in-the-Wind.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "WITNESS IN THE FIRE",
+        "src": "music/Worship/WITNESS-IN-THE-FIRE.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Walk Upright",
+        "src": "music/Worship/Walk-Upright.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Walk it Out",
+        "src": "music/Worship/Walk-it-Out.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "Walking in di Light",
+        "src": "music/Worship/Walking-in-di-Light.mp3",
+        "bpm": 0
+      },
+      {
+        "title": "You Hold Me Up",
+        "src": "music/Worship/You-Hold-Me-Up.mp3",
+        "bpm": 0
       }
     ]
   },
