@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- RRN-WEBSITE-MASTER | 2026-06-14-live120 | playlist flattened to single folder: src = music/<file> for simple upload -->
+<!-- RRN-WEBSITE-MASTER | 2026-06-15-live121 | auto path-resolver: maps flat playlist to real music/Batch*/genre folders via one GitHub tree call; ratings unchanged -->
 
 <html lang="en">
 <head>
@@ -4097,7 +4097,7 @@ var rrA=document.getElementById('rrAudio');
 var rrPreA=(typeof Audio!=='undefined')?new Audio():null; if(rrPreA){rrPreA.preload='auto';}
 var rrPreSrc='', rrPreTimer=null;
 // debounced: during rapid skips, only the settled next-track preloads (protects iOS Safari memory)
-function rrPreload(){ if(rrPreTimer){clearTimeout(rrPreTimer);} rrPreTimer=setTimeout(function(){ try{ var nx=rrUpNext(); if(nx){ var u=rrUrl(nx.src); if(u!==rrPreSrc && rrPreA){ rrPreSrc=u; rrPreA.src=u; rrPreA.load(); } } }catch(e){} },1500); }
+function rrPreload(){ if(rrPreTimer){clearTimeout(rrPreTimer);} rrPreTimer=setTimeout(function(){ try{ var nx=rrUpNext(); if(nx){ var u=rrUrl(nx._real||nx.src); if(u!==rrPreSrc && rrPreA){ rrPreSrc=u; rrPreA.src=u; rrPreA.load(); } } }catch(e){} },1500); }
 var rrPlaying=false, rrCur=null, rrRecent=[], rrHour=-1, rrSongsSinceBreak=0, rrAdIdx=0;
 var rrScore=(function(){try{return JSON.parse(localStorage.getItem('rrn_radio_scores')||'{}');}catch(e){return {};}})();
 function rrSave(){try{localStorage.setItem('rrn_radio_scores',JSON.stringify(rrScore));}catch(e){}}
@@ -4162,7 +4162,7 @@ function rrPick(){
 }
 function rrUpNext(){ if(!rrBag.length) rrBag=rrBuildBag(); return rrBag.length?rrBag[rrBag.length-1]:null; }
 function rrPlayTrack(t){
-  if(!t)return; rrCur=t; rrA.src=rrUrl(t.src);
+  if(!t)return; rrCur=t; rrA.src=rrUrl(t._real||t.src);
   document.getElementById('rrTitle').textContent=t.title||'Refined Radio';
   var rrNx=rrUpNext();document.getElementById('rrSub').textContent=(t.artist?t.artist+' \u00b7 ':'')+rrFormat().label+(rrNx?' \u00b7 Next: '+rrNx.title:'');
   rrRecent.push(t.src); var cap=Math.min(4,Math.max(1,rrPool().length-1)); while(rrRecent.length>cap)rrRecent.shift();
@@ -4330,7 +4330,49 @@ rrA.addEventListener('error',function(){rrFailStreak++;var total=RR_LIBRARY.leng
 rrA.addEventListener('playing',function(){rrFailStreak=0;});
 rrA.addEventListener('timeupdate',function(){if(rrA.duration)document.getElementById('rrFill').style.width=(rrA.currentTime/rrA.duration*100)+'%';});
 rrA.volume=0.8;
-window.addEventListener('load',function(){setTimeout(function(){document.getElementById('rrPlayer').classList.add('rrShow');},1400);if(RR_LIBRARY.length)rrHour=new Date().getHours();rrFillGenres();rrLoadScores();rrTab('trending');try{if(!sessionStorage.getItem('rrn_visited')){sessionStorage.setItem('rrn_visited','1');rrEvent('visit','site');}}catch(e){}setInterval(rrLoadScores,90000);setInterval(function(){if(rrPlaying){try{fetch(RR_API+"/api/radio/ping",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({voter:rrVid})}).catch(function(){});}catch(e){}}},60000);});
+/* ==== Refined Radio path resolver ====
+   The playlist is written as flat paths (music/<file>.mp3) for simple uploads,
+   but mp3s were uploaded into batch subfolders (music/BatchNNN/<file>.mp3) and
+   genre folders. This makes ONE GitHub tree call, finds where each track really
+   lives by filename, and points playback at the real file. Ratings/votes stay on
+   the original flat key. If the call fails (offline/rate-limited), playback falls
+   back to the flat path unchanged. New batches you upload resolve automatically. */
+function rrResolveRealPaths(done){
+  function fin(){ try{ if(done) done(); }catch(e){} }
+  var to=setTimeout(fin,7000);
+  function base(s){ return (s||'').split('/').pop(); }
+  function norm(s){ return base(s).replace(/\.mp3$/i,'').replace(/[^a-z0-9]+/gi,'').toLowerCase(); }
+  try{
+    fetch("https://api.github.com/repos/ChuckB4/rrn-website/git/trees/main?recursive=1",{headers:{Accept:"application/vnd.github+json"}})
+    .then(function(r){ return (r&&r.ok)?r.json():null; })
+    .then(function(d){
+      try{
+        if(d&&d.tree&&d.tree.length){
+          var exact={}, normM={};
+          for(var i=0;i<d.tree.length;i++){
+            var e=d.tree[i]; var p=(e&&e.path)||"";
+            if(e.type==='blob' && /^music\/.+\.mp3$/i.test(p)){
+              var b=base(p), n=norm(p);
+              if(exact[b]===undefined) exact[b]=p;   // first match wins
+              if(normM[n]===undefined) normM[n]=p;
+            }
+          }
+          var hit=0;
+          for(var j=0;j<RR_LIBRARY.length;j++){
+            var t=RR_LIBRARY[j];
+            var real=exact[base(t.src)] || normM[norm(t.src)];
+            if(real){ t._real=real; hit++; }
+          }
+          rrBag=[]; // rebuild rotation now that real paths are known
+          try{ console.log("[Refined Radio] resolved "+hit+" / "+RR_LIBRARY.length+" tracks to live files"); }catch(_){}
+        }
+      }catch(e){}
+      clearTimeout(to); fin();
+    })
+    .catch(function(){ clearTimeout(to); fin(); });
+  }catch(e){ clearTimeout(to); fin(); }
+}
+window.addEventListener('load',function(){setTimeout(function(){document.getElementById('rrPlayer').classList.add('rrShow');},1400);if(RR_LIBRARY.length)rrHour=new Date().getHours();rrFillGenres();rrLoadScores();rrResolveRealPaths();rrTab('trending');try{if(!sessionStorage.getItem('rrn_visited')){sessionStorage.setItem('rrn_visited','1');rrEvent('visit','site');}}catch(e){}setInterval(rrLoadScores,90000);setInterval(function(){if(rrPlaying){try{fetch(RR_API+"/api/radio/ping",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({voter:rrVid})}).catch(function(){});}catch(e){}}},60000);});
 
 </script>
 
