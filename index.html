@@ -3779,6 +3779,11 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')rrnClosePost
    Clock genres: country, pop, contemporary, ccm, edm, trance.
    The "popular" daypart auto-plays the highest-rated tracks regardless of genre. */
 var RR_LIBRARY = [
+  {title:"Don't You Cry Anymore", artist:"RRN", src:"music/Don_t_You_Cry_Anymore.mp3", genre:"Christian Pop"},  // new upload
+  {title:"Devil Under My Soles", artist:"RRN", src:"music/Devil_Under_My_Soles.mp3", genre:"Christian Pop"},  // new upload
+  {title:"Devil Under My Soles (V2)", artist:"RRN", src:"music/Devil_Under_My_Soles__1_.mp3", genre:"Christian Pop"},  // new upload
+  {title:"Devil Under Soles", artist:"RRN", src:"music/Devil_Under_Soles.mp3", genre:"Christian Pop"},  // new upload
+  {title:"Devil Under Soles (V2)", artist:"RRN", src:"music/Devil_Under_Soles__1_.mp3", genre:"Christian Pop"},  // new upload
   {title:"Lazarus", artist:"RRN Teaching", src:"music/Lazarus_Finished.mp3", genre:"Biblical Teaching"},  // educational/teaching song → :55 slot
   {title:"Brook Code", artist:"RRN Teaching", src:"music/Brook_Code.mp3", genre:"Biblical Teaching"},  // educational/teaching song → :55 slot
   {title:"Only God Changes You", artist:"RRN Teaching", src:"music/Only_God_Changes_You.mp3", genre:"Biblical Teaching"},  // educational/teaching song → :55 slot
@@ -4493,32 +4498,64 @@ function rrResolveRealPaths(done){
     fetch("https://api.github.com/repos/ChuckB4/rrn-website/git/trees/main?recursive=1",{headers:{Accept:"application/vnd.github+json"}})
     .then(function(r){ return (r&&r.ok)?r.json():null; })
     .then(function(d){
+      var report={ok:false,categories:{}};
       try{
         if(d&&d.tree&&d.tree.length){
-          var exact={}, normM={};
+          var exact={}, normM={}, files=0;
           for(var i=0;i<d.tree.length;i++){
-            var e=d.tree[i]; var p=(e&&e.path)||"";
-            if(e.type==='blob' && /^music\/.+\.mp3$/i.test(p)){
-              var b=base(p), n=norm(p);
-              if(exact[b]===undefined) exact[b]=p;   // first match wins
-              if(normM[n]===undefined) normM[n]=p;
+            var e=d.tree[i]; var pth=(e&&e.path)||"";
+            if(e.type==='blob' && /^music\/.+\.mp3$/i.test(pth)){ files++;
+              var b=base(pth), n=norm(pth);
+              if(exact[b]===undefined) exact[b]=pth;   // first match wins
+              if(normM[n]===undefined) normM[n]=pth;
             }
           }
-          var hit=0;
-          for(var j=0;j<RR_LIBRARY.length;j++){
-            var t=RR_LIBRARY[j];
-            var real=exact[base(t.src)] || normM[norm(t.src)];
-            if(real){ t._real=real; hit++; }
+          function resolveList(list,label,nameKey){
+            var hit=0, fails=[];
+            for(var k=0;k<list.length;k++){
+              var t=list[k];
+              var real=exact[base(t.src)] || normM[norm(t.src)];
+              if(real){ t._real=real; hit++; }
+              else { fails.push(((t[nameKey]||base(t.src))+"  [file: "+base(t.src)+"]")); }
+            }
+            report.categories[label]={total:list.length,resolved:hit,failed:fails.length,failedItems:fails};
+            return hit;
           }
+          resolveList(RR_LIBRARY,'Songs','title');
+          resolveList(RR_ADS,'Commercials (ads)','title');     // <-- ads now resolved too
+          resolveList(RR_IMAGING,'Station IDs','title');        // <-- station IDs too
+          report.ok=true; report.filesInRepo=files;
           rrBag=[]; // rebuild rotation now that real paths are known
-          try{ console.log("[Refined Radio] resolved "+hit+" / "+RR_LIBRARY.length+" tracks to live files"); }catch(_){}
+          var c=report.categories;
+          try{ console.log("[Refined Radio] resolved \u2014 Songs "+c['Songs'].resolved+"/"+c['Songs'].total+
+            ", Ads "+c['Commercials (ads)'].resolved+"/"+c['Commercials (ads)'].total+
+            ", IDs "+c['Station IDs'].resolved+"/"+c['Station IDs'].total+
+            "  ("+files+" mp3s in repo). Run rrValidate() in this console for the full per-track report."); }catch(_){}
+        } else {
+          try{ console.warn("[Refined Radio] repo tree did not load (GitHub API limit or offline) \u2014 playback falls back to flat music/ paths."); }catch(_){}
         }
       }catch(e){}
+      window.RR_RESOLVE_REPORT=report;
       clearTimeout(to); fin();
     })
     .catch(function(){ clearTimeout(to); fin(); });
   }catch(e){ clearTimeout(to); fin(); }
 }
+// Deterministic manifest validator: prints exactly which assets will and will not play, per category.
+window.rrValidate=function(){
+  var r=window.RR_RESOLVE_REPORT;
+  if(!r||!r.ok){ console.log("Resolver has not finished (or the repo tree did not load). Reload, wait ~3 seconds, then run rrValidate() again."); return r; }
+  console.log("%c=== Refined Radio Manifest Validator ===","font-weight:bold;font-size:13px");
+  console.log(r.filesInRepo+" mp3 files found in /music");
+  Object.keys(r.categories).forEach(function(cat){
+    var c=r.categories[cat];
+    console.log("\n"+cat+": "+c.resolved+" / "+c.total+" WILL PLAY"+(c.failed?("   \u2014 "+c.failed+" WILL NOT PLAY (file not found in /music):"):"   \u2713 all resolved"));
+    c.failedItems.forEach(function(f){ console.log("   \u2717 "+f); });
+  });
+  console.log("\nTip: the \u2717 items are the files to re-upload (check for em-dashes / double spaces in their names).");
+  return r;
+};
+
 window.addEventListener('load',function(){setTimeout(function(){document.getElementById('rrPlayer').classList.add('rrShow');},1400);if(RR_LIBRARY.length)rrHour=new Date().getHours();rrFillGenres();rrLoadScores();rrResolveRealPaths(rrCheckPreview);rrTab('trending');try{if(!sessionStorage.getItem('rrn_visited')){sessionStorage.setItem('rrn_visited','1');rrEvent('visit','site');}}catch(e){}setInterval(rrLoadScores,90000);setInterval(function(){if(rrPlaying){try{fetch(RR_API+"/api/radio/ping",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({voter:rrVid})}).catch(function(){});}catch(e){}}},60000);});
 
 </script>
