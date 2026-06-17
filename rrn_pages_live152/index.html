@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- RRN-WEBSITE-MASTER | 2026-06-15-live154 | Hope Wall legal hardening: safety/not-verified banner, removed direct giving, Adopt->Volunteer to Support, 18+/no-naming/no-medical-PII rules, Privacy + Terms pages -->
+<!-- RRN-WEBSITE-MASTER | 2026-06-15-live152 | journal posts + 14 free curriculum lessons now standalone indexable pages; nav + hub links; full sitemap -->
 
 <html lang="en">
 <head>
@@ -2726,7 +2726,7 @@ function submitNehJob(){
     <p class="sl sl-w" style="max-width:680px;">Every story deserves to be heard. Every struggle deserves support. Every person deserves hope. Share anonymously, and let a praying community walk with you &mdash; with prayer, encouragement, and real help.</p>
 
     <div class="hw-crisis">
-      <strong>In immediate danger or crisis?</strong> This wall is reviewed but <b>not monitored 24/7</b> &mdash; please don’t use it to report an emergency. Call or text <a href="tel:988">988</a> (Suicide &amp; Crisis Lifeline), text <b>HOME</b> to <b>741741</b>, or call <a href="tel:911">911</a> now. You are not alone, and your life matters.
+      <strong>In immediate danger or crisis?</strong> Call or text <a href="tel:988">988</a> (Suicide &amp; Crisis Lifeline), text <b>HOME</b> to <b>741741</b>, or call <a href="tel:911">911</a> now. You are not alone, and your life matters.
     </div>
 
     <!-- IMPACT METRICS -->
@@ -2748,8 +2748,7 @@ function submitNehJob(){
       <button data-f="victory" onclick="hwFilter(this,'victory')">Victory Wall</button>
     </div>
 
-    <div style="max-width:760px;margin:0 auto 18px;background:rgba(201,162,74,.08);border:1px solid rgba(201,162,74,.35);border-radius:10px;padding:14px 18px;font-size:12.5px;line-height:1.6;color:rgba(255,255,255,.72);">Stories are submitted by community members and are <b>self-reported and not independently verified</b>. The Hope Wall is for prayer, encouragement, and connection &mdash; it is <b>not</b> a substitute for emergency services, medical care, mental-health treatment, legal advice, or professional counseling. If you are in immediate danger or crisis, call <a href="tel:911" style="color:var(--gold)">911</a> or <a href="tel:988" style="color:var(--gold)">988</a> immediately.</div>
-<div id="hwGrid" class="hw-grid"></div>
+    <div id="hwGrid" class="hw-grid"></div>
 
     <div style="text-align:center;margin-top:16px;font-size:11.5px;color:rgba(255,255,255,.42);max-width:620px;margin-left:auto;margin-right:auto;line-height:1.6;">Financial blessings are given by supporters through the ministry and directed to meet real needs. The people who post for help never ask for money &mdash; they ask for prayer and support.</div>
     <div class="hw-invite">
@@ -2759,7 +2758,7 @@ function submitNehJob(){
     <!-- SUBMISSION -->
     <div id="hwShare" class="hw-form-wrap">
       <h3>Share Your Story &mdash; Anonymously</h3>
-      <p class="hw-formnote"><b>You must be 18 or older to submit.</b> Share only your own story &mdash; <b>do not name or make accusations against any other person, business, or organization</b>, and <b>do not post personally identifiable medical information</b>. Your story is <b>reviewed by our team before it ever appears</b>. Your last name and exact address are never shown &mdash; only a first name or nickname and your state, if you choose. You are in control.</p>
+      <p class="hw-formnote">Your story is <b>reviewed by our team before it ever appears</b>. Your last name and exact address are never shown &mdash; only a first name or nickname and your state, if you choose. You are in control.</p>
       <div class="rrn-form hw-form">
         <div class="hw-row">
           <input id="hwName" type="text" placeholder="First name or nickname (optional)" aria-label="Name">
@@ -2781,7 +2780,7 @@ function submitNehJob(){
           <label><input type="checkbox" value="Church community">Church community</label>
         </div>
         <input id="hwEmail" type="email" placeholder="Email (optional &mdash; only if you want us to follow up privately)" aria-label="Email">
-        <label class="hw-consent"><input type="checkbox" id="hwConsent">I confirm I am <b>18 or older</b>, this is <b>my own story</b>, I have <b>not named or accused anyone else</b>, and I understand it will be reviewed before posting and shared anonymously to invite prayer and support. I am sharing willingly.</label>
+        <label class="hw-consent"><input type="checkbox" id="hwConsent">I understand my story will be reviewed before posting and shared anonymously to invite prayer and support. I am sharing willingly.</label>
         <button class="btn-pri" style="align-self:flex-start;" onclick="hwSubmit()">Submit for Review</button>
         <div class="rrn-note">A team member reviews every story. If you are in crisis, please use the 988 resources above &mdash; help is available right now.</div>
       </div>
@@ -2880,8 +2879,8 @@ function submitNehJob(){
 
 <div class="hw-modal" id="hwAdoptModal">
   <div class="hw-modal-box">
-    <h3>Churches: Volunteer to Support This Individual</h3>
-    <p>Your church can walk with this person &mdash; we never expose their identity. Tell us how you can help, and our team coordinates privately and safely. <b>Stories are self-reported and have not been independently verified.</b></p>
+    <h3>Churches: Adopt This Person</h3>
+    <p>Your church can walk with this person &mdash; we never expose their identity. Tell us how you can help, and our team coordinates privately and safely.</p>
     <input id="adChurch" type="text" placeholder="Church / ministry name">
     <input id="adContact" type="text" placeholder="Contact person &amp; best way to reach you">
     <input id="adType" type="text" placeholder="Type of support (prayer, mentoring, housing, jobs...)">
@@ -2959,8 +2958,8 @@ function submitNehJob(){
           '<button class="hw-act" onclick="hwFollow('+idx+')">Follow</button>'+
           '<button class="hw-act" onclick="hwShareStory('+idx+')">Share</button>'+
         '</div>'+
-        '<button class="hw-adopt" onclick="hwAdopt('+idx+')">Churches: Volunteer to Support</button>'+
-        
+        '<button class="hw-adopt" onclick="hwAdopt('+idx+')">Churches: Adopt This Person</button>'+
+        '<button class="hw-bless" onclick="hwBless('+idx+')">Give a Financial Blessing &rarr;</button>'+
         '</div>';
     }).join('');
   }
@@ -2969,7 +2968,7 @@ function submitNehJob(){
   window.hwHelp=function(i){var m=document.getElementById('hwHelpMenu'+i);if(!m)return;var open=m.classList.contains('open');document.querySelectorAll('.hw-help-menu').forEach(function(x){x.classList.remove('open');});if(!open)m.classList.add('open');};
   window.hwHelpOffer=function(i,opt){document.querySelectorAll('.hw-help-menu').forEach(function(x){x.classList.remove('open');});mail('I Can Help \u2014 '+opt,'I would like to help with: '+opt+'\nRegarding: '+ref(RRN_HOPE[i])+'.\n\nMy name:\nBest way to reach me:\nDetails:\n');};
   window.hwShareStory=function(i){var s=RRN_HOPE[i];var cat=(s.needs&&s.needs.length)?s.needs.join(', ').toLowerCase():'prayer and support';var loc=s.state||'our community';var txt='Someone in '+loc+' is asking for '+cat+' on the RRN Hope Wall. If you can help, visit: https://joinrrn.com/#hopewall';if(navigator.share){navigator.share({title:'RRN Hope Wall',text:txt,url:'https://joinrrn.com/#hopewall'}).catch(function(){});}else{try{navigator.clipboard.writeText(txt);alert('Anonymous link copied \u2014 share it to invite prayer and support.');}catch(e){window.location.href='mailto:?subject='+encodeURIComponent('Prayer & support needed')+'&body='+encodeURIComponent(txt);}}};
-  window.hwBless=function(i){/* direct giving disabled pending legal review */};
+  window.hwBless=function(i){window.open(PAYPAL_URL,'_blank','noopener');};
   window.hwAdopt=function(i){curStory=i;document.getElementById('hwAdoptModal').classList.add('open');};
   window.hwAdoptSubmit=function(){var ch=(document.getElementById('adChurch').value||'').trim(),co=(document.getElementById('adContact').value||'').trim();if(!ch||!co){alert('Please enter your church name and a contact.');return;}var ty=(document.getElementById('adType').value||'').trim(),vo=(document.getElementById('adVol').value||'').trim();hwCloseModal('hwAdoptModal');mail('Church Adoption \u2014 '+ch,'A church wants to adopt and support a Hope Wall person.\n\nChurch/ministry: '+ch+'\nContact person: '+co+'\nType of support: '+(ty||'(not specified)')+'\nVolunteers available: '+(vo||'(not specified)')+'\n\nRegarding: '+ref(RRN_HOPE[curStory])+'\n\n(Identity protected \u2014 RRN to coordinate privately.)');};
   window.hwFollow=function(i){curStory=i;document.getElementById('hwFollowModal').classList.add('open');};
@@ -4044,7 +4043,7 @@ bkRenderFeatured();bkRenderChips();bkRenderGrid();
     </div>
     <div class="fbot" style="flex-direction:column;gap:16px;align-items:flex-start;">
       <div style="display:flex;align-items:center;justify-content:space-between;width:100%;flex-wrap:wrap;gap:12px;">
-        <p style="margin:0;">&copy; 2026 Refined Recovery Network LLC &middot; Port Allen, Louisiana &middot; All rights reserved<br><span style="font-size:11px;color:rgba(255,255,255,.4)">Operating under 501(c)(3) fiscal sponsorship of Eagle Summit Ministries &middot; <a href="/privacy.html" style="color:var(--gold)">Privacy Policy</a> &middot; <a href="/terms.html" style="color:var(--gold)">Terms of Use</a></span></p>
+        <p style="margin:0;">&copy; 2026 Refined Recovery Network LLC &middot; Port Allen, Louisiana &middot; All rights reserved</p>
         <div style="display:flex;gap:8px;align-items:center;">
           <span style="font-size:10.5px;color:rgba(255,255,255,.25);margin-right:4px;">Follow</span>
           <a href="https://www.facebook.com/refinedrecoverynetwork" target="_blank" rel="noopener" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.06);border:0.5px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;transition:all .2s;color:#4267B2;" title="Facebook">
@@ -4670,36 +4669,23 @@ function rrSongList(){ // user-picked genre wins; otherwise follow the daypart c
 }
 function rrShuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function rrPool(){return rrSongList();} // kept for compatibility
-// ===== PLAY-ALL ROTATION + 2-HOUR SONG-FAMILY COOLDOWN =====
-var rrFamLast={};                      // famKey -> ms timestamp last played
-var RR_COOLDOWN_MS=2*60*60*1000;       // no version of a song repeats within 2 hours
-function rrFamKey(t){ var s=((t&&(t.title||t.src))||"").toLowerCase().replace(/\.(mp3|wav|m4a|ogg|flac)$/,"");
-  s=s.split("\u2014")[0].split(/\s-\s/)[0]; var p; do{p=s;s=s.replace(/\s*\([^)]*\)\s*$/,"").trim();}while(p!==s);
-  return s.replace(/\s*(?:v\d+|mix\s*\d+|version\s*\d+)\s*$/i,"").replace(/[^a-z0-9]+/g,""); }
-function rrPlaysFor(t){ return 1; }     // EVERY song gets exactly one slot -> the whole library plays before anything repeats
-function rrBuildBag(){ return rrShuffle(rrSongList().slice()); } // one copy of every eligible song, shuffled
-// Pop from the bag, skipping any Song Family played within the last 2 hours; if all are on cooldown, play the longest-idle.
+// Shuffle-bag rotation: every song plays once before ANY song repeats, then reshuffle.
+function rrPlaysFor(t){ // play-weight by star rating; every song keeps at least one play
+  var s=Math.max(0,Math.min(5,(rrScore[t.src]||0)));
+  return s>=5?5:(s===4?3:(s===3?2:1));
+}
+function rrBuildBag(){ var bag=[]; rrSongList().forEach(function(t){var n=rrPlaysFor(t);for(var i=0;i<n;i++)bag.push(t);}); return rrShuffle(bag); }
+// Weighted shuffle-bag: favorites appear more (5x/3x/2x), but EVERY song is in the bag at least once.
 function rrPick(){
   if(!rrBag.length){ rrBag=rrBuildBag(); }
   if(!rrBag.length) return null;
-  var now=Date.now(), tries=rrBag.length;
-  while(tries-- > 0){
-    var t=rrBag.pop(); if(!t) break;
-    var lp=rrFamLast[rrFamKey(t)];
-    if(lp==null || (now-lp)>=RR_COOLDOWN_MS){
-      if(rrCur && t.src===rrCur.src && rrBag.length){ rrBag.unshift(t); continue; } // no immediate same-song repeat
-      return t;
-    }
-    rrBag.unshift(t); // family still cooling down -> send to front, try the next song
-  }
-  // pool too small to honor the full 2h window: play the family idle the longest
-  var bi=-1, bt=Infinity;
-  for(var i=0;i<rrBag.length;i++){ var v=rrFamLast[rrFamKey(rrBag[i])]; v=(v==null?-1:v); if(v<bt){bt=v;bi=i;} }
-  return bi>=0 ? rrBag.splice(bi,1)[0] : (rrBag.length?rrBag.pop():null);
+  var t=rrBag.pop();
+  if(t&&rrCur&&t.src===rrCur.src&&rrBag.length){ var t2=rrBag.pop(); rrBag.unshift(t); t=t2; } // no immediate repeat
+  return t;
 }
 function rrUpNext(){ if(!rrBag.length) rrBag=rrBuildBag(); return rrBag.length?rrBag[rrBag.length-1]:null; }
 function rrPlayTrack(t){
-  if(!t)return; rrCur=t; try{rrFamLast[rrFamKey(t)]=Date.now();}catch(_e){} rrA.src=rrUrl(t._real||t.src);
+  if(!t)return; rrCur=t; rrA.src=rrUrl(t._real||t.src);
   document.getElementById('rrTitle').textContent=t.title||'Refined Radio';
   var rrNx=rrUpNext();document.getElementById('rrSub').textContent=(t.artist?t.artist+' \u00b7 ':'')+rrFormat().label+(rrNx?' \u00b7 Next: '+rrNx.title:'');
   rrRecent.push(t.src); var cap=Math.min(4,Math.max(1,rrPool().length-1)); while(rrRecent.length>cap)rrRecent.shift();
