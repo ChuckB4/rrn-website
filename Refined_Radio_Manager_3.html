@@ -1,0 +1,1195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Refined Radio Manager</title>
+<style>
+  :root{
+    --bg:#0e1116; --panel:#161b22; --panel2:#1c232d; --line:#2a313c;
+    --ink:#e9edf2; --mut:#9aa6b2; --gold:#d9a441; --gold2:#f0c167;
+    --good:#3fb27f; --warn:#e0683c; --accent:#3a6ea5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.45 -apple-system,Segoe UI,Roboto,Arial,sans-serif}
+  header{display:flex;align-items:center;gap:14px;padding:14px 20px;
+    background:linear-gradient(90deg,#11151b,#1a2230);border-bottom:1px solid var(--line)}
+  .logo{width:38px;height:38px;border-radius:9px;flex:0 0 auto;
+    background:radial-gradient(circle at 50% 38%,var(--gold2),var(--gold) 60%,#9c7322);
+    display:flex;align-items:center;justify-content:center;color:#1a1206;font-weight:800;font-size:18px;
+    box-shadow:0 0 0 1px #00000040, 0 6px 18px #d9a44133}
+  h1{font-size:18px;margin:0;letter-spacing:.3px}
+  h1 small{display:block;font-size:11px;color:var(--mut);font-weight:500;letter-spacing:2px;text-transform:uppercase}
+  .savestate{font-size:11px;color:var(--good)}
+  .tabs{display:flex;gap:4px;padding:10px 16px 0;background:var(--bg)}
+  .tab{padding:9px 16px;border:1px solid var(--line);border-bottom:none;border-radius:9px 9px 0 0;
+    background:var(--panel);color:var(--mut);cursor:pointer;font-weight:600;font-size:13px}
+  .tab.on{background:var(--panel2);color:var(--gold2);border-color:var(--gold)}
+  main{padding:18px 16px 110px}
+  .view{display:none} .view.on{display:block}
+  .stat{background:#0f141b;border:1px solid var(--line);border-radius:10px;padding:8px 14px;min-width:96px;text-align:center}
+  .stat b{display:block;font-size:20px;color:var(--gold)} .stat span{font-size:11px;color:var(--mut)}
+  .pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+  .pill.on{background:rgba(63,178,127,.15);color:var(--good);border:1px solid #2c5e49}
+  .pill.off{background:rgba(154,166,178,.12);color:var(--mut);border:1px solid var(--line)}
+  .res{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:6px 0}
+  .res h4{margin:0 0 4px;font-size:13px} .res ul{margin:4px 0 0;padding-left:18px} .res li{margin:2px 0;font-size:13px}
+  .ok{color:var(--good)} .bad{color:var(--warn)} .wn{color:var(--gold)}
+  #rl_table td,#rl_table th{font-size:12.5px;vertical-align:top}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  button,.btn{background:var(--panel2);color:var(--ink);border:1px solid var(--line);
+    border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;font-size:13px}
+  button:hover{border-color:var(--gold)}
+  button:disabled{opacity:.4;cursor:not-allowed}
+  .pri{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1206;border-color:var(--gold)}
+  .gd{color:var(--good);border-color:#2c5e48}
+  .danger{color:var(--warn);border-color:#5e2c2c}
+  input,select,textarea{background:#0c1014;color:var(--ink);border:1px solid var(--line);
+    border-radius:8px;padding:8px 10px;font:inherit}
+  input[type=text]{min-width:150px}
+  .drop{border:2px dashed var(--line);border-radius:12px;padding:22px;text-align:center;color:var(--mut);
+    cursor:pointer;transition:.15s}
+  .drop.hot{border-color:var(--gold);color:var(--gold2);background:#1a2230}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:13px}
+  th{color:var(--mut);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+  tr.newrow td:nth-child(2){box-shadow:inset 3px 0 0 var(--gold)}
+  tr.sel{background:#16202b}
+  tr.playing{background:#1a2a1f}
+  .pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700}
+  .pill.new{background:#3a2a12;color:var(--gold2)} .pill.have{background:#143026;color:var(--good)}
+  .pill.mix{background:#1c2b3a;color:#8fc7ff;margin-left:6px}
+  .mut{color:var(--mut)} .sp{flex:1}
+  .play{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;padding:0}
+  .count{font-size:12px;color:var(--mut);margin-left:8px}
+  textarea{width:100%;min-height:200px;font-family:ui-monospace,Consolas,monospace;font-size:12px}
+  .tag{display:inline-flex;align-items:center;gap:6px;background:var(--panel2);border:1px solid var(--line);
+    border-radius:20px;padding:4px 10px;margin:3px;font-size:12px}
+  .tag b{color:var(--gold2)} .x{cursor:pointer;color:var(--warn);font-weight:800}
+  .hint{font-size:12px;color:var(--mut);margin:6px 0 0}
+  .setitem{display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid var(--line);
+    border-radius:8px;margin:4px 0;background:#0c1014}
+  .setitem.ad{border-color:#4a3a1a;background:#1a1408}
+  .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:10px;border:1px solid var(--line);
+    border-radius:10px;background:#0c1014;margin-bottom:10px}
+  .bar .seg{display:flex;gap:6px;align-items:center}
+  .selcount{font-weight:700;color:var(--gold2)}
+  .scroll{max-height:56vh;overflow:auto;border:1px solid var(--line);border-radius:10px}
+  .scroll table{margin-top:0}
+  .scroll thead th{position:sticky;top:0;background:#11161d;z-index:1}
+  /* now-playing scrub bar */
+  #nowbar{position:fixed;left:0;right:0;bottom:0;display:none;align-items:center;gap:12px;
+    padding:10px 16px;background:#11161d;border-top:1px solid var(--gold);z-index:50;
+    box-shadow:0 -6px 18px #00000055}
+  #nowtitle{font-weight:700;color:var(--gold2);min-width:160px;max-width:260px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #seek{flex:1;accent-color:var(--gold);height:6px}
+  #curtime,#durtime{font-variant-numeric:tabular-nums;color:var(--mut);font-size:12px;min-width:44px;text-align:center}
+  .pbtn{width:38px;height:38px;border-radius:50%;padding:0;font-size:14px}
+  #player{display:none}
+  .star{cursor:pointer;color:#4a4a4a;font-size:14px;letter-spacing:1px}
+  .star.on{color:var(--gold)}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">R</div>
+  <div><h1>Refined Radio Manager<small>Worship Station Toolkit · BUILD 16 — Rule Builder + Song-Family cooldown scheduler</small></h1></div>
+  <div class="sp"></div>
+  <div class="savestate" id="savestate"></div>
+  <div class="count" id="topcount"></div>
+</header>
+
+<div class="tabs">
+  <div class="tab on" data-v="import">Import &amp; Categorize</div>
+  <div class="tab" data-v="sets">Sets &amp; Dayparts</div>
+  <div class="tab" data-v="genres">Genres &amp; Styles</div>
+  <div class="tab" data-v="export">Save / Export</div>
+  <div class="tab" data-v="rules">Rules &amp; Validation</div>
+  <div class="tab" data-v="sched">Scheduler &amp; Reports</div>
+</div>
+
+<main>
+  <!-- IMPORT -->
+  <section class="view on" id="v-import">
+    <div class="card">
+      <div class="row">
+        <div class="drop" id="drop" style="flex:1">
+          <b>Drop MP3s here</b> or click to choose &nbsp;•&nbsp; <span class="mut">audio stays on your computer</span>
+        </div>
+        <input type="file" id="file" accept="audio/*,.mp3" multiple style="display:none">
+        <input type="file" id="folder" webkitdirectory directory multiple style="display:none">
+        <button class="btn pri" id="choosefolder">Choose music folder</button>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="loadlib">Load current library file</button>
+        <span class="hint" id="libstatus">No library loaded — songs all show as <b>NEW</b>.</span>
+      </div>
+    </div>
+
+    <div class="card" id="tablecard" style="display:none">
+      <!-- FILTER BAR -->
+      <div class="bar">
+        <div class="seg"><span class="mut">Search</span>
+          <input type="text" id="search" placeholder="title or filename…" style="min-width:200px"></div>
+        <div class="seg"><span class="mut">Genre</span>
+          <select id="filtergenre"><option value="">All genres</option></select></div>
+        <div class="seg"><span class="mut">Status</span>
+          <select id="filterstatus">
+            <option value="">All</option><option value="audio">Has audio ✓</option><option value="noaudio">No audio (can't play)</option><option value="new">New only</option><option value="have">Loaded only</option>
+          </select></div>
+        <label class="seg"><input type="checkbox" id="filterunused"> not in any set</label>
+        <div class="sp"></div>
+        <button id="cleanall" class="gd">Clean titles (shown)</button>
+        <button id="fixcaps" class="gd">Fix ALL-CAPS (shown)</button>
+        <button id="autotag" class="pri">Auto-tag &amp; strip genre (shown)</button>
+      </div>
+
+      <!-- BULK BAR -->
+      <div class="bar">
+        <label class="seg"><input type="checkbox" id="selall"> <span>Select all shown</span></label>
+        <span class="selcount" id="selcount">0 selected</span>
+        <div class="sp"></div>
+        <div class="seg"><span class="mut">Set genre of selected →</span>
+          <select id="bulkgenre"></select>
+          <button id="applysel" class="pri">Apply</button></div>
+        <button id="delsel" class="danger">Remove selected</button>
+      </div>
+
+      <!-- VERSIONING BAR -->
+      <div class="bar">
+        <div class="seg"><span class="mut">Versioning →</span>
+          <select id="mixstyle"></select>
+          <button id="makever" class="pri">Create version of selected</button></div>
+        <div class="sp"></div>
+        <button id="autover">Auto-version duplicates</button>
+      </div>
+
+      <div class="row" style="margin-bottom:8px">
+        <span class="count" id="showing"></span>
+        <div class="sp"></div>
+        <span class="mut">Find/replace in titles:</span>
+        <input type="text" id="findtxt" placeholder="find" style="min-width:110px">
+        <input type="text" id="reptxt" placeholder="replace" style="min-width:110px">
+        <button id="dorep">Replace (shown)</button>
+      </div>
+
+      <div class="scroll">
+        <table>
+          <thead><tr>
+            <th style="width:28px"></th><th style="width:34px"></th><th style="width:64px">Status</th>
+            <th>Title</th><th style="width:180px">Genre</th><th style="width:96px">Rate</th><th>File</th><th style="width:74px"></th>
+          </tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SETS -->
+  <section class="view" id="v-sets">
+    <div class="card">
+      <div class="row"><strong>Build an hour</strong> <span class="mut" style="font-size:12px">— rate your songs, pick genres, hit Build. Fills the hour with your best, drops in your commercials.</span></div>
+      <div class="row" style="margin-top:8px">
+        <input type="text" id="abname" placeholder="Hour name (e.g. Morning Worship)">
+        <span class="mut">Minutes</span><input type="number" id="abmin" style="width:64px" value="60"><span class="mut">min</span>
+        <span class="mut">Commercials</span><input type="number" id="abads" style="width:54px" value="5">
+        <label class="seg"><input type="checkbox" id="abunused"> prefer unused</label>
+        <label class="seg"><input type="checkbox" id="abrepeat" checked> top-rated repeat to fill the hour</label>
+        <button class="pri" id="abbuild">Build hour</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <span class="mut">Genres (tap to include):</span><div id="abgenres" style="display:flex;flex-wrap:wrap;gap:4px"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row">
+        <button class="pri" id="addskeleton">＋ Add 24 hourly sets (12 AM → 11 PM)</button>
+        <span class="mut" style="font-size:12px">prenamed blank hours — open one, tap genres, hit Fill</span>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <input type="text" id="setname" placeholder="Or one custom set — name it">
+        <button id="addset">Create empty set</button>
+      </div>
+    </div>
+    <div class="card" id="unusedcard">
+      <div class="row"><strong>Songs not used in any set</strong> <span class="count" id="unusedcount"></span>
+        <div class="sp"></div><button id="jumpunused">Show these in the song list</button></div>
+      <div id="unusedlist" class="mut" style="max-height:200px;overflow:auto;margin-top:8px"></div>
+    </div>
+    <div id="setlist"></div>
+  </section>
+
+  <!-- GENRES & STYLES -->
+  <section class="view" id="v-genres">
+    <div class="card">
+      <div class="row">
+        <input type="text" id="newgenre" placeholder="New genre / style">
+        <button id="addgenre">Add genre</button>
+        <div class="sp"></div>
+        <button id="resetgenres" class="mut" style="font-size:12px">Reset to default list</button>
+      </div>
+      <div id="genretags" style="margin-top:12px"></div>
+    </div>
+    <div class="card">
+      <div class="row"><strong>Mix Styles</strong> <span class="mut" style="font-size:12px">— used by the Versioning dropdown</span></div>
+      <div class="row" style="margin-top:8px">
+        <input type="text" id="newmix" placeholder="New mix style (e.g. Acoustic)">
+        <button id="addmix">Add</button>
+      </div>
+      <div id="mixtags" style="margin-top:12px"></div>
+    </div>
+    <div class="card">
+      <div class="row"><strong>Advertisements / Station IDs</strong></div>
+      <div class="row" style="margin-top:8px">
+        <input type="text" id="adname" placeholder="Ad / station ID name">
+        <button id="addad">Add</button>
+      </div>
+      <div id="adtags" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <!-- EXPORT -->
+  <section class="view" id="v-export">
+    <div class="card">
+      <div class="row">
+        <button class="pri" id="saveproj">💾 Save my work to a file</button>
+        <button class="gd" id="loadproj">Load my work from a file</button>
+        <input type="file" id="projfile" accept=".json,application/json" style="display:none">
+        <span class="hint" id="projstatus"></span>
+      </div>
+      <p class="hint">Saves <b>everything</b> — every song, title, genre, version, set and your styles — into one file (<code>refined_radio_project.json</code>). Keep it as your backup; load it any time, even after an update, to bring it all back.</p>
+      <textarea id="projout" spellcheck="false" style="display:none;margin-top:10px;min-height:140px"></textarea>
+      <button id="projcopy" class="gd" style="display:none;margin-top:8px">Copy — then paste into Notepad &amp; Save As refined_radio_project.json</button>
+    </div>
+    <div class="card">
+      <div class="row">
+        <button class="pri" id="build">Build radio_library.json</button>
+        <button class="gd" id="download">Download file</button>
+        <button id="copy">Copy to clipboard</button>
+        <span class="hint" id="copied"></span>
+      </div>
+      <p class="hint">Your work auto-saves in this browser. <b>Download file</b> also gives you <code>radio_library.json</code> for your site / batch upload.</p>
+      <textarea id="out" spellcheck="false" placeholder="Click Build to generate the library file…"></textarea>
+    </div>
+    <div class="card">
+      <strong>Songs to upload</strong>
+      <p class="hint">These are NOT in your loaded library yet — load these to your site:</p>
+      <div id="toupload" class="mut">—</div>
+    </div>
+  </section>
+
+  <!-- RULES & VALIDATION -->
+  <section class="view" id="v-rules">
+    <div class="card">
+      <h2 style="margin:0 0 4px">Rule Builder</h2>
+      <p class="hint">Every broadcast-scheduling and song-naming rule the station enforces, in one place. Toggle, re-prioritize, or add your own. Lower priority number = checked first / wins conflicts.</p>
+      <div class="row" style="gap:8px;margin:8px 0">
+        <button id="rl_add" class="pri">+ Add custom rule</button>
+        <button id="rl_reset">Reset to defaults</button>
+        <span class="mut" id="rl_count"></span>
+      </div>
+      <div id="rl_addbox" style="display:none;border:1px solid var(--line);border-radius:10px;padding:10px;margin:8px 0;background:#0f141b">
+        <div class="row" style="gap:8px;flex-wrap:wrap">
+          <input id="rl_name" placeholder="Rule name" style="flex:1;min-width:180px">
+          <select id="rl_cat"><option>Broadcast</option><option>Naming</option></select>
+          <select id="rl_mode"><option value="warn">Warn</option><option value="block">Block</option></select>
+          <input id="rl_pri" type="number" min="1" max="9" value="3" style="width:70px" title="Priority">
+        </div>
+        <input id="rl_desc" placeholder="Description (what it checks)" style="width:100%;margin-top:6px">
+        <input id="rl_kw" placeholder="Flag if title/genre contains any of these words (comma-separated)" style="width:100%;margin-top:6px">
+        <div class="row" style="gap:8px;margin-top:6px"><button id="rl_save" class="pri">Save rule</button><button id="rl_cancel">Cancel</button></div>
+      </div>
+      <div style="overflow:auto"><table id="rl_table"><thead><tr>
+        <th>Status</th><th>Rule</th><th>Description</th><th>Cat.</th><th>Pri.</th><th>Last triggered</th><th></th>
+      </tr></thead><tbody id="rl_rows"></tbody></table></div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin:0 0 4px">Check a Song Against Rules</h2>
+      <p class="hint">Select any track and run a full compliance check. Scheduling rules (cooldown, daypart, cadence) show as restrictions that the Scheduler enforces live.</p>
+      <div class="row" style="gap:8px">
+        <select id="ck_song" style="flex:1;min-width:220px"></select>
+        <button id="ck_run" class="pri">Check Song Against Rules</button>
+      </div>
+      <div id="ck_out" style="margin-top:10px"></div>
+    </div>
+  </section>
+
+  <!-- SCHEDULER & REPORTS -->
+  <section class="view" id="v-sched">
+    <div class="card">
+      <h2 style="margin:0 0 4px">Schedule Generator <span class="mut" style="font-weight:400">— Song-Family cooldown enforced</span></h2>
+      <p class="hint">Builds an on-air log that automatically blocks any other version, remix, arrangement or genre-variant of a song for the cooldown window. Blocked picks show the reason and a suggested replacement.</p>
+      <div class="row" style="gap:8px;flex-wrap:wrap;align-items:flex-end">
+        <label>Start <input id="sc_start" type="time" value="10:00" style="width:110px"></label>
+        <label>Hours <input id="sc_hours" type="number" min="1" max="24" value="3" style="width:70px"></label>
+        <label>Daypart genres
+          <select id="sc_set" style="min-width:170px"><option value="">Any genre (all songs)</option></select>
+        </label>
+        <label>Cooldown (min) <input id="sc_cool" type="number" min="0" max="240" value="60" style="width:80px"></label>
+        <button id="sc_build" class="pri">Generate Schedule</button>
+      </div>
+      <div id="sc_status" class="mut" style="margin-top:6px"></div>
+    </div>
+    <div class="card" id="sc_outcard" style="display:none">
+      <div class="row" style="gap:14px;flex-wrap:wrap;margin-bottom:8px">
+        <div class="stat"><b id="st_songs">0</b><span>songs aired</span></div>
+        <div class="stat"><b id="st_blocks">0</b><span>cooldown blocks</span></div>
+        <div class="stat"><b id="st_over">0</b><span>repeats prevented</span></div>
+        <div class="stat"><b id="st_fam">0</b><span>families used</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:14px" id="sc_grid">
+        <div>
+          <h3 style="margin:4px 0">On-Air Log</h3>
+          <div style="max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:8px">
+            <table><thead><tr><th>Time</th><th>Title</th><th>Genre</th><th>★</th></tr></thead><tbody id="sc_timeline"></tbody></table>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin:4px 0">Cooldown Blocks &amp; Reasons</h3>
+          <div style="max-height:200px;overflow:auto;border:1px solid var(--line);border-radius:8px" id="sc_blocks"></div>
+          <h3 style="margin:12px 0 4px">Most Common Conflicts</h3>
+          <div style="max-height:170px;overflow:auto;border:1px solid var(--line);border-radius:8px" id="sc_conflicts"></div>
+        </div>
+      </div>
+      <h3 style="margin:12px 0 4px">Song-Family Rotation History</h3>
+      <div style="max-height:240px;overflow:auto;border:1px solid var(--line);border-radius:8px" id="sc_history"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- NOW PLAYING BAR -->
+<div id="nowbar">
+  <span id="nowtitle"></span>
+  <button class="pbtn" id="prev" title="Previous track">⏮</button>
+  <button class="pbtn pri" id="playpause" title="Play / Pause">▶</button>
+  <span id="curtime">0:00</span>
+  <input type="range" id="seek" min="0" max="1000" value="0" step="1">
+  <span id="durtime">0:00</span>
+  <button class="pbtn" id="next" title="Next track">⏭</button>
+  <button id="closebar" title="Close">✕</button>
+  <audio id="player" preload="metadata"></audio>
+</div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const STORE="rrn_radio_v3";
+const DEFAULT_GENRES=["Testimony","Station ID","Commercial","Southern Christian Rock","Psychedelic Christian Rock","Ambient Worship","Praise & Worship","Christian Pop","Southern Gospel","Christian Country","Christian Hip-Hop","Christian R&B","Christian Dance","Christian Soul","Bluegrass Gospel","Appalachian Gospel","Quartet Gospel","Gospel Blues","Worship Rock","Christian EDM","Christian Chillwave","Christian Rap","Christian K-Pop","Christian Trip-Hop","Christian Bounce Drop","Christian 80's","Christian Stage Style","Testimony Songs"];
+const DEFAULT_ADS=["Main Ad","Programs Ad","Upcoming Events Ad"];
+const DEFAULT_MIX=["Radio Edit","Extended Worship","Acoustic","Instrumental","Live","Spontaneous","Loop","Intro","Outro","Reprise","Remix","Clean"];
+
+const state={
+  genres:[...DEFAULT_GENRES], ads:[...DEFAULT_ADS], mixStyles:[...DEFAULT_MIX],
+  songs:[], sets:[], libraryNames:[], playingId:null, sel:new Set()
+};
+const player=$("#player");
+const AD_SECONDS=30;
+/* ---------- duration reader (queue, metadata only) ---------- */
+const durQueue=[]; let durRunning=0; let rerT;
+function enqueueDuration(song){ if(song&&song.blob&&song.duration==null){ durQueue.push(song); pumpDur(); } }
+function pumpDur(){
+  while(durRunning<4 && durQueue.length){
+    const song=durQueue.shift(); durRunning++;
+    const a=document.createElement("audio"); a.preload="metadata";
+    const fin=()=>{ durRunning--; pumpDur(); };
+    a.onloadedmetadata=()=>{ song.duration=Math.round(a.duration||0); try{URL.revokeObjectURL(a.src)}catch(e){} save(); scheduleRerender(); fin(); };
+    a.onerror=()=>{ try{URL.revokeObjectURL(a.src)}catch(e){} fin(); };
+    a.src=URL.createObjectURL(song.blob);
+  }
+}
+function scheduleRerender(){ clearTimeout(rerT); rerT=setTimeout(()=>{
+  if($("#v-rules").classList.contains("on")){fillCheckSong();} if($("#v-sched").classList.contains("on")){fillSchedSet();}
+  if($("#v-sets").classList.contains("on")) renderSets();
+  if($("#v-import").classList.contains("on")) renderSongs();
+},400); }
+
+/* ---------- persistence ---------- */
+function save(){
+  try{
+    localStorage.setItem(STORE, JSON.stringify({
+      genres:state.genres, ads:state.ads, mixStyles:state.mixStyles, sets:state.sets, libraryNames:state.libraryNames,
+      songs:state.songs.map(s=>({file:s.file,title:s.title,genre:s.genre,mix:s.mix||null,rating:s.rating||0,duration:s.duration!=null?s.duration:null,isNew:s.isNew}))
+    }));
+    flash("Saved");
+  }catch(e){ flash("Save unavailable",true); }
+}
+let flashT;
+function flash(msg,bad){ const el=$("#savestate"); el.textContent=msg; el.style.color=bad?"var(--warn)":"var(--good)";
+  clearTimeout(flashT); flashT=setTimeout(()=>el.textContent="",1400); }
+function load(){
+  try{
+    const raw=localStorage.getItem(STORE); if(!raw) return;
+    const d=JSON.parse(raw);
+    if(d.genres&&d.genres.length) state.genres=d.genres;
+    if(d.ads) state.ads=d.ads;
+    if(d.mixStyles&&d.mixStyles.length) state.mixStyles=d.mixStyles;
+    if(d.sets) state.sets=d.sets;
+    if(d.libraryNames) state.libraryNames=d.libraryNames;
+    if(d.songs) state.songs=d.songs.map(s=>({id:uid(),file:s.file,title:s.title,genre:s.genre,mix:s.mix||null,rating:s.rating||0,
+      duration:s.duration!=null?s.duration:null, blob:null, isNew:s.isNew!==undefined?s.isNew:!libHas(s.file)}));
+  }catch(e){}
+}
+
+/* ---------- tabs ---------- */
+$$(".tab").forEach(t=>t.onclick=()=>{
+  $$(".tab").forEach(x=>x.classList.remove("on")); t.classList.add("on");
+  $$(".view").forEach(v=>v.classList.remove("on")); $("#v-"+t.dataset.v).classList.add("on");
+});
+
+/* ---------- helpers ---------- */
+const SMALL=new Set(["a","an","and","as","at","but","by","for","in","nor","of","on","or","the","to","vs","via","with","feat"]);
+const ACRONYMS=new Set(["R&B","EDM","DJ","KJV","RRN","USA","UK","TV","II","III","IV","V","VI","VII","NYC"]);
+function toProperTitle(str){
+  const words=str.split(/\s+/).filter(Boolean);
+  return words.map((word,i)=>{
+    const up=word.toUpperCase();
+    if(ACRONYMS.has(up)) return up;
+    const lw=word.toLowerCase();
+    const core=lw.replace(/[^a-z]/g,"");
+    if(i!==0 && i!==words.length-1 && SMALL.has(core)) return lw;
+    return lw.charAt(0).toUpperCase()+lw.slice(1);
+  }).join(" ");
+}
+function cleanName(fn){
+  let n=fn.replace(/\.[^.]+$/,"");
+  n=n.replace(/[_]+/g," ");
+  n=n.replace(/[\(\[][^)\]]*?(official|audio|lyric|lyrics|video|visualizer|music\s*video|hd|hq|4k|mp3|320|kbps|free\s*download|download|www\.|\.com)[^)\]]*?[\)\]]/ig,"");
+  n=n.replace(/\bwww\.\S+/ig,"").replace(/\b[\w-]+\.com\b/ig,"");
+  n=n.replace(/^\s*\d{1,3}\s*[-\.\)]\s*/,"");
+  n=n.replace(/\b(ft|feat)\.?\b/ig,"feat");
+  n=n.replace(/\s*[-–—]\s*/g," - ");
+  n=n.replace(/\s+/g," ").trim().replace(/^[-\s]+|[-\s]+$/g,"").trim();
+  n=toProperTitle(n);
+  return n||fn.replace(/\.[^.]+$/,"");
+}
+function libHas(fn){ return state.libraryNames.map(x=>x.toLowerCase()).includes(fn.toLowerCase()); }
+function uid(){return Math.random().toString(36).slice(2,9)}
+
+/* ---------- auto-tag genre from name + strip it out ---------- */
+const ALIAS={
+  "country rock":"Christian Country","country":"Christian Country",
+  "hip hop":"Christian Hip-Hop","hiphop":"Christian Hip-Hop",
+  "rnb":"Christian R&B","r n b":"Christian R&B","r and b":"Christian R&B",
+  "edm":"Christian EDM","dance":"Christian Dance",
+  "k pop":"Christian K-Pop","kpop":"Christian K-Pop","k-pop":"Christian K-Pop",
+  "trip hop":"Christian Trip-Hop","triphop":"Christian Trip-Hop",
+  "chillwave":"Christian Chillwave","chill":"Christian Chillwave",
+  "bounce drop":"Christian Bounce Drop","bounce":"Christian Bounce Drop",
+  "psychedelic rock":"Psychedelic Christian Rock","psychedelic":"Psychedelic Christian Rock",
+  "southern rock":"Southern Christian Rock","worship rock":"Worship Rock","rock":"Worship Rock",
+  "rap":"Christian Rap","pop":"Christian Pop","soul":"Christian Soul",
+  "gospel blues":"Gospel Blues","blues":"Gospel Blues","bluegrass":"Bluegrass Gospel",
+  "quartet":"Quartet Gospel","appalachian":"Appalachian Gospel","southern gospel":"Southern Gospel",
+  "ambient worship":"Ambient Worship","ambient":"Ambient Worship",
+  "praise and worship":"Praise & Worship","praise":"Praise & Worship","worship":"Praise & Worship",
+  "instrumental":"Instrumental","testimony":"Testimony Songs","stage":"Christian Stage Style",
+  "80s":"Christian 80's","eighties":"Christian 80's","commercial":"Commercial","station id":"Station ID"
+};
+function buildMatchers(){
+  const list=[];
+  state.genres.forEach(g=>list.push({key:g.toLowerCase(),genre:g}));
+  for(const k in ALIAS){ if(state.genres.includes(ALIAS[k])) list.push({key:k,genre:ALIAS[k]}); }
+  list.sort((a,b)=>b.key.length-a.key.length);
+  return list.map(m=>{
+    const parts=m.key.split(/\s+/).map(p=>p.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"));
+    return {key:m.key,genre:m.genre,re:new RegExp("\\b"+parts.join("[\\s\\-_]+")+"\\b","i")};
+  });
+}
+function autoTagStrip(arr){
+  const matchers=buildMatchers(); let n=0;
+  arr.forEach(s=>{
+    for(const m of matchers){
+      const inTitle=m.re.test(s.title), inFile=m.re.test(s.file);
+      if(inTitle||inFile){
+        s.genre=m.genre;
+        if(inTitle){
+          let t=s.title.replace(m.re," ");
+          t=t.replace(/[\(\[]\s*[\)\]]/g," ").replace(/\s*[-–—]\s*$/,"").replace(/^[\s\-–—_]+|[\s\-–—_]+$/g,"").replace(/\s{2,}/g," ").trim();
+          if(t) s.title=toProperTitle(t);
+        }
+        n++; break;
+      }
+    }
+  });
+  return n;
+}
+
+/* ---------- generic tag manager ---------- */
+function renderTags(listKey,containerId,attr){
+  const arr=state[listKey];
+  $("#"+containerId).innerHTML=arr.length?arr.map((v,i)=>
+    `<span class="tag"><b>${v}</b><span class="x" data-${attr}="${i}">✕</span></span>`).join(""):'<span class="mut">None yet</span>';
+  $$("#"+containerId+" .x").forEach(x=>x.onclick=()=>{arr.splice(+x.dataset[attr],1);afterTagChange(listKey)});
+}
+function afterTagChange(listKey){
+  if(listKey==="genres"){renderTags("genres","genretags","g");fillGenreSelects();renderAbGenres();}
+  if(listKey==="ads"){renderTags("ads","adtags","a");}
+  if(listKey==="mixStyles"){renderTags("mixStyles","mixtags","m");fillMixSelect();}
+  save();
+}
+function fillGenreSelects(){
+  const opts=state.genres.map(g=>`<option>${g}</option>`).join("");
+  $("#bulkgenre").innerHTML=opts;
+  $("#filtergenre").innerHTML='<option value="">All genres</option>'+opts;
+}
+function fillMixSelect(){ $("#mixstyle").innerHTML=state.mixStyles.map(m=>`<option>${m}</option>`).join(""); }
+
+$("#addgenre").onclick=()=>{const v=$("#newgenre").value.trim();if(v&&!state.genres.includes(v)){state.genres.push(v);$("#newgenre").value="";afterTagChange("genres")}};
+$("#newgenre").onkeydown=e=>{if(e.key==="Enter")$("#addgenre").click()};
+$("#resetgenres").onclick=()=>{if(confirm("Reset genre list to the default 28?")){state.genres=[...DEFAULT_GENRES];afterTagChange("genres")}};
+$("#addad").onclick=()=>{const v=$("#adname").value.trim();if(v){state.ads.push(v);$("#adname").value="";afterTagChange("ads")}};
+$("#adname").onkeydown=e=>{if(e.key==="Enter")$("#addad").click()};
+$("#addmix").onclick=()=>{const v=$("#newmix").value.trim();if(v&&!state.mixStyles.includes(v)){state.mixStyles.push(v);$("#newmix").value="";afterTagChange("mixStyles")}};
+$("#newmix").onkeydown=e=>{if(e.key==="Enter")$("#addmix").click()};
+
+/* ---------- import ---------- */
+const drop=$("#drop"), file=$("#file"), folder=$("#folder");
+drop.onclick=()=>file.click();
+$("#choosefolder").onclick=()=>folder.click();
+drop.ondragover=e=>{e.preventDefault();drop.classList.add("hot")};
+drop.ondragleave=()=>drop.classList.remove("hot");
+window.addEventListener("dragover",e=>{e.preventDefault();});
+window.addEventListener("drop",async e=>{ e.preventDefault(); drop.classList.remove("hot");
+  const fs=await filesFromDataTransfer(e.dataTransfer);
+  if(fs.length) addFiles(fs); else flash("No audio files in that drop",true);
+});
+file.onchange=()=>addFiles([...file.files]);
+folder.onchange=()=>addFiles([...folder.files]);
+
+async function readEntry(entry){
+  if(entry.isFile) return new Promise(res=>entry.file(f=>res([f]),()=>res([])));
+  if(entry.isDirectory){
+    const reader=entry.createReader(); let all=[], batch;
+    const readAll=()=>new Promise(res=>reader.readEntries(es=>res(es),()=>res([])));
+    do{ batch=await readAll(); for(const e of batch) all=all.concat(await readEntry(e)); }while(batch.length);
+    return all;
+  }
+  return [];
+}
+async function filesFromDataTransfer(dt){
+  const items=dt.items?[...dt.items]:[];
+  const entries=items.map(it=>it.webkitGetAsEntry&&it.webkitGetAsEntry()).filter(Boolean);
+  if(entries.length){ let all=[]; for(const e of entries) all=all.concat(await readEntry(e)); if(all.length) return all; }
+  return dt.files?[...dt.files]:[];
+}
+const AUDIO_RE=/\.(mp3|m4a|aac|wav|ogg|oga|flac|opus)$/i;
+function normKey(n){ return n.toLowerCase().replace(/\.[^.]+$/,'').replace(/\s*\(\d+\)\s*$/,'').replace(/[^a-z0-9]/g,''); }
+function addFiles(list){
+  let added=0, attached=0;
+  const idxF={}, idxT={};
+  state.songs.forEach(s=>{ if(!s.mix){
+    const kf=normKey(s.file); (idxF[kf]=idxF[kf]||[]).push(s);
+    const kt=normKey(s.title); (idxT[kt]=idxT[kt]||[]).push(s);
+  }});
+  function findEx(name){
+    let ex=state.songs.find(s=>s.file===name && !s.mix); if(ex) return ex;
+    const k=normKey(name);
+    let arr=idxF[k]; if(arr&&arr.length){ ex=arr.find(s=>!s.blob)||arr[0]; if(ex) return ex; }
+    arr=idxT[k]; if(arr&&arr.length){ ex=arr.find(s=>!s.blob)||arr[0]; if(ex) return ex; }
+    return null;
+  }
+  [...list].filter(f=>AUDIO_RE.test(f.name)).forEach(f=>{
+    const ex=findEx(f.name);
+    if(ex){ ex.blob=f; enqueueDuration(ex); attached++; return; }
+    const song={id:uid(),file:f.name,title:cleanName(f.name),
+      genre:state.genres[0], blob:f, mix:null, duration:null, rating:0, isNew:!libHas(f.name)};
+    state.songs.push(song); enqueueDuration(song); added++;
+  });
+  renderSongs(); save();
+  // versions share the audio of their base song so they play too
+  const baseBlob={};
+  state.songs.forEach(s=>{ if(!s.mix && s.blob) baseBlob[s.file]=s.blob; });
+  state.songs.forEach(s=>{ if(s.mix && !s.blob && baseBlob[s.file]) s.blob=baseBlob[s.file]; });
+  const canPlay=state.songs.filter(s=>s.blob).length;
+  if(attached===0 && added===0) flash("No audio files found there",true);
+  else flash(attached+" matched · "+added+" new · "+canPlay+" can play",false);
+}
+
+/* ---------- filtering ---------- */
+function filtered(){
+  const q=$("#search").value.trim().toLowerCase();
+  const g=$("#filtergenre").value;
+  const st=$("#filterstatus").value;
+  return state.songs.filter(s=>{
+    if(q && !(s.title.toLowerCase().includes(q)||s.file.toLowerCase().includes(q))) return false;
+    if(g && s.genre!==g) return false;
+    if(st==="new" && !s.isNew) return false;
+    if(st==="have" && s.isNew) return false;
+    if(st==="audio" && !s.blob) return false;
+    if(st==="noaudio" && s.blob) return false;
+    if($("#filterunused").checked && usedRefs().has(s.id)) return false;
+    return true;
+  });
+}
+["search","filtergenre","filterstatus"].forEach(id=>$("#"+id).oninput=()=>renderSongs());
+$("#filterunused").onchange=()=>renderSongs();
+function usedRefs(){ const u=new Set(); state.sets.forEach(set=>set.items.forEach(it=>{ if(it.type==="song"&&it.ref) u.add(it.ref); })); return u; }
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+/* ---------- render songs ---------- */
+function renderSongs(){
+  $("#tablecard").style.display=state.songs.length?"block":"none";
+  $("#topcount").textContent=state.songs.length?state.songs.length+" songs":"";
+  const fs=filtered();
+  $("#showing").textContent=`Showing ${fs.length} of ${state.songs.length}`;
+  $("#rows").innerHTML=fs.map(s=>`
+    <tr class="${s.isNew?'newrow':''} ${state.sel.has(s.id)?'sel':''} ${state.playingId===s.id?'playing':''}" data-id="${s.id}">
+      <td><input type="checkbox" class="chk" ${state.sel.has(s.id)?'checked':''}></td>
+      <td><button class="play" data-play="${s.id}" ${s.blob?'':'disabled title="re-add file to preview"'}>${state.playingId===s.id?'■':'▶'}</button></td>
+      <td>${s.isNew?'<span class="pill new">NEW</span>':'<span class="pill have">LOADED</span>'}</td>
+      <td><input type="text" class="title" value="${s.title.replace(/"/g,'&quot;')}" style="width:100%">${s.mix?`<span class="pill mix">${s.mix}</span>`:''}</td>
+      <td><select class="rowgenre"></select></td>
+      <td class="rate" data-id="${s.id}">${[1,2,3,4,5].map(n=>`<span class="star ${n<=(s.rating||0)?'on':''}" data-r="${n}">★</span>`).join("")}</td>
+      <td class="mut" style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${s.file}">${s.file}</td>
+      <td style="white-space:nowrap"><button class="verbtn" data-ver="${s.id}" title="Make a version of THIS song using the Mix Style above" style="width:30px;padding:5px 0;color:var(--gold)">＋</button> <button class="delrow" data-del="${s.id}" title="Delete this track" style="color:var(--warn);border-color:#5e2c2c;width:30px;padding:5px 0">✕</button></td>
+    </tr>`).join("");
+  $$("#rows tr").forEach(tr=>{
+    const id=tr.dataset.id, s=state.songs.find(x=>x.id===id);
+    const sel=tr.querySelector(".rowgenre");
+    sel.innerHTML=state.genres.map(g=>`<option ${g===s.genre?'selected':''}>${g}</option>`).join("");
+    sel.onchange=()=>{s.genre=sel.value;save()};
+    tr.querySelector(".title").oninput=e=>{s.title=e.target.value;};
+    tr.querySelector(".title").onchange=()=>save();
+    const pb=tr.querySelector(".play"); if(s.blob) pb.onclick=()=>togglePlay(s);
+    tr.querySelector(".chk").onchange=e=>{ e.target.checked?state.sel.add(id):state.sel.delete(id);
+      tr.classList.toggle("sel",e.target.checked); updateSelCount(); };
+    tr.querySelector(".delrow").onclick=()=>deleteSong(id);
+    const vb=tr.querySelector(".verbtn"); if(vb) vb.onclick=()=>{ mkVersion(s,$("#mixstyle").value); renderSongs(); save(); flash("Version made: "+$("#mixstyle").value); };
+    tr.querySelectorAll(".star").forEach(st=>st.onclick=()=>{ const r=+st.dataset.r; s.rating=(s.rating===r?0:r); renderSongs(); save(); });
+  });
+  updateSelCount();
+}
+function updateSelCount(){ $("#selcount").textContent=state.sel.size+" selected"; }
+function deleteSong(id){
+  const s=state.songs.find(x=>x.id===id); if(!s) return;
+  if(!confirm("Delete this track from the list?\n\n"+s.title)) return;
+  if(state.playingId===id){ player.pause(); state.playingId=null; if(curUrl){try{URL.revokeObjectURL(curUrl)}catch(e){}curUrl=null;} $("#nowbar").style.display="none"; }
+  state.songs=state.songs.filter(x=>x.id!==id); state.sel.delete(id);
+  renderSongs(); save();
+}
+
+/* ---------- player (custom scrub slider) ---------- */
+function fmt(t){ if(!isFinite(t))return"0:00"; const m=Math.floor(t/60),s=Math.floor(t%60); return m+":"+String(s).padStart(2,"0"); }
+let curUrl=null, seeking=false;
+const seek=$("#seek");
+function setNow(s){
+  if(curUrl){ try{URL.revokeObjectURL(curUrl)}catch(e){} }
+  curUrl=URL.createObjectURL(s.blob);
+  state.playingId=s.id;
+  $("#nowtitle").textContent=s.title;
+  $("#nowbar").style.display="flex";
+  seek.value=0; $("#curtime").textContent="0:00"; $("#durtime").textContent=s.duration?fmt(s.duration):"0:00";
+  player.src=curUrl;
+  const p=player.play();
+  if(p&&p.catch) p.catch(err=>{ if(err&&err.name!=="AbortError") $("#nowtitle").textContent="Can't play: "+s.title; });
+  renderSongs();
+}
+function togglePlay(s){
+  if(!s.blob){ flash("Load your music folder first to preview",true); return; }
+  if(state.playingId===s.id){ if(player.paused)player.play().catch(()=>{}); else player.pause(); return; }
+  setNow(s);
+}
+function playByOffset(delta){
+  const fs=filtered(); const idx=fs.findIndex(s=>s.id===state.playingId);
+  if(idx<0) return; let j=idx+delta;
+  while(j>=0 && j<fs.length && !fs[j].blob) j+=delta;
+  if(j>=0 && j<fs.length && fs[j].blob) setNow(fs[j]);
+}
+player.addEventListener("loadedmetadata",()=>{ $("#durtime").textContent=fmt(player.duration); });
+player.addEventListener("timeupdate",()=>{
+  if(seeking||!player.duration) return;
+  seek.value=Math.round((player.currentTime/player.duration)*1000);
+  $("#curtime").textContent=fmt(player.currentTime);
+});
+seek.addEventListener("input",()=>{ seeking=true; if(player.duration) $("#curtime").textContent=fmt((seek.value/1000)*player.duration); });
+seek.addEventListener("change",()=>{ if(player.duration) player.currentTime=(seek.value/1000)*player.duration; seeking=false; });
+player.addEventListener("play",()=>{ $("#playpause").textContent="⏸"; });
+player.addEventListener("pause",()=>{ $("#playpause").textContent="▶"; });
+$("#playpause").onclick=()=>{ if(!state.playingId)return; if(player.paused)player.play().catch(()=>{}); else player.pause(); };
+$("#prev").onclick=()=>playByOffset(-1);
+$("#next").onclick=()=>playByOffset(1);
+$("#closebar").onclick=()=>{ player.pause(); try{player.removeAttribute("src");player.load();}catch(e){} state.playingId=null;
+  if(curUrl){try{URL.revokeObjectURL(curUrl)}catch(e){}curUrl=null;} $("#nowbar").style.display="none"; renderSongs(); };
+player.addEventListener("ended",()=>{ playByOffset(1); });
+player.addEventListener("error",()=>{ if(player.getAttribute("src")) $("#nowtitle").textContent="Browser can't play this file"; });
+document.addEventListener("keydown",e=>{
+  if(/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+  if(!state.playingId) return;
+  if(e.code==="Space"){ e.preventDefault(); if(player.paused)player.play().catch(()=>{}); else player.pause(); }
+});
+
+/* ---------- selection + bulk ---------- */
+$("#selall").onchange=e=>{
+  const fs=filtered();
+  if(e.target.checked) fs.forEach(s=>state.sel.add(s.id)); else fs.forEach(s=>state.sel.delete(s.id));
+  renderSongs();
+};
+$("#applysel").onclick=()=>{
+  const g=$("#bulkgenre").value;
+  if(!state.sel.size){alert("Select songs first (checkboxes), or filter then 'Select all shown'.");return;}
+  state.songs.forEach(s=>{if(state.sel.has(s.id))s.genre=g;});
+  renderSongs(); save();
+};
+$("#delsel").onclick=()=>{
+  if(!state.sel.size) return;
+  if(!confirm(`Remove ${state.sel.size} selected song(s) from the list?`)) return;
+  state.songs=state.songs.filter(s=>!state.sel.has(s.id));
+  state.sel.clear(); renderSongs(); save();
+};
+$("#cleanall").onclick=()=>{ filtered().forEach(s=>s.title=cleanName(s.file)); renderSongs(); save(); flash("Titles cleaned"); };
+$("#fixcaps").onclick=()=>{ filtered().forEach(s=>s.title=toProperTitle(s.title)); renderSongs(); save(); flash("ALL-CAPS fixed"); };
+$("#autotag").onclick=()=>{ const n=autoTagStrip(filtered()); renderSongs(); save(); flash(n+" tagged & cleaned"); };
+$("#dorep").onclick=()=>{
+  const f=$("#findtxt").value,r=$("#reptxt").value; if(!f)return;
+  filtered().forEach(s=>s.title=s.title.split(f).join(r)); renderSongs(); save();
+};
+
+/* ---------- versioning ---------- */
+function mkVersion(s,style){
+  const base=s.title.replace(/\s+—\s+.*$/,"");
+  let title=base+" — "+style, v=2;
+  while(state.songs.some(x=>x.title===title)){ title=base+" — "+style+" Mix "+v; v++; }
+  state.songs.push({id:uid(),file:s.file,title,genre:s.genre,blob:s.blob,mix:style,rating:s.rating||0,duration:s.duration!=null?s.duration:null,isNew:s.isNew});
+}
+$("#makever").onclick=()=>{
+  const style=$("#mixstyle").value;
+  if(!state.sel.size){alert("Tick the checkbox on the song(s) you want to version first.");return;}
+  const chosen=state.songs.filter(s=>state.sel.has(s.id));
+  chosen.forEach(s=>mkVersion(s,style));
+  renderSongs(); save(); flash(chosen.length+" version(s) created");
+};
+$("#autover").onclick=()=>{
+  const seen={};
+  state.songs.forEach(s=>{
+    const key=s.title.toLowerCase();
+    if(seen[key]===undefined) seen[key]=1;
+    else { seen[key]++; s.title=s.title+" (v"+seen[key]+")"; }
+  });
+  renderSongs(); save(); flash("Duplicates versioned");
+};
+
+/* ---------- load library ---------- */
+$("#loadlib").onclick=()=>{
+  const inp=document.createElement("input");inp.type="file";inp.accept=".json,application/json";
+  inp.onchange=()=>{const f=inp.files[0];if(!f)return;const r=new FileReader();
+    r.onload=()=>{try{const lib=JSON.parse(r.result);
+      state.libraryNames=(lib.songs||[]).map(s=>s.file||s.filename||"").filter(Boolean);
+      if(lib.genres)lib.genres.forEach(g=>{if(!state.genres.includes(g))state.genres.push(g)});
+      renderTags("genres","genretags","g");fillGenreSelects();
+      state.songs.forEach(s=>s.isNew=!libHas(s.file));renderSongs();save();
+      $("#libstatus").innerHTML=`Loaded library with <b>${state.libraryNames.length}</b> songs. New drops now flagged.`;
+    }catch(err){$("#libstatus").textContent="Could not read that file as JSON."}};
+    r.readAsText(f)};
+  inp.click();
+};
+
+/* ---------- sets ---------- */
+$("#addset").onclick=()=>{const n=$("#setname").value.trim();if(!n){alert("Type a set name first.");return;}
+  state.sets.push({id:uid(),name:n,items:[],targetMin:60,gf:"",fillGenres:[],commercials:5});$("#setname").value="";renderSets();save()};
+$("#setname").onkeydown=e=>{if(e.key==="Enter")$("#addset").click()};
+function setTotal(set){
+  let sec=0,unknown=0;
+  set.items.forEach(it=>{
+    if(it.type==="ad"){ sec+=AD_SECONDS; }
+    else { const s=state.songs.find(x=>x.id===it.ref); if(s&&s.duration) sec+=s.duration; else unknown++; }
+  });
+  return {sec,unknown};
+}
+function songOption(s){ return `<option value="${s.id}">${s.title} — [${s.genre}]${s.duration?` · ${fmt(s.duration)}`:""}</option>`; }
+function fillAddSong(sel,gf){
+  const list=state.songs.filter(s=>!gf||s.genre===gf);
+  sel.innerHTML='<option value="">+ add song…</option>'+list.map(songOption).join("");
+}
+function renderSets(){
+  $("#setlist").innerHTML=state.sets.map(set=>{
+    const t=setTotal(set), target=set.targetMin?set.targetMin*60:0, over=target&&t.sec>target;
+    const left=target?target-t.sec:0;
+    return `
+    <div class="card" data-set="${set.id}">
+      <div class="row">
+        <strong>${set.name}</strong>
+        <span class="count">${set.items.length} items</span>
+        <div class="seg"><span class="mut">Slot limit</span>
+          <input type="number" class="targetmin" min="0" style="width:64px" value="${set.targetMin||""}" placeholder="min">
+          <span class="mut">min</span></div>
+        <span class="settotal" style="font-weight:700;color:${over?"var(--warn)":"var(--good)"}">
+          ${fmt(t.sec)}${target?` / ${fmt(target)}`:""}${over?" — OVER":(target?` · ${fmt(left)} left`:"")}</span>
+        ${t.unknown?`<span class="mut">(${t.unknown} unknown length — re-add files)</span>`:""}
+        <div class="sp"></div>
+        <span class="x" data-delset="${set.id}">remove set ✕</span>
+      </div>
+      <div class="row" style="margin:8px 0">
+        <span class="mut">Filter by genre</span>
+        <select class="setgenrefilter"><option value="">All genres</option>${state.genres.map(g=>`<option ${g===set.gf?"selected":""}>${g}</option>`).join("")}</select>
+        <select class="addsong"></select>
+        <select class="addad"><option value="">+ add ad / ID…</option>${state.ads.map(a=>`<option value="${a}">${a}</option>`).join("")}</select>
+      </div>
+      <div class="row" style="margin:8px 0;padding:8px;background:#141a24;border-radius:8px">
+        <span class="mut">Fill this hour with:</span>
+        <div class="fillgenres" style="display:flex;flex-wrap:wrap;gap:4px"></div>
+        <span class="mut">commercials</span><input type="number" class="setads" style="width:48px" value="${set.commercials!=null?set.commercials:5}">
+        <button class="pri fillbtn">Fill this hour ▸</button>
+      </div>
+      <div>${set.items.map((it,i)=>{
+        let genre="",dur="";
+        if(it.type==="song"){ const s=state.songs.find(x=>x.id===it.ref); if(s){genre=s.genre;dur=s.duration?fmt(s.duration):"?";} }
+        return `<div class="setitem ${it.type==="ad"?"ad":""}">
+          <span class="mut">${i+1}.</span>
+          <span class="mvup" data-mv="${set.id}:${i}:-1" title="Move up" style="cursor:pointer;color:var(--gold)">▲</span>
+          <span class="mvdn" data-mv="${set.id}:${i}:1" title="Move down" style="cursor:pointer;color:var(--gold)">▼</span>
+          <span>${it.type==="ad"?"📢 ":"🎵 "}${it.label}</span>
+          ${genre?`<span class="pill mix">${genre}</span>`:""}
+          <div class="sp"></div>
+          <span class="mut">${it.type==="ad"?fmt(AD_SECONDS):dur}</span>
+          <span class="x" data-del="${set.id}:${i}">✕</span>
+        </div>`;
+      }).join("")||'<span class="mut">Empty — tap genres above and hit Fill this hour.</span>'}</div>
+    </div>`;
+  }).join("")||'<p class="mut">No sets yet.</p>';
+  $$("#setlist [data-set]").forEach(c=>{
+    const set=state.sets.find(s=>s.id===c.dataset.set);
+    const addsong=c.querySelector(".addsong"), gf=c.querySelector(".setgenrefilter");
+    fillAddSong(addsong,set.gf||"");
+    gf.onchange=()=>{ set.gf=gf.value; fillAddSong(addsong,set.gf); };
+    addsong.onchange=e=>{const s=state.songs.find(x=>x.id===e.target.value);
+      if(s){set.items.push({type:"song",ref:s.id,label:s.title});renderSets();save()}};
+    c.querySelector(".addad").onchange=e=>{if(e.target.value){set.items.push({type:"ad",label:e.target.value});renderSets();save()}};
+    c.querySelector(".targetmin").onchange=e=>{set.targetMin=parseInt(e.target.value)||null;renderSets();save()};
+    // per-hour fill genres chips
+    if(!set.fillGenres) set.fillGenres=[];
+    const fg=c.querySelector(".fillgenres");
+    const drawChips=()=>{ fg.innerHTML=state.genres.map(g=>`<span class="tag" data-fg="${g}" style="cursor:pointer;${set.fillGenres.includes(g)?'border-color:var(--gold);background:#2a2110':''}">${g}</span>`).join("");
+      fg.querySelectorAll("[data-fg]").forEach(el=>el.onclick=()=>{ const g=el.dataset.fg; const i=set.fillGenres.indexOf(g); if(i<0){ if(set.fillGenres.length<3) set.fillGenres.push(g); else { flash("Up to 3 genres per hour",true); return; } } else set.fillGenres.splice(i,1); drawChips(); save(); }); };
+    drawChips();
+    c.querySelector(".setads").onchange=e=>{ set.commercials=parseInt(e.target.value); if(isNaN(set.commercials))set.commercials=0; save(); };
+    c.querySelector(".fillbtn").onclick=()=>{
+      const ads=set.commercials!=null?set.commercials:5;
+      if(!set.fillGenres.length){ alert("Tap 1–3 genre chips for this hour first."); return; }
+      const have=state.songs.filter(s=>!s.mix && set.fillGenres.includes(s.genre)).length;
+      if(!have){ alert("None of your songs are tagged "+set.fillGenres.join(", ")+" yet.\n\nGo to Import & Categorize and set those songs' Genre, or pick genres your songs actually use."); return; }
+      const r=buildHour(new Set(set.fillGenres), set.targetMin||60, ads);
+      set.items=r.items; renderSets(); save(); flash(`${set.name}: ${r.songs} songs + ${r.ads} commercials`);
+    };
+  });
+  $$("#setlist .mvup, #setlist .mvdn").forEach(b=>b.onclick=()=>{
+    const[sid,i,dir]=b.dataset.mv.split(":"); const set=state.sets.find(s=>s.id===sid); const idx=+i, j=idx+(+dir);
+    if(j<0||j>=set.items.length) return; const tmp=set.items[idx]; set.items[idx]=set.items[j]; set.items[j]=tmp; renderSets(); save();
+  });
+  $$("#setlist .x[data-del]").forEach(x=>x.onclick=()=>{const[sid,i]=x.dataset.del.split(":");
+    const set=state.sets.find(s=>s.id===sid);set.items.splice(+i,1);renderSets();save()});
+  $$("#setlist .x[data-delset]").forEach(x=>x.onclick=()=>{
+    state.sets=state.sets.filter(s=>s.id!==x.dataset.delset);renderSets();save()});
+  renderUnused();
+}
+
+/* ---------- auto-build daypart ---------- */
+const abSel=new Set();
+function renderAbGenres(){
+  $("#abgenres").innerHTML=state.genres.map(g=>`<span class="tag" data-abg="${g}" style="cursor:pointer;${abSel.has(g)?'border-color:var(--gold);background:#2a2110':''}">${g}</span>`).join("");
+  $$("#abgenres [data-abg]").forEach(el=>el.onclick=()=>{ const g=el.dataset.abg; abSel.has(g)?abSel.delete(g):abSel.add(g); renderAbGenres(); });
+}
+/* shared hour builder: each eligible song once (best first), then repeat only 4★+ to fill, commercials spaced evenly */
+function buildHour(genreSet, min, ads){
+  const limit=(min||60)*60, avg=210, songLimit=Math.max(30, limit - (ads||0)*AD_SECONDS);
+  const base=state.songs.filter(s=>!s.mix && (!genreSet || genreSet.size===0 || genreSet.has(s.genre)));
+  if(!base.length) return null;
+  const songs=[]; let sec=0,last=null;
+  const once=base.slice().sort((a,b)=>(b.rating||0)-(a.rating||0));
+  for(const s of once){ const d=s.duration||avg; if(sec+d>songLimit) break; songs.push(s); sec+=d; last=s; }
+  const repeatable=base.filter(s=>(s.rating||0)>=4);
+  if(repeatable.length){
+    const bag=[]; repeatable.forEach(s=>{ for(let i=0;i<Math.max(1,s.rating);i++) bag.push(s); });
+    let guard=0;
+    while(sec<songLimit && guard<8000){ guard++;
+      const p=bag[Math.floor(Math.random()*bag.length)];
+      if(repeatable.length>1 && p===last) continue;
+      const d=p.duration||avg; if(sec+d>songLimit) break;
+      songs.push(p); sec+=d; last=p;
+    }
+  }
+  const items=[]; const adList=state.ads.length?state.ads:["Commercial"]; let adi=0;
+  if(ads>0 && songs.length){
+    const gap=Math.max(1,Math.round(songs.length/ads));
+    songs.forEach((s,i)=>{ items.push({type:"song",ref:s.id,label:s.title});
+      if((i+1)%gap===0 && adi<ads){ items.push({type:"ad",label:adList[adi%adList.length]}); adi++; } });
+    while(adi<ads){ items.push({type:"ad",label:adList[adi%adList.length]}); adi++; }
+  } else { songs.forEach(s=>items.push({type:"song",ref:s.id,label:s.title})); }
+  return {items, songs:songs.length, ads:adi};
+}
+$("#abbuild").onclick=()=>{
+  const name=$("#abname").value.trim(); if(!name){alert("Name the hour first.");return;}
+  const min=parseInt($("#abmin").value)||60, ads=parseInt($("#abads").value)||0;
+  const r=buildHour(abSel, min, ads);
+  if(!r){alert("No songs match those genres. Tap a genre below first.");return;}
+  state.sets.push({id:uid(),name,items:r.items,targetMin:min,gf:(abSel.size===1?[...abSel][0]:""),fillGenres:[...abSel],commercials:ads});
+  $("#abname").value=""; renderSets(); save(); flash(`Built "${name}": ${r.songs} songs + ${r.ads} commercials`);
+};
+$("#addskeleton").onclick=()=>{
+  const labels=["12 AM","1 AM","2 AM","3 AM","4 AM","5 AM","6 AM","7 AM","8 AM","9 AM","10 AM","11 AM","12 PM","1 PM","2 PM","3 PM","4 PM","5 PM","6 PM","7 PM","8 PM","9 PM","10 PM","11 PM"];
+  const have=new Set(state.sets.map(s=>s.name));
+  const missing=labels.filter(l=>!have.has(l));
+  if(!missing.length){ flash("All 24 hours are already here"); return; }
+  // insert each missing hour back in its correct time order
+  missing.forEach(l=>state.sets.push({id:uid(),name:l,items:[],targetMin:60,gf:"",fillGenres:[],commercials:5}));
+  state.sets.sort((a,b)=>{ const ia=labels.indexOf(a.name), ib=labels.indexOf(b.name); if(ia<0&&ib<0) return 0; if(ia<0) return 1; if(ib<0) return -1; return ia-ib; });
+  renderSets(); save(); flash(missing.length+" hour"+(missing.length>1?"s":"")+" added back");
+};
+/* ---------- unused songs ---------- */
+function renderUnused(){
+  if(!$("#unusedcount")) return;
+  const used=usedRefs();
+  const un=state.songs.filter(s=>!used.has(s.id));
+  $("#unusedcount").textContent=un.length+" of "+state.songs.length;
+  $("#unusedlist").innerHTML=un.length?un.slice(0,400).map(s=>`• ${s.title} <span style="color:#8fc7ff">[${s.genre}]</span>`).join("<br>"):"All songs are placed in a set. ✓";
+}
+$("#jumpunused").onclick=()=>{
+  $$(".tab").forEach(x=>x.classList.remove("on")); document.querySelector('.tab[data-v="import"]').classList.add("on");
+  $$(".view").forEach(v=>v.classList.remove("on")); $("#v-import").classList.add("on");
+  $("#filterunused").checked=true; renderSongs();
+};
+
+/* ---------- export ---------- */
+function buildJSON(){
+  return JSON.stringify({
+    station:"Refined Radio",
+    generated:new Date().toISOString(),
+    genres:state.genres, ads:state.ads, mixStyles:state.mixStyles,
+    songs:state.songs.map(s=>({file:s.file,title:s.title,genre:s.genre,mix:s.mix||null})),
+    sets:state.sets.map(s=>({name:s.name,items:s.items.map(it=>({type:it.type,label:it.label,ref:it.ref||null}))}))
+  },null,2);
+}
+$("#build").onclick=()=>{
+  $("#out").value=buildJSON();
+  const news=state.songs.filter(s=>s.isNew);
+  $("#toupload").innerHTML=news.length?news.map(s=>`• ${s.file}`).join("<br>"):"All loaded songs are already in your library.";
+};
+$("#download").onclick=()=>{
+  if(!$("#out").value)$("#build").click();
+  const b=new Blob([$("#out").value],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="radio_library.json";a.click();
+};
+$("#copy").onclick=async()=>{
+  if(!$("#out").value)$("#build").click();
+  try{await navigator.clipboard.writeText($("#out").value);$("#copied").textContent="Copied ✓";}
+  catch{$("#out").select();document.execCommand("copy");$("#copied").textContent="Copied ✓";}
+  setTimeout(()=>$("#copied").textContent="",1800);
+};
+
+/* ---------- save / load whole project to a file ---------- */
+function buildProject(){
+  return JSON.stringify({
+    _rrn_project:true, saved:new Date().toISOString(),
+    genres:state.genres, ads:state.ads, mixStyles:state.mixStyles, libraryNames:state.libraryNames,
+    songs:state.songs.map(s=>({file:s.file,title:s.title,genre:s.genre,mix:s.mix||null,rating:s.rating||0,duration:s.duration!=null?s.duration:null,isNew:s.isNew})),
+    sets:state.sets
+  },null,2);
+}
+$("#saveproj").onclick=()=>{
+  const txt=buildProject();
+  try{
+    const b=new Blob([txt],{type:"application/json"});
+    const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="refined_radio_project.json";
+    document.body.appendChild(a);a.click();a.remove();
+  }catch(e){}
+  const ta=$("#projout"); ta.value=txt; ta.style.display="block"; $("#projcopy").style.display="inline-block";
+  $("#projstatus").textContent="If no download appeared, hit Copy below and save it in Notepad.";
+};
+$("#projcopy").onclick=async()=>{
+  const ta=$("#projout");
+  try{ await navigator.clipboard.writeText(ta.value); }catch(e){ ta.select(); document.execCommand("copy"); }
+  $("#projstatus").textContent="Copied ✓ — open Notepad, paste, Save As refined_radio_project.json";
+};
+$("#loadproj").onclick=()=>$("#projfile").click();
+$("#projfile").onchange=()=>{
+  const f=$("#projfile").files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{ try{
+    const d=JSON.parse(r.result);
+    if(!d.songs){ $("#projstatus").textContent="That file isn't a saved project."; return; }
+    if(d.genres&&d.genres.length) state.genres=d.genres;
+    if(d.ads) state.ads=d.ads;
+    if(d.mixStyles&&d.mixStyles.length) state.mixStyles=d.mixStyles;
+    if(d.libraryNames) state.libraryNames=d.libraryNames;
+    if(d.sets) state.sets=d.sets;
+    state.songs=(d.songs||[]).map(s=>({id:s.id||uid(),file:s.file,title:s.title,genre:s.genre,mix:s.mix||null,rating:s.rating||0,
+      duration:s.duration!=null?s.duration:null, blob:null, isNew:s.isNew!==undefined?s.isNew:!libHas(s.file)}));
+    state.sel.clear();
+    renderTags("genres","genretags","g");fillGenreSelects();renderTags("ads","adtags","a");renderTags("mixStyles","mixtags","m");fillMixSelect();
+    renderSets(); renderSongs();
+loadRules(); renderRules(); fillCheckSong(); fillSchedSet(); save();
+    $("#projstatus").textContent=`Loaded ${state.songs.length} songs ✓ — re-add your folder to enable preview`;
+  }catch(e){ $("#projstatus").textContent="Could not read that file."; } };
+  r.readAsText(f);
+};
+
+
+/* ============== BUILD 16: SONG FAMILY + RULE ENGINE + COOLDOWN SCHEDULER ============== */
+const RSTORE="rrn_rules_v1";
+function famKey(s){ let t=((s&&(s.title||s.file))||"").toLowerCase().replace(/\.(mp3|wav|m4a|ogg|flac)$/,"");
+  t=t.split("\u2014")[0].split(/\s-\s/)[0]; let p; do{p=t; t=t.replace(/\s*\([^)]*\)\s*$/,"").trim();}while(p!==t);
+  return t.replace(/\s*(?:v\d+|mix\s*\d+|version\s*\d+)\s*$/i,"").trim().replace(/[^a-z0-9]+/g,""); }
+function famLabel(s){ let t=((s&&(s.title||s.file))||"").replace(/\.(mp3|wav|m4a|ogg|flac)$/i,"");
+  t=t.split("\u2014")[0].split(/\s-\s/)[0]; let p; do{p=t; t=t.replace(/\s*\([^)]*\)\s*$/,"").trim();}while(p!==t);
+  return t.replace(/\s*(?:v\d+|mix\s*\d+)\s*$/i,"").trim()||t; }
+function familyMembers(s){ const k=famKey(s); return state.songs.filter(x=>famKey(x)===k); }
+
+const DEFAULT_RULES=[
+ {id:"fam_cooldown",name:"Song Family 60-Minute Cooldown",cat:"Broadcast",phase:"schedule",enabled:true,priority:1,param:60,last:null,
+  desc:"When any version/arrangement/remix/genre-variant of a song plays, every other member of that Song Family is blocked for the cooldown window.",
+  check(s){const m=familyMembers(s);return{r:"restrict",msg:'Family "'+famLabel(s)+'" has '+m.length+" linked version(s). Playing one blocks the rest for "+this.param+" min."};}},
+ {id:"daypart_genre",name:"Daypart Genre Match",cat:"Broadcast",phase:"schedule",enabled:true,priority:1,last:null,
+  desc:"A song may only schedule in a daypart whose genre list includes its genre.",
+  check(s,ctx){ if(ctx&&ctx.genres&&ctx.genres.length){const ok=ctx.genres.map(x=>x.toLowerCase()).includes((s.genre||"").toLowerCase());
+    return ok?{r:"pass",msg:"Genre fits this daypart."}:{r:"fail",msg:'Genre "'+(s.genre||"(none)")+'" is not in this daypart.',fix:"Move to a matching daypart or re-tag the genre."};}
+   const used=state.sets.some(set=>(set.fillGenres||[]).map(x=>x.toLowerCase()).includes((s.genre||"").toLowerCase()));
+   return used?{r:"pass",msg:"Genre is used by at least one daypart."}:{r:"warn",msg:'Genre "'+(s.genre||"(none)")+'" is not used by any daypart, so it may never air.',fix:"Add this genre to a daypart in Sets & Dayparts."}; }},
+ {id:"break_cadence",name:"Break Cadence (every 3\u20135 songs)",cat:"Broadcast",phase:"schedule",enabled:true,priority:2,last:null,
+  desc:"A Station ID / Ad is inserted after every 3\u20135 songs.",check(){return{r:"restrict",msg:"Enforced during scheduling: a break every 3\u20135 songs."};}},
+ {id:"rotation_weight",name:"Rotation Weighting by Rating",cat:"Broadcast",phase:"schedule",enabled:true,priority:3,last:null,
+  desc:"Play frequency is weighted by star rating (weight = 1.7^rating).",check(s){return{r:"pass",msg:"Rotation weight \u00d7"+Math.pow(1.7,s.rating||0).toFixed(1)+" (rating "+(s.rating||0)+")."};}},
+ {id:"featured_elig",name:"Featured Eligibility (rating \u2265 4)",cat:"Broadcast",phase:"song",enabled:true,priority:3,last:null,
+  desc:"Only 4\u20135 star songs are eligible for the top-of-hour featured slot.",check(s){return (s.rating||0)>=4?{r:"pass",msg:"Eligible for featured slot."}:{r:"warn",msg:"Rating "+(s.rating||0)+" \u2014 not featured-eligible.",fix:"Rate 4\u20135 to headline."};}},
+ {id:"no_b2b_genre",name:"No Back-to-Back Same Genre",cat:"Broadcast",phase:"schedule",enabled:true,priority:3,last:null,
+  desc:"Avoid two songs of the same genre in a row when an alternative exists.",check(){return{r:"restrict",msg:"Enforced during scheduling where an alternative exists."};}},
+ {id:"has_audio",name:"Resolvable Audio File",cat:"Broadcast",phase:"song",enabled:true,priority:1,last:null,
+  desc:"Track must reference an audio file.",check(s){return s.file?{r:"pass",msg:"File reference present."}:{r:"fail",msg:"No audio file.",fix:"Re-import the MP3."};}},
+ {id:"name_style",name:"Title Naming Convention",cat:"Naming",phase:"song",enabled:true,priority:2,last:null,
+  desc:"Proper Title Case; versions named \u201cTitle \u2014 Style\u201d; no file extensions / underscores / double spaces.",
+  check(s){const t=s.title||"";const iss=[];if(/\.(mp3|wav|m4a)$/i.test(t))iss.push("file extension in title");if(/_{1,}|\s{2,}/.test(t))iss.push("underscores or double spaces");
+   if(/[A-Z]{4,}/.test(t.replace(/\b(KJV|RRN|II|III|IV|VBS)\b/g,"")))iss.push("ALL-CAPS words");
+   return iss.length?{r:"warn",msg:"Naming: "+iss.join(", ")+".",fix:'Use \u201cFix capitalization\u201d / \u201cClean names\u201d on the Import tab.'}:{r:"pass",msg:"Title formatting is clean."};}},
+ {id:"genre_present",name:"Genre Tag Present & Known",cat:"Naming",phase:"song",enabled:true,priority:1,last:null,
+  desc:"Every song must carry a known genre tag.",check(s){if(!s.genre)return{r:"fail",msg:"No genre assigned.",fix:"Assign a genre."};
+   return state.genres.includes(s.genre)?{r:"pass",msg:"Genre tag present & known."}:{r:"warn",msg:'Genre "'+s.genre+'" is not in your genre list.',fix:"Add it in Genres & Styles, or re-tag."};}},
+ {id:"no_clinical",name:"No Clinical Terms (liability guard)",cat:"Naming",phase:"song",enabled:true,priority:1,last:null,
+  desc:"RRN is a faith-based peer ministry \u2014 no clinical / licensed-profession terms in titles.",
+  check(s){const b=(s.title||"").match(/\b(counsel(?:or|ing)|therapy|therapist|clinical|clinician|patient|diagnos\w*|licensed|treatment)\b/i);
+   return b?{r:"fail",msg:'Clinical term \u201c'+b[0]+'\u201d in title.',fix:"Replace with peer / recovery / ministry wording."}:{r:"pass",msg:"No clinical terms."};}},
+ {id:"doctrine_guard",name:"Doctrine Guard (Oneness)",cat:"Naming",phase:"song",enabled:true,priority:1,last:null,
+  desc:"No Trinity language, cross imagery wording, AA/Serenity, \u201chigher power\u201d or \u201csobriety date.\u201d",
+  check(s){const b=(s.title||"").match(/\b(trinity|triune|three persons|higher power|serenity prayer|sobriety date)\b/i);
+   return b?{r:"fail",msg:'Doctrine conflict: \u201c'+b[0]+'\u201d.',fix:"Use Oneness / Acts 2:38-aligned wording."}:{r:"pass",msg:"Doctrine-aligned."};}},
+ {id:"encoding_clean",name:"Encoding Clean (no mojibake)",cat:"Naming",phase:"song",enabled:true,priority:2,last:null,
+  desc:"No corrupted characters from bad encoding.",check(s){return /[\u00c2\u00c3\u20ac\ufffd]/.test(s.title||"")?{r:"warn",msg:"Possible mojibake in title.",fix:"Re-type the title cleanly."}:{r:"pass",msg:"Encoding clean."};}},
+ {id:"dup_version",name:"Version Marker on Duplicates",cat:"Naming",phase:"song",enabled:true,priority:3,last:null,
+  desc:"Multiple members of a Song Family must be distinctly labelled.",check(s){const m=familyMembers(s);if(m.length<2)return{r:"pass",msg:"Single version."};
+   const ls=m.map(x=>(x.title||"").toLowerCase());const dup=ls.some((t,i)=>ls.indexOf(t)!==i);
+   return dup?{r:"warn",msg:m.length+" versions in family \u2014 some titles are identical.",fix:'Use \u201cAuto-version duplicates\u201d.'}:{r:"pass",msg:m.length+" versions, all distinct."};}}
+];
+let RULES=DEFAULT_RULES.map(r=>Object.assign({},r));
+let CUSTOM=[];
+function ruleCheck(rule,s,ctx){ if(rule.keywords){ const hay=((s.title||"")+" "+(s.genre||"")).toLowerCase();
+   const hit=rule.keywords.find(k=>k&&hay.includes(k)); if(hit) return {r:rule.mode==="block"?"fail":"warn",msg:'Matched flagged word \u201c'+hit+'\u201d.',fix:"Review / rename."};
+   return {r:"pass",msg:"No flagged words."}; } return rule.check(s,ctx); }
+function saveRules(){ try{ localStorage.setItem(RSTORE, JSON.stringify({
+   over:RULES.map(r=>({id:r.id,enabled:r.enabled,priority:r.priority,param:r.param,last:r.last})), custom:CUSTOM })); }catch(e){} }
+function loadRules(){ try{ const d=JSON.parse(localStorage.getItem(RSTORE)||"null"); if(!d) return;
+   (d.over||[]).forEach(o=>{const r=RULES.find(x=>x.id===o.id);if(r){r.enabled=o.enabled;r.priority=o.priority;if(o.param!=null)r.param=o.param;r.last=o.last;}});
+   CUSTOM=(d.custom||[]).map(c=>Object.assign({phase:"song",cat:c.cat||"Naming",last:c.last||null},c)); }catch(e){} }
+function allRules(){ return RULES.concat(CUSTOM).slice().sort((a,b)=>(a.priority-b.priority)||a.name.localeCompare(b.name)); }
+
+function fmtLast(t){ if(!t) return '<span class="mut">\u2014</span>'; const d=new Date(t); return d.toLocaleString([], {month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}); }
+function renderRules(){ const rows=allRules().map(r=>{ const isC=!!r.keywords;
+   return '<tr>'+
+    '<td><span class="pill '+(r.enabled?"on":"off")+'" data-tog="'+r.id+'" style="cursor:pointer">'+(r.enabled?"Enabled":"Disabled")+'</span></td>'+
+    '<td><b>'+r.name+'</b>'+(r.id==="fam_cooldown"?' <span class="pill on">NEW</span>':"")+(isC?' <span class="mut">(custom)</span>':"")+'</td>'+
+    '<td class="mut">'+r.desc+(r.id==="fam_cooldown"?' <span class="mut">Window: <input type="number" min="0" max="240" value="'+r.param+'" data-cool="'+r.id+'" style="width:64px"> min</span>':"")+'</td>'+
+    '<td>'+r.cat+'</td>'+
+    '<td><input type="number" min="1" max="9" value="'+r.priority+'" data-pri="'+r.id+'" style="width:54px"></td>'+
+    '<td>'+fmtLast(r.last)+'</td>'+
+    '<td>'+(isC?'<button data-delrule="'+r.id+'" style="color:var(--warn);border-color:#5e2c2c">\u2715</button>':"")+'</td>'+
+   '</tr>'; }).join("");
+  $("#rl_rows").innerHTML=rows;
+  $("#rl_count").textContent=allRules().length+" rules \u00b7 "+allRules().filter(r=>r.enabled).length+" active";
+  $$("#rl_rows [data-tog]").forEach(el=>el.onclick=()=>{const r=allRules().find(x=>x.id===el.dataset.tog);r.enabled=!r.enabled;saveRules();renderRules();flash(r.enabled?"Rule enabled":"Rule disabled");});
+  $$("#rl_rows [data-pri]").forEach(el=>el.onchange=()=>{const r=allRules().find(x=>x.id===el.dataset.pri);r.priority=Math.max(1,Math.min(9,+el.value||3));saveRules();renderRules();});
+  $$("#rl_rows [data-cool]").forEach(el=>el.onchange=()=>{const r=RULES.find(x=>x.id===el.dataset.cool);r.param=Math.max(0,Math.min(240,+el.value||60));$("#sc_cool").value=r.param;saveRules();flash("Cooldown set to "+r.param+" min");});
+  $$("#rl_rows [data-delrule]").forEach(el=>el.onclick=()=>{CUSTOM=CUSTOM.filter(c=>c.id!==el.dataset.delrule);saveRules();renderRules();flash("Custom rule removed");});
+}
+$("#rl_add")&&($("#rl_add").onclick=()=>{$("#rl_addbox").style.display=$("#rl_addbox").style.display==="none"?"block":"none";});
+$("#rl_cancel")&&($("#rl_cancel").onclick=()=>{$("#rl_addbox").style.display="none";});
+$("#rl_save")&&($("#rl_save").onclick=()=>{ const name=$("#rl_name").value.trim(); if(!name){alert("Name the rule first.");return;}
+  const kw=$("#rl_kw").value.split(",").map(x=>x.trim().toLowerCase()).filter(Boolean);
+  CUSTOM.push({id:"c_"+uid(),name,cat:$("#rl_cat").value,mode:$("#rl_mode").value,priority:+$("#rl_pri").value||3,enabled:true,last:null,phase:"song",
+    desc:$("#rl_desc").value.trim()||("Flags: "+kw.join(", ")),keywords:kw});
+  $("#rl_name").value=$("#rl_desc").value=$("#rl_kw").value=""; $("#rl_addbox").style.display="none"; saveRules(); renderRules(); flash("Custom rule added"); });
+$("#rl_reset")&&($("#rl_reset").onclick=()=>{ if(!confirm("Reset all rules to defaults and remove custom rules?"))return; RULES=DEFAULT_RULES.map(r=>Object.assign({},r)); CUSTOM=[]; saveRules(); renderRules(); flash("Rules reset"); });
+
+/* ----- manual song validation ----- */
+function fillCheckSong(){ const opts=state.songs.slice().sort((a,b)=>(a.title||"").localeCompare(b.title||"")).map(s=>'<option value="'+s.id+'">'+(s.title||s.file)+(s.genre?" \u00b7 "+s.genre:"")+'</option>').join(""); $("#ck_song").innerHTML=opts||'<option>(import songs first)</option>'; }
+function runCheck(){ const s=state.songs.find(x=>x.id===$("#ck_song").value); if(!s){$("#ck_out").innerHTML='<p class="mut">No song selected.</p>';return;}
+  const pass=[],fail=[],warn=[],restrict=[],fixes=[]; const now=Date.now();
+  allRules().filter(r=>r.enabled).forEach(r=>{ const v=ruleCheck(r,s,null); const line=r.name+" \u2014 "+v.msg;
+    if(v.r==="pass")pass.push(line); else if(v.r==="fail"){fail.push(line);r.last=now;} else if(v.r==="warn"){warn.push(line);r.last=now;} else if(v.r==="restrict"){restrict.push(line);r.last=now;}
+    if(v.fix)fixes.push("<b>"+r.name+":</b> "+v.fix); });
+  saveRules(); renderRules();
+  const m=familyMembers(s); const fam='<div class="res"><h4>Song Family</h4><div class="mut">\u201c'+famLabel(s)+'\u201d \u2014 '+m.length+' linked version(s): '+m.map(x=>(x.title||x.file)+(x.genre?" ("+x.genre+")":"")).join(" \u00b7 ")+'</div></div>';
+  const block=(t,arr,cls)=>arr.length?'<div class="res"><h4 class="'+cls+'">'+t+' ('+arr.length+')</h4><ul>'+arr.map(x=>"<li>"+x+"</li>").join("")+"</ul></div>":"";
+  $("#ck_out").innerHTML=fam+block("Passed",pass,"ok")+block("Failed",fail,"bad")+block("Warnings",warn,"wn")+block("Scheduling Restrictions",restrict,"")+block("Suggested Corrections",fixes,"wn");
+}
+$("#ck_run")&&($("#ck_run").onclick=runCheck);
+
+/* ----- daypart picker for scheduler ----- */
+function fillSchedSet(){ const o='<option value="">Any genre (all songs)</option>'+state.sets.map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join(""); $("#sc_set").innerHTML=o; }
+function mm(t){ t=((t%1440)+1440)%1440; const h=Math.floor(t/60),m=t%60; return (h<10?"0":"")+h+":"+(m<10?"0":"")+m; }
+function eligByGenres(gs){ if(!gs||!gs.length) return state.songs.slice(); const g=gs.map(x=>x.toLowerCase()); return state.songs.filter(s=>g.includes((s.genre||"").toLowerCase())); }
+function wpick(list,famLast,t){ let tot=0; const w=list.map(s=>{const k=famKey(s);const lp=famLast[k];const rec=(lp==null)?1.6:1;return Math.pow(1.7,s.rating||0)*rec;}); w.forEach(x=>tot+=x); let r=Math.random()*tot; for(let i=0;i<list.length;i++){r-=w[i];if(r<=0)return list[i];} return list[list.length-1]; }
+function buildSchedule(){ const set=state.sets.find(x=>x.id===$("#sc_set").value); const genres=set?(set.fillGenres||[]):[];
+  const [sh,sm]=($("#sc_start").value||"10:00").split(":").map(Number); const startMin=sh*60+(sm||0);
+  const durationMin=Math.max(30,(+$("#sc_hours").value||3)*60); const cooldown=Math.max(0,+$("#sc_cool").value||60);
+  const cd=RULES.find(r=>r.id==="fam_cooldown"); if(cd){cd.param=cooldown;}
+  const pool=eligByGenres(genres);
+  if(pool.length<2){ $("#sc_status").innerHTML='<span class="bad">Not enough songs match this daypart genre filter ('+pool.length+'). Pick \u201cAny genre\u201d or add songs to that daypart.</span>'; return; }
+  const distinctFams=new Set(pool.map(famKey)).size; const needFams=Math.ceil(cooldown/3.5);
+  const famWarn=(cooldown>0 && distinctFams<needFams)?'<br><span class="wn">Heads-up: this daypart has only '+distinctFams+' Song Families \u2014 fewer than the ~'+needFams+' needed to hold a '+cooldown+'-min cooldown, so some families will return sooner (spaced as far as possible). Widen the genre list for more variety.</span>':"";
+  const famLast={}, timeline=[], blocks=[], famHist={}; let oversat=0, lastGenre=null, sinceBreak=0, breakAfter=3+Math.floor(Math.random()*3), t=startMin, guard=0; const end=startMin+durationMin;
+  const ads=(set&&set.commercials?state.ads:state.ads); 
+  while(t<end && guard++<6000){
+    if(sinceBreak>=breakAfter){ const ad=(state.ads&&state.ads.length)?state.ads[Math.floor(Math.random()*state.ads.length)]:"Station ID"; timeline.push({t,type:"break",title:ad}); t+=1; sinceBreak=0; breakAfter=3+Math.floor(Math.random()*3); continue; }
+    let cands=pool.filter(s=>{const lp=famLast[famKey(s)];return lp==null||(t-lp)>=cooldown;});
+    const onCooldownNow=pool.length-cands.length;
+    if(!cands.length){ /* pool exhausted: choose the family idle the LONGEST (max spacing), never an instant repeat */
+      const byIdle=pool.slice().sort((a,b)=>((famLast[famKey(a)]==null?-1e9:famLast[famKey(a)])-(famLast[famKey(b)]==null?-1e9:famLast[famKey(b)])));
+      const oldestFam=famKey(byIdle[0]); cands=pool.filter(s=>famKey(s)===oldestFam); }
+    let pref=cands.filter(s=>(s.genre||"").toLowerCase()!==(lastGenre||"").toLowerCase());
+    const pick=wpick(pref.length?pref:cands,famLast,t);
+    const k=famKey(pick); const durMin=Math.max(2,Math.round((pick.duration||210)/60));
+    timeline.push({t,type:"song",song:pick});
+    (famHist[k]=famHist[k]||{label:famLabel(pick),times:[]}).times.push(t);
+    const sibs=pool.filter(s=>famKey(s)===k&&s!==pick);
+    const sibBlocked=sibs.length;
+    if(sibBlocked>0){ oversat+=sibBlocked; const repl=cands.find(s=>famKey(s)!==k); blocks.push({t,fam:famLabel(pick),reason:sibBlocked+" other version(s) blocked "+cooldown+" min after \u201c"+(pick.title||pick.file)+"\u201d aired"+(repl?" \u2192 suggested next: "+(repl.title||repl.file):"")}); }
+    famLast[k]=t; lastGenre=pick.genre; sinceBreak++; t+=durMin;
+  }
+  if(cd){cd.last=Date.now(); ["break_cadence","rotation_weight","daypart_genre","no_b2b_genre"].forEach(id=>{const r=RULES.find(x=>x.id===id);if(r)r.last=Date.now();}); saveRules(); renderRules();}
+  // render
+  const songs=timeline.filter(x=>x.type==="song").length;
+  $("#st_songs").textContent=songs; $("#st_blocks").textContent=blocks.length; $("#st_over").textContent=oversat; $("#st_fam").textContent=Object.keys(famHist).length;
+  $("#sc_timeline").innerHTML=timeline.map(x=> x.type==="break"
+     ? '<tr style="background:#0f141b"><td>'+mm(x.t)+'</td><td colspan="3" class="mut">\u25b6 BREAK \u2014 '+x.title+'</td></tr>'
+     : '<tr><td>'+mm(x.t)+'</td><td>'+(x.song.title||x.song.file)+'</td><td class="mut">'+(x.song.genre||"")+'</td><td>'+("\u2605".repeat(x.song.rating||0)||'<span class="mut">\u2013</span>')+'</td></tr>').join("");
+  $("#sc_blocks").innerHTML=blocks.length?('<table>'+blocks.map(b=>'<tr><td style="white-space:nowrap">'+mm(b.t)+'</td><td>'+b.reason+'</td></tr>').join("")+'</table>'):'<p class="mut" style="padding:8px">No cooldown conflicts \u2014 good variety.</p>';
+  const conf={}; blocks.forEach(b=>conf[b.fam]=(conf[b.fam]||0)+1); const common=Object.entries(conf).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  $("#sc_conflicts").innerHTML=common.length?('<table>'+common.map(c=>'<tr><td>'+c[0]+'</td><td style="text-align:right"><b>'+c[1]+'</b> block(s)</td></tr>').join("")+'</table>'):'<p class="mut" style="padding:8px">None.</p>';
+  const hist=Object.values(famHist).sort((a,b)=>b.times.length-a.times.length);
+  $("#sc_history").innerHTML='<table><thead><tr><th>Song Family</th><th>Plays</th><th>Times</th></tr></thead>'+hist.map(f=>'<tr><td>'+f.label+'</td><td><b>'+f.times.length+'</b></td><td class="mut">'+f.times.map(mm).join(", ")+'</td></tr>').join("")+'</table>';
+  $("#sc_outcard").style.display="block";
+  $("#sc_status").innerHTML='<span class="ok">Generated '+mm(startMin)+'\u2013'+mm(end)+' \u00b7 '+songs+' songs \u00b7 '+oversat+' repeat(s) prevented by the '+cooldown+'-min Song-Family cooldown.</span>'+famWarn;
+}
+$("#sc_build")&&($("#sc_build").onclick=buildSchedule);
+
+
+/* ---------- init ---------- */
+load();
+renderTags("genres","genretags","g"); fillGenreSelects();
+renderTags("ads","adtags","a");
+renderTags("mixStyles","mixtags","m"); fillMixSelect();
+renderAbGenres();
+renderSets(); renderSongs();
+</script>
+</body>
+</html>
