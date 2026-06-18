@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recovery Tracker — Days Free by God&rsquo;s Grace | Refined Recovery Network</title>
+<meta name="description" content="A free, private recovery tracker. Mark your recovery start date and count the days God has carried you, with milestone badges and a daily KJV verse. No sign-up, no ads.">
+<link rel="canonical" href="https://joinrrn.com/recovery-tracker.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Recovery Tracker — Days Free by God's Grace">
+<meta property="og:description" content="Count the days God has carried you. Milestone badges + a daily KJV verse. Free and private.">
+<meta property="og:url" content="https://joinrrn.com/recovery-tracker.html">
+<meta property="og:image" content="https://joinrrn.com/share-banner.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#c8913a;--ink:#060d18;--ink2:#0d1726;--fd:"Cormorant Garamond",Georgia,serif;--fb:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:#e8eaef;font-family:var(--fb);line-height:1.6}
+a{color:var(--gold);text-decoration:none}
+header.site{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:16px 22px;border-bottom:1px solid rgba(200,145,58,.22)}
+.brand{font-weight:800;letter-spacing:.5px;color:#fff;font-size:15px}.brand b{color:var(--gold)}
+nav.top a{font-size:13.5px;margin-left:16px;color:#c7cdd8}nav.top a:hover{color:var(--gold)}
+.wrap{max-width:720px;margin:0 auto;padding:40px 22px 70px}
+.eyebrow{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;text-align:center}
+h1{font-family:var(--fd);font-weight:700;font-size:clamp(32px,5.5vw,52px);line-height:1.05;margin:8px 0 4px;color:#fff;text-align:center}
+.sub{color:#aab3c0;text-align:center;max-width:520px;margin:0 auto 26px}
+.card{background:linear-gradient(180deg,var(--ink2),#0a1320);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:26px;margin:16px 0}
+.setup{text-align:center}
+.setup label{display:block;color:#c7cdd8;font-size:14px;margin-bottom:10px}
+input[type=date]{font-family:var(--fb);font-size:17px;padding:13px 16px;border-radius:10px;border:1px solid rgba(200,145,58,.4);background:var(--ink);color:#fff;outline:none}
+input[type=date]:focus{border-color:var(--gold)}
+.btn{display:inline-block;cursor:pointer;font-family:var(--fb);font-weight:700;border:none;border-radius:10px;padding:13px 26px;font-size:15px;background:var(--gold);color:#1a1206}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:none;border:1px solid rgba(200,145,58,.5);color:var(--gold);font-weight:600}
+.count-hero{text-align:center;padding:10px 0 4px}
+.big{font-family:var(--fd);font-weight:700;font-size:clamp(72px,18vw,128px);line-height:.95;color:var(--gold);letter-spacing:-1px}
+.big-label{font-size:15px;letter-spacing:2px;text-transform:uppercase;color:#aab3c0;margin-top:2px}
+.since{color:#8b94a2;font-size:13.5px;margin-top:8px}
+.next{text-align:center;margin:18px 0 2px;color:#c7cdd8;font-size:14.5px}
+.next b{color:var(--gold)}
+.bar{height:8px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden;margin:12px auto 0;max-width:420px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#a4742a,var(--gold))}
+.badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:6px}
+.badge{width:92px;text-align:center;padding:14px 6px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);opacity:.45}
+.badge.earned{opacity:1;border-color:rgba(200,145,58,.6);background:rgba(200,145,58,.1)}
+.badge .ico{font-size:24px}
+.badge .d{font-family:var(--fd);font-size:26px;font-weight:700;color:#fff;line-height:1}
+.badge.earned .d{color:var(--gold)}
+.badge .n{font-size:11px;color:#9aa3b1;margin-top:3px}
+.verse{font-family:var(--fd);font-size:22px;line-height:1.45;color:#f1ece1;text-align:center}
+.verse .ref{display:block;font-family:var(--fb);font-size:13px;letter-spacing:.5px;color:var(--gold);margin-top:12px;font-weight:700}
+.h3{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#8b94a2;text-align:center;margin:0 0 14px}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+.priv{text-align:center;color:#727c8a;font-size:12.5px;margin-top:8px}
+footer.site{border-top:1px solid rgba(200,145,58,.22);text-align:center;padding:26px;color:#8b94a2;font-size:13px}
+footer.site a{color:var(--gold)}
+.hidden{display:none}
+</style></head>
+<body>
+<header class="site">
+  <a class="brand" href="index.html">REFINED <b>RECOVERY</b> NETWORK</a>
+  <nav class="top"><a href="https://joinrrn.com/">Home</a><a href="journal.html">Journal</a><a href="scripture-search.html">Scripture</a></nav>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow">Day by Day</div>
+  <h1>Recovery Tracker</h1>
+  <p class="sub">Mark your recovery start date and count the days God has carried you. Private to this device &mdash; no sign-up, no ads.</p>
+
+  <!-- SETUP -->
+  <div id="setup" class="card setup">
+    <label for="startDate">When did your recovery begin? (your recovery start date)</label>
+    <div class="row">
+      <input type="date" id="startDate">
+      <button class="btn" id="saveBtn">Start Counting</button>
+    </div>
+    <p class="priv">Saved only in this browser. Nothing is uploaded.</p>
+  </div>
+
+  <!-- TRACKER -->
+  <div id="tracker" class="hidden">
+    <div class="card">
+      <div class="count-hero">
+        <div class="big" id="dayNum">0</div>
+        <div class="big-label" id="dayLabel">Days Free</div>
+        <div class="since" id="sinceLine"></div>
+      </div>
+      <div class="next" id="nextLine"></div>
+      <div class="bar"><i id="progBar" style="width:0%"></i></div>
+    </div>
+
+    <div class="card">
+      <p class="h3">Milestones</p>
+      <div class="badges" id="badges"></div>
+    </div>
+
+    <div class="card">
+      <p class="h3">Today&rsquo;s Encouragement</p>
+      <div class="verse" id="verse"></div>
+    </div>
+
+    <div class="card">
+      <p class="h3">Keep Going</p>
+      <div class="row">
+        <button class="btn" id="shareBtn">Share My Milestone</button>
+        <a class="btn ghost" href="index.html#hopewall">Need Prayer / Accountability</a>
+        <button class="btn ghost" id="editBtn">Change Date</button>
+      </div>
+      <p class="priv">&ldquo;This is the day which the LORD hath made; we will rejoice and be glad in it.&rdquo; &mdash; Psalm 118:24</p>
+    </div>
+  </div>
+</div>
+
+<footer class="site">Refined Recovery Network &middot; Port Allen, Louisiana &middot; <a href="index.html">joinrrn.com</a><br>One day at a time, by His grace.</footer>
+
+<script>
+var KEY='rrn_recovery_start';
+var VERSES=[
+{t:"I can do all things through Christ which strengtheneth me.",r:"Philippians 4:13"},
+{t:"They that wait upon the LORD shall renew their strength.",r:"Isaiah 40:31"},
+{t:"This is the day which the LORD hath made; we will rejoice and be glad in it.",r:"Psalm 118:24"},
+{t:"If the Son therefore shall make you free, ye shall be free indeed.",r:"John 8:36"},
+{t:"His compassions fail not. They are new every morning.",r:"Lamentations 3:22-23"},
+{t:"Fear thou not; for I am with thee... I will strengthen thee.",r:"Isaiah 41:10"},
+{t:"There is therefore now no condemnation to them which are in Christ Jesus.",r:"Romans 8:1"},
+{t:"He brought me up also out of an horrible pit... and set my feet upon a rock.",r:"Psalm 40:2"},
+{t:"My grace is sufficient for thee: for my strength is made perfect in weakness.",r:"2 Corinthians 12:9"},
+{t:"If any man be in Christ, he is a new creature: old things are passed away.",r:"2 Corinthians 5:17"},
+{t:"Casting all your care upon him; for he careth for you.",r:"1 Peter 5:7"},
+{t:"God is our refuge and strength, a very present help in trouble.",r:"Psalm 46:1"},
+{t:"Come unto me, all ye that labour and are heavy laden, and I will give you rest.",r:"Matthew 11:28"},
+{t:"There hath no temptation taken you but such as is common to man: but God is faithful.",r:"1 Corinthians 10:13"},
+{t:"Stand fast therefore in the liberty wherewith Christ hath made us free.",r:"Galatians 5:1"},
+{t:"He healeth the broken in heart, and bindeth up their wounds.",r:"Psalm 147:3"},
+{t:"Let us not be weary in well doing: for in due season we shall reap, if we faint not.",r:"Galatians 6:9"},
+{t:"For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.",r:"2 Timothy 1:7"},
+{t:"Submit yourselves therefore to God. Resist the devil, and he will flee from you.",r:"James 4:7"},
+{t:"Thou wilt keep him in perfect peace, whose mind is stayed on thee.",r:"Isaiah 26:3"},
+{t:"The name of the LORD is a strong tower: the righteous runneth into it, and is safe.",r:"Proverbs 18:10"},
+{t:"Create in me a clean heart, O God; and renew a right spirit within me.",r:"Psalm 51:10"},
+{t:"I will never leave thee, nor forsake thee.",r:"Hebrews 13:5"},
+{t:"Trust in the LORD with all thine heart; and lean not unto thine own understanding.",r:"Proverbs 3:5"},
+{t:"Weeping may endure for a night, but joy cometh in the morning.",r:"Psalm 30:5"},
+{t:"Be strong and of a good courage... for the LORD thy God is with thee.",r:"Joshua 1:9"},
+{t:"I waited patiently for the LORD; and he inclined unto me, and heard my cry.",r:"Psalm 40:1"},
+{t:"Whom resist stedfast in the faith.",r:"1 Peter 5:9"},
+{t:"Looking unto Jesus the author and finisher of our faith.",r:"Hebrews 12:2"},
+{t:"The LORD is nigh unto them that are of a broken heart.",r:"Psalm 34:18"},
+{t:"Draw nigh to God, and he will draw nigh to you.",r:"James 4:8"}
+];
+var MILESTONES=[
+{d:1,ico:"🌱",n:"Day 1"},{d:7,ico:"🕊️",n:"1 Week"},{d:30,ico:"⭐",n:"1 Month"},
+{d:60,ico:"✨",n:"2 Months"},{d:90,ico:"🔥",n:"90 Days"},{d:180,ico:"🛡️",n:"6 Months"},
+{d:270,ico:"⚓",n:"9 Months"},{d:365,ico:"👑",n:"1 Year"},{d:730,ico:"🏔️",n:"2 Years"},
+{d:1825,ico:"🌟",n:"5 Years"}
+];
+function daysBetween(start){
+  var s=new Date(start+'T00:00:00'); var now=new Date();
+  s.setHours(0,0,0,0); now.setHours(0,0,0,0);
+  return Math.max(0,Math.round((now-s)/86400000));
+}
+function fmt(d){var x=new Date(d+'T00:00:00');return x.toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}
+function show(start){
+  document.getElementById('setup').classList.add('hidden');
+  document.getElementById('tracker').classList.remove('hidden');
+  var days=daysBetween(start);
+  document.getElementById('dayNum').textContent=days.toLocaleString();
+  document.getElementById('dayLabel').textContent=(days===1?'Day Free':'Days Free');
+  document.getElementById('sinceLine').textContent='Recovery start date: '+fmt(start);
+  // next milestone
+  var next=MILESTONES.find(function(m){return m.d>days;});
+  var prev=MILESTONES.filter(function(m){return m.d<=days;}).pop();
+  if(next){
+    var base=prev?prev.d:0;
+    var pct=Math.round((days-base)/(next.d-base)*100);
+    document.getElementById('nextLine').innerHTML=(next.d-days)+' day'+((next.d-days)===1?'':'s')+' to your <b>'+next.n+'</b> milestone';
+    document.getElementById('progBar').style.width=Math.min(100,Math.max(3,pct))+'%';
+  } else {
+    document.getElementById('nextLine').innerHTML='Every milestone reached &mdash; <b>'+Math.floor(days/365)+'+ years</b> by God&rsquo;s grace.';
+    document.getElementById('progBar').style.width='100%';
+  }
+  // badges
+  document.getElementById('badges').innerHTML=MILESTONES.map(function(m){
+    var earned=days>=m.d;
+    return '<div class="badge'+(earned?' earned':'')+'"><div class="ico">'+m.ico+'</div><div class="d">'+m.d+'</div><div class="n">'+m.n+'</div></div>';
+  }).join('');
+  // daily verse (stable per calendar day)
+  var doy=Math.floor((new Date()-new Date(new Date().getFullYear(),0,0))/86400000);
+  var v=VERSES[doy%VERSES.length];
+  document.getElementById('verse').innerHTML='&ldquo;'+v.t+'&rdquo;<span class="ref">'+v.r+' (KJV)</span>';
+  window._rrnDays=days;
+}
+document.getElementById('saveBtn').onclick=function(){
+  var d=document.getElementById('startDate').value;
+  if(!d){alert('Please choose your recovery start date.');return;}
+  if(new Date(d+'T00:00:00')>new Date()){alert('That date is in the future. Please pick the day your recovery began.');return;}
+  try{localStorage.setItem(KEY,d);}catch(e){} show(d);
+};
+document.getElementById('editBtn').onclick=function(){
+  document.getElementById('tracker').classList.add('hidden');
+  document.getElementById('setup').classList.remove('hidden');
+  var saved=localStorage.getItem(KEY); if(saved)document.getElementById('startDate').value=saved;
+};
+document.getElementById('shareBtn').onclick=function(){
+  var days=window._rrnDays||0;
+  var msg='By God\u2019s grace I am '+days+' day'+(days===1?'':'s')+' free. \u201CIf the Son therefore shall make you free, ye shall be free indeed.\u201D \u2014 John 8:36 (KJV) \u2014 Refined Recovery Network, joinrrn.com';
+  var b=document.getElementById('shareBtn');
+  if(navigator.share&&window.isSecureContext){ navigator.share({title:'My Recovery Milestone',text:msg}).catch(function(){}); return; }
+  function done(){var o=b.textContent;b.textContent='Copied ✓';setTimeout(function(){b.textContent=o;},1500);}
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(msg).then(done).catch(fb);}else{fb();}
+  function fb(){var ta=document.createElement('textarea');ta.value=msg;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');done();}catch(e){prompt('Copy this:',msg);}document.body.removeChild(ta);}
+};
+// init
+var saved=localStorage.getItem(KEY);
+if(saved){ show(saved); } else { document.getElementById('startDate').max=new Date().toISOString().slice(0,10); }
+</script>
+</body></html>

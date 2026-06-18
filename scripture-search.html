@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ask the Bible — Search KJV Scripture | Refined Recovery Network</title>
+<meta name="description" content="Type a word like fear, addiction, hope, or healing and instantly find King James Version scriptures for the recovery road. Free, KJV-only, no sign-up.">
+<link rel="canonical" href="https://joinrrn.com/scripture-search.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ask the Bible — Search KJV Scripture">
+<meta property="og:description" content="Type a word and instantly find KJV scriptures for the recovery road. Free, KJV-only.">
+<meta property="og:url" content="https://joinrrn.com/scripture-search.html">
+<meta property="og:image" content="https://joinrrn.com/share-banner.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#c8913a;--ink:#060d18;--ink2:#0d1726;--fd:"Cormorant Garamond",Georgia,serif;--fb:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:#e8eaef;font-family:var(--fb);line-height:1.6}
+a{color:var(--gold);text-decoration:none}
+header.site{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:16px 22px;border-bottom:1px solid rgba(200,145,58,.22)}
+.brand{font-family:var(--fb);font-weight:800;letter-spacing:.5px;color:#fff;font-size:15px}
+.brand b{color:var(--gold)}
+nav.top a{font-size:13.5px;margin-left:16px;color:#c7cdd8}
+nav.top a:hover{color:var(--gold)}
+.hero{max-width:780px;margin:0 auto;padding:48px 22px 14px;text-align:center}
+.eyebrow{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700}
+h1{font-family:var(--fd);font-weight:700;font-size:clamp(34px,6vw,58px);line-height:1.05;margin:10px 0 6px;color:#fff}
+.sub{color:#aab3c0;font-size:17px;max-width:560px;margin:0 auto}
+.wrap{max-width:780px;margin:0 auto;padding:8px 22px 70px}
+.searchbar{position:relative;margin:26px 0 8px}
+#q{width:100%;padding:18px 20px 18px 52px;font-size:18px;font-family:var(--fb);color:#fff;background:var(--ink2);border:1px solid rgba(200,145,58,.4);border-radius:14px;outline:none}
+#q:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,145,58,.15)}
+.searchbar svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);opacity:.6}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0 6px}
+.chip{font-size:13px;padding:7px 14px;border-radius:20px;background:rgba(200,145,58,.1);border:1px solid rgba(200,145,58,.35);color:#e7c98a;cursor:pointer;font-family:var(--fb)}
+.chip:hover{background:rgba(200,145,58,.22);color:#fff}
+.count{text-align:center;color:#8b94a2;font-size:13.5px;margin:18px 0 2px;min-height:18px}
+.verse{background:linear-gradient(180deg,var(--ink2),#0a1320);border:1px solid rgba(255,255,255,.06);border-left:3px solid var(--gold);border-radius:12px;padding:20px 22px;margin:14px 0}
+.verse .text{font-family:var(--fd);font-size:23px;line-height:1.4;color:#f1ece1}
+.verse .ref{margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.verse .ref b{color:var(--gold);font-family:var(--fb);font-weight:700;letter-spacing:.4px;font-size:14px}
+.verse .tags{display:flex;gap:6px;flex-wrap:wrap}
+.verse .tag{font-size:11px;color:#9aa3b1;background:rgba(255,255,255,.05);padding:3px 9px;border-radius:12px}
+.copy{font-size:12px;color:#8b94a2;background:none;border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:5px 11px;cursor:pointer;font-family:var(--fb)}
+.copy:hover{color:#fff;border-color:var(--gold)}
+.empty{text-align:center;color:#8b94a2;padding:40px 10px}
+.note{text-align:center;color:#727c8a;font-size:12.5px;margin-top:30px}
+footer.site{border-top:1px solid rgba(200,145,58,.22);text-align:center;padding:26px;color:#8b94a2;font-size:13px}
+</style></head>
+<body>
+<header class="site">
+  <a class="brand" href="index.html">REFINED <b>RECOVERY</b> NETWORK</a>
+  <nav class="top"><a href="https://joinrrn.com/">Home</a><a href="journal.html">Journal</a><a href="recovery-tracker.html">Recovery Tracker</a></nav>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">Ask the Bible</div>
+  <h1>Search the Scriptures</h1>
+  <p class="sub">Type what you&rsquo;re facing &mdash; fear, addiction, hope, healing &mdash; and find the Word for it. King James Version only.</p>
+</div>
+
+<div class="wrap">
+  <div class="searchbar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8913a" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="q" type="text" placeholder="Search a word or feeling…" autocomplete="off" autofocus>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="count" id="count"></div>
+  <div id="results"></div>
+  <p class="note">All verses King James Version (public domain). This is Scripture for encouragement &mdash; if you are in crisis, call or text <a href="tel:988">988</a>.</p>
+</div>
+
+<footer class="site">Refined Recovery Network &middot; Port Allen, Louisiana &middot; <a href="index.html">joinrrn.com</a><br>&ldquo;Thy word is a lamp unto my feet, and a light unto my path.&rdquo; &mdash; Psalm 119:105</footer>
+
+<script>
+var VERSES=[
+{r:"Philippians 4:13",t:"I can do all things through Christ which strengtheneth me.",k:["strength","addiction","perseverance","power","temptation"]},
+{r:"Philippians 4:6-7",t:"Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus.",k:["anxiety","fear","peace","worry","prayer"]},
+{r:"Philippians 4:19",t:"But my God shall supply all your need according to his riches in glory by Christ Jesus.",k:["provision","need","money","hope"]},
+{r:"Isaiah 41:10",t:"Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.",k:["fear","strength","anxiety","help","alone"]},
+{r:"Isaiah 40:31",t:"But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint.",k:["strength","renewal","hope","perseverance","weary","rest"]},
+{r:"Isaiah 26:3",t:"Thou wilt keep him in perfect peace, whose mind is stayed on thee: because he trusteth in thee.",k:["peace","anxiety","trust","mind"]},
+{r:"Isaiah 53:5",t:"But he was wounded for our transgressions, he was bruised for our iniquities: the chastisement of our peace was upon him; and with his stripes we are healed.",k:["healing","forgiveness","peace","salvation"]},
+{r:"Isaiah 43:18-19",t:"Remember ye not the former things, neither consider the things of old. Behold, I will do a new thing.",k:["new life","renewal","past","shame","hope"]},
+{r:"Psalm 23:1-4",t:"The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters. He restoreth my soul... Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me.",k:["fear","comfort","peace","rest","alone","death"]},
+{r:"Psalm 34:18",t:"The LORD is nigh unto them that are of a broken heart; and saveth such as be of a contrite spirit.",k:["grief","broken","comfort","sorrow","alone"]},
+{r:"Psalm 46:1",t:"God is our refuge and strength, a very present help in trouble.",k:["strength","fear","help","trouble","refuge"]},
+{r:"Psalm 51:10",t:"Create in me a clean heart, O God; and renew a right spirit within me.",k:["renewal","forgiveness","new life","repentance"]},
+{r:"Psalm 147:3",t:"He healeth the broken in heart, and bindeth up their wounds.",k:["healing","broken","grief","comfort"]},
+{r:"Psalm 30:5",t:"For his anger endureth but a moment; in his favour is life: weeping may endure for a night, but joy cometh in the morning.",k:["joy","grief","hope","sorrow","morning"]},
+{r:"Psalm 121:1-2",t:"I will lift up mine eyes unto the hills, from whence cometh my help. My help cometh from the LORD, which made heaven and earth.",k:["help","hope","strength"]},
+{r:"Psalm 27:1",t:"The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?",k:["fear","strength","salvation","courage"]},
+{r:"Psalm 91:1-2",t:"He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty. I will say of the LORD, He is my refuge and my fortress: my God; in him will I trust.",k:["fear","refuge","trust","protection"]},
+{r:"Psalm 103:12",t:"As far as the east is from the west, so far hath he removed our transgressions from us.",k:["forgiveness","shame","guilt","past"]},
+{r:"Psalm 32:7",t:"Thou art my hiding place; thou shalt preserve me from trouble; thou shalt compass me about with songs of deliverance.",k:["deliverance","refuge","trouble","protection"]},
+{r:"Psalm 40:1-3",t:"I waited patiently for the LORD; and he inclined unto me, and heard my cry. He brought me up also out of an horrible pit, out of the miry clay, and set my feet upon a rock... And he hath put a new song in my mouth.",k:["deliverance","addiction","hope","new life","pit","rescue"]},
+{r:"Psalm 34:17",t:"The righteous cry, and the LORD heareth, and delivereth them out of all their troubles.",k:["deliverance","prayer","trouble","help"]},
+{r:"John 3:16",t:"For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.",k:["love","salvation","hope","faith"]},
+{r:"John 8:36",t:"If the Son therefore shall make you free, ye shall be free indeed.",k:["freedom","addiction","deliverance","bondage"]},
+{r:"John 14:27",t:"Peace I leave with you, my peace I give unto you: not as the world giveth, give I unto you. Let not your heart be troubled, neither let it be afraid.",k:["peace","fear","anxiety","comfort"]},
+{r:"John 14:6",t:"Jesus saith unto him, I am the way, the truth, and the life: no man cometh unto the Father, but by me.",k:["faith","salvation","identity","truth"]},
+{r:"John 16:33",t:"These things I have spoken unto you, that in me ye might have peace. In the world ye shall have tribulation: but be of good cheer; I have overcome the world.",k:["peace","trouble","courage","hope","overcome"]},
+{r:"John 10:10",t:"The thief cometh not, but for to steal, and to kill, and to destroy: I am come that they might have life, and that they might have it more abundantly.",k:["new life","addiction","hope","abundance"]},
+{r:"Romans 8:28",t:"And we know that all things work together for good to them that love God, to them who are the called according to his purpose.",k:["hope","purpose","trust","trouble"]},
+{r:"Romans 8:1",t:"There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit.",k:["shame","guilt","forgiveness","condemnation"]},
+{r:"Romans 8:38-39",t:"For I am persuaded, that neither death, nor life... nor any other creature, shall be able to separate us from the love of God, which is in Christ Jesus our Lord.",k:["love","fear","assurance","alone"]},
+{r:"Romans 12:2",t:"And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God.",k:["renewal","mind","new life","transformation"]},
+{r:"Romans 10:13",t:"For whosoever shall call upon the name of the Lord shall be saved.",k:["salvation","hope","prayer"]},
+{r:"2 Corinthians 5:17",t:"Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new.",k:["new life","identity","past","shame","transformation"]},
+{r:"2 Corinthians 12:9",t:"And he said unto me, My grace is sufficient for thee: for my strength is made perfect in weakness.",k:["weakness","strength","grace","powerless"]},
+{r:"2 Corinthians 5:7",t:"For we walk by faith, not by sight.",k:["faith","trust","fear"]},
+{r:"Matthew 11:28-30",t:"Come unto me, all ye that labour and are heavy laden, and I will give you rest. Take my yoke upon you, and learn of me; for I am meek and lowly in heart: and ye shall find rest unto your souls.",k:["rest","weary","comfort","peace","burden"]},
+{r:"Matthew 6:33",t:"But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you.",k:["purpose","provision","faith","priorities"]},
+{r:"Jeremiah 29:11",t:"For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.",k:["hope","future","purpose","peace"]},
+{r:"Jeremiah 31:3",t:"The LORD hath appeared of old unto me, saying, Yea, I have loved thee with an everlasting love.",k:["love","comfort","worth","identity"]},
+{r:"1 John 1:9",t:"If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness.",k:["forgiveness","guilt","shame","confession","repentance"]},
+{r:"1 John 4:18",t:"There is no fear in love; but perfect love casteth out fear: because fear hath torment.",k:["fear","love","anxiety"]},
+{r:"James 1:2-4",t:"My brethren, count it all joy when ye fall into divers temptations; Knowing this, that the trying of your faith worketh patience. But let patience have her perfect work.",k:["perseverance","trials","joy","patience","temptation"]},
+{r:"James 4:7",t:"Submit yourselves therefore to God. Resist the devil, and he will flee from you.",k:["temptation","addiction","spiritual","strength"]},
+{r:"James 4:8",t:"Draw nigh to God, and he will draw nigh to you. Cleanse your hands, ye sinners; and purify your hearts, ye double minded.",k:["prayer","repentance","renewal","near"]},
+{r:"James 5:16",t:"Confess your faults one to another, and pray one for another, that ye may be healed. The effectual fervent prayer of a righteous man availeth much.",k:["healing","confession","prayer","accountability","community"]},
+{r:"James 1:5",t:"If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him.",k:["wisdom","decisions","prayer"]},
+{r:"1 Peter 5:7",t:"Casting all your care upon him; for he careth for you.",k:["anxiety","worry","comfort","care"]},
+{r:"1 Peter 5:8-9",t:"Be sober, be vigilant; because your adversary the devil, as a roaring lion, walketh about, seeking whom he may devour: Whom resist stedfast in the faith.",k:["temptation","addiction","vigilance","spiritual","relapse"]},
+{r:"1 Peter 2:24",t:"Who his own self bare our sins in his own body on the tree... by whose stripes ye were healed.",k:["healing","forgiveness","salvation"]},
+{r:"Galatians 2:20",t:"I am crucified with Christ: nevertheless I live; yet not I, but Christ liveth in me.",k:["identity","new life","surrender","transformation"]},
+{r:"Galatians 5:1",t:"Stand fast therefore in the liberty wherewith Christ hath made us free, and be not entangled again with the yoke of bondage.",k:["freedom","addiction","bondage","relapse","deliverance"]},
+{r:"Galatians 6:9",t:"And let us not be weary in well doing: for in due season we shall reap, if we faint not.",k:["perseverance","weary","hope","patience"]},
+{r:"Ephesians 2:8-9",t:"For by grace are ye saved through faith; and that not of yourselves: it is the gift of God: Not of works, lest any man should boast.",k:["grace","salvation","worth","faith"]},
+{r:"Acts 2:38",t:"Then Peter said unto them, Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins, and ye shall receive the gift of the Holy Ghost.",k:["salvation","repentance","baptism","new life","forgiveness"]},
+{r:"Acts 1:8",t:"But ye shall receive power, after that the Holy Ghost is come upon you.",k:["power","strength","spiritual","new life"]},
+{r:"Acts 16:31",t:"And they said, Believe on the Lord Jesus Christ, and thou shalt be saved, and thy house.",k:["salvation","faith","family","hope"]},
+{r:"Proverbs 3:5-6",t:"Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.",k:["trust","decisions","wisdom","surrender","guidance"]},
+{r:"Proverbs 18:10",t:"The name of the LORD is a strong tower: the righteous runneth into it, and is safe.",k:["refuge","strength","safety","fear"]},
+{r:"Joshua 1:9",t:"Have not I commanded thee? Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest.",k:["courage","fear","strength","alone"]},
+{r:"Deuteronomy 31:6",t:"Be strong and of a good courage, fear not, nor be afraid of them: for the LORD thy God, he it is that doth go with thee; he will not fail thee, nor forsake thee.",k:["courage","fear","strength","alone","abandonment"]},
+{r:"Hebrews 13:5",t:"Let your conversation be without covetousness; and be content with such things as ye have: for he hath said, I will never leave thee, nor forsake thee.",k:["alone","comfort","contentment","abandonment"]},
+{r:"Hebrews 4:16",t:"Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need.",k:["grace","prayer","help","mercy","need"]},
+{r:"Hebrews 11:1",t:"Now faith is the substance of things hoped for, the evidence of things not seen.",k:["faith","hope","trust"]},
+{r:"Hebrews 12:1-2",t:"Let us lay aside every weight, and the sin which doth so easily beset us, and let us run with patience the race that is set before us, Looking unto Jesus the author and finisher of our faith.",k:["perseverance","addiction","temptation","focus","relapse"]},
+{r:"Lamentations 3:22-23",t:"It is of the LORD'S mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness.",k:["hope","mercy","new life","morning","grief"]},
+{r:"Nahum 1:7",t:"The LORD is good, a strong hold in the day of trouble; and he knoweth them that trust in him.",k:["refuge","trouble","trust","comfort"]},
+{r:"Zephaniah 3:17",t:"The LORD thy God in the midst of thee is mighty; he will save... he will joy over thee with singing.",k:["love","joy","worth","comfort"]},
+{r:"1 Corinthians 10:13",t:"There hath no temptation taken you but such as is common to man: but God is faithful, who will not suffer you to be tempted above that ye are able; but will with the temptation also make a way to escape.",k:["temptation","addiction","relapse","strength","hope"]},
+{r:"1 Corinthians 6:11",t:"And such were some of you: but ye are washed, but ye are sanctified, but ye are justified in the name of the Lord Jesus, and by the Spirit of our God.",k:["identity","past","new life","shame","forgiveness"]},
+{r:"2 Timothy 1:7",t:"For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.",k:["fear","anxiety","power","mind","courage"]},
+{r:"Titus 3:5",t:"Not by works of righteousness which we have done, but according to his mercy he saved us, by the washing of regeneration, and renewing of the Holy Ghost.",k:["grace","salvation","new life","mercy"]},
+{r:"Mark 16:16",t:"He that believeth and is baptized shall be saved; but he that believeth not shall be damned.",k:["salvation","faith","baptism"]},
+{r:"Colossians 3:1-2",t:"If ye then be risen with Christ, seek those things which are above... Set your affection on things above, not on things on the earth.",k:["focus","new life","purpose","mind"]},
+{r:"Psalm 42:11",t:"Why art thou cast down, O my soul? and why art thou disquieted within me? hope thou in God: for I shall yet praise him.",k:["depression","grief","hope","despair","sorrow"]},
+{r:"Matthew 5:4",t:"Blessed are they that mourn: for they shall be comforted.",k:["grief","comfort","sorrow","loss"]},
+{r:"Romans 5:8",t:"But God commendeth his love toward us, in that, while we were yet sinners, Christ died for us.",k:["love","worth","salvation","shame"]},
+{r:"Psalm 139:14",t:"I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works.",k:["worth","identity","self","value"]},
+{r:"Ecclesiastes 3:1",t:"To every thing there is a season, and a time to every purpose under the heaven.",k:["purpose","patience","time","hope"]}
+];
+
+var THEMES=["fear","addiction","hope","healing","peace","strength","forgiveness","temptation","anxiety","grief","new life","freedom","love","worth","prayer","alone","relapse","salvation","rest","courage"];
+
+function rrnCopy(txt,btn,ok){function done(){if(btn){var o=btn.textContent;btn.textContent=ok||'Copied ✓';setTimeout(function(){btn.textContent=o;},1400);}}
+ if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(done).catch(fb);}else{fb();}
+ function fb(){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');done();}catch(e){prompt('Copy this:',txt);}document.body.removeChild(ta);}}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function render(list,query){
+  var R=document.getElementById('results'), C=document.getElementById('count');
+  if(!list.length){ C.textContent=''; R.innerHTML='<div class="empty">No verses matched &ldquo;'+esc(query)+'&rdquo;. Try a word like <b>fear</b>, <b>hope</b>, <b>addiction</b>, or <b>peace</b>.</div>'; return; }
+  C.textContent=list.length+' verse'+(list.length>1?'s':'')+(query?' for "'+query+'"':'');
+  R.innerHTML=list.map(function(v){
+    return '<div class="verse"><div class="text">&ldquo;'+esc(v.t)+'&rdquo;</div>'+
+      '<div class="ref"><b>'+esc(v.r)+' (KJV)</b>'+
+      '<button class="copy" onclick="cp(this,'+VERSES.indexOf(v)+')">Copy</button></div>'+
+      '<div class="tags">'+v.k.slice(0,5).map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('')+'</div></div>';
+  }).join('');
+}
+function cp(btn,i){var v=VERSES[i];rrnCopy('"'+v.t+'" — '+v.r+' (KJV)',btn,'Copied ✓');}
+function search(qraw){
+  var q=(qraw||'').trim().toLowerCase();
+  if(!q){ render(VERSES.slice(0,12),''); document.getElementById('count').textContent='Showing '+Math.min(12,VERSES.length)+' of '+VERSES.length+' — type to search'; return; }
+  var scored=VERSES.map(function(v){
+    var s=0;
+    v.k.forEach(function(t){ if(t===q)s+=10; else if(t.indexOf(q)>=0||q.indexOf(t)>=0)s+=6; });
+    if(v.t.toLowerCase().indexOf(q)>=0)s+=3;
+    if(v.r.toLowerCase().indexOf(q)>=0)s+=4;
+    return {v:v,s:s};
+  }).filter(function(x){return x.s>0;}).sort(function(a,b){return b.s-a.s;}).map(function(x){return x.v;});
+  render(scored,qraw.trim());
+}
+// chips
+var chipBox=document.getElementById('chips');
+THEMES.forEach(function(t){var c=document.createElement('span');c.className='chip';c.textContent=t;c.onclick=function(){document.getElementById('q').value=t;search(t);};chipBox.appendChild(c);});
+// live search
+var qEl=document.getElementById('q');
+qEl.addEventListener('input',function(){search(qEl.value);});
+search('');
+</script>
+</body></html>
