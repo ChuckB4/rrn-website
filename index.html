@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- RRN-WEBSITE-MASTER | 2026-06-15-live168 | +4 new songs (Alt Rock/80s/Southern Blues Rock) = 250 -->
+<!-- RRN-WEBSITE-MASTER | 2026-06-15-live170 | rebuilt from sheet v4 (257); rotation = full PLAY-ALL (dayparts no longer gate music, every song airs any hour) -->
 
 <html lang="en">
 <head>
@@ -4425,7 +4425,14 @@ var RR_LIBRARY = [
   {title:"The Way You Lead Me (Alt Rock)", artist:"RRN", src:"music/The Way You Lead Me  (Alt 2000s Rock).mp3", genre:"Christian Alternative Rock", isNew:true},
   {title:"He Never Quit on Me (Alt Rock)", artist:"RRN", src:"music/He Never Quit on Me (Alternative 2000s Rock).mp3", genre:"Christian Alternative Rock", isNew:true},
   {title:"He Spoke to the Wind (80s)", artist:"RRN", src:"music/He Spoke to the Wind (80s).mp3", genre:"Christian 80's", isNew:true},
-  {title:"Awoken the Master (Southern Blues Rock)", artist:"RRN", src:"music/Awoken the Master (Southern Blues Rock).mp3", genre:"Christian Southern Blues Rock", isNew:true}
+  {title:"Awoken the Master (Southern Blues Rock)", artist:"RRN", src:"music/Awoken the Master (Southern Blues Rock).mp3", genre:"Christian Southern Blues Rock", isNew:true},
+  {title:"Sweet Release (Chill)", artist:"RRN", src:"music/Sweet Release (Chill).mp3", genre:"Christian Chillwave", isNew:true},
+  {title:"He Strengthens Me (Alt Rock)", artist:"RRN", src:"music/He Strengthens Me (Alternative 2000s Rock).mp3", genre:"Christian Alternative Rock", isNew:true},
+  {title:"Shine His Light (K-Pop)", artist:"RRN", src:"music/Shine His Light (K -Pop).mp3", genre:"Christian K-Pop", isNew:true},
+  {title:"I Can Count on You (Country)", artist:"RRN", src:"music/I Can Count on You (Country).mp3", genre:"Christian Country", isNew:true},
+  {title:"What Must I Do (Alt Rock)", artist:"RRN", src:"music/What Must I Do (2000s Alternative Metal).mp3", genre:"Christian Alternative Rock", isNew:true},
+  {title:"One Promise (R&B)", artist:"RRN", src:"music/One Promise (R&B).mp3", genre:"Christian R&B", isNew:true},
+  {title:"Boots-A-Stompin’ (For the King) (Country)", artist:"RRN", src:"music/Boots-A-Stompin’ (For the King) (Country).mp3", genre:"Christian Country", isNew:true}
 ];
 
 /* RRN AVAILABLE-NOW RESOLVER: points the existing playlist at the songs already on GitHub.
@@ -4572,17 +4579,11 @@ function rrSetGenre(g){rrForcedGenre=(g||"").toLowerCase();rrBag=[];rrAdvance();
 function rrSongListAll(){ // every playable song (commercials, station IDs, teaching excluded)
   return RR_LIBRARY.filter(function(t){var g=(t.genre||"").toLowerCase();return g!=="commercial"&&g!=="station id"&&g!=="station-id"&&g!==RR_G_TEACH;});
 }
-function rrSongList(){ // user-picked genre wins; otherwise follow the daypart clock
+function rrSongList(){ // PLAY-ALL: every song is always eligible, so the whole catalog is heard at any hour
   var all=rrSongListAll();
   if(rrForcedGenre) return all.filter(function(t){return (t.genre||"").toLowerCase()===rrForcedGenre;});
-  var dp=rrDaypart(new Date().getHours());
-  var covered=rrAllDpGenres(); // every genre that appears in ANY daypart
-  var pool=all.filter(function(t){
-    var g=(t.genre||"").toLowerCase();
-    if(g===RR_G_BOUNCE) return false;                       // bounce drops sprinkle in separately
-    return dp.genres.indexOf(g)>=0 || covered.indexOf(g)<0; // this daypart's genres, OR orphan genres no daypart covers (so every song still airs)
-  });
-  return pool.length?pool:all; // fall back to full library if a daypart has no matches yet
+  var pool=all.filter(function(t){ return (t.genre||"").toLowerCase()!==RR_G_BOUNCE; }); // bounce drops sprinkle in via the specialty path
+  return pool.length?pool:all;
 }
 var _rrAllDp=null;
 function rrAllDpGenres(){ if(_rrAllDp)return _rrAllDp; var s={}; RR_DAYPARTS.forEach(function(d){(d.genres||[]).forEach(function(g){s[g]=1;});}); _rrAllDp=Object.keys(s); return _rrAllDp; }
