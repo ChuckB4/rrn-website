@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- RRN-WEBSITE-MASTER | 2026-06-15-live170 | rebuilt from sheet v4 (257); rotation = full PLAY-ALL (dayparts no longer gate music, every song airs any hour) -->
+<!-- RRN-WEBSITE-MASTER | 2026-06-15-live172 | share picker w/ 15 advocacy captions (5 long-form); logo banners rect+square (subtitle readable) -->
 
 <html lang="en">
 <head>
@@ -4751,15 +4751,7 @@ function rrShareLink(msg,base){
   if(navigator.share){ navigator.share({title:"Refined Recovery Network Radio",text:msg,url:base}).catch(function(){}); }
   else { window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(base),"_blank","noopener"); }
 }
-function rrShareSong(){
-  if(!rrCur) return; var t=rrCur;
-  var base="https://joinrrn.com/";
-  var url=base+"?preview="+encodeURIComponent((t.title||'').trim());
-  var msg="\uD83C\uDFB5 \u201C"+t.title+"\u201D on Refined Recovery Network Radio \u2014 Christian music, recovery, restoration, and hope through Jesus Christ. Tap for a 30-second preview, then listen live: ";
-  rrEvent('share');
-  if(navigator.share){ navigator.share({title:"Refined Recovery Network Radio",text:msg,url:url}).catch(function(){}); return; }
-  window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(url),"_blank","noopener");
-}
+function rrShareSong(){ rrEvent("share"); if(window.rrOpenShare) rrOpenShare(); }
 function rrNowCard(t,label){
   var T=document.getElementById('np-title'); if(!T) return;
   if(label){ T.textContent=label; document.getElementById('np-artist').textContent=''; document.getElementById('np-stars').textContent=''; document.getElementById('np-likes').textContent=''; }
@@ -5313,6 +5305,80 @@ html{overflow-x:hidden;}
   };
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',inject); else inject();
   setTimeout(inject,1200); // catch any late-rendered cards
+})();
+</script>
+<style>
+#rrShareModal{display:none;position:fixed;inset:0;z-index:700;background:rgba(4,9,18,.78);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:18px;}
+.rrsm-card{width:100%;max-width:500px;max-height:92vh;overflow:auto;background:#0c1626;border:1px solid rgba(200,145,58,.35);border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,.6);padding:22px;color:#e9eef5;font-family:var(--fb,system-ui,sans-serif);}
+.rrsm-h{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;color:#c8913a;margin:0 0 3px;}
+.rrsm-sub{font-size:12.5px;color:#9fb0c4;margin:0 0 16px;}
+.rrsm-lab{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#c8913a;margin:0 0 6px;display:block;}
+#rrShareSel{width:100%;background:#0a1322;color:#e9eef5;border:1px solid rgba(200,145,58,.4);border-radius:10px;padding:11px;font-size:14px;margin-bottom:14px;cursor:pointer;}
+#rrShareText{width:100%;min-height:150px;background:#0a1322;color:#e9eef5;border:1px solid rgba(200,145,58,.3);border-radius:10px;padding:12px;font-size:13.5px;line-height:1.55;resize:vertical;font-family:inherit;}
+.rrsm-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px;}
+.rrsm-btn{flex:1;min-width:120px;border:none;border-radius:999px;padding:12px 14px;font-size:13.5px;font-weight:700;cursor:pointer;}
+.rrsm-primary{background:#c8913a;color:#1a1206;}
+.rrsm-ghost{background:transparent;border:1px solid rgba(200,145,58,.45);color:#c8913a;}
+.rrsm-x{float:right;background:none;border:none;color:#9fb0c4;font-size:24px;cursor:pointer;margin:-8px -4px 0 0;}
+.rrsm-note{font-size:11.5px;color:#7d8aa0;margin-top:12px;text-align:center;}
+</style>
+<div id="rrShareModal" role="dialog" aria-label="Share Refined Radio">
+  <div class="rrsm-card">
+    <button class="rrsm-x" onclick="rrCloseShare()" aria-label="Close">&times;</button>
+    <h3 class="rrsm-h">Share hope. Save a life.</h3>
+    <p class="rrsm-sub">Pick a message, then post it anywhere &mdash; every share reaches someone who needs it.</p>
+    <span class="rrsm-lab">Choose a message</span>
+    <select id="rrShareSel"></select>
+    <span class="rrsm-lab">Your post (edit if you like)</span>
+    <textarea id="rrShareText"></textarea>
+    <div class="rrsm-row">
+      <button class="rrsm-btn rrsm-primary" onclick="rrShareNative()">Share</button>
+      <button class="rrsm-btn rrsm-ghost" onclick="rrShareCopy()">Copy</button>
+    </div>
+    <div class="rrsm-row">
+      <button class="rrsm-btn rrsm-ghost" onclick="rrShareFB()">Facebook</button>
+      <button class="rrsm-btn rrsm-ghost" onclick="rrShareX()">X / Twitter</button>
+    </div>
+    <p class="rrsm-note">&ldquo;Share&rdquo; opens your phone&rsquo;s share menu. &ldquo;Copy&rdquo; lets you paste into any post.</p>
+  </div>
+</div>
+<script>
+(function(){
+  var LINK="https://joinrrn.com/";
+  window.RR_SHARE_CAPTIONS=[
+   {label:"💬 You are not your lowest moment", text:"There’s a song I want to share today for anyone who feels overlooked, tired, or like they are not enough. You are not defined by your lowest moment, your past mistakes, or how others have treated you. Value isn’t something you earn by being perfect — it’s something you were given. If your confidence has been worn down, I hope this reminds you that there is still purpose in you, still strength in you, and a future ahead that hasn’t been written yet. Don’t give up on yourself. Keep going. Healing and rebuilding take time, but they are real. Share this with someone who needs encouragement today. 🔥\n\n{link}\n\n#Hope #Encouragement #KeepGoing #YouMatter #RefinedRadio #RecoveryIsPossible"},
+   {label:"💬 If no one told you today", text:"If no one has told you today: you matter. You are not too far gone, too broken, or too late. The mistakes behind you don’t get to write the story ahead of you. Healing can be slow and quiet, but it is real — and so is the strength still inside you. Hold on. Keep going. Don’t give up on yourself. 💛 Listen, breathe, and pass this to someone who needs it:\n\n{link}\n\n#YouMatter #KeepGoing #ThereIsHope #RecoveryIsPossible #RefinedRadio"},
+   {label:"💬 One overdose is too many (long)", text:"One overdose is too many. Behind every number is a son, a daughter, a mother, a friend — a whole life worth fighting for. If you’re struggling, you are not alone, and it is never too late to begin again. And if you’ve made it through, reach back and pull someone else up. We recover together, and hope is real. 💛 Share it with someone today:\n\n{link}\n\n#OneOverdoseIsTooMany #RecoveryIsPossible #WeRecoverTogether #EveryLifeMatters #RefinedRadio"},
+   {label:"💬 There is purpose in you", text:"To anyone who is tired, overlooked, or feeling like they’re not enough — hear this: your worth was never based on your performance, your past, or how people have treated you. It was given to you, and it cannot be taken away. There is still purpose in your life and a future that hasn’t been written yet. Don’t quit on yourself now. 🔥\n\n{link}\n\n#Encouragement #YouAreEnough #ThereIsHope #RefinedRecovery #KeepGoing"},
+   {label:"💬 He doesn’t waste the fire", text:"Rebuilding a life takes time. Some days you’ll feel the progress; other days you’ll just have to trust it’s happening. But the God who refines us doesn’t waste a single fire — your past doesn’t disqualify you, it’s the very thing He redeems. There is purpose in you and a future ahead. Keep going. 🔥\n\n{link}\n\n#FaithOverFear #Refined #RecoveryIsPossible #KeepGoing #Hope"},
+   {label:"One overdose is too many", text:"One overdose is too many. 💛 Recovery is real, hope is real, and no one has to fight alone. Listen to Refined Radio and share the hope: {link}\n\n#OneOverdoseIsTooMany #RecoveryIsPossible #RefinedRadio #YouAreNotAlone"},
+   {label:"You are not alone", text:"If you’re struggling today, you are not alone. There is hope, and there is a way forward. 🔥 Refined Radio — music, recovery, and restoration: {link}\n\n#YouAreNotAlone #RecoveryIsPossible #ThereIsHope #RefinedRecovery"},
+   {label:"Be someone’s hope", text:"Be the reason someone doesn’t give up today. Share hope. Save a life. 💛 {link}\n\n#BeSomeonesHope #RecoveryCommunity #OneOverdoseIsTooMany #RefinedRadio"},
+   {label:"Recovery is possible", text:"Recovery is possible — it’s never too late to start again. 🔥 Tune in to Refined Radio: {link}\n\n#RecoveryIsPossible #NeverTooLate #RefinedRecovery #HopeDealer"},
+   {label:"Now playing / invite", text:"🎵 Now playing on Refined Radio — Christian music, recovery, and hope, 24/7. Come listen with me: {link}\n\n#RefinedRadio #ChristianMusic #RecoveryRadio #Hope"},
+   {label:"Hold on (for someone struggling)", text:"To anyone in the fight right now: hold on. One more day. One more breath. You matter. 💛 {link}\n\n#HoldOn #YouMatter #RecoveryIsPossible #OneDayAtATime"},
+   {label:"Addiction doesn’t win", text:"Addiction doesn’t get the last word — hope does. Share this with someone who needs it today. 🔥 {link}\n\n#ThereIsHope #RecoveryIsPossible #RefinedRecovery #OneOverdoseIsTooMany"},
+   {label:"We recover together", text:"If you’ve made it through, reach back and pull someone else up. We recover together. 🤝 {link}\n\n#WeRecoverTogether #RecoveryCommunity #BeSomeonesHope #RefinedRadio"},
+   {label:"Every life matters", text:"Every life is worth fighting for. Every person is worth saving. One overdose is too many. 💛 {link}\n\n#OneOverdoseIsTooMany #EveryLifeMatters #RecoveryAwareness #RefinedRecovery"}
+  ];
+  function build(t){ var song=(window.rrCur&&rrCur.title)?rrCur.title:""; return t.replace(/\{link\}/g,LINK).replace(/\{song\}/g,song||"this song"); }
+  window.rrOpenShare=function(){
+    var m=document.getElementById('rrShareModal'); if(!m) return;
+    var sel=document.getElementById('rrShareSel'), ta=document.getElementById('rrShareText');
+    if(!sel.options.length){ RR_SHARE_CAPTIONS.forEach(function(c,i){ var o=document.createElement('option'); o.value=i; o.textContent=c.label; sel.appendChild(o); }); }
+    function setT(){ ta.value=build(RR_SHARE_CAPTIONS[sel.value||0].text); }
+    sel.onchange=setT; if(sel.selectedIndex<0) sel.selectedIndex=0; setT();
+    m.style.display='flex'; document.body.style.overflow='hidden';
+  };
+  window.rrCloseShare=function(){ var m=document.getElementById('rrShareModal'); if(m)m.style.display='none'; document.body.style.overflow=''; };
+  window.rrShareCopy=function(){ var ta=document.getElementById('rrShareText'); function ok(){ if(window.rrToast)rrToast('Copied \u2014 paste it into any post'); }
+    if(navigator.clipboard){ navigator.clipboard.writeText(ta.value).then(ok).catch(function(){ta.select();document.execCommand('copy');ok();}); } else { ta.select(); document.execCommand('copy'); ok(); } };
+  window.rrShareNative=function(){ var ta=document.getElementById('rrShareText');
+    if(navigator.share){ navigator.share({title:"Refined Radio",text:ta.value,url:LINK}).catch(function(){}); } else { window.rrShareCopy(); } };
+  window.rrShareFB=function(){ window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(LINK),"_blank","noopener"); window.rrShareCopy(); if(window.rrToast)rrToast('Caption copied \u2014 paste it into your Facebook post'); };
+  window.rrShareX=function(){ var ta=document.getElementById('rrShareText'); window.open("https://twitter.com/intent/tweet?text="+encodeURIComponent(ta.value),"_blank","noopener"); };
+  document.addEventListener('click',function(e){ if(e.target&&e.target.id==='rrShareModal') window.rrCloseShare(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') window.rrCloseShare(); });
 })();
 </script>
 </body>
