@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Song Preview · Refined Radio</title>
+<style>
+:root{--ink:#060d18;--gold:#c8913a;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:#e9eef5;font-family:-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+.card{max-width:520px;width:100%;background:rgba(11,24,41,.9);border:1px solid rgba(200,145,58,.3);border-radius:20px;padding:30px;box-shadow:0 30px 80px rgba(0,0,0,.5);text-align:center;}
+.brand{color:var(--gold);font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;letter-spacing:.5px;margin-bottom:4px;}
+.title{font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;line-height:1.15;margin:14px 0 6px;}
+.genre{color:#9fb0c4;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:22px;}
+.play{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#1a1206;border:none;border-radius:999px;font-size:17px;font-weight:700;padding:14px 30px;cursor:pointer;box-shadow:0 10px 30px rgba(200,145,58,.35);}
+.play:active{transform:scale(.97)}
+audio{width:100%;margin-top:22px;}
+.msg{font-size:13px;color:#9fb0c4;margin-top:16px;min-height:18px;}
+.back{display:inline-block;margin-top:24px;color:var(--gold);font-size:13px;text-decoration:none;border:1px solid rgba(200,145,58,.4);padding:8px 16px;border-radius:999px;}
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(200,145,58,.3);border-top-color:var(--gold);border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px;}
+@keyframes s{to{transform:rotate(360deg)}}
+</style></head><body>
+<div class="card">
+  <div class="brand">Refined Radio</div>
+  <div class="title" id="t">Loading…</div>
+  <div class="genre" id="g"></div>
+  <button class="play" id="pb" onclick="go()">▶ Play song</button>
+  <audio id="au" controls preload="none"></audio>
+  <div class="msg" id="m"><span class="spin"></span> Finding the file…</div>
+  <a class="back" href="https://joinrrn.com/">← Back to Refined Recovery Network</a>
+</div>
+<script>
+(function(){
+  var RR_ABS="https://chuckb4.github.io/rrn-website/";
+  var TREE_KEY="rrn_tree_cache_v1", TTL=2*60*60*1000;
+  var qs=new URLSearchParams(location.search);
+  var src=qs.get('s')||"", title=qs.get('t')||"", genre=qs.get('g')||"";
+  document.getElementById('t').textContent=title|| (src.split('/').pop()||'Song');
+  document.getElementById('g').textContent=genre;
+  var au=document.getElementById('au'), msg=document.getElementById('m');
+  function base(s){return (s||'').split('/').pop();}
+  function norm(s){return base(s).replace(/\.mp3$/i,'').replace(/[^a-z0-9]+/gi,'').toLowerCase();}
+  function basenorm(s){return norm(s).replace(/\d+$/,'');}
+  function buildMaps(tree){
+    var exact={},normM={},baseM={};
+    for(var i=0;i<tree.length;i++){var p=tree[i];if(!/^music\/.+\.mp3$/i.test(p))continue;
+      var b=base(p),n=norm(p),bn=basenorm(p);
+      if(exact[b]===undefined)exact[b]=p; if(normM[n]===undefined)normM[n]=p; if(baseM[bn]===undefined)baseM[bn]=p;}
+    return {exact:exact,normM:normM,baseM:baseM};
+  }
+  function resolve(maps){
+    var b=base(src),n=norm(src),bn=basenorm(src);
+    return maps.exact[b]||maps.normM[n]||maps.baseM[bn]||null;
+  }
+  function setSrc(real){
+    var url=RR_ABS+real.split('/').map(encodeURIComponent).join('/');
+    au.src=url; msg.innerHTML="Ready — press play ▶";
+    var p=au.play(); if(p&&p.catch)p.catch(function(){msg.innerHTML="Tap ▶ Play song to listen";});
+  }
+  function getTree(cb){
+    try{var c=JSON.parse(localStorage.getItem(TREE_KEY)||'null');
+      if(c&&c.t&&(Date.now()-c.t<TTL)&&c.paths){cb(c.paths);return;}}catch(e){}
+    fetch("https://api.github.com/repos/ChuckB4/rrn-website/git/trees/main?recursive=1",{headers:{Accept:"application/vnd.github+json"}})
+    .then(function(r){return r.ok?r.json():null;})
+    .then(function(d){
+      if(d&&d.tree){var paths=d.tree.filter(function(e){return e.type==='blob'&&/^music\/.+\.mp3$/i.test(e.path);}).map(function(e){return e.path;});
+        try{localStorage.setItem(TREE_KEY,JSON.stringify({t:Date.now(),paths:paths}));}catch(e){}
+        cb(paths);
+      } else cb(null);
+    }).catch(function(){cb(null);});
+  }
+  window.go=function(){ if(au.src){ au.play(); return; } start(true); };
+  function start(force){
+    if(!src){msg.textContent="No song specified.";return;}
+    getTree(function(paths){
+      if(paths){var maps=buildMaps(paths);var real=resolve(maps);
+        if(real){setSrc(real);return;}
+        msg.textContent="Couldn't match this file in the music folder.";
+      } else { // tree unavailable (rate limit) — try direct as a fallback
+        au.src=RR_ABS+src.split('/').map(encodeURIComponent).join('/');
+        msg.innerHTML="Trying direct file… if it doesn't play, reload in a minute.";
+        var p=au.play(); if(p&&p.catch)p.catch(function(){});
+      }
+    });
+  }
+  start();
+})();
+</script>
+</body></html>
