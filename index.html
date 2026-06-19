@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- RRN-WEBSITE-MASTER | 2026-06-15-live162 | removed Spoken Fort (3 versions) -->
+<!-- RRN-WEBSITE-MASTER | 2026-06-15-live168 | +4 new songs (Alt Rock/80s/Southern Blues Rock) = 250 -->
 
 <html lang="en">
 <head>
@@ -239,9 +239,9 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
 .nl .grp>button{display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,.65);font-size:12.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-family:var(--fb);padding:6px 0;transition:color .2s;}
 .nl .grp>button:hover,.nl .grp.open>button,.nl .grp:hover>button{color:var(--gold);}
 .nl .grp .cv{width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-top:-2px;transition:transform .25s;}
-.nl .grp.open .cv,.nl .grp:hover .cv{transform:rotate(-135deg);margin-top:2px;}
+.nl .grp.open .cv{transform:rotate(-135deg);margin-top:2px;}
 .nl .dd{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%) translateY(8px);min-width:228px;background:rgba(11,24,41,.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--gold-br);border-radius:14px;padding:8px;opacity:0;visibility:hidden;transition:all .22s;box-shadow:0 24px 70px rgba(0,0,0,.5);}
-.nl .grp.open .dd,.nl .grp:hover .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.nl .grp.open .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
 .nl .dd a{display:block;color:rgba(255,255,255,.72);font-size:13px;font-weight:500;letter-spacing:.02em;text-transform:none;padding:10px 14px;border-radius:9px;white-space:nowrap;}
 .nl .dd a:hover{background:var(--gold-lo);color:var(--gold);}
 .mm .mg{font-size:10.5px;font-weight:700;color:var(--gold);letter-spacing:.13em;text-transform:uppercase;padding:18px 6% 6px;}
@@ -1051,7 +1051,7 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
       <div class="tt" id="rrTitle">Refined Radio &mdash; tap play to begin</div>
       <div class="sb"><span class="rrp-live"><i></i>LIVE</span> &middot; <span id="rrSub">Continuous Worship &amp; Recovery</span></div>
     </div>
-    <div class="rrp-rate"><button class="rrp-rb" id="rrUp" onclick="rrRate(1)" title="Bump this song up so it plays more often" aria-label="Thumbs up / request more plays"><svg viewBox="0 0 24 24"><path d="M2 20h2a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1H2zM22 10h-6.31l.95-4.57.03-.32a1.5 1.5 0 0 0-.44-1.06L15.17 3 8.59 9.59A2 2 0 0 0 8 11v7a2 2 0 0 0 2 2h7a2 2 0 0 0 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1a2 2 0 0 0-2-2z"/></svg></button><button class="rrp-rb" id="rrDn" onclick="rrRate(-1)" title="Play this less" aria-label="Thumbs down"><svg viewBox="0 0 24 24"><path d="M22 4h-2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2zM2 14h6.31l-.95 4.57-.03.32a1.5 1.5 0 0 0 .44 1.06L8.83 21l6.58-6.59A2 2 0 0 0 16 13V6a2 2 0 0 0-2-2H7a2 2 0 0 0-1.84 1.22L2.14 12.27c-.09.23-.14.47-.14.73v1a2 2 0 0 0 2 2z"/></svg></button><button class="rrp-rb" id="rrReq" onclick="rrRequest()" title="Request this song (boosts rotation)" aria-label="Request this song"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg></button><button class="rrp-rb" id="rrShSong" onclick="rrShareSong()" title="Share this song" aria-label="Share this song"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg></button><span id="rrStars" class="rrp-stars" title="This song&rsquo;s rating &mdash; 4&#9733; and 5&#9733; play more" style="color:var(--gold);font-size:12px;letter-spacing:1px;margin-left:7px;white-space:nowrap;"></span></div><div class="rrp-prog" id="rrProg" onclick="rrSeek(event)"><div class="rrp-fill" id="rrFill"></div></div>
+    <div class="rrp-rate"><button class="rrp-rb" id="rrUp" onclick="rrRate(1)" title="Bump this song up so it plays more often" aria-label="Thumbs up / request more plays"><svg viewBox="0 0 24 24"><path d="M2 20h2a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1H2zM22 10h-6.31l.95-4.57.03-.32a1.5 1.5 0 0 0-.44-1.06L15.17 3 8.59 9.59A2 2 0 0 0 8 11v7a2 2 0 0 0 2 2h7a2 2 0 0 0 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1a2 2 0 0 0-2-2z"/></svg></button><button class="rrp-rb" id="rrDn" onclick="rrRate(-1)" title="Play this less" aria-label="Thumbs down"><svg viewBox="0 0 24 24"><path d="M22 4h-2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2zM2 14h6.31l-.95 4.57-.03.32a1.5 1.5 0 0 0 .44 1.06L8.83 21l6.58-6.59A2 2 0 0 0 16 13V6a2 2 0 0 0-2-2H7a2 2 0 0 0-1.84 1.22L2.14 12.27c-.09.23-.14.47-.14.73v1a2 2 0 0 0 2 2z"/></svg></button><button class="rrp-rb" id="rrReq" onclick="rrRequest()" title="Request this song (boosts rotation)" aria-label="Request this song"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg></button><button class="rrp-rb" id="rrShSong" onclick="rrShareSong()" title="Share this song" aria-label="Share this song"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg></button><button class="rrp-rb" id="rrHeart" onclick="rrReactToggle(event)" title="Quick reactions" aria-label="Quick reactions"><svg viewBox="0 0 24 24"><path d="M12 21s-7.55-4.74-10.05-9.24C.6 9.1 1.7 5.8 4.7 4.85 6.85 4.17 9.1 5.1 12 8c2.9-2.9 5.15-3.83 7.3-3.15 3 .95 4.1 4.25 2.75 6.91C19.55 16.26 12 21 12 21z"/></svg></button><div id="rrReactMenu" class="rrp-react"><button onclick="rrLikeSong()">❤️ Like this song</button><button onclick="rrMoreLikeThis()">🎶 Need more like this</button><button onclick="rrTestimony()">🙏 “This song helped me”</button><button onclick="rrFav()">⭐ Save to favorites</button></div><span id="rrStars" class="rrp-stars" title="This song&rsquo;s rating &mdash; 4&#9733; and 5&#9733; play more" style="color:var(--gold);font-size:12px;letter-spacing:1px;margin-left:7px;white-space:nowrap;"></span></div><div class="rrp-prog" id="rrProg" onclick="rrSeek(event)"><div class="rrp-fill" id="rrFill"></div></div>
     <input class="rrp-vol" type="range" min="0" max="1" step="0.05" value="0.8" oninput="rrVol(this.value)" aria-label="Volume">
     <select class="rrp-genre" id="rrGenre" onchange="rrSetGenre(this.value)" aria-label="Choose a genre" title="Choose a genre"><option value="">All Genres &middot; Auto Mix</option></select>
     <div class="rrp-hint" style="flex-basis:100%;width:100%;font-size:11px;color:var(--gold);opacity:.85;text-align:center;padding:5px 8px 0;letter-spacing:.02em;line-height:1.45;">Love this song? Tap <strong>&#128077;</strong> to move it up the station playlist. Top-rated songs play more often and can be featured at the top of the hour.</div>
@@ -4176,360 +4176,256 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')rrnClosePost
    Clock genres: country, pop, contemporary, ccm, edm, trance.
    The "popular" daypart auto-plays the highest-rated tracks regardless of genre. */
 var RR_LIBRARY = [
-  {title:"You Are My Joy (Dance)", artist:"RRN", src:"music/You Are My Joy (Dance).mp3", genre:"Christian Dance", isNew:true},
-  {title:"Hidden in the Shadow of His Wings (LoFi)", artist:"RRN", src:"music/Hidden in the Shadow of His Wings (LoFi).mp3", genre:"Christian LoFi", isNew:true},
-  {title:"You Are My Joy (LoFi)", artist:"RRN", src:"music/You Are My Joy (LoFi).mp3", genre:"Christian LoFi", isNew:true},
-  {title:"Rose of Sharron (LoFi)", artist:"RRN", src:"music/Rose Of Sharron (LoFi).mp3", genre:"Christian LoFi", isNew:true},
-  {title:"Healed by the Hand (Dance)", artist:"RRN", src:"music/Healed by the Hand (Dance).mp3", genre:"Christian Dance", isNew:true},
-  {title:"Heart of Glass, Hand of Grace (Dance)", artist:"RRN", src:"music/HEART OF GLASS, HAND OF GRACE (Dance).mp3", genre:"Christian Dance", isNew:true},
-  {title:"Grace in Cowboy Boots (Country)", artist:"RRN", src:"music/Grace in Cowboy Boots (Country).mp3", genre:"Christian Country", isNew:true},
-  {title:"Give God Your Burden (Country)", artist:"RRN", src:"music/Give God Your Burden (Country).mp3", genre:"Christian Country", isNew:true},
-  {title:"Too Far Gone (Bluegrass)", artist:"RRN", src:"music/Too Far Gone (Bluegrass).mp3", genre:"Christian Bluegrass", isNew:true},
-  {title:"Bless Your Name (Bluegrass)", artist:"RRN", src:"music/Bless Your Name (Bluegrass).mp3", genre:"Christian Bluegrass", isNew:true},
-  {title:"Bless Your Name (Bluegrass) (V2)", artist:"RRN", src:"music/Bless Your Name (Bluegrass) (2).mp3", genre:"Christian Bluegrass", isNew:true},
-  {title:"In Your Presence (Bluegrass)", artist:"RRN", src:"music/In Your Presence (Bluegrass).mp3", genre:"Christian Bluegrass", isNew:true},
-  {title:"Bless Your Name (Bluegrass) (V3)", artist:"RRN", src:"music/Bless Your Name (Bluegrass) (1).mp3", genre:"Christian Bluegrass", isNew:true},
-  {title:"His Mercy Runs Deep (R&B)", artist:"RRN", src:"music/His Mercy Runs Deep (R&B).mp3", genre:"Christian R&B", isNew:true},
-  {title:"Clothed in Your Glory (R&B)", artist:"RRN", src:"music/Clothed in Your Glory (R&B).mp3", genre:"Christian R&B", isNew:true},
-  {title:"His Mercy Runs Deep (R&B) (V2)", artist:"RRN", src:"music/His Mercy Runs Deep (R&B) (1).mp3", genre:"Christian R&B", isNew:true},
-  {title:"Light That Never Falls (Worship)", artist:"RRN", src:"music/LIGHT THAT NEVER FALLS.mp3", genre:"Contemporary Worship", isNew:true},
-  {title:"What I Lay at the Altar (Worship)", artist:"RRN", src:"music/What I Lay at the Altar.mp3", genre:"Contemporary Worship", isNew:true},
-  {title:"Light That Never Falls (Worship) (V2)", artist:"RRN", src:"music/LIGHT THAT NEVER FALLS (1).mp3", genre:"Contemporary Worship", isNew:true},
-  {title:"Light That Never Fails (Worship)", artist:"RRN", src:"music/Light That Never Fails (Worship).mp3", genre:"Contemporary Worship", isNew:true},
-  {title:"His Mercy Runs Deep (R&B) (V3)", artist:"RRN", src:"music/His Mercy Runs Deep (R&B) (2).mp3", genre:"Christian R&B", isNew:true},
-  {title:"In Your Presence (Bluegrass) (V2)", artist:"RRN", src:"music/In Your Presence (Bluegrass) (1).mp3", genre:"Christian Bluegrass", isNew:true},
-  {title:"Broken by Grace (Country)", artist:"RRN", src:"music/Broken By Grace (Country).mp3", genre:"Christian Country", isNew:true},
-  {title:"Give God Your Burden (Country) (V2)", artist:"RRN", src:"music/Give God Your Burden (Country) (1).mp3", genre:"Christian Country", isNew:true},
-  {title:"Healed by the Hand (Dance) (V2)", artist:"RRN", src:"music/Healed by the Hand (Dance) (1).mp3", genre:"Christian Dance", isNew:true},
-  {title:"You Are My Joy (LoFi) (V2)", artist:"RRN", src:"music/You Are My Joy (LoFi) (1).mp3", genre:"Christian LoFi", isNew:true},
-  {title:"Don't You Cry Anymore (Pop)", artist:"RRN", src:"music/Don't You Cry Anymore (1).mp3", genre:"Christian Pop", isNew:true},
-  {title:"Don't You Cry Anymore (Pop) (V2)", artist:"RRN", src:"music/Don_t_You_Cry_Anymore.mp3", genre:"Christian Pop"},  // new upload
-  {title:"Devil Under My Soles (Pop)", artist:"RRN", src:"music/Devil_Under_My_Soles.mp3", genre:"Christian Pop"},  // new upload
-  {title:"Devil Under My Soles (Pop) (V2)", artist:"RRN", src:"music/Devil_Under_My_Soles__1_.mp3", genre:"Christian Pop"},  // new upload
-  {title:"Devil Under Soles (Pop)", artist:"RRN", src:"music/Devil_Under_Soles.mp3", genre:"Christian Pop"},  // new upload
-  {title:"Devil Under Soles (Pop) (V2)", artist:"RRN", src:"music/Devil_Under_Soles__1_.mp3", genre:"Christian Pop"},  // new upload
-  {title:"Lazarus (Teaching)", artist:"RRN Teaching", src:"music/Lazarus_Finished.mp3", genre:"Biblical Teaching"},  // educational/teaching song → :55 slot
-  {title:"Brook Code (Teaching)", artist:"RRN Teaching", src:"music/Brook_Code.mp3", genre:"Biblical Teaching"},  // educational/teaching song → :55 slot
-  {title:"Only God Changes You (Teaching)", artist:"RRN Teaching", src:"music/Only_God_Changes_You.mp3", genre:"Biblical Teaching"},  // educational/teaching song → :55 slot
-  {title:"Backside of the Desert (Teaching)", artist:"RRN Teaching", src:"music/Backside_Desert.mp3", genre:"Biblical Teaching"},  // educational/teaching song → :55 slot
-  {title:"Alabaster Box (Teaching)", artist:"RRN Teaching", src:"music/Alabaster_Box.mp3", genre:"Biblical Teaching"},  // educational/teaching song → :55 slot
-  {title:"Trusted Witness (Teaching)", artist:"RRN Teaching", src:"music/Trusted_Witness.mp3", genre:"Biblical Teaching"},  // educational/teaching song → :55 slot
-  {title:"Hannah Prayed (Teaching)", artist:"RRN Teaching", src:"music/Hannah_Prayed.mp3", genre:"Biblical Teaching"},  // educational/teaching song → :55 slot
-  {title:"Issue of Blood (Teaching)", artist:"RRN Teaching", src:"music/Issue_Blood.mp3", genre:"Biblical Teaching"},  // educational/teaching song → :55 slot
-  {title:"Simon Peter (Teaching)", artist:"RRN Teaching", src:"music/Simon_Peter.mp3", genre:"Biblical Teaching"},  // educational/teaching song → :55 slot
-  {title:"The Things You Never Saw (Hip-Hop)", artist:"RRN", src:"music/The Things you Never Saw Alternative R&B, Pop, Hip Hop.mp3", genre:"Christian Hip-Hop"},
-  {title:"Strong and Brave (Hip-Hop)", artist:"RRN", src:"music/Strong and Brave Alternative R&B, Pop, Hip Hop.mp3", genre:"Christian Hip-Hop"},
-  {title:"Still You Hold Me (Worship)", artist:"RRN", src:"music/Still You Hold Me Contemporary Worship.mp3", genre:"Contemporary Worship"},
-  {title:"Runnin\u2019 Across the Pew Top (Bounce Drop)", artist:"RRN", src:"music/RUNNIN\u2019 ACROSS THE PEW TOP \u2014 Bounce Drop Country Rap,.mp3", genre:"Christian Bounce Drop"},
-  {title:"My Wig Blew Off and Started a Revival (Bounce Drop)", artist:"RRN", src:"music/MY WIG BLEW OFF AND STARTED A REVIVAL\u2014 Bounce Drop Country Rap,.mp3", genre:"Christian Bounce Drop"},
-  {title:"My Wig Blew Off and Started a Revival (Bounce Drop) (V2)", artist:"RRN", src:"music/MY WIG BLEW OFF AND STARTED A REVIVAL\u2014 Bounce Drop Country Rap, (2).mp3", genre:"Christian Bounce Drop"},
-  {title:"My Wig Blew Off and Started a Revival (Bounce Drop) (V3)", artist:"RRN", src:"music/MY WIG BLEW OFF AND STARTED A REVIVAL\u2014 Bounce Drop Country Rap, (1).mp3", genre:"Christian Bounce Drop"},
-  {title:"My Only Amen (Bounce Drop)", artist:"RRN", src:"music/MY ONLY AMEN\u2014 Bounce Drop Country Rap,.mp3", genre:"Christian Bounce Drop"},
-  {title:"In a Dry and Weary Land (Hip-Hop)", artist:"RRN", src:"music/In a Dry and Weary Land Alternative R&B, Pop, Hip Hop.mp3", genre:"Christian Hip-Hop"},
-  {title:"I Almost Left My Coffee in the Pew (Bounce Drop)", artist:"RRN", src:"music/I Almost Left My Coffee in the Pew \u2014 Bounce Drop Country Rap,.mp3", genre:"Christian Bounce Drop"},
-  {title:"Grounded in Victory (2000s Alternative Metal)", artist:"RRN", src:"music/GROUNDED IN VICTORY\u2014 Post-Grunge.mp3", genre:"Christian 2000s Alternative Metal"},
-  {title:"Grounded in Victory (Gospel Blues)", artist:"RRN", src:"music/GROUNDED IN VICTORY\u2014 Blues Rock.mp3", genre:"Gospel Blues"},
-  {title:"Grounded in Victory (Gospel Blues) (V2)", artist:"RRN", src:"music/GROUNDED IN VICTORY\u2014 Blues Rock (1).mp3", genre:"Gospel Blues"},
-  {title:"Grandma Outdanced Me in Church (Bounce Drop)", artist:"RRN", src:"music/GRANDMA OUTDANCED ME IN CHURCH \u2014 Bounce Drop Country Rap,.mp3", genre:"Christian Bounce Drop"},
-  {title:"God's Glory Ends My Story (Country)", artist:"RRN", src:"music/God's Glory Ends My Story Modern country-pop.mp3", genre:"Christian Country"},
-  {title:"God's Glory Ends My Story (Country) (V2)", artist:"RRN", src:"music/God's Glory Ends My Story Classic Country Honky-tonk.mp3", genre:"Christian Country"},
-  {title:"God's Glory Ends My Story (Country) (V3)", artist:"RRN", src:"music/God's Glory Ends My Story Classic Country Honky-tonk (1).mp3", genre:"Christian Country"},
-  {title:"Fall on Us (Country)", artist:"RRN", src:"music/Fall on U s Outlaw Country (2).mp3", genre:"Christian Country"},
-  {title:"Fall on Us (Country) (V2)", artist:"RRN", src:"music/Fall on U s Outlaw Country (1).mp3", genre:"Christian Country"},
-  {title:"Crown of Thorns, Hands of Grace (Worship Rock)", artist:"RRN", src:"music/CROWN OF THORNS, HANDS OF GRACE\u2014 Post-Grunge.mp3", genre:"Worship Rock"},
-  {title:"Broken but Yours (Worship)", artist:"RRN", src:"music/Broken but Yours (Worship).mp3", genre:"Contemporary Worship"},
-  {title:"Abide in You (Worship Rock)", artist:"RRN", src:"music/ABIDE IN YOU\u2014 Post-Grunge.mp3", genre:"Worship Rock"},
-  {title:"Abide in You (Dance)", artist:"RRN", src:"music/ABIDE IN YOU\u2014 DANCE FLOOR ANTHEM.mp3", genre:"Christian Dance"},
-  {title:"I Quoted the Wrong Verse (It Was a Burger King Ad) (Bounce Drop)", artist:"RRN", src:"music/\u201cI QUOTED THE WRONG VERSE (IT WAS A BURGER KING AD)\u2014 Bounce Drop Country Rap,.mp3", genre:"Christian Bounce Drop"},
-  {title:"You Never Let Go (Worship)", artist:"RRN", src:"music/You Never Let Go Contemporary Worship.mp3", genre:"Contemporary Worship"},
-  {title:"We Knew God (Pop)", artist:"RRN", src:"music/We Knew God Radio (1).mp3", genre:"Christian Pop"},
-  {title:"Light Breaks the Chains (Gospel Blues)", artist:"RRN", src:"music/\u201cLight Breaks the Chain)\u201d Blues Jazz (1).mp3", genre:"Gospel Blues"},
-  {title:"Light Breaks the Chains (Gospel Blues) (V2)", artist:"RRN", src:"music/\u201cLight Breaks the Chain)\u201d Blues Jazz.mp3", genre:"Gospel Blues"},
-  {title:"Started with a Dream (Southern Christian Rock)", artist:"RRN", src:"music/\u201cStarted With a Dream\u201d (Edit).mp3", genre:"Southern Christian Rock"},
   {title:"A Vapor Breath (2000s Alternative Metal)", artist:"RRN", src:"music/A Vapor Breath.mp3", genre:"Christian 2000s Alternative Metal"},
   {title:"A Whisper from Hannah (Southern Blues Rock)", artist:"RRN", src:"music/A Whisper From Hannah Country Rock.mp3", genre:"Christian Southern Blues Rock"},
+  {title:"Abide in You (Dance)", artist:"RRN", src:"music/ABIDE IN YOU— DANCE FLOOR ANTHEM.mp3", genre:"Christian Dance"},
+  {title:"Abide in You (Worship Rock)", artist:"RRN", src:"music/ABIDE IN YOU— Post-Grunge.mp3", genre:"Worship Rock"},
+  {title:"Alabaster Box (Teaching)", artist:"RRN Teaching", src:"music/Alabaster_Box.mp3", genre:"Biblical Teaching"},
+  {title:"Alabaster Tears (Outlaw Country)", artist:"RRN", src:"music/Alabaster Tears (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
+  {title:"Among the Tombs (Outlaw Country)", artist:"RRN", src:"music/Among the Tombs (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
+  {title:"Backside of the Desert (Teaching)", artist:"RRN Teaching", src:"music/Backside_Desert.mp3", genre:"Biblical Teaching"},
   {title:"Beauty for Ashes (Southern Blues Rock)", artist:"RRN", src:"music/Beauty for Ashes (1).mp3", genre:"Christian Southern Blues Rock"},
   {title:"Beauty Holiness (Worship)", artist:"RRN", src:"music/Beauty Holiness Radio.mp3", genre:"Contemporary Worship"},
-  {title:"Beauty Holiness Spanish Guitar (Southern Blues Rock)", artist:"RRN", src:"music/Beauty Holiness Spanish Guitar (1).mp3", genre:"Christian Southern Blues Rock"},
-  {title:"Beauty Holiness Spanish Guitar (Southern Blues Rock) (V2)", artist:"RRN", src:"music/Beauty Holiness Spanish Guitar.mp3", genre:"Christian Southern Blues Rock"},
+  {title:"Beauty Holiness: Spanish Guitar Version (Southern Blues Rock)", artist:"RRN", src:"music/Beauty Holiness Spanish Guitar (1).mp3", genre:"Christian Southern Blues Rock"},
   {title:"Beyond the Shadows (Pop)", artist:"RRN", src:"music/Beyond the Shadows.mp3", genre:"Christian Pop"},
-  {title:"Blessed & a Mess Country Rap (Bounce Drop)", artist:"RRN", src:"music/Blessed & a Mess Bounce Drop Country Rap (1).mp3", genre:"Christian Bounce Drop"},
-  {title:"Blessed & a Mess Country Rap (Bounce Drop) (V2)", artist:"RRN", src:"music/Blessed & a Mess Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
-  {title:"In His Grace (Hip-Hop)", artist:"RRN", src:"music/Bounce in His grace l.mp3", genre:"Christian Hip-Hop"},
-  {title:"Break the Silence (Praise & Worship)", artist:"RRN", src:"music/Break the Silence\u201d.mp3", genre:"Praise & Worship"},
+  {title:"Bless Your Name (Bluegrass)", artist:"RRN", src:"music/Bless Your Name (Bluegrass).mp3", genre:"Christian Bluegrass", isNew:true},
+  {title:"Blessed & a Mess (Country Rap Bounce Mix)", artist:"RRN", src:"music/Blessed & a Mess Bounce Drop Country Rap (1).mp3", genre:"Christian Bounce Drop"},
+  {title:"Bow Before Your Throne (K-Pop)", artist:"RRN", src:"music/Bow Before Your Thone (K - Pop).mp3", genre:"Christian K-Pop", isNew:true},
+  {title:"Break the Silence (Praise & Worship)", artist:"RRN", src:"music/Break the Silence”.mp3", genre:"Praise & Worship"},
   {title:"Breath on Glass (Hip-Hop)", artist:"RRN", src:"music/Breath on Glass (1).mp3", genre:"Christian Hip-Hop"},
-  {title:"Breath on Glass (Hip-Hop) (V2)", artist:"RRN", src:"music/Breath on Glass.mp3", genre:"Christian Hip-Hop"},
-  {title:"Broken Chains Version (Psychedelic Christian Rock)", artist:"RRN", src:"music/Broken Chains Psychedelic Rock Version (1).mp3", genre:"Psychedelic Christian Rock"},
-  {title:"Broken Chains Version (Psychedelic Christian Rock) (V2)", artist:"RRN", src:"music/Broken Chains Psychedelic Rock Version.mp3", genre:"Psychedelic Christian Rock"},
-  {title:"Called by Name ( I Am Yours) (EDM)", artist:"RRN", src:"music/CALLED BY NAME (I AM YOURS) (1).mp3", genre:"Christian EDM"},
-  {title:"Called by Name (I Am Yours) (EDM)", artist:"RRN", src:"music/CALLED BY NAME (I AM YOURS).mp3", genre:"Christian EDM"},
+  {title:"Broken but Yours (Worship)", artist:"RRN", src:"music/Broken but Yours (Worship).mp3", genre:"Contemporary Worship"},
+  {title:"Broken by Grace (Country)", artist:"RRN", src:"music/Broken By Grace (Country).mp3", genre:"Christian Country", isNew:true},
+  {title:"Broken Chains (Psychedelic Christian Rock)", artist:"RRN", src:"music/Broken Chains Psychedelic Rock Version (1).mp3", genre:"Psychedelic Christian Rock"},
+  {title:"Brook Code (Teaching)", artist:"RRN Teaching", src:"music/Brook_Code.mp3", genre:"Biblical Teaching"},
+  {title:"Called by Name (I Am Yours) (EDM)", artist:"RRN", src:"music/CALLED BY NAME (I AM YOURS) (1).mp3", genre:"Christian EDM"},
   {title:"Called from the Low Places (Southern Blues Rock)", artist:"RRN", src:"music/Called From the Low Places (1).mp3", genre:"Christian Southern Blues Rock"},
-  {title:"Called from the Low Places (Southern Blues Rock) (V2)", artist:"RRN", src:"music/Called From the Low Places (2).mp3", genre:"Christian Southern Blues Rock"},
-  {title:"Called from the Low Places (Southern Blues Rock) (V3)", artist:"RRN", src:"music/Called From the Low Places (4).mp3", genre:"Christian Southern Blues Rock"},
-  {title:"Called from the Low Places (Southern Blues Rock) (V4)", artist:"RRN", src:"music/Called From the Low Places.mp3", genre:"Christian Southern Blues Rock"},
-  {title:"Chaos Vs Calling (EDM)", artist:"RRN", src:"music/CHAOS VS CALLING (1).mp3", genre:"Christian EDM"},
-  {title:"Chaos Vs Calling (EDM) (V2)", artist:"RRN", src:"music/CHAOS VS CALLING.mp3", genre:"Christian EDM"},
-  {title:"Church N Chicken (Bounce Drop)", artist:"RRN", src:"music/Church N Chicken Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
-  {title:"Clock Won\u2019t Let Go (Bounce Drop)", artist:"RRN", src:"music/Clock Won\u2019t Let Go Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
+  {title:"Chaos vs. Calling (EDM)", artist:"RRN", src:"music/CHAOS VS CALLING (1).mp3", genre:"Christian EDM"},
+  {title:"Church N Chicken (Country Rap Bounce Mix)", artist:"RRN", src:"music/Church N Chicken Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
+  {title:"Clock Won't Let Go (Country Rap Bounce Mix)", artist:"RRN", src:"music/Clock Won’t Let Go Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
   {title:"Closer Than My Breath (Pop)", artist:"RRN", src:"music/Closer Than My Breath Pop.mp3", genre:"Christian Pop"},
-  {title:"Come Alive (Chains Fall Down) Radio (Pop)", artist:"RRN", src:"music/Come Alive (Chains Fall Down) Radio (1).mp3", genre:"Christian Pop"},
+  {title:"Clothed in Your Glory (R&B)", artist:"RRN", src:"music/Clothed in Your Glory (R&B).mp3", genre:"Christian R&B", isNew:true},
   {title:"Come Alive (Chains Fall Down) (Pop)", artist:"RRN", src:"music/Come Alive (Chains Fall Down) Radio.mp3", genre:"Christian Pop"},
   {title:"Come Alive (Praise & Worship)", artist:"RRN", src:"music/Come Alive (Chains Fall Down).mp3", genre:"Praise & Worship"},
-  {title:"Consuming Fire (Pop)", artist:"RRN", src:"music/Consuming Fire (1).mp3", genre:"Christian Pop"},
+  {title:"Come Alive (Chains Fall Down) (Radio Edit)", artist:"RRN", src:"music/Come Alive (Chains Fall Down) Radio (1).mp3", genre:"Christian Pop"},
   {title:"Consuming Fire (Country)", artist:"RRN", src:"music/Consuming Fire Country.mp3", genre:"Christian Country"},
-  {title:"Consuming Fire Jazz (Blues-Jazz)", artist:"RRN", src:"music/Consuming Fire Jazz.mp3", genre:"Christian Blues-Jazz"},
-  {title:"Consuming Fire (Pop) (V2)", artist:"RRN", src:"music/Consuming Fire.mp3", genre:"Christian Pop"},
+  {title:"Consuming Fire (Pop)", artist:"RRN", src:"music/Consuming Fire (1).mp3", genre:"Christian Pop"},
+  {title:"Consuming Fire (Blues Jazz Version)", artist:"RRN", src:"music/Consuming Fire Jazz.mp3", genre:"Christian Blues-Jazz"},
+  {title:"Crown of Thorns, Hands of Grace (Worship Rock)", artist:"RRN", src:"music/CROWN OF THORNS, HANDS OF GRACE— Post-Grunge.mp3", genre:"Worship Rock"},
   {title:"Daughter Again (EDM)", artist:"RRN", src:"music/Daughter Again EDM (1).mp3", genre:"Christian EDM"},
-  {title:"Daughter Again (EDM) (V2)", artist:"RRN", src:"music/Daughter Again EDM.mp3", genre:"Christian EDM"},
   {title:"Daughter Again (Pop)", artist:"RRN", src:"music/Daughter Again Pop (1).mp3", genre:"Christian Pop"},
-  {title:"Daughter Again (Pop) (V2)", artist:"RRN", src:"music/Daughter Again Pop.mp3", genre:"Christian Pop"},
-  {title:"Divine Controlt13 (EDM)", artist:"RRN", src:"music/Divine Controlt13.mp3", genre:"Christian EDM"},
-  {title:"Double Portion Radio (Alternative R&B)", artist:"RRN", src:"music/Double Portion Radio (1).mp3", genre:"Christian Alternative R&B"},
+  {title:"Devil Under My Soles (Pop)", artist:"RRN", src:"music/Devil_Under_My_Soles.mp3", genre:"Christian Pop"},
+  {title:"Divine Control (Trip-Hop)", artist:"RRN", src:"music/Divine-Control.mp3", genre:"Christian Trip-Hop"},
+  {title:"Divine Control (EDM Version)", artist:"RRN", src:"music/Divine Controlt13.mp3", genre:"Christian EDM"},
+  {title:"Do You Love Me? (Outlaw Country)", artist:"RRN", src:"music/Do You Love Me_  (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
+  {title:"Don't You Cry Anymore (Pop)", artist:"RRN", src:"music/Don't You Cry Anymore (1).mp3", genre:"Christian Pop", isNew:true},
   {title:"Double Portion (Southern Blues Rock)", artist:"RRN", src:"music/Double Portion.mp3", genre:"Christian Southern Blues Rock"},
-  {title:"Faithfully (Trip-Hop)", artist:"RRN", src:"music/FAITHFULLY.mp3", genre:"Christian Trip-Hop"},
+  {title:"Double Portion (Radio Edit)", artist:"RRN", src:"music/Double Portion Radio (1).mp3", genre:"Christian Alternative R&B"},
   {title:"Faithfully (EDM)", artist:"RRN", src:"music/FAITHFULLYt8.mp3", genre:"Christian EDM"},
-  {title:"Fall on Us (Country) (V3)", artist:"RRN", src:"music/Fall on U s Outlaw Country.mp3", genre:"Christian Country"},
+  {title:"Faithfully (Trip-Hop)", artist:"RRN", src:"music/FAITHFULLY.mp3", genre:"Christian Trip-Hop"},
   {title:"Fall on Us (Chillwave)", artist:"RRN", src:"music/Fall on Us Chill.mp3", genre:"Christian Chillwave"},
-  {title:"Fall on Us Radio (Alternative R&B)", artist:"RRN", src:"music/Fall on Us Radio (1).mp3", genre:"Christian Alternative R&B"},
-  {title:"Fall on Us Radio (Alternative R&B) (V2)", artist:"RRN", src:"music/Fall on Us Radio (2).mp3", genre:"Christian Alternative R&B"},
-  {title:"Fall on Us Radio (Alternative R&B) (V3)", artist:"RRN", src:"music/Fall on Us Radio.mp3", genre:"Christian Alternative R&B"},
+  {title:"Fall on Us (Outlaw Country)", artist:"RRN", src:"music/Fall on U s Outlaw Country (2).mp3", genre:"Christian Outlaw Country"},
   {title:"Fall on Us (Psychedelic Christian Rock)", artist:"RRN", src:"music/FallmOn Us.mp3", genre:"Psychedelic Christian Rock"},
-  {title:"Father\u2019s Steady Hands (Hip-Hop)", artist:"RRN", src:"music/Father\u2019s Steady Hands.mp3", genre:"Christian Hip-Hop"},
+  {title:"Fall on Us (Alternative R&B Radio Edit)", artist:"RRN", src:"music/Fall on Us Radio (1).mp3", genre:"Christian Alternative R&B"},
+  {title:"Father's Steady Hands (Hip-Hop)", artist:"RRN", src:"music/Father’s Steady Hands.mp3", genre:"Christian Hip-Hop"},
   {title:"Fever (K-Pop)", artist:"RRN", src:"music/Fever.mp3", genre:"Christian K-Pop"},
-  {title:"Fire in My Bones (Trip-Hop)", artist:"RRN", src:"music/Fire in My Bones (1).mp3", genre:"Christian Trip-Hop"},
-  {title:"Fire in My Bones (Trip-Hop) (V2)", artist:"RRN", src:"music/Fire in My Bones (2).mp3", genre:"Christian Trip-Hop"},
   {title:"Fire in My Bones (Chillwave)", artist:"RRN", src:"music/Fire in My Bones Chill (1).mp3", genre:"Christian Chillwave"},
-  {title:"Fire in My Bones (Chillwave) (V2)", artist:"RRN", src:"music/Fire in My Bones Chill.mp3", genre:"Christian Chillwave"},
-  {title:"Fire in My Bones Radio (Pop)", artist:"RRN", src:"music/Fire in My Bones Radio (1).mp3", genre:"Christian Pop"},
-  {title:"Fire in My Bones Radio (K-Pop)", artist:"RRN", src:"music/Fire in My Bones Radio.mp3", genre:"Christian K-Pop"},
-  {title:"Fire in My Bones (Trip-Hop) (V3)", artist:"RRN", src:"music/Fire in My Bones.mp3", genre:"Christian Trip-Hop"},
+  {title:"Fire in My Bones (Trip-Hop)", artist:"RRN", src:"music/Fire in My Bones (1).mp3", genre:"Christian Trip-Hop"},
+  {title:"Fire in My Bones (Radio Edit – K-Pop)", artist:"RRN", src:"music/Fire in My Bones Radio.mp3", genre:"Christian K-Pop"},
+  {title:"Fire in My Bones (Radio Edit – Pop)", artist:"RRN", src:"music/Fire in My Bones Radio (1).mp3", genre:"Christian Pop"},
   {title:"Foot on His Neck (Southern Christian Rock)", artist:"RRN", src:"music/Foot on His Neck Country Rock (1).mp3", genre:"Southern Christian Rock"},
-  {title:"Foot on His Neck (Southern Christian Rock) (V2)", artist:"RRN", src:"music/Foot on His Neck Country Rock.mp3", genre:"Southern Christian Rock"},
-  {title:"Fragile Heart, Eternal Lightt6 (80's)", artist:"RRN", src:"music/FRAGILE HEART, ETERNAL LIGHTt6 (1).mp3", genre:"Christian 80's"},
-  {title:"Fragile Heart, Eternal Lightt6 (80's) (V2)", artist:"RRN", src:"music/FRAGILE HEART, ETERNAL LIGHTt6.mp3", genre:"Christian 80's"},
+  {title:"Fragile Heart, Eternal Light (80's)", artist:"RRN", src:"music/FRAGILE HEART, ETERNAL LIGHTt6 (1).mp3", genre:"Christian 80's"},
   {title:"From Pit to Purpose (EDM)", artist:"RRN", src:"music/FROM PIT TO PURPOSE.mp3", genre:"Christian EDM"},
   {title:"From Pit to Purpose (Worship Rock)", artist:"RRN", src:"music/FROM PIT TO PURPOSEt7 (1).mp3", genre:"Worship Rock"},
-  {title:"From Pit to Purposet (Worship Rock)", artist:"RRN", src:"music/FROM PIT TO PURPOSEt7.mp3", genre:"Worship Rock"},
+  {title:"Give God Your Burden (Country)", artist:"RRN", src:"music/Give God Your Burden (Country).mp3", genre:"Christian Country", isNew:true},
   {title:"Go a Little Further (Testimony)", artist:"RRN", src:"music/Go a Little Further (1).mp3", genre:"Testimony Songs"},
-  {title:"Go a Little Further (Testimony) (V2)", artist:"RRN", src:"music/Go a Little Further.mp3", genre:"Testimony Songs"},
-  {title:"God's Glory Ends My Story (Country) (V4)", artist:"RRN", src:"music/God's Glory Ends My Story  Country Rock.mp3", genre:"Christian Country"},
-  {title:"God's Glory Ends My Story Gospel Soul Worship Ballad (Praise & Worship)", artist:"RRN", src:"music/God's Glory Ends My Story Gospel Soul Worship Ballad.mp3", genre:"Praise & Worship"},
+  {title:"God's Glory Ends My Story (Country)", artist:"RRN", src:"music/God's Glory Ends My Story Modern country-pop.mp3", genre:"Christian Country"},
+  {title:"God's Glory Ends My Story (Praise & Worship Ballad)", artist:"RRN", src:"music/God's Glory Ends My Story Gospel Soul Worship Ballad.mp3", genre:"Praise & Worship"},
   {title:"Grace Fever (K-Pop)", artist:"RRN", src:"music/Grace Fever.mp3", genre:"Christian K-Pop"},
+  {title:"Grace in Cowboy Boots (Country)", artist:"RRN", src:"music/Grace in Cowboy Boots (Country).mp3", genre:"Christian Country", isNew:true},
+  {title:"Grace Runs Deep (Like a River) (Psychedelic Christian Rock)", artist:"RRN", src:"music/“Grace Runs Deep (Like a River) Psychedelic Rock Version (1).mp3", genre:"Psychedelic Christian Rock"},
   {title:"Grace This Place (Country)", artist:"RRN", src:"music/Grace This Place Outlaw Country Rock.mp3", genre:"Christian Country"},
+  {title:"Grandma Outdanced Me in Church (Bounce Drop)", artist:"RRN", src:"music/GRANDMA OUTDANCED ME IN CHURCH — Bounce Drop Country Rap,.mp3", genre:"Christian Bounce Drop"},
   {title:"Grandma Said Amen Country Rap (Bounce Drop)", artist:"RRN", src:"music/Grandma Said Amen Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
-  {title:"Granpa Was a Preacher Man (Country)", artist:"RRN", src:"music/Granpa was a Preacher Man (1).mp3", genre:"Christian Country"},
-  {title:"Granpa Was a Preacher Man (Country) (V2)", artist:"RRN", src:"music/Granpa was a Preacher Man.mp3", genre:"Christian Country"},
+  {title:"Grandpa Was a Preacher Man (Country)", artist:"RRN", src:"music/Granpa was a Preacher Man (1).mp3", genre:"Christian Country"},
+  {title:"Grounded in Victory (2000s Alternative Metal)", artist:"RRN", src:"music/GROUNDED IN VICTORY— Post-Grunge.mp3", genre:"Christian 2000s Alternative Metal"},
+  {title:"Grounded in Victory (Gospel Blues)", artist:"RRN", src:"music/GROUNDED IN VICTORY— Blues Rock.mp3", genre:"Gospel Blues"},
   {title:"Hair Down Glory (Stage Style)", artist:"RRN", src:"music/Hair Down Glory (1).mp3", genre:"Christian Stage Style"},
-  {title:"Hair Down Glory (Stage Style) (V2)", artist:"RRN", src:"music/Hair Down Glory.mp3", genre:"Christian Stage Style"},
   {title:"Hallelujah in the Fire (Worship Rock)", artist:"RRN", src:"music/Hallelujah in the Fire Cowboy Outlaw Rock.mp3", genre:"Worship Rock"},
   {title:"Hallelujah Lamb Trance (EDM)", artist:"RRN", src:"music/Hallelujah Lamb Trance (1).mp3", genre:"Christian EDM"},
-  {title:"Hallelujah Lamb Trance (EDM) (V2)", artist:"RRN", src:"music/Hallelujah Lamb Trance (2).mp3", genre:"Christian EDM"},
-  {title:"Hallelujah Lamb Trance (EDM) (V3)", artist:"RRN", src:"music/Hallelujah Lamb Trance (3).mp3", genre:"Christian EDM"},
-  {title:"Hallelujah Lamb Trance (EDM) (V4)", artist:"RRN", src:"music/Hallelujah Lamb Trance (4).mp3", genre:"Christian EDM"},
-  {title:"Hallelujah Lamb Trance (EDM) (V5)", artist:"RRN", src:"music/Hallelujah Lamb Trance.mp3", genre:"Christian EDM"},
+  {title:"Hannah Prayed (Teaching)", artist:"RRN Teaching", src:"music/Hannah_Prayed.mp3", genre:"Biblical Teaching"},
   {title:"Hard to See Lines (Pop)", artist:"RRN", src:"music/Hard-to-See Lines.mp3", genre:"Christian Pop"},
   {title:"He Is My Salvation (EDM)", artist:"RRN", src:"music/He Is My Salvation t4 (1).mp3", genre:"Christian EDM"},
-  {title:"He Is My Salvation (EDM) (V2)", artist:"RRN", src:"music/He Is My Salvation t4 (2).mp3", genre:"Christian EDM"},
-  {title:"He Is My Salvation (EDM) (V3)", artist:"RRN", src:"music/He Is My Salvation t4 (3).mp3", genre:"Christian EDM"},
-  {title:"He Is My Salvation (EDM) (V4)", artist:"RRN", src:"music/He Is My Salvation t4.mp3", genre:"Christian EDM"},
-  {title:"He Lifts the Lowly (Worship)", artist:"RRN", src:"music/He Lifts the Lowly (1).mp3", genre:"Contemporary Worship"},
+  {title:"He Lifts the Lowly (Worship)", artist:"RRN", src:"music/He Lifts the Lowly.mp3", genre:"Christian EDM"},
   {title:"He Lifts the Lowly (Gospel Blues)", artist:"RRN", src:"music/He Lifts the Lowly (2).mp3", genre:"Gospel Blues"},
-  {title:"He Lifts the Lowly (Gospel Blues) (V2)", artist:"RRN", src:"music/He Lifts the Lowly Male Blues Pop (1).mp3", genre:"Gospel Blues"},
-  {title:"He Lifts the Lowly (Gospel Blues) (V3)", artist:"RRN", src:"music/He Lifts the Lowly Male Blues Pop.mp3", genre:"Gospel Blues"},
-  {title:"He Lifts the Lowly (EDM)", artist:"RRN", src:"music/He Lifts the Lowly.mp3", genre:"Christian EDM"},
-  {title:"He Still Calls My Name (Southern Christian Rock)", artist:"RRN", src:"music/He Still Calls My Name (1).mp3", genre:"Southern Christian Rock"},
+  {title:"He Lifts the Lowly (Worship)", artist:"RRN", src:"music/He Lifts the Lowly (1).mp3", genre:"Contemporary Worship"},
   {title:"He Still Calls My Name (Hip-Hop)", artist:"RRN", src:"music/He Still Calls My Name.mp3", genre:"Christian Hip-Hop"},
+  {title:"He Still Calls My Name (Southern Christian Rock)", artist:"RRN", src:"music/He Still Calls My Name (1).mp3", genre:"Southern Christian Rock"},
   {title:"He Sustains Me Through the Storm (Southern Blues Rock)", artist:"RRN", src:"music/He Sustains Me Through the Storm.mp3", genre:"Christian Southern Blues Rock"},
   {title:"He Took My Place (Southern Christian Rock)", artist:"RRN", src:"music/HE TOOK MY PLACE.mp3", genre:"Southern Christian Rock"},
-  {title:"Hear My Cause, O Lord (Southern Christian Rock)", artist:"RRN", src:"music/Hear My Cause, O Lord (1).mp3", genre:"Southern Christian Rock"},
-  {title:"Hear My Cause, O Lord (Southern Blues Rock)", artist:"RRN", src:"music/Hear My Cause, O Lord.mp3", genre:"Christian Southern Blues Rock"},
-  {title:"Here Comes the Paint (EDM)", artist:"RRN", src:"music/Here Comes the Paint17 (1).mp3", genre:"Christian EDM"},
-  {title:"Here Comes the Paint (EDM) (V2)", artist:"RRN", src:"music/Here Comes the Paint17 (2).mp3", genre:"Christian EDM"},
-  {title:"Here Comes the Paint (EDM) (V3)", artist:"RRN", src:"music/Here Comes the Paint17.mp3", genre:"Christian EDM"},
-  {title:"Hes Comming Back (EDM)", artist:"RRN", src:"music/Hes comming back.mp3", genre:"Christian EDM"},
   {title:"He's Coming Back (EDM)", artist:"RRN", src:"music/Hes comming backt.mp3", genre:"Christian EDM"},
-  {title:"He's Coming Back (EDM) (V2)", artist:"RRN", src:"music/Hes comming backt10 (1).mp3", genre:"Christian EDM"},
-  {title:"He's Coming Back (EDM) (V3)", artist:"RRN", src:"music/Hes comming backt10.mp3", genre:"Christian EDM"},
+  {title:"Healed by the Hand (Dance)", artist:"RRN", src:"music/Healed by the Hand (Dance).mp3", genre:"Christian Dance", isNew:true},
+  {title:"Hear My Cause, O Lord (Southern Blues Rock)", artist:"RRN", src:"music/Hear My Cause, O Lord.mp3", genre:"Christian Southern Blues Rock"},
+  {title:"Hear My Cause, O Lord (Southern Christian Rock)", artist:"RRN", src:"music/Hear My Cause, O Lord (1).mp3", genre:"Southern Christian Rock"},
+  {title:"Heart of Glass, Hand of Grace (Dance)", artist:"RRN", src:"music/HEART OF GLASS, HAND OF GRACE (Dance).mp3", genre:"Christian Dance", isNew:true},
+  {title:"Here Comes the Pain (EDM)", artist:"RRN", src:"music/Here-Comes-the-Pain.mp3", genre:"Christian EDM"},
+  {title:"Here Comes the Paint (EDM)", artist:"RRN", src:"music/Here Comes the Paint17 (1).mp3", genre:"Christian EDM"},
+  {title:"Hes Comming Back (EDM)", artist:"RRN", src:"music/Hes comming back.mp3", genre:"Christian EDM"},
   {title:"Hidden Glory (R&B)", artist:"RRN", src:"music/Hidden Glory R&B.mp3", genre:"Christian R&B"},
+  {title:"Hidden in the Shadow of His Wings (LoFi)", artist:"RRN", src:"music/Hidden in the Shadow of His Wings (LoFi).mp3", genre:"Christian LoFi", isNew:true},
+  {title:"His Mercy Runs Deep (R&B)", artist:"RRN", src:"music/His Mercy Runs Deep (R&B).mp3", genre:"Christian R&B", isNew:true},
+  {title:"Holy Rest (80's)", artist:"RRN", src:"music/Holy Rest (1).mp3", genre:"Christian 80's"},
+  {title:"Holy Rest (Alternative R&B)", artist:"RRN", src:"music/Holy Rest R&B JAZZ CHILL.mp3", genre:"Christian Alternative R&B"},
+  {title:"Holy Rest (Freestyle) (80's)", artist:"RRN", src:"music/Holy Rest (Freestyle).mp3", genre:"Christian 80's"},
   {title:"Hope Over Despair (Worship)", artist:"RRN", src:"music/Hope Over Despair.mp3", genre:"Contemporary Worship"},
+  {title:"I Almost Left My Coffee in the Pew (Bounce Drop)", artist:"RRN", src:"music/I Almost Left My Coffee in the Pew — Bounce Drop Country Rap,.mp3", genre:"Christian Bounce Drop"},
+  {title:"I Am Barabbas (Outlaw Country)", artist:"RRN", src:"music/I Am Barabbas  (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
+  {title:"I Am Born Again (Alternative 2000s Rock)", artist:"RRN", src:"music/I am Born Again (Alt 2000s Rock).mp3", genre:"Christian Alternative Rock", isNew:true},
   {title:"I Am the Bride (R&B)", artist:"RRN", src:"music/I am the bride.mp3", genre:"Christian R&B"},
   {title:"I Am Yours (Chillwave)", artist:"RRN", src:"music/I am Yours Chill.mp3", genre:"Christian Chillwave"},
+  {title:"I Googled God (K-Pop)", artist:"RRN", src:"music/I Googled God (K - Pop).mp3", genre:"Christian K-Pop", isNew:true},
+  {title:"I Quoted the Wrong Verse (It Was a Burger King Ad) (Bounce Drop)", artist:"RRN", src:"music/“I QUOTED THE WRONG VERSE (IT WAS A BURGER KING AD)— Bounce Drop Country Rap,.mp3", genre:"Christian Bounce Drop"},
   {title:"I Was Running (Gut Mercy Caught Me) (Chillwave)", artist:"RRN", src:"music/I Was Running (But Mercy Caught Me) Chill.mp3", genre:"Christian Chillwave"},
   {title:"I Will Walk on Water Remix (EDM)", artist:"RRN", src:"music/I Will Walk On Water Remix.mp3", genre:"Christian EDM"},
-  {title:"I Will Walk on Water Remix (EDM) (V2)", artist:"RRN", src:"music/I Will Walk On Water Remixt14 (1).mp3", genre:"Christian EDM"},
-  {title:"I Will Walk on Water Remix (EDM) (V3)", artist:"RRN", src:"music/I Will Walk On Water Remixt14 (2).mp3", genre:"Christian EDM"},
-  {title:"I Will Walk on Water Remix (EDM) (V4)", artist:"RRN", src:"music/I Will Walk On Water Remixt14 (3).mp3", genre:"Christian EDM"},
-  {title:"I Will Walk on Water Remix (EDM) (V5)", artist:"RRN", src:"music/I Will Walk On Water Remixt14.mp3", genre:"Christian EDM"},
-  {title:"I\u2019m Free (Country - Pop)", artist:"RRN", src:"music/I\u2019M FREE.mp3", genre:"Christian Country - Pop"},
-  {title:"If I Could Walk in His Boots (Country - Pop)", artist:"RRN", src:"music/If I Could Walk in His Boots.mp3", genre:"Christian Country - Pop"},
-  {title:"In a Dry and Weary Land (Country)", artist:"RRN", src:"music/In a Dry and Weary Land Country Rock.mp3", genre:"Christian Country"},
+  {title:"If I Could Walk in His Boots (Country Pop)", artist:"RRN", src:"music/If I Could Walk in His Boots.mp3", genre:"Christian Country - Pop"},
+  {title:"If I Only Touch Him (Outlaw Country)", artist:"RRN", src:"music/If I Only Touch Him  (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
+  {title:"I Will Walk on Water (EDM)", artist:"RRN", src:"music/(Intro _ Build-Up).mp3", genre:"Christian EDM"},
+  {title:"In a Dry and Weary Land (Psychedelic Christian Rock Version)", artist:"RRN", src:"music/In a Dry and Weary Land Country Rock.mp3", genre:"Psychedelic Christian Rock"},
+  {title:"In a Dry and Weary Land (Hip-Hop)", artist:"RRN", src:"music/In a Dry and Weary Land Alternative R&B, Pop, Hip Hop.mp3", genre:"Christian Hip-Hop"},
+  {title:"In His Grace (Hip-Hop)", artist:"RRN", src:"music/Bounce in His grace l.mp3", genre:"Christian Hip-Hop"},
+  {title:"In the Shape You Left Behind (Lo-Fi)", artist:"RRN", src:"music/In the Shape You Left Behind (LoFi).mp3", genre:"Christian LoFi", isNew:true},
+  {title:"In Your Presence (Bluegrass)", artist:"RRN", src:"music/In Your Presence (Bluegrass).mp3", genre:"Christian Bluegrass", isNew:true},
+  {title:"Issue of Blood (Teaching)", artist:"RRN Teaching", src:"music/Issue_Blood.mp3", genre:"Biblical Teaching"},
+  {title:"I'm Free (Country Pop)", artist:"RRN", src:"music/I’M FREE.mp3", genre:"Christian Country - Pop"},
   {title:"Joyful Noise (Celebrate His Name Mix) (EDM)", artist:"RRN", src:"music/Joyful Noise (Celebrate His Name Mix).mp3", genre:"Christian EDM"},
   {title:"Joyful Noise (EDM)", artist:"RRN", src:"music/Joyful Noise t3 (1).mp3", genre:"Christian EDM"},
-  {title:"Joyful Noise (EDM) (V2)", artist:"RRN", src:"music/Joyful Noise t3.mp3", genre:"Christian EDM"},
   {title:"Kingdom Beat (K-Pop)", artist:"RRN", src:"music/Kingdom beat,.mp3", genre:"Christian K-Pop"},
-  {title:"Kingdom Drill No Excuses (Blues-Jazz)", artist:"RRN", src:"music/KINGDOM DRILL \u2013 NO EXCUSES\u201d.mp3", genre:"Christian Blues-Jazz"},
+  {title:"Kingdom Drill No Excuses (Blues-Jazz)", artist:"RRN", src:"music/KINGDOM DRILL – NO EXCUSES”.mp3", genre:"Christian Hip-Hop"},
+  {title:"Lazarus (Teaching)", artist:"RRN Teaching", src:"music/Lazarus_Finished.mp3", genre:"Biblical Teaching"},
+  {title:"Let Jesus Decide (Alternative 2000s Rock)", artist:"RRN", src:"music/Let Jesus Decide (Alt 2000s Rock).mp3", genre:"Christian Alternative Rock", isNew:true},
+  {title:"Lift My Head (80s)", artist:"RRN", src:"music/Lift-my-head.mp3", genre:"Christian 80's"},
   {title:"Lift My Head (Blues-Jazz)", artist:"RRN", src:"music/Lift my headt11 (1).mp3", genre:"Christian Blues-Jazz"},
   {title:"Lift My Head (R&B)", artist:"RRN", src:"music/Lift my headt11.mp3", genre:"Christian R&B"},
+  {title:"Light Breaks the Chains (Gospel Blues)", artist:"RRN", src:"music/“Light Breaks the Chain)” Blues Jazz (1).mp3", genre:"Gospel Blues"},
+  {title:"Light In the Shadows (K-Pop)", artist:"RRN", src:"music/Light In the Shadows (K - Pop).mp3", genre:"Christian K-Pop", isNew:true},
+  {title:"Light That Never Fails (Worship)", artist:"RRN", src:"music/Light That Never Fails (Worship).mp3", genre:"Contemporary Worship", isNew:true},
+  {title:"Light That Never Falls (Worship)", artist:"RRN", src:"music/LIGHT THAT NEVER FALLS.mp3", genre:"Contemporary Worship", isNew:true},
   {title:"Locust Years (Worship Rock)", artist:"RRN", src:"music/Locust Years Cowboy Outlaw Rock (1).mp3", genre:"Worship Rock"},
-  {title:"Locust Years (Worship Rock) (V2)", artist:"RRN", src:"music/Locust Years Cowboy Outlaw Rock.mp3", genre:"Worship Rock"},
   {title:"Locust Years Gospel Soul Worship Ballad (Praise & Worship)", artist:"RRN", src:"music/Locust Years Gospel Soul Worship Ballad (1).mp3", genre:"Praise & Worship"},
-  {title:"Locust Years Gospel Soul Worship Ballad (Praise & Worship) (V2)", artist:"RRN", src:"music/Locust Years Gospel Soul Worship Ballad (2).mp3", genre:"Praise & Worship"},
-  {title:"Lord, Do Not Rebuke Me in Your Anger (Country - Pop)", artist:"RRN", src:"music/Lord, Do Not Rebuke Me in Your Anger (1).mp3", genre:"Christian Country - Pop"},
+  {title:"Loosed (Outlaw Country)", artist:"RRN", src:"music/Loosed  (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
+  {title:"Lord, Do Not Rebuke Me in Your Anger (Country Pop)", artist:"RRN", src:"music/Lord, Do Not Rebuke Me in Your Anger (1).mp3", genre:"Christian Country - Pop"},
   {title:"Lord, Do Not Rebuke Me in Your Anger (Southern Blues Rock)", artist:"RRN", src:"music/Lord, Do Not Rebuke Me in Your Anger.mp3", genre:"Christian Southern Blues Rock"},
   {title:"Mercy Sorrow Crucible (Southern Christian Rock)", artist:"RRN", src:"music/Mercy-Sorrow Crucible.mp3", genre:"Southern Christian Rock"},
+  {title:"Midnight Grace (Studio Freestyle Worship) (80s)", artist:"RRN", src:"music/Midnight Grace (Studio Freestyle Worship) (1).mp3", genre:"Christian 80's"},
   {title:"Mocker in the Cup (Gospel Blues)", artist:"RRN", src:"music/Mocker in the Cup Blues.mp3", genre:"Gospel Blues"},
-  {title:"Mocker in the Cup Version (Psychedelic Christian Rock)", artist:"RRN", src:"music/Mocker in the Cup Psychedelic Rock Version.mp3", genre:"Psychedelic Christian Rock"},
-  {title:"Mocker in the Cup Radio (K-Pop)", artist:"RRN", src:"music/Mocker in the Cup Radio.mp3", genre:"Christian K-Pop"},
+  {title:"Mocker in the Cup (K-Pop Radio)", artist:"RRN", src:"music/Mocker in the Cup Radio.mp3", genre:"Christian K-Pop"},
+  {title:"Mocker in the Cup (Psychedelic Christian Rock Version)", artist:"RRN", src:"music/Mocker in the Cup Psychedelic Rock Version.mp3", genre:"Psychedelic Christian Rock"},
+  {title:"My Only Amen (Bounce Drop)", artist:"RRN", src:"music/MY ONLY AMEN— Bounce Drop Country Rap,.mp3", genre:"Christian Bounce Drop"},
+  {title:"My Wig Blew Off and Started a Revival (Bounce Drop)", artist:"RRN", src:"music/MY WIG BLEW OFF AND STARTED A REVIVAL— Bounce Drop Country Rap,.mp3", genre:"Christian Bounce Drop"},
+  {title:"New Anthem Love (80s)", artist:"RRN", src:"music/New Anthem Love.mp3", genre:"Christian 80's"},
   {title:"Not the Devil I Used to Be (Southern Blues Rock)", artist:"RRN", src:"music/Not The Devil I used to Be.mp3", genre:"Christian Southern Blues Rock"},
   {title:"Nylon String Hallelujah (Worship)", artist:"RRN", src:"music/Nylon-String Hallelujah.mp3", genre:"Contemporary Worship"},
   {title:"Old Warrior at the Water (Southern Blues Rock)", artist:"RRN", src:"music/Old Warrior at the Water.mp3", genre:"Christian Southern Blues Rock"},
-  {title:"Out of the Depths (Country)", artist:"RRN", src:"music/Out of the Depths Country Rock (1).mp3", genre:"Christian Country"},
-  {title:"Out of the Depths (Country) (V2)", artist:"RRN", src:"music/Out of the Depths Country Rock.mp3", genre:"Christian Country"},
+  {title:"Only God Changes You (Teaching)", artist:"RRN Teaching", src:"music/Only_God_Changes_You.mp3", genre:"Biblical Teaching"},
+  {title:"Out of the Depths (Psychedelic Christian Rock)", artist:"RRN", src:"music/Out of the Depths Country Rock (1).mp3", genre:"Psychedelic Christian Rock"},
   {title:"Out of the Depths Gospel Soul Worship Ballad (Praise & Worship)", artist:"RRN", src:"music/Out of the Depths Gospel Soul Worship Ballad.mp3", genre:"Praise & Worship"},
   {title:"Overcome in Rest (Alternative R&B)", artist:"RRN", src:"music/Overcome in Rest Radio (1).mp3", genre:"Christian Alternative R&B"},
-  {title:"Overcome in Rest (Alternative R&B) (V2)", artist:"RRN", src:"music/Overcome in Rest Radio (2).mp3", genre:"Christian Alternative R&B"},
-  {title:"Overcome in Rest (Alternative R&B) (V3)", artist:"RRN", src:"music/Overcome in Rest Radio.mp3", genre:"Christian Alternative R&B"},
   {title:"Overcome in Rest (Southern Blues Rock)", artist:"RRN", src:"music/Overcome in Rest.mp3", genre:"Christian Southern Blues Rock"},
   {title:"Pain and Pride (Blues-Jazz)", artist:"RRN", src:"music/Pain and Pride (1).mp3", genre:"Christian Blues-Jazz"},
-  {title:"Pain and Pride (Southern Blues Rock)", artist:"RRN", src:"music/Pain and Pride Best.mp3", genre:"Christian Southern Blues Rock"},
   {title:"Pain and Pride (Soul)", artist:"RRN", src:"music/Pain and Pride.mp3", genre:"Christian Soul"},
-  {title:"Pain and Pride (Alternative R&B)", artist:"RRN", src:"music/Pain and Rpride Radio (1).mp3", genre:"Christian Alternative R&B"},
-  {title:"Pain and Rride (Alternative R&B)", artist:"RRN", src:"music/Pain and Rpride Radio.mp3", genre:"Christian Alternative R&B"},
+  {title:"Pain and Pride (Southern Blues Rock)", artist:"RRN", src:"music/Pain and Pride Best.mp3", genre:"Christian Southern Blues Rock"},
+  {title:"Pain and Pride (Alternative R&B)", artist:"RRN", src:"music/Pain and Rpride Radio.mp3", genre:"Christian Alternative R&B"},
   {title:"Pressing Through the Thorn (Southern Blues Rock)", artist:"RRN", src:"music/Pressing Through the Thorn (Still Sent) (1).mp3", genre:"Christian Southern Blues Rock"},
-  {title:"Pressing Through the Thorn (Southern Blues Rock) (V2)", artist:"RRN", src:"music/Pressing Through the Thorn (Still Sent).mp3", genre:"Christian Southern Blues Rock"},
   {title:"Proven Armor (Alternative R&B)", artist:"RRN", src:"music/Proven Armor Radio (1).mp3", genre:"Christian Alternative R&B"},
   {title:"Proven Armor (EDM)", artist:"RRN", src:"music/Proven Armor Radio edm (1).mp3", genre:"Christian EDM"},
-  {title:"Proven Armor (EDM) (V2)", artist:"RRN", src:"music/Proven Armor Radio edm.mp3", genre:"Christian EDM"},
-  {title:"Proven Armor (Alternative R&B) (V2)", artist:"RRN", src:"music/Proven Armor Radio.mp3", genre:"Christian Alternative R&B"},
   {title:"Proven Armor (Southern Christian Rock)", artist:"RRN", src:"music/Proven Armor.mp3", genre:"Southern Christian Rock"},
   {title:"Quiet Pain (Southern Blues Rock)", artist:"RRN", src:"music/Quiet Pain.mp3", genre:"Christian Southern Blues Rock"},
-  {title:"River of Grace (Country - Pop)", artist:"RRN", src:"music/River-of-Grace-808.mp3", genre:"Christian Country - Pop"},
-  {title:"Road Home Mercy (Country - Pop)", artist:"RRN", src:"music/Road Home Mercy.mp3", genre:"Christian Country - Pop"},
+  {title:"Refined By His Hand (Hip-Hop)", artist:"RRN", src:"music/Refined By His Hand (HipHop).mp3", genre:"Christian Hip-Hop", isNew:true},
+  {title:"Rip It Off (Alternative 2000s Rock)", artist:"RRN", src:"music/Rip It Off (Alt 2000s Rock).mp3", genre:"Christian Alternative Rock", isNew:true},
+  {title:"River of Grace (Country Pop)", artist:"RRN", src:"music/River-of-Grace-808.mp3", genre:"Christian Country - Pop"},
+  {title:"Road Home Mercy (Country Pop)", artist:"RRN", src:"music/Road Home Mercy.mp3", genre:"Christian Country - Pop"},
+  {title:"Road to Damascus (Outlaw Country)", artist:"RRN", src:"music/Road to Damascus (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
+  {title:"Rose of Sharon (Lo-Fi)", artist:"RRN", src:"music/Rose Of Sharron (LoFi).mp3", genre:"Christian LoFi", isNew:true},
   {title:"Running on Empty (EDM)", artist:"RRN", src:"music/RUNNING ON EMPTY.mp3", genre:"Christian EDM"},
+  {title:"Runnin’ Across the Pew Top (Bounce Drop)", artist:"RRN", src:"music/RUNNIN’ ACROSS THE PEW TOP — Bounce Drop Country Rap,.mp3", genre:"Christian Bounce Drop"},
   {title:"Save My Marriage, Jesus (Country)", artist:"RRN", src:"music/Save My Marriage, Jesus Country Rock.mp3", genre:"Christian Country"},
   {title:"Selah (EDM)", artist:"RRN", src:"music/Selah.mp3", genre:"Christian EDM"},
-  {title:"Selah (EDM) (V2)", artist:"RRN", src:"music/Selaht18 (1).mp3", genre:"Christian EDM"},
-  {title:"Selah (EDM) (V3)", artist:"RRN", src:"music/Selaht18.mp3", genre:"Christian EDM"},
   {title:"Seven Times I Rise (Chillwave)", artist:"RRN", src:"music/Seven Times I Rise Chill.mp3", genre:"Christian Chillwave"},
   {title:"Seven Times I Rise (Southern Christian Rock)", artist:"RRN", src:"music/Seven Times I Rise.mp3", genre:"Southern Christian Rock"},
-  {title:"Sippin\u2019 on Grace & Truth Country Rap (Bounce Drop)", artist:"RRN", src:"music/Sippin\u2019 on Grace & Truth  Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
+  {title:"Simon Peter (Teaching)", artist:"RRN Teaching", src:"music/Simon_Peter.mp3", genre:"Biblical Teaching"},
+  {title:"Sippin’ on Grace & Truth (Country Rap Bounce Drop)", artist:"RRN", src:"music/Sippin’ on Grace & Truth  Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
   {title:"Spoken For (2000s Alternative Metal)", artist:"RRN", src:"music/Spoken For (1).mp3", genre:"Christian 2000s Alternative Metal"},
-  {title:"Spoken for (Euro Rave ) (EDM)", artist:"RRN", src:"music/Spoken For (euro rave bounce).mp3", genre:"Christian EDM"},
-  {title:"Spoken For (2000s Alternative Metal) (V2)", artist:"RRN", src:"music/Spoken For Refined.mp3", genre:"Christian 2000s Alternative Metal"},
-  {title:"Spoken For (2000s Alternative Metal) (V3)", artist:"RRN", src:"music/Spoken For t1.mp3", genre:"Christian 2000s Alternative Metal"},
-  {title:"Spoken For (2000s Alternative Metal) (V4)", artist:"RRN", src:"music/Spoken For.mp3", genre:"Christian 2000s Alternative Metal"},
+  {title:"Spoken For (Euro Rave EDM)", artist:"RRN", src:"music/Spoken For (euro rave bounce).mp3", genre:"Christian EDM"},
   {title:"Standing in the Fire (EDM)", artist:"RRN", src:"music/Standing in the fire Trance (1).mp3", genre:"Christian EDM"},
-  {title:"Standing in the Fire (EDM) (V2)", artist:"RRN", src:"music/Standing in the fire Trance.mp3", genre:"Christian EDM"},
+  {title:"Started with a Dream (Southern Christian Rock)", artist:"RRN", src:"music/“Started With a Dream” (Edit).mp3", genre:"Southern Christian Rock"},
+  {title:"Stay in Your Love (Smooth Groove Version) (80s)", artist:"RRN", src:"music/Stay in Your Love” (Smooth Groove Version)_.mp3", genre:"Christian 80's"},
+  {title:"Stay in Your Love (Smooth Version) (EDM)", artist:"RRN", src:"music/Stay in Your Love” (Smooth Version)_.mp3", genre:"Christian EDM"},
   {title:"Step Strong (EDM)", artist:"RRN", src:"music/Step Strong (euro hop).mp3", genre:"Christian EDM"},
   {title:"Still in Your Hands (Pop)", artist:"RRN", src:"music/Still In Your Hands Pop.mp3", genre:"Christian Pop"},
-  {title:"Straped X Fire in My Bones (Trip-Hop)", artist:"RRN", src:"music/Straped x Fire in My Bones (Mashup)t19 (0.89x)t20.mp3", genre:"Christian Trip-Hop"},
-  {title:"Straped (Hip-Hop)", artist:"RRN", src:"music/Straped.mp3", genre:"Christian Hip-Hop"},
-  {title:"Straped (Trip-Hop)", artist:"RRN", src:"music/Strapedt18.mp3", genre:"Christian Trip-Hop"},
+  {title:"Still in Your Hands Gospel Soul Worship Ballad (Testimony)", artist:"RRN", src:"music/Still In Your Hands Gospel Soul Worship Ballad.mp3", genre:"Testimony"},
+  {title:"Still You Hold Me (Worship)", artist:"RRN", src:"music/Still You Hold Me Contemporary Worship.mp3", genre:"Contemporary Worship"},
+  {title:"Strapped (Hip-Hop)", artist:"RRN", src:"music/Straped.mp3", genre:"Christian Hip-Hop"},
+  {title:"Strapped (Trip-Hop)", artist:"RRN", src:"music/Strapedt18.mp3", genre:"Christian Trip-Hop"},
+  {title:"Strapped X Fire in My Bones (Trip-Hop)", artist:"RRN", src:"music/Straped x Fire in My Bones (Mashup)t19 (0.89x)t20.mp3", genre:"Christian Trip-Hop"},
+  {title:"Strapped X Fire in My Bones Mashup 0 89x (Trip-Hop)", artist:"RRN", src:"music/Straped-x-Fire-in-My-Bones-Mashup-0-89x.mp3", genre:"Christian Trip-Hop"},
+  {title:"Strong and Brave (Hip-Hop)", artist:"RRN", src:"music/Strong and Brave Alternative R&B, Pop, Hip Hop.mp3", genre:"Christian Hip-Hop"},
   {title:"Strong and Brave Pop (Gospel Blues)", artist:"RRN", src:"music/Strong and Brave Blues Pop.mp3", genre:"Gospel Blues"},
   {title:"Strong and Brave Version (Psychedelic Christian Rock)", artist:"RRN", src:"music/Strong and Brave Psychedelic Rock Version (1).mp3", genre:"Psychedelic Christian Rock"},
-  {title:"Strong and Brave Version (Psychedelic Christian Rock) (V2)", artist:"RRN", src:"music/Strong and Brave Psychedelic Rock Version.mp3", genre:"Psychedelic Christian Rock"},
-  {title:"Stronger Than the Pain (Bass Drums) (Dance)", artist:"RRN", src:"music/Stronger Than the Pain (bass drums).mp3", genre:"Christian Dance"},
-  {title:"Stronger Than the Pain Clubmix (Dance)", artist:"RRN", src:"music/Stronger Than the Pain ClubMix (1).mp3", genre:"Christian Dance"},
-  {title:"Stronger Than the Pain Clubmix (Dance) (V2)", artist:"RRN", src:"music/Stronger Than the Pain ClubMix.mp3", genre:"Christian Dance"},
-  {title:"Stronger Than the Pain Tear the Roof Club Mix (Dance)", artist:"RRN", src:"music/Stronger than The Pain Tear The Roof  Club Mix (1).mp3", genre:"Christian Dance"},
-  {title:"Stronger Than the Pain Tear the Roof Club Mix (Dance) (V2)", artist:"RRN", src:"music/Stronger than The Pain Tear The Roof  Club Mix.mp3", genre:"Christian Dance"},
+  {title:"Stronger Than the Pain (Bass Drums Dance)", artist:"RRN", src:"music/Stronger Than the Pain (bass drums).mp3", genre:"Christian Dance"},
   {title:"Stronger Than the Pain (Trip-Hop)", artist:"RRN", src:"music/Stronger Than the Pain.mp3", genre:"Christian Trip-Hop"},
-  {title:"Stronger Than the Paint16 Version (Rap)", artist:"RRN", src:"music/Stronger Than the Paint16 Rap version.mp3", genre:"Christian Rap"},
+  {title:"Stronger Than the Pain Clubmix (Dance)", artist:"RRN", src:"music/Stronger Than the Pain ClubMix (1).mp3", genre:"Christian Dance"},
+  {title:"Stronger Than the Pain Rap Version (Trip-Hop)", artist:"RRN", src:"music/Stronger-Than-the-Pain-Rap-version.mp3", genre:"Christian Trip-Hop"},
+  {title:"Stronger Than the Pain Tear the Roof Club Mix (Dance)", artist:"RRN", src:"music/Stronger than The Pain Tear The Roof  Club Mix (1).mp3", genre:"Christian Dance"},
+  {title:"Stronger Than the Pain Version (Rap)", artist:"RRN", src:"music/Stronger Than the Paint16 Rap version.mp3", genre:"Christian Rap"},
   {title:"Sweeter Than the Chains (Southern Christian Rock)", artist:"RRN", src:"music/Sweeter Than the Chains Southern Rock (1).mp3", genre:"Southern Christian Rock"},
-  {title:"Sweeter Than the Chains (Southern Christian Rock) (V2)", artist:"RRN", src:"music/Sweeter Than the Chains Southern Rock.mp3", genre:"Southern Christian Rock"},
   {title:"Sword I Carry Now (Testimony)", artist:"RRN", src:"music/Sword I Carry Now.mp3", genre:"Testimony Songs"},
   {title:"Tear the Roof (Hip-Hop)", artist:"RRN", src:"music/Tear the Roof (1).mp3", genre:"Christian Hip-Hop"},
   {title:"Tear the Roof X Stronger Than the Pain (Mashup) (Trip-Hop)", artist:"RRN", src:"music/Tear the Roof x Stronger Than the Pain (Mashup) (2).mp3", genre:"Christian Trip-Hop"},
-  {title:"Tear the Roof X Stronger Than the Pain (Mashup) (Trip-Hop) (V2)", artist:"RRN", src:"music/Tear the Roof x Stronger Than the Pain (Mashup).mp3", genre:"Christian Trip-Hop"},
   {title:"The Horse and Rider (Southern Christian Rock)", artist:"RRN", src:"music/The Horse and Rider.mp3", genre:"Southern Christian Rock"},
-  {title:"The Nitty Gritty Devil (Country)", artist:"RRN", src:"music/The Nitty Gritty Devil Country Rock (1).mp3", genre:"Christian Country"},
-  {title:"The Nitty Gritty Devil (Country) (V2)", artist:"RRN", src:"music/The Nitty Gritty Devil Country Rock (2).mp3", genre:"Christian Country"},
-  {title:"The Nitty Gritty Devil (Country) (V3)", artist:"RRN", src:"music/The Nitty Gritty Devil Country Rock.mp3", genre:"Christian Country"},
+  {title:"The Nitty Gritty Devil (Psychedelic Christian Rock)", artist:"RRN", src:"music/The Nitty Gritty Devil Country Rock (1).mp3", genre:"Psychedelic Christian Rock"},
   {title:"The Rider in the Sky (Country)", artist:"RRN", src:"music/The Rider in the Sky (1).mp3", genre:"Christian Country"},
   {title:"The Rider in the Sky (Pop)", artist:"RRN", src:"music/The Rider in the Sky.mp3", genre:"Christian Pop"},
+  {title:"The Things You Never Saw (Hip-Hop)", artist:"RRN", src:"music/The Things you Never Saw Alternative R&B, Pop, Hip Hop.mp3", genre:"Christian Hip-Hop"},
   {title:"Those Nail Scarred Hands (R&B)", artist:"RRN", src:"music/Those nail-scarred hands.mp3", genre:"Christian R&B"},
-  {title:"Tongues of Fire Country Rap (Southern Blues Rock)", artist:"RRN", src:"music/Tongues of Fire  Bounce Drop Country Rap.mp3", genre:"Christian Southern Blues Rock"},
+  {title:"Through the Roof (Outlaw Country)", artist:"RRN", src:"music/Through the Roof (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
+  {title:"Today You Will Be With Me (Outlaw Country)", artist:"RRN", src:"music/Today You Will Be With Me  (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
   {title:"Tongues of Fire Club (EDM)", artist:"RRN", src:"music/Tongues of Fire  Club.mp3", genre:"Christian EDM"},
-  {title:"Tryna Stay Awake in Church Country Rap (Bounce Drop)", artist:"RRN", src:"music/Tryna Stay Awake in Church Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
+  {title:"Tongues of Fire Country Rap (Southern Blues Rock)", artist:"RRN", src:"music/Tongues of Fire  Bounce Drop Country Rap.mp3", genre:"Christian Southern Blues Rock"},
+  {title:"Tongues of Fire Country Rap — Remix (Alternative 2000s Rock)", artist:"RRN", src:"music/Tongues of Fire  Bounce Drop Country Rap.mp3", genre:"Christian Alternative Rock"},
+  {title:"Too Far Gone (Bluegrass)", artist:"RRN", src:"music/Too Far Gone (Bluegrass).mp3", genre:"Christian Bluegrass", isNew:true},
+  {title:"Trusted Witness (Teaching)", artist:"RRN Teaching", src:"music/Trusted_Witness.mp3", genre:"Biblical Teaching"},
+  {title:"Tryna Stay Awake in Church (Country Rap Bounce Drop)", artist:"RRN", src:"music/Tryna Stay Awake in Church Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
   {title:"Use This Pain (Soul)", artist:"RRN", src:"music/Use this pain.mp3", genre:"Christian Soul"},
   {title:"Valley Nightlight (Country)", artist:"RRN", src:"music/Valley Nightlight.mp3", genre:"Christian Country"},
   {title:"Vapor in the Wind (Blues-Jazz)", artist:"RRN", src:"music/Vapor in the Wind (1).mp3", genre:"Christian Blues-Jazz"},
   {title:"Vapor in the Wind (Gospel Blues)", artist:"RRN", src:"music/Vapor in the Wind.mp3", genre:"Gospel Blues"},
   {title:"Walk It Out (K-Pop)", artist:"RRN", src:"music/Walk it Out.mp3", genre:"Christian K-Pop"},
   {title:"Walk Upright (Praise & Worship)", artist:"RRN", src:"music/Walk Upright.mp3", genre:"Praise & Worship"},
-  {title:"Walk Upright (Praise & Worship) (V2)", artist:"RRN", src:"music/Walk Uprightt13 (1).mp3", genre:"Praise & Worship"},
-  {title:"Walk Upright (Praise & Worship) (V3)", artist:"RRN", src:"music/Walk Uprightt13.mp3", genre:"Praise & Worship"},
-  {title:"Walking in Di Light (Rege)", artist:"RRN", src:"music/Walking in di Light.mp3", genre:"Christian Rege"},
-  {title:"Witness in the Fire (Worship Rock)", artist:"RRN", src:"music/WITNESS IN THE FIRE (1).mp3", genre:"Worship Rock"},
-  {title:"Witness in the Fire (Trible Chant) (Alternative R&B)", artist:"RRN", src:"music/WITNESS IN THE FIRE (2).mp3", genre:"Christian Alternative R&B"},
-  {title:"Witness in the Fire (Praise & Worship)", artist:"RRN", src:"music/WITNESS IN THE FIRE.mp3", genre:"Praise & Worship"},
-  {title:"You Answer When I Call (Praise & Worship)", artist:"RRN", src:"music/You answer when I call (1).mp3", genre:"Praise & Worship"},
-  {title:"You Answer When I Call (Praise & Worship) (V2)", artist:"RRN", src:"music/You answer when I call (2).mp3", genre:"Praise & Worship"},
-  {title:"You Answer When I Call (Praise & Worship) (V3)", artist:"RRN", src:"music/You answer when I call.mp3", genre:"Praise & Worship"},
-  {title:"You Hold Mde Up (Pop)", artist:"RRN", src:"music/You Hold Mde Up Radio.mp3", genre:"Christian Pop"},
-  {title:"You Hold Me Up (Country - Pop)", artist:"RRN", src:"music/You Hold Me Up (1).mp3", genre:"Christian Country - Pop"},
-  {title:"You Hold Me Up (Country - Pop) (V2)", artist:"RRN", src:"music/You Hold Me Up.mp3", genre:"Christian Country - Pop"},
-  {title:"You Speak for Me (Soul)", artist:"RRN", src:"music/You speak for me.mp3", genre:"Christian Soul"},
-  {title:"If I Walk on Water (EDM)", artist:"RRN", src:"music/(Intro _ Build-Up).mp3", genre:"Christian EDM"},
-  {title:"Grace Runs Deep (Like a River) Version (Psychedelic Christian Rock)", artist:"RRN", src:"music/\u201cGrace Runs Deep (Like a River) Psychedelic Rock Version (1).mp3", genre:"Psychedelic Christian Rock"},
-  {title:"Grace Runs Deep (Like a River) Version (Psychedelic Christian Rock) (V2)", artist:"RRN", src:"music/\u201cGrace Runs Deep (Like a River) Psychedelic Rock Version.mp3", genre:"Psychedelic Christian Rock"},
-  {title:"Light Breaks the Chains (Gospel Blues) (V3)", artist:"RRN", src:"music/\u201cLight Breaks the Chain)\u201d  Blues Jazz (1).mp3", genre:"Gospel Blues"},
-  {title:"Light Breaks the Chains (Gospel Blues) (V4)", artist:"RRN", src:"music/\u201cLight Breaks the Chain)\u201d  Blues Jazz.mp3", genre:"Gospel Blues"},
-  {title:"Blessed & a Mess Country Rap (1) \u2014 Remix (Bounce Drop)", artist:"RRN", src:"music/Blessed & a Mess Bounce Drop Country Rap (1).mp3", genre:"Christian Bounce Drop"},
-  {title:"Blessed & a Mess Country Rap \u2014 Remix (Bounce Drop)", artist:"RRN", src:"music/Blessed & a Mess Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
-  {title:"Church N Chicken Country Rap \u2014 Remix (Bounce Drop)", artist:"RRN", src:"music/Church N Chicken Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
-  {title:"Clock Won\u2019t Let Go Country Rap \u2014 Remix (Bounce Drop)", artist:"RRN", src:"music/Clock Won\u2019t Let Go Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
-  {title:"Grandma Said Amen Country Rap \u2014 Remix (Bounce Drop)", artist:"RRN", src:"music/Grandma Said Amen Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
-  {title:"Sippin\u2019 on Grace & Truth Country Rap \u2014 Remix (Bounce Drop)", artist:"RRN", src:"music/Sippin\u2019 on Grace & Truth  Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
-  {title:"Tongues of Fire Country Rap \u2014 Remix (Bounce Drop)", artist:"RRN", src:"music/Tongues of Fire  Bounce Drop Country Rap.mp3", genre:"Christian Bounce Drop"},
-  {title:"Divine Control (Trip-Hop)", artist:"RRN", src:"music/Divine-Control.mp3", genre:"Christian Trip-Hop"},
-  {title:"Fragile Heart Eternal Light (80's)", artist:"RRN", src:"music/FRAGILE-HEART-ETERNAL-LIGHT.mp3", genre:"Christian 80's"},
-  {title:"He Is My Salvation (EDM) (V5)", artist:"RRN", src:"music/He-Is-My-Salvation.mp3", genre:"Christian EDM"},
-  {title:"Here Comes the Pain (EDM)", artist:"RRN", src:"music/Here-Comes-the-Pain.mp3", genre:"Christian EDM"},
-  {title:"Holy Rest (80's)", artist:"RRN", src:"music/Holy Rest (1).mp3", genre:"Christian 80's"},
-  {title:"Holy Rest (Freestyle) (80's)", artist:"RRN", src:"music/Holy Rest (Freestyle).mp3", genre:"Christian 80's"},
-  {title:"Holy Rest (Alternative R&B)", artist:"RRN", src:"music/Holy Rest R&B JAZZ CHILL.mp3", genre:"Christian Alternative R&B"},
-  {title:"Holy Rest (80's) (V2)", artist:"RRN", src:"music/Holy Rest.mp3", genre:"Christian 80's"},
-  {title:"Joyful Noise (EDM) (V3)", artist:"RRN", src:"music/Joyful-Noise.mp3", genre:"Christian EDM"},
-  {title:"Lift My Head (80's)", artist:"RRN", src:"music/Lift-my-head.mp3", genre:"Christian 80's"},
-  {title:"Midnight Grace (Studio Freestyle Worship) (80's)", artist:"RRN", src:"music/Midnight Grace (Studio Freestyle Worship) (1).mp3", genre:"Christian 80's"},
-  {title:"Midnight Grace (Studio Freestyle Worship) (80's) (V2)", artist:"RRN", src:"music/Midnight Grace (Studio Freestyle Worship) (2).mp3", genre:"Christian 80's"},
-  {title:"Midnight Grace (Studio Freestyle Worship) (80's) (V3)", artist:"RRN", src:"music/Midnight Grace (Studio Freestyle Worship) (3).mp3", genre:"Christian 80's"},
-  {title:"Midnight Grace (Studio Freestyle Worship) (80's) (V4)", artist:"RRN", src:"music/Midnight Grace (Studio Freestyle Worship).mp3", genre:"Christian 80's"},
-  {title:"New Anthem Love (80's)", artist:"RRN", src:"music/New Anthem Love.mp3", genre:"Christian 80's"},
-  {title:"Stay in Your Love (Smooth Groove Version) (80's)", artist:"RRN", src:"music/Stay in Your Love\u201d (Smooth Groove Version)_.mp3", genre:"Christian 80's"},
-  {title:"Stay in Your Love (Smooth Version) (EDM)", artist:"RRN", src:"music/Stay in Your Love\u201d (Smooth Version)_.mp3", genre:"Christian EDM"},
-  {title:"Straped X Fire in My Bones Mashup 0 89x (Trip-Hop)", artist:"RRN", src:"music/Straped-x-Fire-in-My-Bones-Mashup-0-89x.mp3", genre:"Christian Trip-Hop"},
-  {title:"Stronger Than the Pain Rap Version (Trip-Hop)", artist:"RRN", src:"music/Stronger-Than-the-Pain-Rap-version.mp3", genre:"Christian Trip-Hop"},
-  {title:"You Alone Are Holy (Alternative R&B)", artist:"RRN", src:"music/You Alone Are Holy.mp3", genre:"Christian Alternative R&B"},
-  {title:"Your Holy Heartbeat Stays (Club Mix) (Alternative R&B)", artist:"RRN", src:"music/Your Holy Heartbeat Stays (Club Mix).mp3", genre:"Christian Alternative R&B"},
-  {title:"Your Holy Heartbeat Stays (Concert Mix Smooth) (Stage Style)", artist:"RRN", src:"music/Your Holy Heartbeat Stays (Concert Mix Smooth).mp3", genre:"Christian Stage Style"},
-  {title:"Your Holy Heartbeat Stays (Concert Mix) (Stage Style)", artist:"RRN", src:"music/Your Holy Heartbeat Stays (Concert Mix).mp3", genre:"Christian Stage Style"},
-  {title:"Locust Years Gospel Soul Worship Ballad (Praise & Worship) (V3)", artist:"RRN", src:"music/Locust Years Gospel Soul Worship Ballad (2).mp3", genre:"Praise & Worship"},
-  {title:"Locust Years Gospel Soul Worship Ballad (Praise & Worship) (V4)", artist:"RRN", src:"music/Locust Years Gospel Soul Worship Ballad (2).mp3", genre:"Praise & Worship"},
-  {title:"Still in Your Hands Gospel Soul Worship Ballad (Testimony)", artist:"RRN", src:"music/Still In Your Hands Gospel Soul Worship Ballad.mp3", genre:"Testimony"},
-  {title:"Loosed (Outlaw Country)", artist:"RRN", src:"music/Loosed  (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
-  {title:"Refined By His Hand (HipHop)", artist:"RRN", src:"music/Refined By His Hand (HipHop).mp3", genre:"Christian Hip-Hop", isNew:true},
-  {title:"Rip It Off (Alt 2000s Rock)", artist:"RRN", src:"music/Rip It Off (Alt 2000s Rock).mp3", genre:"Christian Alternative Rock", isNew:true},
-  {title:"Road to Damascus (Outlaw Country)", artist:"RRN", src:"music/Road to Damascus (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
-  {title:"Through the Roof (Outlaw Country)", artist:"RRN", src:"music/Through the Roof (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
-  {title:"Today You Will Be With Me (Outlaw Country)", artist:"RRN", src:"music/Today You Will Be With Me  (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
+  {title:"Walking in Di Light (Reggae)", artist:"RRN", src:"music/Walking in di Light.mp3", genre:"Christian Rege"},
+  {title:"We Knew God (Pop)", artist:"RRN", src:"music/We Knew God Radio (1).mp3", genre:"Christian Pop"},
+  {title:"What I Lay at the Altar (Worship)", artist:"RRN", src:"music/What I Lay at the Altar.mp3", genre:"Contemporary Worship", isNew:true},
   {title:"When Fever Lost Its Claim (Outlaw Country)", artist:"RRN", src:"music/When Fever Lost Its Claim  (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
   {title:"Where Are Your Accusers? (Outlaw Country)", artist:"RRN", src:"music/Where Are Your Accusers_ (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
   {title:"Wilt Thou Be Made Whole (Outlaw Country)", artist:"RRN", src:"music/Wilt Thou Be Made Whole (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
+  {title:"Witness in the Fire (Praise & Worship)", artist:"RRN", src:"music/WITNESS IN THE FIRE.mp3", genre:"Praise & Worship"},
+  {title:"Witness in the Fire (Tribal Chant) (Alternative R&B)", artist:"RRN", src:"music/WITNESS IN THE FIRE (2).mp3", genre:"Christian Alternative R&B"},
+  {title:"Witness in the Fire (Worship Rock)", artist:"RRN", src:"music/WITNESS IN THE FIRE (1).mp3", genre:"Worship Rock"},
   {title:"You Alone Are Holy", artist:"RRN", src:"music/You Alone Are Holy.mp3", genre:"Contemporary Worship", isNew:true},
+  {title:"You Alone Are Holy (Alternative R&B)", artist:"RRN", src:"music/You Alone Are Holy.mp3", genre:"Christian Alternative R&B"},
+  {title:"You Answer When I Call (Praise & Worship)", artist:"RRN", src:"music/You answer when I call (1).mp3", genre:"Praise & Worship"},
+  {title:"You Are My Joy (Dance)", artist:"RRN", src:"music/You Are My Joy (Dance).mp3", genre:"Christian Dance", isNew:true},
+  {title:"You Are My Joy (Lo-Fi)", artist:"RRN", src:"music/You Are My Joy (LoFi).mp3", genre:"Christian LoFi", isNew:true},
+  {title:"You Hold Me Up (Pop)", artist:"RRN", src:"music/You Hold Mde Up Radio.mp3", genre:"Christian Pop"},
+  {title:"You Hold Me Up (Country Pop)", artist:"RRN", src:"music/You Hold Me Up (1).mp3", genre:"Christian Country - Pop"},
+  {title:"You Never Let Go (Worship)", artist:"RRN", src:"music/You Never Let Go Contemporary Worship.mp3", genre:"Contemporary Worship"},
   {title:"You Never Let Go (Worship)", artist:"RRN", src:"music/You Never Let Go Contemporary Worship.mp3", genre:"Contemporary Worship", isNew:true},
-  {title:"Alabaster Tears (Outlaw Country)", artist:"RRN", src:"music/Alabaster Tears (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
-  {title:"Among the Tombs (Outlaw Country)", artist:"RRN", src:"music/Among the Tombs (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
-  {title:"Bow Before Your Throne (K-Pop)", artist:"RRN", src:"music/Bow Before Your Thone (K - Pop).mp3", genre:"Christian K-Pop", isNew:true},
-  {title:"Do You Love Me? (Outlaw Country)", artist:"RRN", src:"music/Do You Love Me_  (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
-  {title:"I Am Barabbas (Outlaw Country)", artist:"RRN", src:"music/I Am Barabbas  (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
-  {title:"I Am Born Again (Alt 2000s Rock)", artist:"RRN", src:"music/I am Born Again (Alt 2000s Rock).mp3", genre:"Christian Alternative Rock", isNew:true},
-  {title:"I Googled God (K-Pop)", artist:"RRN", src:"music/I Googled God (K - Pop).mp3", genre:"Christian K-Pop", isNew:true},
-  {title:"If I Only Touch Him (Outlaw Country)", artist:"RRN", src:"music/If I Only Touch Him  (Outlaw Country).mp3", genre:"Christian Outlaw Country", isNew:true},
-  {title:"In the Shape You Left Behind (LoFi)", artist:"RRN", src:"music/In the Shape You Left Behind (LoFi).mp3", genre:"Christian LoFi", isNew:true},
-  {title:"Let Jesus Decide (Alt 2000s Rock)", artist:"RRN", src:"music/Let Jesus Decide (Alt 2000s Rock).mp3", genre:"Christian Alternative Rock", isNew:true},
-  {title:"Light In the Shadows (K-Pop)", artist:"RRN", src:"music/Light In the Shadows (K - Pop).mp3", genre:"Christian K-Pop", isNew:true}
+  {title:"You Speak for Me (Soul)", artist:"RRN", src:"music/You speak for me.mp3", genre:"Christian Soul"},
+  {title:"Your Holy Heartbeat Stays (Club Mix) (Alternative R&B)", artist:"RRN", src:"music/Your Holy Heartbeat Stays (Club Mix).mp3", genre:"Christian Alternative R&B"},
+  {title:"Your Holy Heartbeat Stays (Concert Mix Smooth) (Stage Style)", artist:"RRN", src:"music/Your Holy Heartbeat Stays (Concert Mix Smooth).mp3", genre:"Christian Stage Style"},
+  {title:"Your Holy Heartbeat Stays (Concert Mix) (Stage Style)", artist:"RRN", src:"music/Your Holy Heartbeat Stays (Concert Mix).mp3", genre:"Christian Stage Style"},
+  {title:"The Way You Lead Me (Alt Rock)", artist:"RRN", src:"music/The Way You Lead Me  (Alt 2000s Rock).mp3", genre:"Christian Alternative Rock", isNew:true},
+  {title:"He Never Quit on Me (Alt Rock)", artist:"RRN", src:"music/He Never Quit on Me (Alternative 2000s Rock).mp3", genre:"Christian Alternative Rock", isNew:true},
+  {title:"He Spoke to the Wind (80s)", artist:"RRN", src:"music/He Spoke to the Wind (80s).mp3", genre:"Christian 80's", isNew:true},
+  {title:"Awoken the Master (Southern Blues Rock)", artist:"RRN", src:"music/Awoken the Master (Southern Blues Rock).mp3", genre:"Christian Southern Blues Rock", isNew:true}
 ];
 
 /* RRN AVAILABLE-NOW RESOLVER: points the existing playlist at the songs already on GitHub.
@@ -4610,12 +4506,12 @@ var RR_SONGS_PER_BREAK = 3;   // ad-break cadence (matches your radio clock)
 // THE CLOCK — which genre pool plays each hour (visitor local time, 24h). Edit freely:
 /* ===== Refined Radio programmed clock: dayparts + scheduled specialty inserts ===== */
 var RR_DAYPARTS = [
-  {s:0,  e:6,  name:"Healing & Recovery",    genres:["praise & worship","contemporary worship","worship rock","christian chillwave","christian blues-jazz","testimony","testimony songs"], spec:""},
-  {s:6,  e:10, name:"Morning Motivation",    genres:["christian pop","southern christian rock","worship rock","christian country","praise & worship"], spec:"bounce"},
-  {s:10, e:14, name:"Christian 80s Lunch",   genres:["christian pop","southern christian rock","christian country","christian country - pop"], spec:"80s"},
+  {s:0, e:6, name:"Healing & Recovery", genres:["praise & worship","contemporary worship","worship rock","christian chillwave","christian blues-jazz","testimony","testimony songs"], spec:""},
+  {s:6, e:10, name:"Morning Motivation", genres:["christian pop","southern christian rock","worship rock","christian country","praise & worship"], spec:"bounce"},
+  {s:10, e:14, name:"Christian 80s Lunch", genres:["christian pop","southern christian rock","christian country","christian country - pop"], spec:"80s"},
   {s:14, e:17, name:"Workday Encouragement", genres:["christian country","southern christian rock","christian pop","christian soul"], spec:"bounce"},
-  {s:17, e:20, name:"Drive Time",            genres:["southern christian rock","christian country","christian pop","christian 80's"], spec:""},
-  {s:20, e:24, name:"Night Energy",          genres:["christian edm","christian dance","christian k-pop","christian trip-hop"], spec:"bounce"}
+  {s:17, e:20, name:"Drive Time", genres:["southern christian rock","christian country","christian pop","christian 80's"], spec:""},
+  {s:20, e:24, name:"Night Energy", genres:["christian edm","christian dance","christian k-pop","christian trip-hop"], spec:"bounce"}
 ];
 // Scheduled specialty inserts: hour -> {min,type}. Fires once that hour when the clock passes that minute.
 var RR_SPECIAL = {
@@ -4847,7 +4743,7 @@ function rrRequest(){
   if(!rrCur) return;
   rrReqMap[rrCur.src]=(rrReqMap[rrCur.src]||0)+1;
   try{ localStorage.setItem('rrn_requests',JSON.stringify(rrReqMap)); }catch(e){}
-  rrEvent('request'); rrNowCard(rrCur); rrRenderLoved();
+  rrEvent('request'); if(window.rrToast)rrToast('Requested \u2014 boosting this song'); if(window.rrFloat)rrFloat('\u2708\ufe0f','up'); rrNowCard(rrCur); rrRenderLoved();
   var b=document.getElementById('rrReq'); if(b){ b.classList.add('on'); setTimeout(function(){b.classList.remove('on');},1000); }
 }
 function rrShareLink(msg,base){
@@ -5187,6 +5083,8 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
       area: (d.area||"").toString().trim(),
       message: (d.message||"").toString().trim(),
       consent: d.consent !== false,
+      email_optin: d.email_optin === true,
+      ads_optin: d.ads_optin === true,
       payload: d.payload || {}
     };
   }
@@ -5201,6 +5099,15 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
 
   // Every form calls this. Captures locally first, then tries the API (fire-and-forget).
   window.rrnIntake = function(program, data){
+    data = data || {};
+    try{
+      if(data.email_optin===undefined){
+        var all=[].slice.call(document.querySelectorAll('input[type=email],input[id*=Email],input[id*=mail]'));
+        var inp=all.filter(function(x){return (x.value||"").trim()===(data.email||"").trim() && (data.email||"").trim()!=="";})[0]||null;
+        var o=inp?window.rrnReadOptin(inp):{email_optin:false,ads_optin:false};
+        data.email_optin=o.email_optin; data.ads_optin=o.ads_optin;
+      }
+    }catch(_){}
     var body = buildBody(program, data);
     var rec = JSON.parse(JSON.stringify(body));
     rec._ts = new Date().toISOString();
@@ -5292,5 +5199,120 @@ html{overflow-x:hidden;}
   .ph-title{font-size:22px;}
 }
 </style>
+<!-- RRN persistent-player tool overlay: opens tools/journal in-page so the radio never stops -->
+<div id="toolOverlay" style="display:none;position:fixed;inset:0;z-index:550;background:#060d18;">
+  <button onclick="closeTool()" aria-label="Close tool" style="position:absolute;top:12px;right:14px;z-index:570;background:rgba(6,13,24,.92);border:1px solid rgba(200,145,58,.5);color:#c8913a;min-width:42px;height:42px;border-radius:999px;font-size:24px;line-height:1;cursor:pointer;padding:0 12px;box-shadow:0 2px 12px rgba(0,0,0,.45);">&times;</button>
+  <iframe id="toolFrame" title="Refined Recovery tool" src="about:blank" style="position:absolute;top:0;left:0;right:0;bottom:78px;width:100%;border:0;background:#fff;"></iframe>
+</div>
+<script>
+(function(){
+  var TITLES={
+    'tools':'Free Tools','document-center':'Document Center','recovery-tracker':'Recovery Tracker',
+    'scripture-search':'Scripture Search','resume-builder':'Resume Builder','reference-letter':'Reference Letter',
+    'court-letter':'Court Letter','testimony-builder':'Testimony Builder','recovery-plan':'Recovery Plan',
+    'prayer-journal':'Prayer Journal','resources':'Resource Directory','journal':"The Refiner's Journal"
+  };
+  window.openTool=function(file,title){
+    var o=document.getElementById('toolOverlay');
+    var _tt=document.getElementById('toolTitle'); if(_tt) _tt.textContent=title||'Refined Recovery';
+    document.getElementById('toolFrame').src=file;
+    o.style.display='block'; document.body.style.overflow='hidden';
+  };
+  window.closeTool=function(){
+    var o=document.getElementById('toolOverlay');
+    o.style.display='none'; document.getElementById('toolFrame').src='about:blank';
+    document.body.style.overflow='';
+  };
+  // Intercept every internal tool/journal link so it opens in-page (player keeps playing)
+  document.addEventListener('click',function(e){
+    var a=e.target.closest?e.target.closest('a'):null; if(!a) return;
+    var href=(a.getAttribute('href')||'').trim();
+    var m=href.match(/^\.?\/?([a-z-]+)\.html(?:[?#].*)?$/);
+    if(m && TITLES.hasOwnProperty(m[1])){ e.preventDefault(); window.openTool(m[1]+'.html', TITLES[m[1]]); }
+  },true);
+  // Esc closes
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ var o=document.getElementById('toolOverlay'); if(o&&o.style.display==='block') window.closeTool(); }});
+})();
+</script>
+
+<style>
+.rrp-rate{position:relative;}
+.rrp-react{position:absolute;bottom:calc(100% + 12px);right:0;min-width:230px;background:rgba(11,24,41,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--gold-br,rgba(200,145,58,.4));border-radius:14px;padding:7px;box-shadow:0 22px 64px rgba(0,0,0,.55);display:none;z-index:640;}
+.rrp-react.open{display:block;}
+.rrp-react button{display:block;width:100%;text-align:left;background:none;border:none;color:rgba(255,255,255,.86);font-family:var(--fb,inherit);font-size:13.5px;padding:11px 13px;border-radius:9px;cursor:pointer;white-space:nowrap;}
+.rrp-react button:hover{background:var(--gold-lo,rgba(200,145,58,.14));color:var(--gold,#c8913a);}
+#rrHeart.liked{border-color:var(--gold,#c8913a);color:var(--gold,#c8913a);}
+</style>
+<script>
+(function(){
+  function gFav(){ try{return JSON.parse(localStorage.getItem('rrn_favorites')||'[]');}catch(e){return[];} }
+  window.rrToast=function(msg){
+    var t=document.getElementById('rrToast');
+    if(!t){t=document.createElement('div');t.id='rrToast';t.style.cssText='position:fixed;left:50%;bottom:98px;transform:translateX(-50%);z-index:660;background:rgba(11,24,41,.98);color:#e9eef5;border:1px solid rgba(200,145,58,.45);padding:11px 18px;border-radius:999px;font-size:13.5px;box-shadow:0 14px 44px rgba(0,0,0,.5);opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;max-width:88vw;text-align:center;';document.body.appendChild(t);}
+    t.textContent=msg;t.style.opacity='1';t.style.transform='translateX(-50%) translateY(-6px)';
+    clearTimeout(window._rrTT);window._rrTT=setTimeout(function(){t.style.opacity='0';t.style.transform='translateX(-50%)';},1900);
+  };
+  window.rrReactToggle=function(e){ if(e){e.stopPropagation();} var m=document.getElementById('rrReactMenu'); if(m) m.classList.toggle('open'); };
+  function closeReact(){ var m=document.getElementById('rrReactMenu'); if(m) m.classList.remove('open'); }
+  document.addEventListener('click',function(e){ if(!e.target.closest('#rrReactMenu')&&!e.target.closest('#rrHeart')) closeReact(); });
+  window.rrFav=function(silent){ var c=window.rrCur; if(!c){closeReact();return;}
+    try{var f=gFav(); if(f.indexOf(c.src)<0){f.push(c.src);localStorage.setItem('rrn_favorites',JSON.stringify(f));}}catch(e){}
+    if(window.rrEvent)rrEvent('favorite');
+    var hb=document.getElementById('rrHeart'); if(hb)hb.classList.add('liked');
+    if(!silent){ if(window.rrFloat)rrFloat('\u2B50','up'); rrToast('Saved to favorites'); } closeReact();
+  };
+  window.rrLikeSong=function(){ var c=window.rrCur; if(!c){closeReact();return;}
+    if(window.rrRate)rrRate(1); window.rrFav(true); if(window.rrFloat)rrFloat('\u2764\ufe0f','up'); rrToast('Liked \u2014 you\u2019ll hear it more'); closeReact();
+  };
+  window.rrMoreLikeThis=function(){ var c=window.rrCur; if(!c){closeReact();return;}
+    try{var k='rrn_more_like',m=JSON.parse(localStorage.getItem(k)||'{}'),g=(c.genre||'').toLowerCase();m[g]=(m[g]||0)+1;localStorage.setItem(k,JSON.stringify(m));}catch(e){}
+    if(window.rrRate)rrRate(1); if(window.rrEvent)rrEvent('more_like_this'); if(window.rrFloat)rrFloat('\U0001F3B6','up');
+    rrToast('More '+((c.genre||'songs like this'))+' coming up'); closeReact();
+  };
+  window.rrTestimony=function(){ var c=window.rrCur; if(!c){closeReact();return;} closeReact();
+    var note=prompt('Share how this song helped you (a sentence or two):',''); if(note===null) return;
+    var rec={song:c.title||'',src:c.src||'',text:(note||'This song helped me').trim(),at:new Date().toISOString()};
+    try{var k='rrn_testimonies',a=JSON.parse(localStorage.getItem(k)||'[]');a.push(rec);localStorage.setItem(k,JSON.stringify(a));}catch(e){}
+    try{ if(window.RR_API) fetch(RR_API+'/api/testimony',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)}).catch(function(){}); }catch(e){}
+    if(window.rrEvent)rrEvent('testimony'); if(window.rrFloat)rrFloat('\U0001F64F','up'); rrToast('Thank you for sharing your testimony');
+  };
+})();
+</script>
+<style>
+.rrn-optin{margin:14px 0 4px;display:flex;flex-direction:column;gap:9px;}
+.rrn-optin-row{display:flex;align-items:flex-start;gap:9px;cursor:pointer;font-size:12.5px;line-height:1.45;color:rgba(255,255,255,.78);font-family:var(--fb,inherit);}
+.rrn-optin-row input{width:17px;height:17px;flex:none;margin-top:1px;accent-color:var(--gold,#c8913a);cursor:pointer;}
+.rrn-optin-row.req span:after{content:" *";color:var(--gold,#c8913a);}
+</style>
+<script>
+(function(){
+  function html(){
+    return '<div class="rrn-optin">'
+      +'<label class="rrn-optin-row req"><input type="checkbox" class="rrn-email-optin"><span>Yes, I agree to receive email updates, follow-ups, and correspondence from Refined Recovery Network.</span></label>'
+      +'<label class="rrn-optin-row"><input type="checkbox" class="rrn-ads-optin"><span>Optional: I also agree to receive ministry news and promotional messages. You can unsubscribe anytime.</span></label>'
+      +'</div>';
+  }
+  function emailIn(el){ return el.querySelector && el.querySelector('input[type=email],input[id*=Email],input[id*=mail]'); }
+  function inject(){
+    document.querySelectorAll('.f-title').forEach(function(t){
+      var card=null,p=t;
+      for(var k=0;k<6 && p;k++){ if(emailIn(p)){ card=p; break; } p=p.parentElement; }
+      if(!card || card.querySelector('.rrn-optin')) return;
+      var btns=card.querySelectorAll('button'); var btn=btns[btns.length-1];
+      var d=document.createElement('div'); d.innerHTML=html(); var node=d.firstChild;
+      if(btn && btn.parentNode){ btn.parentNode.insertBefore(node,btn); } else { card.appendChild(node); }
+    });
+  }
+  window.rrnReadOptin=function(el){
+    var p=el, found=null;
+    for(var k=0;k<8 && p;k++){ if(p.querySelector && p.querySelector('.rrn-email-optin')){ found=p; break; } p=p.parentElement; }
+    var scope=found||document;
+    var em=scope.querySelector('.rrn-email-optin'), ad=scope.querySelector('.rrn-ads-optin');
+    return { email_optin: em?!!em.checked:false, ads_optin: ad?!!ad.checked:false };
+  };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',inject); else inject();
+  setTimeout(inject,1200); // catch any late-rendered cards
+})();
+</script>
 </body>
 </html>
