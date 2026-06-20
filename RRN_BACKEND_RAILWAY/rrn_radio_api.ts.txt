@@ -1,0 +1,187 @@
+/* ============================================================================
+   RRN REFINED RADIO API  —  Railway backend module
+   ----------------------------------------------------------------------------
+   Removes the console 404s you saw:
+       GET /api/radio/scores      -> 404   (now served)
+       GET /api/radio/board?days= -> 404   (now served)
+   ...and makes song ratings + the leaderboard REAL and cross-user instead of
+   per-device only. The website already calls all four of these endpoints and
+   falls back to local data when they 404 — once this is deployed, the calls
+   succeed and the console is clean.
+
+   ----------------------------------------------------------------------------
+   SETUP  (run on your machine, then `railway up`)
+   ----------------------------------------------------------------------------
+   1) Save as  src/routes/radio.ts
+        PowerShell, if downloaded as radio.ts.txt:
+          Rename-Item "radio.ts.txt" "radio.ts"
+        then move it into src\routes\
+
+   2) Add these models to prisma/schema.prisma :
+
+        model RadioScore {
+          track     String   @id
+          score     Int      @default(0)
+          updatedAt DateTime @updatedAt
+        }
+        model RadioEvent {
+          id        Int      @id @default(autoincrement())
+          track     String
+          type      String                       // start|complete|skip|like|dislike|request|share|favorite
+          voter     String?
+          source    String?
+          createdAt DateTime @default(now())
+          @@index([track])
+          @@index([type])
+          @@index([createdAt])
+        }
+
+   3) npx prisma migrate dev --name radio    (or use the raw SQL at the bottom)
+      npx prisma generate
+
+   4) Mount in src/index.ts (next to /api/intake):
+
+        import radioRouter from "./routes/radio";
+        app.use("/api/radio", radioRouter);
+
+   5) cd C:\Users\broch\Downloads\hope-recovery-backend
+      railway up
+
+   ----------------------------------------------------------------------------
+   ENDPOINTS (shapes match what index.html already expects)
+     POST /api/radio/event  { voter, track, type, source }   -> { ok:true }
+     POST /api/radio/rate   { voter, track, delta }          -> { track, score }
+     GET  /api/radio/scores                                   -> { scores: { src: score } }
+     GET  /api/radio/board?days=N                             -> { tracks: [ {src,title,popularity,requests,shares,first_seen} ] }
+   ============================================================================ */
+
+import { Router, Request, Response } from "express";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+const router = Router();
+
+const EVENT_TYPES = new Set(["start", "complete", "skip", "like", "dislike", "request", "share", "favorite"]);
+const SCORE_MIN = -3, SCORE_MAX = 5;
+
+/* POST /api/radio/event ----------------------------------------------------- */
+router.post("/event", async (req: Request, res: Response) => {
+  try {
+    const track = String(req.body?.track || "").slice(0, 300);
+    const type = String(req.body?.type || "");
+    if (!track || !EVENT_TYPES.has(type)) return res.json({ ok: false });
+    await prisma.radioEvent.create({
+      data: {
+        track,
+        type,
+        voter: req.body?.voter ? String(req.body.voter).slice(0, 80) : null,
+        source: req.body?.source ? String(req.body.source).slice(0, 60) : null,
+      },
+    });
+    res.json({ ok: true });
+  } catch (e) { res.json({ ok: false }); }
+});
+
+/* POST /api/radio/rate ------------------------------------------------------ */
+router.post("/rate", async (req: Request, res: Response) => {
+  try {
+    const track = String(req.body?.track || "").slice(0, 300);
+    let delta = parseInt(req.body?.delta, 10);
+    if (!track || isNaN(delta)) return res.status(400).json({ ok: false });
+    delta = Math.max(-1, Math.min(1, delta)); // one step at a time
+
+    const existing = await prisma.radioScore.findUnique({ where: { track } });
+    let score = (existing?.score || 0) + delta;
+    score = Math.max(SCORE_MIN, Math.min(SCORE_MAX, score));
+    await prisma.radioScore.upsert({
+      where: { track },
+      update: { score },
+      create: { track, score },
+    });
+    // record the vote as an event too (feeds the board)
+    await prisma.radioEvent.create({
+      data: { track, type: delta > 0 ? "like" : "dislike", voter: req.body?.voter ? String(req.body.voter).slice(0, 80) : null },
+    });
+    res.json({ track, score });
+  } catch (e) { res.json({ ok: false }); }
+});
+
+/* GET /api/radio/scores ----------------------------------------------------- */
+router.get("/scores", async (_req: Request, res: Response) => {
+  try {
+    const rows = await prisma.radioScore.findMany({ select: { track: true, score: true } });
+    const scores: Record<string, number> = {};
+    for (const r of rows) scores[r.track] = r.score;
+    res.json({ scores });
+  } catch (e) { res.json({ scores: {} }); }
+});
+
+/* GET /api/radio/board?days=N ----------------------------------------------- */
+router.get("/board", async (req: Request, res: Response) => {
+  try {
+    let days = parseInt(String(req.query.days || "7"), 10);
+    if (isNaN(days) || days < 1) days = 7;
+    const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
+
+    const events = await prisma.radioEvent.findMany({
+      where: { createdAt: { gte: since } },
+      select: { track: true, type: true, createdAt: true },
+    });
+    // also first-seen across all time
+    const firstSeen = await prisma.radioEvent.groupBy({
+      by: ["track"],
+      _min: { createdAt: true },
+    });
+    const firstMap: Record<string, Date> = {};
+    for (const f of firstSeen) firstMap[f.track] = f._min.createdAt as Date;
+
+    const agg: Record<string, any> = {};
+    for (const e of events) {
+      const a = agg[e.track] || (agg[e.track] = { src: e.track, plays: 0, likes: 0, requests: 0, shares: 0 });
+      if (e.type === "start" || e.type === "complete") a.plays += 1;
+      else if (e.type === "like" || e.type === "favorite") a.likes += 1;
+      else if (e.type === "request") a.requests += 1;
+      else if (e.type === "share") a.shares += 1;
+    }
+
+    const tracks = Object.values(agg).map((a: any) => ({
+      src: a.src,
+      title: prettySrc(a.src),
+      popularity: a.plays + a.likes * 2 + a.requests * 3 + a.shares * 2,
+      requests: a.requests,
+      shares: a.shares,
+      first_seen: firstMap[a.src] || null,
+    }));
+    tracks.sort((x, y) => y.popularity - x.popularity);
+    res.json({ tracks: tracks.slice(0, 60) });
+  } catch (e) { res.json({ tracks: [] }); }
+});
+
+// best-effort display title from a flat src path (the site overrides with the real title when it has it)
+function prettySrc(s: string): string {
+  try { s = decodeURIComponent(s); } catch (_) {}
+  return (s || "").replace(/^.*\//, "").replace(/\.[^.]+$/, "").replace(/_+/g, " ").trim();
+}
+
+export default router;
+
+/* ============================================================================
+   RAW SQL  (only if you can't run `prisma migrate`)
+   ----------------------------------------------------------------------------
+   CREATE TABLE IF NOT EXISTS "RadioScore" (
+     "track"     TEXT PRIMARY KEY,
+     "score"     INTEGER   NOT NULL DEFAULT 0,
+     "updatedAt" TIMESTAMP NOT NULL DEFAULT now()
+   );
+   CREATE TABLE IF NOT EXISTS "RadioEvent" (
+     "id"        SERIAL PRIMARY KEY,
+     "track"     TEXT      NOT NULL,
+     "type"      TEXT      NOT NULL,
+     "voter"     TEXT,
+     "source"    TEXT,
+     "createdAt" TIMESTAMP NOT NULL DEFAULT now()
+   );
+   CREATE INDEX IF NOT EXISTS "RadioEvent_track_idx"     ON "RadioEvent" ("track");
+   CREATE INDEX IF NOT EXISTS "RadioEvent_type_idx"      ON "RadioEvent" ("type");
+   CREATE INDEX IF NOT EXISTS "RadioEvent_createdAt_idx" ON "RadioEvent" ("createdAt");
+   ============================================================================ */

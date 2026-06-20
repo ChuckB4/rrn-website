@@ -1,0 +1,232 @@
+/* ============================================================================
+   RRN BOOK LAUNCH METRICS  —  Railway backend module
+   ----------------------------------------------------------------------------
+   Real, honest engagement numbers for the bookstore launch system.
+   NO fake numbers: every figure is computed from rows that actually exist.
+
+   What it powers on the website:
+     • Founding Readers count   (from real /api/intake signups)
+     • Shares / Referral clicks / Referral signups   (from real events)
+     • Community Interest Score + Launch Momentum     (weighted, from the above)
+     • Communities Reached       (distinct referrers)
+
+   ----------------------------------------------------------------------------
+   SETUP  (run these on your machine, then `railway up`)
+   ----------------------------------------------------------------------------
+   1) Save this file as:   src/routes/books.ts
+        - In PowerShell, if you downloaded it as books.ts.txt:
+            Rename-Item "books.ts.txt" "books.ts"
+          then move it into src\routes\
+
+   2) Add this model to  prisma/schema.prisma  :
+
+        model BookEvent {
+          id        Int      @id @default(autoincrement())
+          book      String                       // slug, e.g. "hope-anchored-my-soul"
+          type      String                       // view | share | referral_click | wishlist | follow
+          ref       String?                      // referrer code from ?ref=
+          voter     String?                      // anon device id (optional)
+          createdAt DateTime @default(now())
+          @@index([book])
+          @@index([book, type])
+          @@index([createdAt])
+        }
+
+   3) Create + apply the migration:
+        npx prisma migrate dev --name book_events
+        npx prisma generate
+
+      (If `migrate dev` won't run against the live DB, use the raw SQL at the
+       bottom of this file, then `npx prisma generate`.)
+
+   4) Mount the router in your main server file (src/index.ts or src/app.ts),
+      next to where /api/intake is mounted:
+
+        import booksRouter from "./routes/books";
+        app.use("/api/books", booksRouter);
+
+      IMPORTANT: this assumes your existing intake rows live in a Prisma model
+      called `intake` with columns `program` (string) and `payload` (Json).
+      If your model/columns are named differently, change the two spots marked
+      ===ADJUST=== below.
+
+   5) Deploy:
+        cd C:\Users\broch\Downloads\hope-recovery-backend
+        railway up
+
+   ----------------------------------------------------------------------------
+   ENDPOINTS
+     POST /api/books/event        { book, type, ref? }     -> {ok:true}
+     GET  /api/books/stats                                  -> { slug: {..} }
+     GET  /api/books/:slug/stats                            -> {..}
+   ============================================================================ */
+
+import { Router, Request, Response } from "express";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+const router = Router();
+
+// only these event types are accepted (anything else is ignored)
+const EVENT_TYPES = new Set(["view", "share", "referral_click", "wishlist", "follow"]);
+
+// weights for the Community Interest Score (all real signals)
+const W = {
+  foundingReaders: 5,   // a real intake signup for this book
+  referralSignups: 8,   // signup that arrived via someone's ref link
+  follows: 4,
+  wishlist: 3,
+  shares: 3,
+  referralClicks: 1,
+  views: 0.2,
+};
+
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+
+/* ---- POST /api/books/event ------------------------------------------------ */
+router.post("/event", async (req: Request, res: Response) => {
+  try {
+    const book = String(req.body?.book || "").trim().slice(0, 120);
+    const type = String(req.body?.type || "").trim();
+    const ref  = req.body?.ref ? String(req.body.ref).trim().slice(0, 60) : null;
+    const voter = req.body?.voter ? String(req.body.voter).trim().slice(0, 80) : null;
+    if (!book || !EVENT_TYPES.has(type)) return res.status(400).json({ ok: false });
+    await prisma.bookEvent.create({ data: { book, type, ref, voter } });
+    return res.json({ ok: true });
+  } catch (e) {
+    // never break the page over an event write
+    return res.json({ ok: false });
+  }
+});
+
+/* ---- helpers -------------------------------------------------------------- */
+// Pull every bookstore intake row once, grouped by book slug.
+// ===ADJUST=== model name `intake` and field names `program`/`payload` if yours differ.
+async function intakeByBook(): Promise<Record<string, { founding: number; referralSignups: number }>> {
+  const out: Record<string, { founding: number; referralSignups: number }> = {};
+  try {
+    const rows: any[] = await prisma.intake.findMany({
+      where: { program: "bookstore" },
+      select: { payload: true },
+    });
+    for (const r of rows) {
+      const p = (r.payload || {}) as any;
+      const slug = String(p.book || "").trim();
+      if (!slug) continue;
+      if (!out[slug]) out[slug] = { founding: 0, referralSignups: 0 };
+      out[slug].founding += 1;
+      if (p.referred_by) out[slug].referralSignups += 1;
+    }
+  } catch (_e) { /* intake model absent or different — founding counts just stay 0 */ }
+  return out;
+}
+
+function scoreFrom(c: any): number {
+  return Math.round(
+    c.foundingReaders * W.foundingReaders +
+    c.referralSignups * W.referralSignups +
+    c.follows         * W.follows +
+    c.wishlist        * W.wishlist +
+    c.shares          * W.shares +
+    c.referralClicks  * W.referralClicks +
+    c.views           * W.views
+  );
+}
+
+// Build the full stats map from BookEvent rows + intake counts.
+async function buildStats(filterSlug?: string): Promise<Record<string, any>> {
+  const where: any = filterSlug ? { book: filterSlug } : {};
+  const events: any[] = await prisma.bookEvent.findMany({
+    where,
+    select: { book: true, type: true, ref: true, createdAt: true },
+  });
+  const intake = await intakeByBook();
+  const now = Date.now();
+
+  const acc: Record<string, any> = {};
+  function slot(slug: string) {
+    if (!acc[slug]) acc[slug] = {
+      views: 0, shares: 0, referralClicks: 0, wishlist: 0, follows: 0,
+      refs: new Set<string>(), recent: 0,
+    };
+    return acc[slug];
+  }
+
+  for (const e of events) {
+    const s = slot(e.book);
+    if (e.type === "view") s.views += 1;
+    else if (e.type === "share") s.shares += 1;
+    else if (e.type === "referral_click") s.referralClicks += 1;
+    else if (e.type === "wishlist") s.wishlist += 1;
+    else if (e.type === "follow") s.follows += 1;
+    if (e.ref) s.refs.add(e.ref);
+    if (now - new Date(e.createdAt).getTime() <= WEEK_MS) s.recent += 1;
+  }
+
+  // make sure books that only have intake (no events yet) still appear
+  for (const slug of Object.keys(intake)) slot(slug);
+
+  const out: Record<string, any> = {};
+  for (const slug of Object.keys(acc)) {
+    const s = acc[slug];
+    const it = intake[slug] || { founding: 0, referralSignups: 0 };
+    const c = {
+      foundingReaders: it.founding,
+      referralSignups: it.referralSignups,
+      shares: s.shares,
+      referralClicks: s.referralClicks,
+      wishlist: s.wishlist,
+      follows: s.follows,
+      views: s.views,
+    };
+    out[slug] = {
+      ...c,
+      communitiesReached: s.refs.size,
+      momentum: s.recent,                 // events in the last 7 days
+      interestScore: scoreFrom(c),
+    };
+  }
+  return out;
+}
+
+/* ---- GET /api/books/stats ------------------------------------------------- */
+router.get("/stats", async (_req: Request, res: Response) => {
+  try {
+    res.json(await buildStats());
+  } catch (e) {
+    res.json({}); // empty -> the site simply shows no numbers (never fake ones)
+  }
+});
+
+/* ---- GET /api/books/:slug/stats ------------------------------------------- */
+router.get("/:slug/stats", async (req: Request, res: Response) => {
+  try {
+    const slug = String(req.params.slug || "").trim();
+    const all = await buildStats(slug);
+    res.json(all[slug] || {
+      foundingReaders: 0, referralSignups: 0, shares: 0, referralClicks: 0,
+      wishlist: 0, follows: 0, views: 0, communitiesReached: 0, momentum: 0, interestScore: 0,
+    });
+  } catch (e) {
+    res.json({});
+  }
+});
+
+export default router;
+
+/* ============================================================================
+   RAW SQL  (only if you can't run `prisma migrate` against the live DB)
+   Run once against the Railway Postgres, then `npx prisma generate`.
+   ----------------------------------------------------------------------------
+   CREATE TABLE IF NOT EXISTS "BookEvent" (
+     "id"        SERIAL PRIMARY KEY,
+     "book"      TEXT        NOT NULL,
+     "type"      TEXT        NOT NULL,
+     "ref"       TEXT,
+     "voter"     TEXT,
+     "createdAt" TIMESTAMP   NOT NULL DEFAULT now()
+   );
+   CREATE INDEX IF NOT EXISTS "BookEvent_book_idx"      ON "BookEvent" ("book");
+   CREATE INDEX IF NOT EXISTS "BookEvent_book_type_idx" ON "BookEvent" ("book","type");
+   CREATE INDEX IF NOT EXISTS "BookEvent_createdAt_idx" ON "BookEvent" ("createdAt");
+   ============================================================================ */
