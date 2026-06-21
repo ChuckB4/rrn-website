@@ -3,18 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<meta name="description" content="Free faith-based recovery tools — private to your device. No account required. Built for your walk.">
+<meta name="description" content="Free faith-based recovery tools — private to your device. No account required.">
 <title>Free Recovery Tools | Refined Recovery Network</title>
-<meta property="og:title" content="Free Recovery Tools | Refined Recovery Network">
-<meta property="og:description" content="Free faith-based recovery tools — private to your device. No account required. Built for your walk.">
-<meta property="og:url" content="https://joinrrn.com/tools.html">
-<meta property="og:type" content="website">
 <link rel="canonical" href="https://joinrrn.com/tools.html">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23060d18'/><text x='32' y='45' font-family='Georgia,serif' font-size='40' font-weight='700' text-anchor='middle' fill='%23c8913a'>R</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
+:root{--ink:#060d18;--ink2:#0b1829;--gold:#c8913a;--gold-hi:#f0c060;--gold-lo:rgba(200,145,58,0.12);--gold-br:rgba(200,145,58,0.22);--white:#fff;--off:#f8f6f3;--body:#1c1c28;--muted:#72728a;--fd:"Cormorant Garamond",Georgia,serif;--fb:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+a{text-decoration:none;color:inherit;}
+
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(6,13,24,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(200,145,58,.12);transition:background .3s;}
+#nav.on{background:rgba(6,13,24,.97);}
+.nw{max-width:1320px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,3vw,48px);height:66px;}
+.nlogo img{height:40px;width:auto;display:block;}
+.nl{display:flex;align-items:center;gap:4px;list-style:none;}
+.grp{position:relative;}
+.glab{background:none;border:none;font-family:var(--fb);font-size:13px;font-weight:600;letter-spacing:.03em;color:rgba(255,255,255,.82);padding:8px 14px;cursor:pointer;border-radius:8px;display:flex;align-items:center;gap:5px;transition:color .2s,background .2s;}
+.glab:hover,.grp.open .glab{color:#fff;background:rgba(255,255,255,.07);}
+.dd{display:none;position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%) translateY(8px);min-width:228px;background:rgba(11,24,41,.98);backdrop-filter:blur(20px);border:1px solid rgba(200,145,58,.18);border-radius:14px;padding:10px;box-shadow:0 24px 48px rgba(0,0,0,.35);z-index:100;opacity:0;transition:opacity .15s,transform .15s;}
+.grp.open .dd{display:block;opacity:1;transform:translateX(-50%) translateY(0);}
+.cv{display:flex;flex-direction:column;gap:2px;}
+.cv a{display:block;padding:9px 14px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.78);transition:background .15s,color .15s;}
+.cv a:hover{background:rgba(200,145,58,.12);color:#fff;}
+.nl-give a{background:var(--gold);color:#060d18!important;border-radius:100px;padding:9px 20px!important;font-weight:700;font-size:13px;}
+.nl-give a:hover{opacity:.88;}
+.hbtn{display:none;background:none;border:none;padding:8px;cursor:pointer;flex-direction:column;gap:5px;}
+.hbtn span{display:block;width:22px;height:1.5px;background:#fff;border-radius:2px;}
+.mm{display:none;position:fixed;top:66px;left:0;right:0;background:rgba(6,13,24,.98);backdrop-filter:blur(24px);z-index:499;max-height:calc(100vh - 66px);overflow-y:auto;}
+.mg{display:flex;flex-direction:column;gap:2px;padding:12px 20px;}
+.mg a{display:block;padding:11px 14px;color:rgba(255,255,255,.78);font-size:15px;border-radius:10px;}
+.mg a:hover{background:rgba(200,145,58,.1);color:#fff;}
+@media(max-width:860px){.nl{display:none;}.hbtn{display:flex;}}
+
+
+footer{background:var(--ink);color:rgba(255,255,255,.5);font-size:12.5px;}
+.fi{max-width:1320px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(20px,4vw,60px) 24px;}
+.ftop{display:grid;grid-template-columns:1fr 2fr;gap:40px 60px;padding-bottom:40px;border-bottom:1px solid rgba(200,145,58,.12);}
+.fbr img{height:52px;width:auto;margin-bottom:16px;}
+.fbr p{font-size:13px;line-height:1.7;max-width:320px;}
+.fc{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 32px;}
+.fc h4{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.fc a{display:block;color:rgba(255,255,255,.5);font-size:13px;padding:3px 0;transition:color .2s;}
+.fc a:hover{color:var(--gold);}
+.fbot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:24px;font-size:12px;}
+.fbot a{color:rgba(255,255,255,.4);}
+.fbot a:hover{color:var(--gold);}
+@media(max-width:700px){.ftop{grid-template-columns:1fr;}.fc{grid-template-columns:1fr 1fr;}}
+
+
 
 :root{
   --ink:#060d18;--ink2:#0b1829;--ink3:#0f2035;
@@ -287,6 +325,9 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
 /* Page content padding for fixed nav */
 .page-body{padding-top:90px;min-height:100vh;}
 @media(max-width:720px){#grid{grid-template-columns:1fr!important}}
+
+body{background:#f6f4ee!important;color:#23303f!important;}
+.page-body{background:#f6f4ee!important;padding-top:90px;min-height:100vh;}
 </style>
 </head>
 <body>
@@ -385,39 +426,41 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
 <div class="eyebrow">Free Tools</div>
 <h1>Recovery Tools</h1>
 <p class="sub">Every tool here is 100% free, private to your device, and works without an account. Built to serve your walk &mdash; not to sell you anything.</p>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:10px" id="grid"><a href="document-center.html" style="display:block;background:linear-gradient(180deg,#15233a,#0a1320);border:1px solid rgba(200,145,58,.4);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none;grid-column:1/-1"><div style="font-size:26px">🗂️</div><b style="display:block;font-family:var(--fd);font-size:23px;color:#fff;margin:4px 0 2px">Document Center</b><span style="font-size:14px;color:#aab3c0">All five paperwork generators (resume, letters, testimony, plan) in one place.</span></a><a href="recovery-tracker.html" style="display:block;background:linear-gradient(180deg,var(--ink2),#0a1320);border:1px solid rgba(255,255,255,.07);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:10px" id="grid"><a href="document-center.html" style="display:block;background:#ffffff;border:1px solid rgba(200,145,58,.3);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none;grid-column:1/-1"><div style="font-size:26px">🗂️</div><b style="display:block;font-family:var(--fd);font-size:23px;color:#0f1b2d;margin:4px 0 2px">Document Center</b><span style="font-size:14px;color:#555">All five paperwork generators (resume, letters, testimony, plan) in one place.</span></a><a href="recovery-tracker.html" style="display:block;background:#ffffff;border:1px solid rgba(200,145,58,.2);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
       <div style="font-size:26px">🕊️</div>
-      <b style="display:block;font-family:var(--fd);font-size:23px;color:#fff;margin:4px 0 2px">Recovery Tracker</b>
-      <span style="font-size:14px;color:#aab3c0">Count the days God has carried you, with milestone badges and a daily verse.</span></a><a href="scripture-search.html" style="display:block;background:linear-gradient(180deg,var(--ink2),#0a1320);border:1px solid rgba(255,255,255,.07);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
+      <b style="display:block;font-family:var(--fd);font-size:23px;color:#0f1b2d;margin:4px 0 2px">Recovery Tracker</b>
+      <span style="font-size:14px;color:#555">Count the days God has carried you, with milestone badges and a daily verse.</span></a><a href="scripture-search.html" style="display:block;background:#ffffff;border:1px solid rgba(200,145,58,.2);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
       <div style="font-size:26px">📖</div>
-      <b style="display:block;font-family:var(--fd);font-size:23px;color:#fff;margin:4px 0 2px">Scripture Search</b>
-      <span style="font-size:14px;color:#aab3c0">Type what you're facing and find KJV verses for it, instantly.</span></a><a href="resume-builder.html" style="display:block;background:linear-gradient(180deg,var(--ink2),#0a1320);border:1px solid rgba(255,255,255,.07);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
+      <b style="display:block;font-family:var(--fd);font-size:23px;color:#0f1b2d;margin:4px 0 2px">Scripture Search</b>
+      <span style="font-size:14px;color:#555">Type what you're facing and find KJV verses for it, instantly.</span></a><a href="resume-builder.html" style="display:block;background:#ffffff;border:1px solid rgba(200,145,58,.2);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
       <div style="font-size:26px">📄</div>
-      <b style="display:block;font-family:var(--fd);font-size:23px;color:#fff;margin:4px 0 2px">Resume Builder</b>
-      <span style="font-size:14px;color:#aab3c0">Build a clean, strength-forward resume and save it as a PDF.</span></a><a href="reference-letter.html" style="display:block;background:linear-gradient(180deg,var(--ink2),#0a1320);border:1px solid rgba(255,255,255,.07);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
+      <b style="display:block;font-family:var(--fd);font-size:23px;color:#0f1b2d;margin:4px 0 2px">Resume Builder</b>
+      <span style="font-size:14px;color:#555">Build a clean, strength-forward resume and save it as a PDF.</span></a><a href="reference-letter.html" style="display:block;background:#ffffff;border:1px solid rgba(200,145,58,.2);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
       <div style="font-size:26px">✍️</div>
-      <b style="display:block;font-family:var(--fd);font-size:23px;color:#fff;margin:4px 0 2px">Character Reference Letter</b>
-      <span style="font-size:14px;color:#aab3c0">Court, employment, housing, or ministry — generate a respectful letter.</span></a><a href="court-letter.html" style="display:block;background:linear-gradient(180deg,var(--ink2),#0a1320);border:1px solid rgba(255,255,255,.07);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
+      <b style="display:block;font-family:var(--fd);font-size:23px;color:#0f1b2d;margin:4px 0 2px">Character Reference Letter</b>
+      <span style="font-size:14px;color:#555">Court, employment, housing, or ministry — generate a respectful letter.</span></a><a href="court-letter.html" style="display:block;background:#ffffff;border:1px solid rgba(200,145,58,.2);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
       <div style="font-size:26px">⚖️</div>
-      <b style="display:block;font-family:var(--fd);font-size:23px;color:#fff;margin:4px 0 2px">Court Support Letter</b>
-      <span style="font-size:14px;color:#aab3c0">A formatted letter to the court describing recovery progress and support.</span></a><a href="testimony-builder.html" style="display:block;background:linear-gradient(180deg,var(--ink2),#0a1320);border:1px solid rgba(255,255,255,.07);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
+      <b style="display:block;font-family:var(--fd);font-size:23px;color:#0f1b2d;margin:4px 0 2px">Court Support Letter</b>
+      <span style="font-size:14px;color:#555">A formatted letter to the court describing recovery progress and support.</span></a><a href="testimony-builder.html" style="display:block;background:#ffffff;border:1px solid rgba(200,145,58,.2);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
       <div style="font-size:26px">🔥</div>
-      <b style="display:block;font-family:var(--fd);font-size:23px;color:#fff;margin:4px 0 2px">Testimony Builder</b>
-      <span style="font-size:14px;color:#aab3c0">Turn four simple parts into one powerful written testimony.</span></a><a href="recovery-plan.html" style="display:block;background:linear-gradient(180deg,var(--ink2),#0a1320);border:1px solid rgba(255,255,255,.07);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
+      <b style="display:block;font-family:var(--fd);font-size:23px;color:#0f1b2d;margin:4px 0 2px">Testimony Builder</b>
+      <span style="font-size:14px;color:#555">Turn four simple parts into one powerful written testimony.</span></a><a href="recovery-plan.html" style="display:block;background:#ffffff;border:1px solid rgba(200,145,58,.2);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
       <div style="font-size:26px">🧭</div>
-      <b style="display:block;font-family:var(--fd);font-size:23px;color:#fff;margin:4px 0 2px">Recovery Plan</b>
-      <span style="font-size:14px;color:#aab3c0">Goals, triggers, coping steps, accountability, and scripture anchors.</span></a><a href="prayer-journal.html" style="display:block;background:linear-gradient(180deg,var(--ink2),#0a1320);border:1px solid rgba(255,255,255,.07);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
+      <b style="display:block;font-family:var(--fd);font-size:23px;color:#0f1b2d;margin:4px 0 2px">Recovery Plan</b>
+      <span style="font-size:14px;color:#555">Goals, triggers, coping steps, accountability, and scripture anchors.</span></a><a href="prayer-journal.html" style="display:block;background:#ffffff;border:1px solid rgba(200,145,58,.2);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
       <div style="font-size:26px">🙏</div>
-      <b style="display:block;font-family:var(--fd);font-size:23px;color:#fff;margin:4px 0 2px">Prayer Journal</b>
-      <span style="font-size:14px;color:#aab3c0">A private daily journal with scripture prompts and gratitude.</span></a><a href="resources.html" style="display:block;background:linear-gradient(180deg,var(--ink2),#0a1320);border:1px solid rgba(255,255,255,.07);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
+      <b style="display:block;font-family:var(--fd);font-size:23px;color:#0f1b2d;margin:4px 0 2px">Prayer Journal</b>
+      <span style="font-size:14px;color:#555">A private daily journal with scripture prompts and gratitude.</span></a><a href="resources.html" style="display:block;background:#ffffff;border:1px solid rgba(200,145,58,.2);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;text-decoration:none">
       <div style="font-size:26px">🤝</div>
-      <b style="display:block;font-family:var(--fd);font-size:23px;color:#fff;margin:4px 0 2px">Resource Directory</b>
-      <span style="font-size:14px;color:#aab3c0">Lifelines, churches, meetings, food, housing, and employment help.</span></a></div>
+      <b style="display:block;font-family:var(--fd);font-size:23px;color:#0f1b2d;margin:4px 0 2px">Resource Directory</b>
+      <span style="font-size:14px;color:#555">Lifelines, churches, meetings, food, housing, and employment help.</span></a></div>
 <div style="text-align:center;margin-top:30px"><a class="prayerbtn" href="index.html#hopewall">Need prayer or support? Visit the Hope Wall →</a></div>
 
 </div>
 
 <script></script>
+</div>
+
 </div>
 <footer>
   <div class="fi">
@@ -488,6 +531,11 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
     </div>
   </div>
 </footer>
+<script>function rrTog(btn){var g=btn.parentElement,open=g.classList.contains('open');document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});if(!open)g.classList.add('open');}
+function openMM(){var m=document.getElementById('mm');m.style.display=m.style.display==='flex'?'none':'flex';}
+function cMM(){var m=document.getElementById('mm');m.style.display='none';}
+document.addEventListener('click',function(e){if(!e.target.closest('.grp'))document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});});
+window.addEventListener('scroll',function(){var n=document.getElementById('nav');if(window.scrollY>10)n.classList.add('on');else n.classList.remove('on');});</script>
 <script>function rrTog(btn){var g=btn.parentElement,open=g.classList.contains('open');document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});if(!open)g.classList.add('open');}
 function openMM(){var m=document.getElementById('mm');m.style.display=m.style.display==='flex'?'none':'flex';}
 function cMM(){var m=document.getElementById('mm');m.style.display='none';}

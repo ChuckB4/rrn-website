@@ -5,16 +5,54 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="description" content="Track your recovery journey day by day. Private to your device, built on faith.">
 <title>Recovery Tracker | Refined Recovery Network</title>
-<meta property="og:title" content="Recovery Tracker | Refined Recovery Network">
-<meta property="og:description" content="Track your recovery journey day by day. Private to your device, built on faith.">
-<meta property="og:url" content="https://joinrrn.com/recovery-tracker.html">
-<meta property="og:type" content="website">
 <link rel="canonical" href="https://joinrrn.com/recovery-tracker.html">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23060d18'/><text x='32' y='45' font-family='Georgia,serif' font-size='40' font-weight='700' text-anchor='middle' fill='%23c8913a'>R</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
+:root{--ink:#060d18;--ink2:#0b1829;--gold:#c8913a;--gold-hi:#f0c060;--gold-lo:rgba(200,145,58,0.12);--gold-br:rgba(200,145,58,0.22);--white:#fff;--off:#f8f6f3;--body:#1c1c28;--muted:#72728a;--fd:"Cormorant Garamond",Georgia,serif;--fb:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+a{text-decoration:none;color:inherit;}
+
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(6,13,24,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(200,145,58,.12);transition:background .3s;}
+#nav.on{background:rgba(6,13,24,.97);}
+.nw{max-width:1320px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,3vw,48px);height:66px;}
+.nlogo img{height:40px;width:auto;display:block;}
+.nl{display:flex;align-items:center;gap:4px;list-style:none;}
+.grp{position:relative;}
+.glab{background:none;border:none;font-family:var(--fb);font-size:13px;font-weight:600;letter-spacing:.03em;color:rgba(255,255,255,.82);padding:8px 14px;cursor:pointer;border-radius:8px;display:flex;align-items:center;gap:5px;transition:color .2s,background .2s;}
+.glab:hover,.grp.open .glab{color:#fff;background:rgba(255,255,255,.07);}
+.dd{display:none;position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%) translateY(8px);min-width:228px;background:rgba(11,24,41,.98);backdrop-filter:blur(20px);border:1px solid rgba(200,145,58,.18);border-radius:14px;padding:10px;box-shadow:0 24px 48px rgba(0,0,0,.35);z-index:100;opacity:0;transition:opacity .15s,transform .15s;}
+.grp.open .dd{display:block;opacity:1;transform:translateX(-50%) translateY(0);}
+.cv{display:flex;flex-direction:column;gap:2px;}
+.cv a{display:block;padding:9px 14px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.78);transition:background .15s,color .15s;}
+.cv a:hover{background:rgba(200,145,58,.12);color:#fff;}
+.nl-give a{background:var(--gold);color:#060d18!important;border-radius:100px;padding:9px 20px!important;font-weight:700;font-size:13px;}
+.nl-give a:hover{opacity:.88;}
+.hbtn{display:none;background:none;border:none;padding:8px;cursor:pointer;flex-direction:column;gap:5px;}
+.hbtn span{display:block;width:22px;height:1.5px;background:#fff;border-radius:2px;}
+.mm{display:none;position:fixed;top:66px;left:0;right:0;background:rgba(6,13,24,.98);backdrop-filter:blur(24px);z-index:499;max-height:calc(100vh - 66px);overflow-y:auto;}
+.mg{display:flex;flex-direction:column;gap:2px;padding:12px 20px;}
+.mg a{display:block;padding:11px 14px;color:rgba(255,255,255,.78);font-size:15px;border-radius:10px;}
+.mg a:hover{background:rgba(200,145,58,.1);color:#fff;}
+@media(max-width:860px){.nl{display:none;}.hbtn{display:flex;}}
+
+
+footer{background:var(--ink);color:rgba(255,255,255,.5);font-size:12.5px;}
+.fi{max-width:1320px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(20px,4vw,60px) 24px;}
+.ftop{display:grid;grid-template-columns:1fr 2fr;gap:40px 60px;padding-bottom:40px;border-bottom:1px solid rgba(200,145,58,.12);}
+.fbr img{height:52px;width:auto;margin-bottom:16px;}
+.fbr p{font-size:13px;line-height:1.7;max-width:320px;}
+.fc{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 32px;}
+.fc h4{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.fc a{display:block;color:rgba(255,255,255,.5);font-size:13px;padding:3px 0;transition:color .2s;}
+.fc a:hover{color:var(--gold);}
+.fbot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:24px;font-size:12px;}
+.fbot a{color:rgba(255,255,255,.4);}
+.fbot a:hover{color:var(--gold);}
+@media(max-width:700px){.ftop{grid-template-columns:1fr;}.fc{grid-template-columns:1fr 1fr;}}
+
+
 
 :root{
   --ink:#060d18;--ink2:#0b1829;--ink3:#0f2035;
@@ -287,6 +325,9 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
 /* Page content padding for fixed nav */
 .page-body{padding-top:90px;min-height:100vh;}
 
+
+body{background:#f6f4ee!important;color:#23303f!important;}
+.page-body{background:#f6f4ee!important;padding-top:90px;min-height:100vh;}
 </style>
 </head>
 <body>
@@ -534,6 +575,8 @@ var saved=localStorage.getItem(KEY);
 if(saved){ show(saved); } else { document.getElementById('startDate').max=new Date().toISOString().slice(0,10); }
 </script>
 </div>
+
+</div>
 <footer>
   <div class="fi">
     <div class="ftop">
@@ -604,6 +647,112 @@ if(saved){ show(saved); } else { document.getElementById('startDate').max=new Da
   </div>
 </footer>
 <script>function rrTog(btn){var g=btn.parentElement,open=g.classList.contains('open');document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});if(!open)g.classList.add('open');}
+function openMM(){var m=document.getElementById('mm');m.style.display=m.style.display==='flex'?'none':'flex';}
+function cMM(){var m=document.getElementById('mm');m.style.display='none';}
+document.addEventListener('click',function(e){if(!e.target.closest('.grp'))document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});});
+window.addEventListener('scroll',function(){var n=document.getElementById('nav');if(window.scrollY>10)n.classList.add('on');else n.classList.remove('on');});</script>
+<script>
+var KEY='rrn_recovery_start';
+var VERSES=[
+{t:"I can do all things through Christ which strengtheneth me.",r:"Philippians 4:13"},
+{t:"They that wait upon the LORD shall renew their strength.",r:"Isaiah 40:31"},
+{t:"This is the day which the LORD hath made; we will rejoice and be glad in it.",r:"Psalm 118:24"},
+{t:"If the Son therefore shall make you free, ye shall be free indeed.",r:"John 8:36"},
+{t:"His compassions fail not. They are new every morning.",r:"Lamentations 3:22-23"},
+{t:"Fear thou not; for I am with thee... I will strengthen thee.",r:"Isaiah 41:10"},
+{t:"There is therefore now no condemnation to them which are in Christ Jesus.",r:"Romans 8:1"},
+{t:"He brought me up also out of an horrible pit... and set my feet upon a rock.",r:"Psalm 40:2"},
+{t:"My grace is sufficient for thee: for my strength is made perfect in weakness.",r:"2 Corinthians 12:9"},
+{t:"If any man be in Christ, he is a new creature: old things are passed away.",r:"2 Corinthians 5:17"},
+{t:"Casting all your care upon him; for he careth for you.",r:"1 Peter 5:7"},
+{t:"God is our refuge and strength, a very present help in trouble.",r:"Psalm 46:1"},
+{t:"Come unto me, all ye that labour and are heavy laden, and I will give you rest.",r:"Matthew 11:28"},
+{t:"There hath no temptation taken you but such as is common to man: but God is faithful.",r:"1 Corinthians 10:13"},
+{t:"Stand fast therefore in the liberty wherewith Christ hath made us free.",r:"Galatians 5:1"},
+{t:"He healeth the broken in heart, and bindeth up their wounds.",r:"Psalm 147:3"},
+{t:"Let us not be weary in well doing: for in due season we shall reap, if we faint not.",r:"Galatians 6:9"},
+{t:"For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.",r:"2 Timothy 1:7"},
+{t:"Submit yourselves therefore to God. Resist the devil, and he will flee from you.",r:"James 4:7"},
+{t:"Thou wilt keep him in perfect peace, whose mind is stayed on thee.",r:"Isaiah 26:3"},
+{t:"The name of the LORD is a strong tower: the righteous runneth into it, and is safe.",r:"Proverbs 18:10"},
+{t:"Create in me a clean heart, O God; and renew a right spirit within me.",r:"Psalm 51:10"},
+{t:"I will never leave thee, nor forsake thee.",r:"Hebrews 13:5"},
+{t:"Trust in the LORD with all thine heart; and lean not unto thine own understanding.",r:"Proverbs 3:5"},
+{t:"Weeping may endure for a night, but joy cometh in the morning.",r:"Psalm 30:5"},
+{t:"Be strong and of a good courage... for the LORD thy God is with thee.",r:"Joshua 1:9"},
+{t:"I waited patiently for the LORD; and he inclined unto me, and heard my cry.",r:"Psalm 40:1"},
+{t:"Whom resist stedfast in the faith.",r:"1 Peter 5:9"},
+{t:"Looking unto Jesus the author and finisher of our faith.",r:"Hebrews 12:2"},
+{t:"The LORD is nigh unto them that are of a broken heart.",r:"Psalm 34:18"},
+{t:"Draw nigh to God, and he will draw nigh to you.",r:"James 4:8"}
+];
+var MILESTONES=[
+{d:1,ico:"🌱",n:"Day 1"},{d:7,ico:"🕊️",n:"1 Week"},{d:30,ico:"⭐",n:"1 Month"},
+{d:60,ico:"✨",n:"2 Months"},{d:90,ico:"🔥",n:"90 Days"},{d:180,ico:"🛡️",n:"6 Months"},
+{d:270,ico:"⚓",n:"9 Months"},{d:365,ico:"👑",n:"1 Year"},{d:730,ico:"🏔️",n:"2 Years"},
+{d:1825,ico:"🌟",n:"5 Years"}
+];
+function daysBetween(start){
+  var s=new Date(start+'T00:00:00'); var now=new Date();
+  s.setHours(0,0,0,0); now.setHours(0,0,0,0);
+  return Math.max(0,Math.round((now-s)/86400000));
+}
+function fmt(d){var x=new Date(d+'T00:00:00');return x.toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}
+function show(start){
+  document.getElementById('setup').classList.add('hidden');
+  document.getElementById('tracker').classList.remove('hidden');
+  var days=daysBetween(start);
+  document.getElementById('dayNum').textContent=days.toLocaleString();
+  document.getElementById('dayLabel').textContent=(days===1?'Day Free':'Days Free');
+  document.getElementById('sinceLine').textContent='Recovery start date: '+fmt(start);
+  // next milestone
+  var next=MILESTONES.find(function(m){return m.d>days;});
+  var prev=MILESTONES.filter(function(m){return m.d<=days;}).pop();
+  if(next){
+    var base=prev?prev.d:0;
+    var pct=Math.round((days-base)/(next.d-base)*100);
+    document.getElementById('nextLine').innerHTML=(next.d-days)+' day'+((next.d-days)===1?'':'s')+' to your <b>'+next.n+'</b> milestone';
+    document.getElementById('progBar').style.width=Math.min(100,Math.max(3,pct))+'%';
+  } else {
+    document.getElementById('nextLine').innerHTML='Every milestone reached &mdash; <b>'+Math.floor(days/365)+'+ years</b> by God&rsquo;s grace.';
+    document.getElementById('progBar').style.width='100%';
+  }
+  // badges
+  document.getElementById('badges').innerHTML=MILESTONES.map(function(m){
+    var earned=days>=m.d;
+    return '<div class="badge'+(earned?' earned':'')+'"><div class="ico">'+m.ico+'</div><div class="d">'+m.d+'</div><div class="n">'+m.n+'</div></div>';
+  }).join('');
+  // daily verse (stable per calendar day)
+  var doy=Math.floor((new Date()-new Date(new Date().getFullYear(),0,0))/86400000);
+  var v=VERSES[doy%VERSES.length];
+  document.getElementById('verse').innerHTML='&ldquo;'+v.t+'&rdquo;<span class="ref">'+v.r+' (KJV)</span>';
+  window._rrnDays=days;
+}
+document.getElementById('saveBtn').onclick=function(){
+  var d=document.getElementById('startDate').value;
+  if(!d){alert('Please choose your recovery start date.');return;}
+  if(new Date(d+'T00:00:00')>new Date()){alert('That date is in the future. Please pick the day your recovery began.');return;}
+  try{localStorage.setItem(KEY,d);}catch(e){} show(d);
+};
+document.getElementById('editBtn').onclick=function(){
+  document.getElementById('tracker').classList.add('hidden');
+  document.getElementById('setup').classList.remove('hidden');
+  var saved=localStorage.getItem(KEY); if(saved)document.getElementById('startDate').value=saved;
+};
+document.getElementById('shareBtn').onclick=function(){
+  var days=window._rrnDays||0;
+  var msg='By God\u2019s grace I am '+days+' day'+(days===1?'':'s')+' free. \u201CIf the Son therefore shall make you free, ye shall be free indeed.\u201D \u2014 John 8:36 (KJV) \u2014 Refined Recovery Network, joinrrn.com';
+  var b=document.getElementById('shareBtn');
+  if(navigator.share&&window.isSecureContext){ navigator.share({title:'My Recovery Milestone',text:msg}).catch(function(){}); return; }
+  function done(){var o=b.textContent;b.textContent='Copied ✓';setTimeout(function(){b.textContent=o;},1500);}
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(msg).then(done).catch(fb);}else{fb();}
+  function fb(){var ta=document.createElement('textarea');ta.value=msg;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');done();}catch(e){prompt('Copy this:',msg);}document.body.removeChild(ta);}
+};
+// init
+var saved=localStorage.getItem(KEY);
+if(saved){ show(saved); } else { document.getElementById('startDate').max=new Date().toISOString().slice(0,10); }
+
+function rrTog(btn){var g=btn.parentElement,open=g.classList.contains('open');document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});if(!open)g.classList.add('open');}
 function openMM(){var m=document.getElementById('mm');m.style.display=m.style.display==='flex'?'none':'flex';}
 function cMM(){var m=document.getElementById('mm');m.style.display='none';}
 document.addEventListener('click',function(e){if(!e.target.closest('.grp'))document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});});
