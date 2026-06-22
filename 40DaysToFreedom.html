@@ -3,17 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<meta name="description" content="Join the 40 Days to Freedom Challenge from Refined Recovery Network — a faith-based, scripture-anchored discipleship journey for people in recovery.">
+<meta name="description" content="A 40-day scripture-anchored faith challenge for people in recovery — three levels so everyone can participate. Launches July 14, 2026.">
 <title>40 Days to Freedom | Refined Recovery Network</title>
-<meta property="og:title" content="40 Days to Freedom — Refined Recovery Network">
-<meta property="og:description" content="A 40-day scripture-anchored recovery challenge. One day at a time, by His grace.">
+<meta property="og:title" content="40 Days to Freedom | Refined Recovery Network">
+<meta property="og:description" content="Three levels. One goal. 40 days of meeting God where you are. Launches July 14, 2026.">
 <meta property="og:url" content="https://joinrrn.com/40DaysToFreedom.html">
-<meta property="og:type" content="website">
 <link rel="canonical" href="https://joinrrn.com/40DaysToFreedom.html">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23060d18'/><text x='32' y='45' font-family='Georgia,serif' font-size='40' font-weight='700' text-anchor='middle' fill='%23c8913a'>R</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 
 :root{
@@ -285,103 +283,123 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
 @media(max-width:640px){.rrp-rate{order:5;}}
 
 
-/* === 40 DAYS PAGE CSS === */
-.page-body{padding-top:90px;min-height:100vh;background:var(--off);}
-.c40{max-width:880px;margin:0 auto;padding:clamp(40px,6vw,80px) max(4%,calc((100% - 880px)/2 + 4%));}
-.c40 .eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-.c40 h1{font-family:var(--fd);font-size:clamp(2rem,5vw,3.2rem);font-weight:700;color:var(--ink);line-height:1.15;margin-bottom:18px;}
-.c40 .lead{font-size:1.1rem;color:#3a3a50;line-height:1.75;margin-bottom:32px;max-width:640px;}
+.page-body{padding-top:90px;min-height:100vh;background:#f6f4ee;}
+.c40{max-width:880px;margin:0 auto;padding:clamp(36px,6vw,72px) max(4%,calc((100% - 880px)/2 + 4%));}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.c40 h1{font-family:var(--fd);font-size:clamp(1.8rem,4.5vw,3rem);font-weight:700;color:#0f1b2d;line-height:1.15;margin:0 0 14px;}
+.c40 .lead{font-size:1rem;color:#444;line-height:1.75;margin-bottom:28px;max-width:640px;}
+
+/* Level selector */
+.level-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:28px 0;}
+.lv-card{border-radius:16px;padding:24px 20px;cursor:pointer;border:2px solid transparent;transition:all .2s;position:relative;}
+.lv-card.bronze{background:linear-gradient(135deg,#fff8f0,#fff3e0);border-color:rgba(180,120,60,.2);}
+.lv-card.silver{background:linear-gradient(135deg,#f5f7ff,#eef1fb);border-color:rgba(100,120,200,.2);}
+.lv-card.gold{background:linear-gradient(135deg,#fffbf0,#fff8e0);border-color:rgba(200,145,58,.2);}
+.lv-card.selected.bronze{border-color:#b4783c;box-shadow:0 4px 20px rgba(180,120,60,.2);}
+.lv-card.selected.silver{border-color:#6478c8;box-shadow:0 4px 20px rgba(100,120,200,.2);}
+.lv-card.selected.gold{border-color:var(--gold);box-shadow:0 4px 20px rgba(200,145,58,.25);}
+.lv-icon{font-size:2rem;margin-bottom:8px;}
+.lv-name{font-family:var(--fd);font-size:1.1rem;font-weight:700;color:#0f1b2d;margin-bottom:4px;}
+.lv-tag{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:100px;display:inline-block;margin-bottom:10px;}
+.tag-bronze{background:rgba(180,120,60,.12);color:#8b5a2b;}
+.tag-silver{background:rgba(100,120,200,.12);color:#4a5aa0;}
+.tag-gold{background:rgba(200,145,58,.12);color:#996010;}
+.lv-desc{font-size:.82rem;color:#555;line-height:1.6;}
+.lv-checks{margin-top:12px;font-size:.78rem;color:#777;}
+.lv-checks li{margin:2px 0;}
+.selected-badge{display:none;position:absolute;top:12px;right:12px;background:var(--gold);color:#fff;border-radius:50%;width:22px;height:22px;font-size:12px;align-items:center;justify-content:center;}
+.lv-card.selected .selected-badge{display:flex;}
 
 /* Countdown */
-.cd-wrap{display:flex;gap:20px;flex-wrap:wrap;margin:32px 0;align-items:flex-end;}
-.cd-box{background:var(--ink);color:#fff;border-radius:12px;padding:18px 24px;text-align:center;min-width:80px;}
-.cd-num{font-family:var(--fd);font-size:2.4rem;font-weight:700;color:var(--gold);display:block;line-height:1;}
-.cd-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.5;margin-top:4px;display:block;}
-.cd-sep{font-size:2rem;color:var(--gold);margin-bottom:24px;opacity:.4;}
+.cd-wrap{display:flex;gap:14px;flex-wrap:wrap;margin:24px 0;align-items:flex-end;}
+.cd-box{background:var(--ink);color:#fff;border-radius:12px;padding:14px 18px;text-align:center;min-width:68px;}
+.cd-num{font-family:var(--fd);font-size:2rem;font-weight:700;color:var(--gold);display:block;line-height:1;}
+.cd-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.45;margin-top:3px;display:block;}
+.cd-sep{font-size:1.8rem;color:var(--gold);margin-bottom:18px;opacity:.35;}
 
 /* Registration */
-.reg-card{background:#fff;border-radius:16px;box-shadow:0 2px 24px rgba(0,0,0,.06);padding:36px;margin:32px 0;}
-.reg-card h2{font-family:var(--fd);font-size:1.5rem;color:var(--ink);margin-bottom:6px;}
-.reg-card .sub{font-size:.9rem;color:#666;margin-bottom:24px;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
-.form-row.full{grid-template-columns:1fr;}
-label.fl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#444;display:block;margin-bottom:5px;}
-input[type=text],input[type=email],input[type=date],select,textarea{
-  width:100%;padding:11px 14px;border:1.5px solid #ddd;border-radius:8px;
-  font-size:14px;font-family:var(--fb);color:var(--ink);background:#faf9f7;
-  transition:border-color .2s;outline:none;}
-input:focus,select:focus,textarea:focus{border-color:var(--gold);}
-textarea{min-height:80px;resize:vertical;}
-.btn-gold{background:var(--gold);color:var(--ink);border:none;padding:14px 32px;border-radius:100px;
-  font-size:14px;font-weight:700;letter-spacing:.05em;cursor:pointer;transition:opacity .2s;margin-top:8px;}
+.reg-card{background:#fff;border-radius:16px;box-shadow:0 2px 20px rgba(0,0,0,.06);padding:32px;margin:28px 0;}
+.reg-card h2{font-family:var(--fd);font-size:1.4rem;color:#0f1b2d;margin-bottom:4px;}
+.sub{font-size:.85rem;color:#888;margin-bottom:22px;}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+label.fl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#444;display:block;margin-bottom:4px;}
+input,select,textarea{width:100%;padding:10px 13px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;color:#0f1b2d;background:#faf9f7;outline:none;font-family:inherit;transition:border-color .2s;}
+input:focus,select:focus{border-color:var(--gold);}
+.btn-gold{background:var(--gold);color:#0f1b2d;border:none;padding:13px 28px;border-radius:100px;font-size:13.5px;font-weight:700;cursor:pointer;margin-top:8px;transition:opacity .2s;}
 .btn-gold:hover{opacity:.88;}
-.btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--gold);padding:12px 28px;
-  border-radius:100px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
-.btn-outline:hover{background:var(--gold);color:var(--ink);}
+.btn-outline{background:transparent;color:#0f1b2d;border:1.5px solid var(--gold);padding:10px 22px;border-radius:100px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+.btn-outline:hover{background:var(--gold);}
 
 /* Dashboard */
 .dash{display:none;}
 .dash.active{display:block;}
-.dash-hero{background:var(--ink);color:#fff;border-radius:16px;padding:32px;margin-bottom:24px;position:relative;overflow:hidden;}
-.dash-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(200,145,58,.15),transparent 70%);border-radius:50%;}
-.dash-hero h2{font-family:var(--fd);font-size:1.8rem;color:var(--gold);margin-bottom:4px;}
-.dash-hero .day-count{font-size:4rem;font-weight:700;line-height:1;color:#fff;}
-.dash-hero .day-label{font-size:.85rem;opacity:.5;letter-spacing:.08em;text-transform:uppercase;}
-.progress-bar{background:rgba(255,255,255,.08);border-radius:100px;height:6px;margin:16px 0 8px;overflow:hidden;}
+.dash-hero{background:var(--ink);color:#fff;border-radius:16px;padding:28px;margin-bottom:20px;}
+.dash-hero h2{font-family:var(--fd);font-size:1.6rem;color:var(--gold);margin-bottom:4px;}
+.level-pill{display:inline-block;padding:4px 14px;border-radius:100px;font-size:11px;font-weight:700;margin-bottom:12px;}
+.pill-bronze{background:rgba(180,120,60,.2);color:#f0a060;}
+.pill-silver{background:rgba(100,120,200,.2);color:#aab8ff;}
+.pill-gold{background:rgba(200,145,58,.2);color:var(--gold);}
+.day-count{font-size:3.5rem;font-weight:700;line-height:1;}
+.day-label{font-size:.8rem;opacity:.45;letter-spacing:.08em;text-transform:uppercase;}
+.progress-bar{background:rgba(255,255,255,.08);border-radius:100px;height:5px;margin:14px 0 6px;overflow:hidden;}
 .progress-fill{background:var(--gold);height:100%;border-radius:100px;transition:width .6s;}
-.progress-pct{font-size:12px;opacity:.45;}
+.pct{font-size:11px;opacity:.4;}
 
-/* Daily Tracker Tabs */
-.tab-nav{display:flex;gap:6px;flex-wrap:wrap;margin:24px 0 16px;}
-.tab-btn{padding:8px 16px;border-radius:100px;font-size:12.5px;font-weight:600;border:1.5px solid rgba(0,0,0,.1);
-  background:transparent;cursor:pointer;transition:all .2s;color:#555;}
+/* Tabs */
+.tab-nav{display:flex;gap:6px;flex-wrap:wrap;margin:20px 0 14px;}
+.tab-btn{padding:7px 15px;border-radius:100px;font-size:12px;font-weight:600;border:1.5px solid rgba(0,0,0,.1);background:transparent;cursor:pointer;color:#555;transition:all .2s;}
 .tab-btn.active{background:var(--ink);color:var(--gold);border-color:var(--ink);}
 .tab-panel{display:none;}
 .tab-panel.active{display:block;}
 
-/* Daily check card */
-.day-card{background:#fff;border-radius:14px;box-shadow:0 2px 16px rgba(0,0,0,.05);padding:28px;margin-bottom:20px;}
-.day-card h3{font-family:var(--fd);font-size:1.2rem;color:var(--ink);margin-bottom:4px;}
-.day-card .verse-ref{font-size:12px;color:var(--gold);font-weight:700;letter-spacing:.05em;margin-bottom:12px;display:block;}
-.day-card .verse-text{font-size:.9rem;color:#444;font-style:italic;border-left:3px solid rgba(200,145,58,.35);
-  padding-left:14px;margin:12px 0;line-height:1.7;}
-.check-row{display:flex;align-items:center;gap:10px;margin:10px 0;}
-.check-row input[type=checkbox]{width:18px;height:18px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;}
-.check-row label{font-size:.88rem;color:#333;cursor:pointer;}
-.journal-area{width:100%;margin-top:12px;min-height:70px;font-size:.88rem;}
-.save-day{margin-top:14px;}
-.saved-badge{display:inline-block;background:rgba(200,145,58,.12);color:var(--gold);padding:4px 12px;
-  border-radius:100px;font-size:11px;font-weight:700;margin-left:8px;opacity:0;transition:opacity .4s;}
+/* Day card */
+.day-card{background:#fff;border-radius:14px;box-shadow:0 2px 14px rgba(0,0,0,.05);padding:24px;margin-bottom:16px;}
+.day-card h3{font-family:var(--fd);font-size:1.15rem;color:#0f1b2d;margin-bottom:4px;}
+.verse-ref{font-size:11.5px;color:var(--gold);font-weight:700;letter-spacing:.05em;margin-bottom:10px;display:block;}
+.verse-text{font-size:.88rem;color:#333;font-style:italic;border-left:3px solid rgba(200,145,58,.35);padding-left:12px;margin:10px 0;line-height:1.7;}
+.check-row{display:flex;align-items:center;gap:9px;margin:8px 0;}
+.check-row input[type=checkbox]{width:17px;height:17px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;}
+.check-row label{font-size:.85rem;color:#333;cursor:pointer;}
+.optional-label{font-size:.75rem;color:#aaa;font-style:italic;margin-left:4px;}
+.journal-area{width:100%;margin-top:10px;min-height:60px;font-size:.85rem;border-radius:8px;border:1.5px solid #eee;padding:10px;resize:vertical;}
+.save-day{margin-top:12px;}
+.saved-badge{display:inline-block;background:rgba(200,145,58,.12);color:var(--gold);padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;margin-left:8px;opacity:0;transition:opacity .4s;}
 .saved-badge.show{opacity:1;}
+.level-note{background:rgba(200,145,58,.06);border:1px solid rgba(200,145,58,.15);border-radius:8px;padding:8px 12px;font-size:.78rem;color:#886010;margin-bottom:12px;}
 
 /* Badges */
-.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px;margin:20px 0;}
-.badge{background:#fff;border-radius:12px;padding:20px 14px;text-align:center;box-shadow:0 1px 8px rgba(0,0,0,.06);}
-.badge .icon{font-size:2rem;display:block;margin-bottom:6px;}
-.badge .name{font-size:11px;font-weight:700;color:#333;letter-spacing:.04em;}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:14px;margin:16px 0;}
+.badge{background:#fff;border-radius:12px;padding:18px 12px;text-align:center;box-shadow:0 1px 6px rgba(0,0,0,.06);}
+.badge .icon{font-size:1.8rem;display:block;margin-bottom:5px;}
+.badge .bname{font-size:10.5px;font-weight:700;color:#333;letter-spacing:.03em;}
 .badge.earned{border:2px solid var(--gold);}
-.badge.earned .name{color:var(--gold);}
-.badge.locked{opacity:.35;}
+.badge.earned .bname{color:var(--gold);}
+.badge.locked{opacity:.3;}
 
-/* Certificate */
-.cert-wrap{background:#fff;border:2px solid rgba(200,145,58,.3);border-radius:16px;padding:48px;text-align:center;margin:20px 0;}
-.cert-wrap h2{font-family:var(--fd);font-size:2rem;color:var(--ink);margin-bottom:4px;}
-.cert-name{font-family:var(--fd);font-size:1.6rem;color:var(--gold);border-bottom:2px solid rgba(200,145,58,.3);
-  display:inline-block;padding-bottom:4px;margin:16px 0;}
-.cert-verse{font-size:.9rem;color:#555;font-style:italic;max-width:480px;margin:12px auto;}
-.cert-seal{font-size:3rem;margin:16px 0;}
+/* Cert */
+.cert-wrap{background:#fff;border:2px solid rgba(200,145,58,.3);border-radius:16px;padding:40px;text-align:center;margin:16px 0;}
+.cert-wrap h2{font-family:var(--fd);font-size:1.8rem;color:#0f1b2d;}
+.cert-name{font-family:var(--fd);font-size:1.5rem;color:var(--gold);border-bottom:2px solid rgba(200,145,58,.3);display:inline-block;padding-bottom:4px;margin:14px 0;}
+.cert-verse{font-size:.85rem;color:#555;font-style:italic;max-width:440px;margin:10px auto;}
+.cert-seal{font-size:2.5rem;margin:12px 0;}
 
-/* Disclaimers */
-.disclaimer{background:#f3f2ef;border-left:4px solid rgba(200,145,58,.4);padding:20px 24px;border-radius:0 10px 10px 0;
-  margin:32px 0;font-size:.82rem;color:#555;line-height:1.75;}
-.disclaimer strong{color:var(--ink);}
+/* Disclaimer */
+.disc{background:#f3f2ef;border-left:4px solid rgba(200,145,58,.35);padding:16px 20px;border-radius:0 10px 10px 0;margin:24px 0;font-size:.78rem;color:#555;line-height:1.7;}
+.disc strong{color:#333;}
+
+/* How it works */
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin:20px 0;}
+.how-card{background:#fff;border-radius:12px;padding:22px;box-shadow:0 1px 6px rgba(0,0,0,.05);}
+.how-card .icon{font-size:1.6rem;margin-bottom:6px;}
+.how-card strong{font-size:.9rem;color:#0f1b2d;display:block;margin-bottom:4px;}
+.how-card p{font-size:.78rem;color:#555;line-height:1.6;}
 
 @media(max-width:640px){
-  .form-row{grid-template-columns:1fr;}
-  .cd-wrap{gap:10px;}
-  .cd-box{min-width:60px;padding:12px 16px;}
-  .cd-num{font-size:1.8rem;}
-  .cert-wrap{padding:28px 16px;}
+  .level-wrap,.form-row-2{grid-template-columns:1fr;}
+  .cd-wrap{gap:8px;}
+  .cd-box{min-width:56px;padding:10px 12px;}
+  .cd-num{font-size:1.5rem;}
+  .cert-wrap{padding:24px 16px;}
 }
 
 </style>
@@ -480,10 +498,9 @@ textarea{min-height:80px;resize:vertical;}
 <div class="page-body">
 <div class="c40">
 
-  <!-- HERO -->
-  <div class="eyebrow">40-Day Challenge</div>
+  <div class="eyebrow">40-Day Challenge · Launches July 14, 2026</div>
   <h1>40 Days to Freedom</h1>
-  <p class="lead">A scripture-anchored, faith-based discipleship challenge for people in recovery. One day. One verse. One step forward. Forty days of meeting God where you are and walking out what He says.</p>
+  <p class="lead">A scripture-anchored, faith-based discipleship challenge for people in recovery. Three levels — so wherever you are starting from, there is a place for you. Scripture and prayer are the foundation at every level.</p>
 
   <!-- COUNTDOWN -->
   <div id="cdWrap" class="cd-wrap">
@@ -494,109 +511,123 @@ textarea{min-height:80px;resize:vertical;}
     <div class="cd-box"><span class="cd-num" id="cdM">--</span><span class="cd-label">Min</span></div>
     <span class="cd-sep">:</span>
     <div class="cd-box"><span class="cd-num" id="cdS">--</span><span class="cd-label">Sec</span></div>
-    <p style="margin-left:8px;font-size:.88rem;color:#666;align-self:center;">Until the challenge launches July 4, 2026 — <strong>register now to begin</strong></p>
+    <p style="font-size:.82rem;color:#666;align-self:center;margin-left:6px;">Until launch — <strong>register now to be ready</strong></p>
   </div>
 
-  <!-- DISCLAIMERS (before registration) -->
-  
-<div class="disclaimer">
-  <strong>Health &amp; Medical Disclaimer.</strong> The 40 Days to Freedom Challenge is a faith-based peer recovery and spiritual discipleship program, not a medical, clinical, or mental health treatment program. Refined Recovery Network LLC is a peer recovery ministry, not a licensed clinical provider. Nothing in this program constitutes medical advice, diagnosis, treatment, or therapy. If you are experiencing a medical emergency, mental health crisis, or severe withdrawal symptoms, call 911 or go to your nearest emergency room immediately. If you are considering fasting as part of your personal spiritual practice, consult a qualified physician before doing so, especially if you have any underlying health conditions, are on medication, or are in early recovery. RRN does not supervise, prescribe, or recommend any specific fasting regimen. Participation in all activities, including spiritual disciplines, is entirely voluntary and at your own risk.<br><br>
-  <strong>Recovery Disclaimer.</strong> Recovery outcomes vary. No program, curriculum, or faith community can guarantee any specific recovery result. This program is a supplement to, not a replacement for, professional medical or clinical care where it is clinically indicated. If you are struggling with active addiction, please also seek qualified medical care.<br><br>
-  <strong>Data Privacy.</strong> All data entered in this tool is stored only in your browser's local storage on your device. Refined Recovery Network does not collect, transmit, store, or access any personal data you enter here. Clearing your browser data will erase your progress.
-</div>
+  <!-- LEVEL SELECTOR -->
+  <h2 style="font-family:var(--fd);font-size:1.35rem;color:#0f1b2d;margin:32px 0 6px;">Choose Your Level</h2>
+  <p style="font-size:.85rem;color:#666;margin-bottom:16px;">Scripture and prayer are required at every level. Choose what fits where you are — you can always move up.</p>
+  <div class="level-wrap">
+    <div class="lv-card bronze" id="lv-bronze" onclick="selectLevel('bronze')">
+      <div class="selected-badge">✓</div>
+      <div class="lv-icon">🌱</div>
+      <div class="lv-name">Seeker</div>
+      <div class="lv-tag tag-bronze">Getting Started</div>
+      <div class="lv-desc">New to faith-based recovery. Scripture + Prayer daily. Everything else is optional.</div>
+      <ul class="lv-checks">
+        <li>📖 Daily scripture — <strong>required</strong></li>
+        <li>🙏 Daily prayer — <strong>required</strong></li>
+        <li>✅ Accountability checkin — optional</li>
+        <li>📝 Journal — optional</li>
+      </ul>
+    </div>
+    <div class="lv-card silver" id="lv-silver" onclick="selectLevel('silver')">
+      <div class="selected-badge">✓</div>
+      <div class="lv-icon">🔥</div>
+      <div class="lv-name">Walker</div>
+      <div class="lv-tag tag-silver">Building Discipline</div>
+      <div class="lv-desc">Ready to go deeper. Scripture, Prayer, and a daily checkin. Journal is optional.</div>
+      <ul class="lv-checks">
+        <li>📖 Daily scripture — <strong>required</strong></li>
+        <li>🙏 Daily prayer — <strong>required</strong></li>
+        <li>✅ Accountability checkin — <strong>required</strong></li>
+        <li>📝 Journal — optional</li>
+      </ul>
+    </div>
+    <div class="lv-card gold" id="lv-gold" onclick="selectLevel('gold')">
+      <div class="selected-badge">✓</div>
+      <div class="lv-icon">👑</div>
+      <div class="lv-name">Covenant Runner</div>
+      <div class="lv-tag tag-gold">Full Commitment</div>
+      <div class="lv-desc">Full commitment — all four daily practices. The complete experience.</div>
+      <ul class="lv-checks">
+        <li>📖 Daily scripture — <strong>required</strong></li>
+        <li>🙏 Daily prayer — <strong>required</strong></li>
+        <li>✅ Accountability checkin — <strong>required</strong></li>
+        <li>📝 Journal — <strong>required</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="level-note" id="lvNote" style="display:none;"></div>
 
-  
-<div class="disclaimer" style="margin-top:0;">
-  <strong>Terms of Use.</strong> By participating in the 40 Days to Freedom Challenge, you agree that: (1) you are participating voluntarily; (2) you understand this is a faith-based peer recovery program, not clinical treatment; (3) you will seek appropriate medical care if needed; (4) Refined Recovery Network LLC, Eagle Summit Ministries, and their agents are not liable for any outcomes arising from your participation; (5) any content you enter is stored only on your device and is your sole responsibility. Refined Recovery Network reserves the right to modify program content at any time. All scripture quotations are from the King James Version (KJV) of the Holy Bible.
-</div>
-
+  <div class="disc"><strong>Health &amp; Medical Disclaimer.</strong> The 40 Days to Freedom Challenge is a faith-based peer recovery and spiritual discipleship program, not a medical or clinical treatment program. Refined Recovery Network LLC is a peer recovery ministry, not a licensed clinical provider. Nothing here constitutes medical advice. If you are experiencing a medical emergency, crisis, or severe withdrawal, call 911. If you are considering fasting as part of your spiritual practice, consult a physician first — especially if you have health conditions or are in early recovery. All activities are voluntary and at your own risk.<br><br><strong>Data Privacy.</strong> All data entered is stored only in your browser's local storage. Refined Recovery Network does not collect, transmit, or access any personal data you enter here. Clearing your browser data will erase your progress.<br><br><strong>Terms of Use.</strong> By participating you agree this is a faith-based peer recovery program, not clinical treatment, and that RRN LLC and Eagle Summit Ministries are not liable for any outcomes. All scripture is from the King James Version (KJV).</div>
 
   <!-- REGISTRATION -->
   <div id="regSection" style="display:none;">
     <div class="reg-card">
       <h2>Start Your 40 Days</h2>
-      <p class="sub">Enter your name, email, and your recovery start date. Your data stays on your device — never sent to us.</p>
-      <div class="form-row">
+      <p class="sub">Your data stays on your device only — never sent to us.</p>
+      <div class="form-row-2" style="margin-bottom:14px;">
         <div><label class="fl" for="regName">Your Name</label><input type="text" id="regName" placeholder="First and last name"></div>
-        <div><label class="fl" for="regEmail">Email Address</label><input type="email" id="regEmail" placeholder="you@email.com"></div>
+        <div><label class="fl" for="regEmail">Email</label><input type="email" id="regEmail" placeholder="you@email.com"></div>
       </div>
-      <div class="form-row">
-        <div><label class="fl" for="regStart">Recovery Start Date</label><input type="date" id="regStart"></div>
-        <div><label class="fl" for="regIntent">Why are you taking this challenge?</label><input type="text" id="regIntent" placeholder="Optional — for your own journal"></div>
-      </div>
+      <div style="margin-bottom:16px;"><label class="fl" for="regStart">Your Start Date</label><input type="date" id="regStart"></div>
       <button class="btn-gold" onclick="doRegister()">Begin My 40 Days →</button>
+      <p style="font-size:.75rem;color:#aaa;margin-top:10px;">Choose a level above before clicking Begin.</p>
     </div>
   </div>
 
   <!-- DASHBOARD -->
   <div id="dashSection" class="dash">
     <div class="dash-hero">
+      <span class="level-pill" id="dashLvPill"></span>
       <h2>Welcome back, <span id="dashName">friend</span>.</h2>
       <div class="day-count" id="dashDay">1</div>
       <div class="day-label">days into your 40</div>
       <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-      <div class="progress-pct" id="progressPct">0% complete</div>
+      <div class="pct" id="progressPct">0% complete</div>
     </div>
-
-    <!-- DAILY TRACKER -->
     <div id="tabNav" class="tab-nav"></div>
     <div id="tabPanels"></div>
-
-    <!-- BADGES -->
-    <h2 style="font-family:var(--fd);font-size:1.4rem;color:var(--ink);margin:32px 0 8px;">Milestones</h2>
+    <h2 style="font-family:var(--fd);font-size:1.3rem;color:#0f1b2d;margin:28px 0 8px;">Milestones</h2>
     <div id="badgeGrid" class="badge-grid"></div>
-
-    <!-- CERTIFICATE (shown at completion) -->
     <div id="certSection" style="display:none;">
       <div class="cert-wrap">
         <div class="cert-seal">✝</div>
         <h2>Certificate of Completion</h2>
-        <p style="color:#888;font-size:.85rem;margin-bottom:8px;">This certifies that</p>
+        <div id="certLevel" style="font-size:.85rem;color:var(--gold);margin:6px 0;font-weight:700;"></div>
+        <p style="color:#888;font-size:.82rem;margin-bottom:6px;">This certifies that</p>
         <div class="cert-name" id="certName"></div>
         <p class="cert-verse">&ldquo;I have fought a good fight, I have finished my course, I have kept the faith.&rdquo;<br><strong>— 2 Timothy 4:7 KJV</strong></p>
-        <p style="font-size:.82rem;color:#888;margin-top:16px;">Issued by Refined Recovery Network · Port Allen, Louisiana · All Scripture KJV</p>
-        <button class="btn-outline" onclick="window.print()" style="margin-top:20px;">Print Certificate</button>
+        <p style="font-size:.78rem;color:#aaa;margin-top:12px;">Refined Recovery Network · Port Allen, Louisiana · All Scripture KJV</p>
+        <button class="btn-outline" onclick="window.print()" style="margin-top:16px;">Print Certificate</button>
       </div>
     </div>
-
-    <div style="margin-top:32px;text-align:center;">
-      <button class="btn-outline" onclick="if(confirm('Reset all 40 Days data?')){localStorage.removeItem(\'rrn_40days_v1\');location.reload();}">Reset My Progress</button>
-    </div>
-  </div>
-
-  <!-- HOW IT WORKS (shown to all) -->
-  <div style="margin:48px 0 0;">
-    <h2 style="font-family:var(--fd);font-size:1.5rem;color:var(--ink);margin-bottom:20px;">How It Works</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;">
-      <div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 8px rgba(0,0,0,.05);">
-        <div style="font-size:1.8rem;margin-bottom:8px;">📖</div>
-        <strong style="color:var(--ink);font-size:.95rem;">Daily Scripture</strong>
-        <p style="font-size:.83rem;color:#555;margin-top:6px;line-height:1.6;">One KJV verse per day — the same scripture that anchors the RRN 12-Step curriculum.</p>
-      </div>
-      <div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 8px rgba(0,0,0,.05);">
-        <div style="font-size:1.8rem;margin-bottom:8px;">✅</div>
-        <strong style="color:var(--ink);font-size:.95rem;">Three Daily Checks</strong>
-        <p style="font-size:.83rem;color:#555;margin-top:6px;line-height:1.6;">Simple accountability checkboxes — prayer, action, and one honest step forward.</p>
-      </div>
-      <div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 8px rgba(0,0,0,.05);">
-        <div style="font-size:1.8rem;margin-bottom:8px;">📝</div>
-        <strong style="color:var(--ink);font-size:.95rem;">Your Journal</strong>
-        <p style="font-size:.83rem;color:#555;margin-top:6px;line-height:1.6;">A private reflection space for each day. Stored only on your device — never on our servers.</p>
-      </div>
-      <div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 8px rgba(0,0,0,.05);">
-        <div style="font-size:1.8rem;margin-bottom:8px;">👑</div>
-        <strong style="color:var(--ink);font-size:.95rem;">Certificate at 40</strong>
-        <p style="font-size:.83rem;color:#555;margin-top:6px;line-height:1.6;">Complete all 40 days and receive a printable certificate of completion — a mark of faithfulness.</p>
-      </div>
+    <div style="margin-top:28px;text-align:center;">
+      <button class="btn-outline" onclick="copyLink()" style="margin-right:8px;">🔗 Share Challenge</button>
+      <button class="btn-outline" onclick="if(confirm('Reset all 40 Days progress?')){localStorage.removeItem('rrn_40days_v2');location.reload();}">Reset Progress</button>
     </div>
   </div>
 
-  <div style="margin:48px 0 16px;text-align:center;">
-    <p style="font-size:.85rem;color:#888;">Questions? <a href="https://joinrrn.com/#contact" style="color:var(--gold);">Contact us</a> · <a href="https://joinrrn.com/" style="color:var(--gold);">Return to joinrrn.com</a></p>
+  <!-- HOW IT WORKS -->
+  <div style="margin:40px 0 0;">
+    <h2 style="font-family:var(--fd);font-size:1.35rem;color:#0f1b2d;margin-bottom:16px;">How It Works</h2>
+    <div class="how-grid">
+      <div class="how-card"><div class="icon">📖</div><strong>Daily KJV Scripture</strong><p>One verse every day — the same scripture that anchors the RRN 12-Step curriculum. Required at every level.</p></div>
+      <div class="how-card"><div class="icon">🙏</div><strong>Daily Prayer</strong><p>A written prayer for each day. Speak it out loud. Required at every level.</p></div>
+      <div class="how-card"><div class="icon">✅</div><strong>Accountability Checkin</strong><p>One honest action per day. Required for Walker and Covenant Runner levels.</p></div>
+      <div class="how-card"><div class="icon">📝</div><strong>Your Journal</strong><p>Private reflection. Stored only on your device. Required for Covenant Runner, optional for others.</p></div>
+    </div>
   </div>
 
+  <div style="margin:36px 0 16px;text-align:center;">
+    <p style="font-size:.82rem;color:#aaa;">Questions? <a href="https://joinrrn.com/#contact" style="color:var(--gold);">Contact us</a> · <a href="https://joinrrn.com/" style="color:var(--gold);">joinrrn.com</a></p>
+  </div>
 </div>
 </div>
+
+<div id="toast40" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--gold);padding:10px 24px;border-radius:100px;font-size:13px;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;"></div>
+
 <footer>
   <div class="fi">
     <div class="ftop">
@@ -666,202 +697,236 @@ textarea{min-height:80px;resize:vertical;}
     </div>
   </div>
 </footer>
-<script>
-
-function rrTog(btn){var g=btn.parentElement,open=g.classList.contains('open');document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});if(!open)g.classList.add('open');}
+<script>function rrTog(btn){var g=btn.parentElement,open=g.classList.contains('open');document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});if(!open)g.classList.add('open');}
 function openMM(){var m=document.getElementById('mm');m.style.display=m.style.display==='flex'?'none':'flex';}
 function cMM(){var m=document.getElementById('mm');m.style.display='none';}
 document.addEventListener('click',function(e){if(!e.target.closest('.grp'))document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});});
-window.addEventListener('scroll',function(){var n=document.getElementById('nav');if(window.scrollY>10)n.classList.add('on');else n.classList.remove('on');});
+window.addEventListener('scroll',function(){var n=document.getElementById('nav');if(window.scrollY>10)n.classList.add('on');else n.classList.remove('on');});</script>
+<script>
+var KEY40='rrn_40days_v2';
+var state={};
 
-
-// === 40 DAYS STATE ===
-var KEY40 = 'rrn_40days_v1';
-var state = {};
-
-function loadState(){
-  try{ state = JSON.parse(localStorage.getItem(KEY40)||'{}'); } catch(e){ state={}; }
-}
-function saveState(){ localStorage.setItem(KEY40, JSON.stringify(state)); }
-
-// === COUNTDOWN (to June 30, 2026 launch) ===
-function runCountdown(){
-  var launch = new Date('2026-07-04T00:00:00');
-  function tick(){
-    var now = new Date(), diff = launch - now;
-    if(diff <= 0){ document.getElementById('cdWrap').innerHTML='<span style="color:var(--gold);font-weight:700;font-size:1.2rem;">The Challenge Is Live — Start Today!</span>'; return; }
-    var d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000),
-        m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
-    document.getElementById('cdD').textContent=String(d).padStart(2,'0');
-    document.getElementById('cdH').textContent=String(h).padStart(2,'0');
-    document.getElementById('cdM').textContent=String(m).padStart(2,'0');
-    document.getElementById('cdS').textContent=String(s).padStart(2,'0');
+// ===== LEVELS =====
+var LEVELS = {
+  bronze: {
+    name: 'Seeker',
+    icon: '🌱',
+    tag: 'Getting Started',
+    tagClass: 'tag-bronze',
+    pillClass: 'pill-bronze',
+    desc: 'New to faith-based recovery or just getting started. Focus on scripture and one daily prayer. Everything else is optional.',
+    required: ['scripture','prayer'],
+    optional: ['checkin','journal'],
+    note: 'Seeker level: Scripture + Prayer are your daily commitment. Checkins and journal are optional bonuses.'
+  },
+  silver: {
+    name: 'Walker',
+    icon: '🔥',
+    tag: 'Building Discipline',
+    tagClass: 'tag-silver',
+    pillClass: 'pill-silver',
+    desc: 'Ready to go deeper. Scripture, prayer, and daily accountability checkin are your commitment. Journal is optional.',
+    required: ['scripture','prayer','checkin'],
+    optional: ['journal'],
+    note: 'Walker level: Scripture, Prayer, and Checkin are required. Journal is your optional reflection space.'
+  },
+  gold: {
+    name: 'Covenant Runner',
+    icon: '👑',
+    tag: 'Full Commitment',
+    tagClass: 'tag-gold',
+    pillClass: 'pill-gold',
+    desc: 'Full commitment — scripture, prayer, accountability checkin, and daily journal. This is the complete 40-day experience.',
+    required: ['scripture','prayer','checkin','journal'],
+    optional: [],
+    note: 'Covenant Runner: All four daily commitments — Scripture, Prayer, Checkin, and Journal.'
   }
-  tick(); setInterval(tick,1000);
-}
+};
 
-// === REGISTRATION ===
-function doRegister(){
-  var name = document.getElementById('regName').value.trim();
-  var email = document.getElementById('regEmail').value.trim();
-  var start = document.getElementById('regStart').value;
-  var intent = document.getElementById('regIntent').value.trim();
-  if(!name||!email||!start){ alert('Please fill in name, email, and start date.'); return; }
-  state.name = name; state.email = email; state.startDate = start; state.intent = intent;
-  state.registered = true;
-  saveState();
-  showDash();
-}
-
-// === DASHBOARD ===
-function showDash(){
-  loadState();
-  if(!state.registered){ document.getElementById('regSection').style.display=''; document.getElementById('dashSection').classList.remove('active'); return; }
-  document.getElementById('regSection').style.display='none';
-  document.getElementById('dashSection').classList.add('active');
-
-  var startMs = new Date(state.startDate).getTime();
-  var todayMs = new Date().setHours(0,0,0,0);
-  var dayNum = Math.max(1, Math.min(40, Math.floor((todayMs - startMs)/86400000)+1));
-
-  document.getElementById('dashName').textContent = state.name.split(' ')[0];
-  document.getElementById('dashDay').textContent = dayNum;
-  var pct = Math.round((dayNum/40)*100);
-  document.getElementById('progressFill').style.width = pct+'%';
-  document.getElementById('progressPct').textContent = pct+'% complete';
-
-  buildTabs(dayNum);
-  buildBadges(dayNum);
-  if(dayNum >= 40 && state.days && Object.keys(state.days).length >= 35) showCert();
-}
-
-// === DAILY DATA ===
 var DAYS_DATA = [
-  {title:"The Starting Line",ref:"Psalm 40:1-3",verse:"I waited patiently for the LORD; and he inclined unto me, and heard my cry.",checks:["Prayed this morning","Read today's scripture","Completed my journal entry"]},
-  {title:"Admitting Powerlessness",ref:"John 15:5",verse:"Without me ye can do nothing.",checks:["Acknowledged where I am powerless","Surrendered it in prayer","Reached out to someone today"]},
-  {title:"Came to Believe",ref:"Hebrews 11:6",verse:"He that cometh to God must believe that he is, and that he is a rewarder of them that diligently seek him.",checks:["Identified one area of doubt","Prayed for increased faith","Wrote about what I believe"]},
-  {title:"Not My Will",ref:"Luke 22:42",verse:"Not my will, but thine, be done.",checks:["Identified my own agenda","Surrendered one decision to God","Prayed for willingness"]},
-  {title:"Search Me, O God",ref:"Psalm 139:23-24",verse:"Search me, O God, and know my heart: try me, and know my thoughts.",checks:["Completed my moral inventory page","Identified one pattern honestly","Prayed Psalm 139:23-24"]},
-  {title:"Confessing to Another",ref:"James 5:16",verse:"Confess your faults one to another, and pray one for another, that ye may be healed.",checks:["Connected with my accountability partner","Shared something honest today","Prayed for healing"]},
-  {title:"One Week In",ref:"Lamentations 3:22-23",verse:"His mercies are new every morning: great is thy faithfulness.",checks:["Reviewed my first week","Wrote what God has shown me","Celebrated one small victory"]},
-  {title:"Ready to Change",ref:"Psalm 51:10",verse:"Create in me a clean heart, O God; and renew a right spirit within me.",checks:["Identified one character defect","Asked God to remove it","Wrote my willingness statement"]},
-  {title:"Humble Before God",ref:"James 4:10",verse:"Humble yourselves in the sight of the Lord, and he shall lift you up.",checks:["Prayed in humility","Identified where pride is blocking me","Served someone else today"]},
-  {title:"The List",ref:"Matthew 5:23-24",verse:"First be reconciled to thy brother, and then come and offer thy gift.",checks:["Added to my amends list","Prayed over one name on the list","Wrote what I will say"]},
-  {title:"Making It Right",ref:"Luke 19:8",verse:"If I have taken any thing from any man by false accusation, I restore him fourfold.",checks:["Made or planned one direct amends","Prayed for the person I wronged","Released the outcome to God"]},
-  {title:"Daily Inventory",ref:"1 Corinthians 11:28",verse:"Let a man examine himself.",checks:["Completed my evening inventory","Admitted one wrong from today","Made it right before sleep"]},
-  {title:"Draw Near to God",ref:"James 4:8",verse:"Draw nigh to God, and he will draw nigh to you.",checks:["Had intentional prayer time","Meditated on one scripture","Wrote what I heard from God"]},
-  {title:"Two Weeks Faithful",ref:"Galatians 6:9",verse:"Let us not be weary in well doing: for in due season we shall reap, if we faint not.",checks:["Reviewed my journal from week one","Identified growth areas","Encouraged someone else today"]},
-  {title:"Carrying the Message",ref:"Mark 16:15",verse:"Go ye into all the world, and preach the gospel to every creature.",checks:["Shared my story with one person","Invited someone to come with me","Prayed for those still struggling"]},
-  {title:"One God, One Plan",ref:"Deuteronomy 6:4",verse:"The LORD our God is one LORD.",checks:["Studied what one God means","Prayed in Jesus name","Wrote what this truth means for my recovery"]},
-  {title:"The Holy Ghost",ref:"Acts 2:38",verse:"Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins, and ye shall receive the gift of the Holy Ghost.",checks:["Sought God with everything in me","Prayed for the Holy Ghost","Wrote what I believe about Acts 2:38"]},
-  {title:"Power Over Sin",ref:"Romans 8:2",verse:"The law of the Spirit of life in Christ Jesus hath made me free from the law of sin and death.",checks:["Identified where sin still has pull","Applied the Spirit's power in prayer","Claimed Romans 8:2 over my life"]},
-  {title:"Identity in Christ",ref:"2 Corinthians 5:17",verse:"Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new.",checks:["Wrote my new identity statement","Prayed against old labels","Thanked God for who I am becoming"]},
-  {title:"Covenant Language",ref:"Jeremiah 31:33",verse:"I will put my law in their inward parts, and write it in their hearts; and will be their God, and they shall be my people.",checks:["Read Jeremiah 31:31-34","Prayed about what covenant means","Wrote how covenant changes recovery"]},
-  {title:"Three Weeks Strong",ref:"Joshua 1:9",verse:"Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest.",checks:["Reviewed three weeks of progress","Named my greatest challenge","Declared Joshua 1:9 over it"]},
-  {title:"The Word and Prayer",ref:"1 Timothy 4:5",verse:"It is sanctified by the word of God and prayer.",checks:["Spent 20 minutes in scripture","Prayed with the Word in hand","Wrote one promise to stand on"]},
-  {title:"Fellowship",ref:"Acts 2:42",verse:"They continued stedfastly in the apostles' doctrine and fellowship, and in breaking of bread, and in prayers.",checks:["Connected with at least one believer","Attended or planned to attend church","Prayed for my fellowship community"]},
-  {title:"Trials and Testing",ref:"James 1:3-4",verse:"The trying of your faith worketh patience. But let patience have her perfect work, that ye may be perfect and entire, wanting nothing.",checks:["Named a current trial","Applied patience instead of panic","Prayed James 1:5 for wisdom"]},
-  {title:"Forgiveness",ref:"Matthew 6:14",verse:"For if ye forgive men their trespasses, your heavenly Father will also forgive you.",checks:["Named someone I need to forgive","Prayed for that person","Released unforgiveness in prayer"]},
-  {title:"The Fruit of the Spirit",ref:"Galatians 5:22-23",verse:"The fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith, meekness, temperance.",checks:["Identified which fruit needs growth","Asked God to produce it in me","Showed that fruit to someone today"]},
-  {title:"Fleeing Temptation",ref:"1 Corinthians 10:13",verse:"God is faithful, who will not suffer you to be tempted above that ye are able; but will with the temptation also make a way to escape.",checks:["Identified my current pressure points","Named the way of escape for each","Prayed 1 Corinthians 10:13 over each one"]},
-  {title:"Four Weeks — Steady",ref:"Philippians 4:13",verse:"I can do all things through Christ which strengtheneth me.",checks:["Declared Philippians 4:13 over today","Wrote what 'all things' means for me","Thanked God for four weeks of faithfulness"]},
-  {title:"Sober-Minded",ref:"1 Peter 5:8",verse:"Be sober, be vigilant; because your adversary the devil, as a roaring lion, walketh about, seeking whom he may devour.",checks:["Identified spiritual vulnerabilities","Put up one new guard today","Prayed armor of God (Ephesians 6)"]},
-  {title:"Resting in God",ref:"Psalm 46:10",verse:"Be still, and know that I am God.",checks:["Had 10 minutes of silence with God","Wrote what came in the stillness","Prayed Psalm 23 slowly"]},
-  {title:"The Body of Christ",ref:"1 Corinthians 12:27",verse:"Now ye are the body of Christ, and members in particular.",checks:["Identified my role in the body","Served in one concrete way","Prayed for the church and its members"]},
-  {title:"Gratitude",ref:"1 Thessalonians 5:18",verse:"In every thing give thanks: for this is the will of God in Christ Jesus concerning you.",checks:["Listed 10 things I am grateful for","Thanked God for the hard things too","Expressed gratitude to one person"]},
-  {title:"The Mind Renewed",ref:"Romans 12:2",verse:"Be not conformed to this world: but be ye transformed by the renewing of your mind.",checks:["Identified one worldly thought pattern","Applied scripture to renew it","Prayed Romans 12:2 over my mind"]},
-  {title:"Carrying Others",ref:"Galatians 6:2",verse:"Bear ye one another's burdens, and so fulfil the law of Christ.",checks:["Checked in on someone in recovery","Prayed for a specific person by name","Offered practical help to one person"]},
-  {title:"Walking in the Spirit",ref:"Galatians 5:25",verse:"If we live in the Spirit, let us also walk in the Spirit.",checks:["Chose Spirit over flesh in one moment","Prayed for Holy Ghost guidance today","Wrote about Spirit-led moments today"]},
-  {title:"The Finish Line in Sight",ref:"2 Timothy 4:7",verse:"I have fought a good fight, I have finished my course, I have kept the faith.",checks:["Reviewed all 35+ days of this journal","Named what has changed most","Prayed with thanksgiving for what God has done"]},
-  {title:"Setting Others Free",ref:"Isaiah 61:1",verse:"He hath sent me to bind up the brokenhearted, to proclaim liberty to the captives.",checks:["Committed to continuing to serve","Named one person God is placing on my heart","Prayed for their deliverance"]},
-  {title:"Water Baptism",ref:"Acts 2:38",verse:"Be baptized every one of you in the name of Jesus Christ for the remission of sins.",checks:["Studied Acts 2:38 in full","Prayed about your baptism commitment","Spoke with a pastor or leader if not yet baptized"]},
-  {title:"Seeking the Holy Ghost",ref:"Luke 11:13",verse:"How much more shall your heavenly Father give the Holy Spirit to them that ask him.",checks:["Spent extended time seeking God","Prayed with fasting if led","Wrote your commitment to receive Acts 2:38"]},
-  {title:"Forty Days Complete",ref:"Matthew 4:11",verse:"Then the devil leaveth him, and, behold, angels came and ministered unto him.",checks:["Completed all 40 days","Shared your testimony with at least one person","Committed to the next season of your walk"]}
+  {title:"The Starting Line",ref:"Psalm 40:1-3",verse:"I waited patiently for the LORD; and he inclined unto me, and heard my cry.",prayer:"Lord, I am starting this walk. I cannot do this without You. I waited and You heard. Hear me now.",checkin:"Named one thing I am surrendering to God today"},
+  {title:"Admitting Powerlessness",ref:"John 15:5",verse:"Without me ye can do nothing.",prayer:"Lord, I admit I cannot fix this myself. You are the vine and I am the branch. I need You.",checkin:"Honestly told God one area where I am powerless"},
+  {title:"Came to Believe",ref:"Hebrews 11:6",verse:"He that cometh to God must believe that he is, and that he is a rewarder of them that diligently seek him.",prayer:"God, I choose to believe You are real and that You reward those who seek You. I am seeking You.",checkin:"Identified one doubt and brought it to God in prayer"},
+  {title:"Not My Will",ref:"Luke 22:42",verse:"Not my will, but thine, be done.",prayer:"Father, not my will but Yours. I surrender my plan, my timeline, and my ideas about how this should go.",checkin:"Surrendered one specific decision to God today"},
+  {title:"Search Me, O God",ref:"Psalm 139:23-24",verse:"Search me, O God, and know my heart: try me, and know my thoughts.",prayer:"Search me, Lord. Know my heart. Try my thoughts. Lead me in the way everlasting.",checkin:"Sat quietly with God and let Him show me one thing in my heart"},
+  {title:"Confessing to Another",ref:"James 5:16",verse:"Confess your faults one to another, and pray one for another, that ye may be healed.",prayer:"Lord, give me the courage to be honest with another person. Let me receive healing through honesty.",checkin:"Connected with my accountability partner today"},
+  {title:"One Week — His Mercies",ref:"Lamentations 3:22-23",verse:"His mercies are new every morning: great is thy faithfulness.",prayer:"Thank You for seven mornings of new mercy. Your faithfulness carried me through this week.",checkin:"Named three specific ways God showed up for me this week"},
+  {title:"Ready to Change",ref:"Psalm 51:10",verse:"Create in me a clean heart, O God; and renew a right spirit within me.",prayer:"Create in me a clean heart, O God. Not a repaired one — a new one. I am ready.",checkin:"Identified one character defect I am asking God to remove"},
+  {title:"Humble Before God",ref:"James 4:10",verse:"Humble yourselves in the sight of the Lord, and he shall lift you up.",prayer:"I humble myself before You, Lord. I stop striving and start trusting. Lift me as only You can.",checkin:"Did one act of service for someone else today"},
+  {title:"The List",ref:"Matthew 5:23-24",verse:"First be reconciled to thy brother, and then come and offer thy gift.",prayer:"Lord, show me who I have harmed. Give me the willingness to go to them before I come to the altar.",checkin:"Wrote at least one name on my amends list"},
+  {title:"Making It Right",ref:"Luke 19:8",verse:"If I have taken any thing from any man by false accusation, I restore him fourfold.",prayer:"Lord, give me the courage to make it right — not just apologize, but to actually restore what I took.",checkin:"Prayed specifically over one name on my amends list"},
+  {title:"Daily Inventory",ref:"1 Corinthians 11:28",verse:"Let a man examine himself.",prayer:"Lord, search my day. Show me where I fell short. I admit it and make it right before I sleep.",checkin:"Completed my evening self-examination today"},
+  {title:"Draw Near to God",ref:"James 4:8",verse:"Draw nigh to God, and he will draw nigh to you.",prayer:"I am drawing near, Lord. Not because I have it together, but because You said You would draw near to me.",checkin:"Had intentional time with God — more than just a moment"},
+  {title:"Two Weeks Faithful",ref:"Galatians 6:9",verse:"Let us not be weary in well doing: for in due season we shall reap, if we faint not.",prayer:"Lord, I will not faint. Two weeks in and I am still here. You have carried me and I give You the credit.",checkin:"Encouraged someone else in their walk today"},
+  {title:"Carrying the Message",ref:"Mark 16:15",verse:"Go ye into all the world, and preach the gospel to every creature.",prayer:"Lord, use me. Let what You have done in me be a light to someone who is still in the dark.",checkin:"Shared my recovery story or faith with one person"},
+  {title:"One God, One Plan",ref:"Deuteronomy 6:4",verse:"The LORD our God is one LORD.",prayer:"There is one God. One plan. One path to freedom. I am walking it and I will not be distracted.",checkin:"Read Deuteronomy 6:4-9 and wrote what it means for my recovery"},
+  {title:"The Holy Ghost",ref:"Acts 2:38",verse:"Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins, and ye shall receive the gift of the Holy Ghost.",prayer:"Lord, I want the Holy Ghost. I want the power You promised. I am asking and seeking with everything in me.",checkin:"Spent extended time seeking God today — not rushed"},
+  {title:"Power Over Sin",ref:"Romans 8:2",verse:"The law of the Spirit of life in Christ Jesus hath made me free from the law of sin and death.",prayer:"I declare Romans 8:2 over my life. The law of the Spirit of life has made me free. I receive that freedom.",checkin:"Named one specific area where I claimed the Spirit's power today"},
+  {title:"Identity in Christ",ref:"2 Corinthians 5:17",verse:"If any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new.",prayer:"I am a new creature. I refuse the old labels. I receive who You say I am.",checkin:"Wrote my new identity statement — who God says I am"},
+  {title:"Covenant Language",ref:"Jeremiah 31:33",verse:"I will put my law in their inward parts, and write it in their hearts; and will be their God, and they shall be my people.",prayer:"Write Your law in my heart, Lord. Not just in my head — in my heart. Let me be Your person.",checkin:"Read Jeremiah 31:31-34 and prayed about what covenant means for my life"},
+  {title:"Three Weeks Strong",ref:"Joshua 1:9",verse:"Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest.",prayer:"Lord, I declare Joshua 1:9 over this next week. You are with me. I will not be afraid.",checkin:"Named my hardest challenge right now and declared Joshua 1:9 over it"},
+  {title:"Word and Prayer",ref:"1 Timothy 4:5",verse:"It is sanctified by the word of God and prayer.",prayer:"Let Your Word sanctify my day. Let prayer be my covering. I choose both — not one without the other.",checkin:"Spent at least 20 minutes in scripture today"},
+  {title:"Fellowship",ref:"Acts 2:42",verse:"They continued stedfastly in the apostles' doctrine and fellowship.",prayer:"Lord, I cannot walk this out alone. Connect me to the people You have placed in the body for this season.",checkin:"Connected with at least one believer in community today"},
+  {title:"Trials and Testing",ref:"James 1:3-4",verse:"The trying of your faith worketh patience. But let patience have her perfect work.",prayer:"Let patience have her perfect work in me. I will not rush out of the trial. I trust the process.",checkin:"Named a current trial and prayed James 1:5 for wisdom in it"},
+  {title:"Forgiveness",ref:"Matthew 6:14",verse:"If ye forgive men their trespasses, your heavenly Father will also forgive you.",prayer:"Lord, I choose to forgive. Not because it is easy but because I have received forgiveness. I release it.",checkin:"Prayed by name for someone I need to forgive"},
+  {title:"Fruit of the Spirit",ref:"Galatians 5:22-23",verse:"The fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith, meekness, temperance.",prayer:"Produce Your fruit in me, Lord. What I cannot manufacture, You can grow. I yield to the Spirit.",checkin:"Identified which fruit needs the most growth in me right now and asked God to develop it"},
+  {title:"Fleeing Temptation",ref:"1 Corinthians 10:13",verse:"God is faithful, who will not suffer you to be tempted above that ye are able; but will with the temptation also make a way to escape.",prayer:"Lord, show me the way of escape before the temptation builds. I will take it.",checkin:"Named my top pressure point right now and identified the way of escape"},
+  {title:"Four Weeks — Steady",ref:"Philippians 4:13",verse:"I can do all things through Christ which strengtheneth me.",prayer:"Through Christ. Not through my discipline, my willpower, or my determination. Through Christ.",checkin:"Declared Philippians 4:13 out loud over three specific things I face this week"},
+  {title:"Sober-Minded",ref:"1 Peter 5:8",verse:"Be sober, be vigilant; because your adversary the devil, as a roaring lion, walketh about, seeking whom he may devour.",prayer:"I am alert, Lord. I am not careless. I put on the armor of God and I stand firm.",checkin:"Prayed Ephesians 6 armor of God prayer today"},
+  {title:"Resting in God",ref:"Psalm 46:10",verse:"Be still, and know that I am God.",prayer:"I am still. I stop striving. I stop performing. I know that You are God and You have this.",checkin:"Had 10 minutes of silence before God today — phone down, nothing playing"},
+  {title:"The Body of Christ",ref:"1 Corinthians 12:27",verse:"Now ye are the body of Christ, and members in particular.",prayer:"Lord, show me my place in the body. I am not a spectator. I am a member with a role.",checkin:"Served in one concrete way in my recovery community or church today"},
+  {title:"Gratitude",ref:"1 Thessalonians 5:18",verse:"In every thing give thanks: for this is the will of God in Christ Jesus concerning you.",prayer:"In everything — even the hard things — I give You thanks. This is Your will and I choose it.",checkin:"Listed 10 things I am grateful for — including at least two hard things"},
+  {title:"The Mind Renewed",ref:"Romans 12:2",verse:"Be not conformed to this world: but be ye transformed by the renewing of your mind.",prayer:"Transform my thinking, Lord. Where the world's pattern has gotten in, let Your Word replace it.",checkin:"Identified one worldly thought pattern and applied a specific scripture to renew it"},
+  {title:"Carrying Others",ref:"Galatians 6:2",verse:"Bear ye one another's burdens, and so fulfil the law of Christ.",prayer:"Let me be a burden-bearer today, Lord. Show me who needs me to show up for them.",checkin:"Checked in on someone in recovery today and offered something practical"},
+  {title:"Walking in the Spirit",ref:"Galatians 5:25",verse:"If we live in the Spirit, let us also walk in the Spirit.",prayer:"I choose the Spirit over the flesh today — not just in the big moments but in every small decision.",checkin:"Named one moment today where I chose Spirit over flesh"},
+  {title:"The Finish Line in Sight",ref:"2 Timothy 4:7",verse:"I have fought a good fight, I have finished my course, I have kept the faith.",prayer:"Lord, I am almost there. I will finish this course. I will keep the faith.",checkin:"Reviewed my journal from the first week and named what God has changed in me"},
+  {title:"Setting Others Free",ref:"Isaiah 61:1",verse:"He hath sent me to bind up the brokenhearted, to proclaim liberty to the captives.",prayer:"Use me, Lord, for the person behind me on this road. Let my freedom be their invitation.",checkin:"Named one person God is placing on my heart and prayed specifically for their deliverance"},
+  {title:"Water Baptism",ref:"Acts 2:38",verse:"Be baptized every one of you in the name of Jesus Christ for the remission of sins.",prayer:"Lord, I study Acts 2:38 and I ask You to show me what You require. I want to be fully obedient.",checkin:"Spoke with a pastor or leader about baptism in Jesus name if not yet baptized"},
+  {title:"Seeking the Holy Ghost",ref:"Luke 11:13",verse:"How much more shall your heavenly Father give the Holy Spirit to them that ask him.",prayer:"I ask. I seek. I knock. Lord, fill me with the Holy Ghost as You promised.",checkin:"Spent extended time in prayer specifically seeking the Holy Ghost today"},
+  {title:"Forty Days Complete",ref:"Matthew 4:11",verse:"Then the devil leaveth him, and, behold, angels came and ministered unto him.",prayer:"Lord, I have finished what You called me to. Now minister to me as You ministered to Your Son. I receive it.",checkin:"Shared my testimony with at least one person about what God did in these 40 days"}
 ];
 
-// === TAB BUILDER ===
-function buildTabs(currentDay){
-  var nav = document.getElementById('tabNav');
-  var panels = document.getElementById('tabPanels');
-  nav.innerHTML=''; panels.innerHTML='';
-  // Show current day, last 3 completed, and week tabs
-  var groups = [{label:'Today',days:[currentDay]},{label:'This Week',days:[]},{label:'All Days',days:[]}];
-  // Build current day panel
-  buildDayPanel(currentDay, true);
-  // Quick access tabs: today + previous 6
-  for(var i=Math.max(1,currentDay-6); i<=currentDay; i++){
-    var btn = document.createElement('button');
-    btn.className='tab-btn'+(i===currentDay?' active':'');
-    btn.textContent='Day '+i;
-    btn.setAttribute('data-tab','day'+i);
-    btn.onclick=(function(di,b){ return function(){
-      document.querySelectorAll('.tab-btn').forEach(function(x){x.classList.remove('active');});
-      document.querySelectorAll('.tab-panel').forEach(function(x){x.classList.remove('active');});
-      b.classList.add('active');
-      var p=document.getElementById('panel-day'+di);
-      if(!p){ buildDayPanel(di,false); p=document.getElementById('panel-day'+di); }
-      p.classList.add('active');
-    };})(i,btn);
-    nav.appendChild(btn);
-    if(i!==currentDay) buildDayPanel(i,false);
+function loadState(){try{state=JSON.parse(localStorage.getItem(KEY40)||'{}');}catch(e){state={};}}
+function saveState(){localStorage.setItem(KEY40,JSON.stringify(state));}
+
+// Countdown to July 14, 2026
+function runCountdown(){
+  var launch=new Date('2026-07-14T00:00:00');
+  function tick(){
+    var now=new Date(),diff=launch-now;
+    if(diff<=0){
+      document.getElementById('cdWrap').innerHTML='<span style="color:var(--gold);font-weight:700;font-size:1.1rem;">The Challenge Is Live — Start Today!</span>';
+      return;
+    }
+    var d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),
+        m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    var set=function(id,v){var el=document.getElementById(id);if(el)el.textContent=String(v).padStart(2,'0');};
+    set('cdD',d);set('cdH',h);set('cdM',m);set('cdS',s);
   }
-  document.querySelector('.tab-panel')&&document.querySelector('.tab-panel').classList.add('active');
+  tick();setInterval(tick,1000);
 }
 
-function buildDayPanel(dayNum, makeActive){
-  var panels = document.getElementById('tabPanels');
-  var d = DAYS_DATA[dayNum-1];
-  if(!d) return;
-  var key = 'day'+dayNum;
-  var saved = (state.days&&state.days[key])||{};
-  var panel = document.createElement('div');
-  panel.className='tab-panel'+(makeActive?' active':'');
+// Level selection
+function selectLevel(lv){
+  state.level=lv;
+  document.querySelectorAll('.lv-card').forEach(function(c){c.classList.remove('selected');});
+  document.getElementById('lv-'+lv).classList.add('selected');
+  document.getElementById('lvNote').textContent=LEVELS[lv].note;
+  document.getElementById('lvNote').style.display='';
+}
+
+function doRegister(){
+  var name=document.getElementById('regName').value.trim();
+  var email=document.getElementById('regEmail').value.trim();
+  var start=document.getElementById('regStart').value;
+  var lv=state.level||'bronze';
+  if(!name||!email||!start){alert('Please fill in name, email, and start date.');return;}
+  if(!state.level){alert('Please choose a challenge level.');return;}
+  state.name=name;state.email=email;state.startDate=start;state.registered=true;
+  saveState();showDash();
+}
+
+function showDash(){
+  loadState();
+  if(!state.registered){
+    document.getElementById('regSection').style.display='';
+    document.getElementById('dashSection').classList.remove('active');
+    return;
+  }
+  document.getElementById('regSection').style.display='none';
+  document.getElementById('dashSection').classList.add('active');
+  var lv=LEVELS[state.level]||LEVELS.bronze;
+  var startMs=new Date(state.startDate+'T00:00:00').getTime();
+  var todayMs=new Date().setHours(0,0,0,0);
+  var dayNum=Math.max(1,Math.min(40,Math.floor((todayMs-startMs)/86400000)+1));
+  document.getElementById('dashName').textContent=state.name.split(' ')[0];
+  document.getElementById('dashDay').textContent=dayNum;
+  document.getElementById('dashLvPill').textContent=lv.icon+' '+lv.name;
+  document.getElementById('dashLvPill').className='level-pill '+lv.pillClass;
+  var pct=Math.round((dayNum/40)*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressPct').textContent=pct+'% complete';
+  buildTabs(dayNum);buildBadges(dayNum);
+  if(dayNum>=40&&state.days&&Object.keys(state.days).length>=30)showCert();
+}
+
+function buildTabs(cur){
+  var nav=document.getElementById('tabNav');
+  var panels=document.getElementById('tabPanels');
+  nav.innerHTML='';panels.innerHTML='';
+  for(var i=Math.max(1,cur-5);i<=cur;i++){
+    var btn=document.createElement('button');
+    btn.className='tab-btn'+(i===cur?' active':'');
+    btn.textContent='Day '+i;
+    btn.setAttribute('data-d',i);
+    (function(di,b){
+      b.onclick=function(){
+        document.querySelectorAll('.tab-btn').forEach(function(x){x.classList.remove('active');});
+        document.querySelectorAll('.tab-panel').forEach(function(x){x.classList.remove('active');});
+        b.classList.add('active');
+        var p=document.getElementById('panel-day'+di);
+        if(!p){buildDayPanel(di,false);p=document.getElementById('panel-day'+di);}
+        p.classList.add('active');
+      };
+    })(i,btn);
+    nav.appendChild(btn);
+    buildDayPanel(i,i===cur);
+  }
+}
+
+function buildDayPanel(dayNum,active){
+  var panels=document.getElementById('tabPanels');
+  var d=DAYS_DATA[dayNum-1];if(!d)return;
+  var lv=LEVELS[state.level]||LEVELS.bronze;
+  var key='day'+dayNum;
+  var saved=(state.days&&state.days[key])||{};
+  var panel=document.createElement('div');
+  panel.className='tab-panel'+(active?' active':'');
   panel.id='panel-day'+dayNum;
-  
-  var checksHtml = d.checks.map(function(c,i){
-    var ck = saved['check'+i]?'checked':'';
-    return '<div class="check-row"><input type="checkbox" id="ck'+dayNum+'_'+i+'" '+ck+' onchange="saveCheck('+dayNum+','+i+',this.checked)"><label for="ck'+dayNum+'_'+i+'">'+c+'</label></div>';
-  }).join('');
-  
-  panel.innerHTML = '<div class="day-card">'
+
+  var req=lv.required;
+  var isReq=function(k){return req.indexOf(k)>=0;};
+
+  var scripCheck=saved.scripture?'checked':'';
+  var prayCheck=saved.prayer?'checked':'';
+  var checkinCheck=saved.checkin?'checked':'';
+  var optLabel=function(k){return isReq(k)?'':' <span class="optional-label">(optional for your level)</span>';};
+
+  panel.innerHTML='<div class="day-card">'
     +'<h3>Day '+dayNum+': '+d.title+'</h3>'
     +'<span class="verse-ref">'+d.ref+'</span>'
     +'<div class="verse-text">&ldquo;'+d.verse+'&rdquo; &mdash; KJV</div>'
-    +checksHtml
-    +'<textarea class="journal-area" id="journal'+dayNum+'" placeholder="Write your reflection for today..." onchange="saveJournal('+dayNum+',this.value)">'+( saved.journal||'')+'</textarea>'
-    +'<button class="btn-gold save-day" onclick="markDayComplete('+dayNum+')">Mark Day '+dayNum+' Complete</button>'
-    +'<span class="saved-badge" id="badge-save'+dayNum+'">Saved ✓</span>'
+    +'<div class="level-note" id="ln'+dayNum+'">'+lv.note+'</div>'
+    +'<div class="check-row"><input type="checkbox" id="sc'+dayNum+'" '+scripCheck+' onchange="saveFld('+dayNum+',\'scripture\',this.checked)"><label for="sc'+dayNum+'">📖 Read and meditate on today\'s scripture'+optLabel('scripture')+'</label></div>'
+    +'<div class="check-row"><input type="checkbox" id="pr'+dayNum+'" '+prayCheck+' onchange="saveFld('+dayNum+',\'prayer\',this.checked)"><label for="pr'+dayNum+'">🙏 Prayed today\'s prayer out loud'+optLabel('prayer')+'</label></div>'
+    +'<div style="background:#f8f7f4;border-radius:8px;padding:10px 12px;margin:8px 0;font-size:.8rem;color:#444;font-style:italic;">'+d.prayer+'</div>'
+    +'<div class="check-row"><input type="checkbox" id="ck'+dayNum+'" '+checkinCheck+' onchange="saveFld('+dayNum+',\'checkin\',this.checked)"><label for="ck'+dayNum+'">✅ '+d.checkin+optLabel('checkin')+'</label></div>'
+    +'<textarea class="journal-area" id="jn'+dayNum+'" placeholder="Write your reflection for today...'+(isReq('journal')?'':' (optional for your level)')+'" onchange="saveFld('+dayNum+',\'journal\',this.value)">'+( saved.journal||'')+'</textarea>'
+    +'<button class="btn-gold save-day" onclick="markDay('+dayNum+')">Mark Day '+dayNum+' Complete</button>'
+    +'<span class="saved-badge" id="sb'+dayNum+'">Saved ✓</span>'
     +'</div>';
   panels.appendChild(panel);
 }
 
-function saveCheck(day,idx,val){
-  if(!state.days) state.days={};
-  var key='day'+day;
-  if(!state.days[key]) state.days[key]={};
-  state.days[key]['check'+idx]=val;
+function saveFld(day,fld,val){
+  if(!state.days)state.days={};
+  var k='day'+day;
+  if(!state.days[k])state.days[k]={};
+  state.days[k][fld]=val;
   saveState();
 }
-function saveJournal(day,val){
-  if(!state.days) state.days={};
-  var key='day'+day;
-  if(!state.days[key]) state.days[key]={};
-  state.days[key].journal=val;
+function markDay(day){
+  if(!state.days)state.days={};
+  var k='day'+day;
+  if(!state.days[k])state.days[k]={};
+  state.days[k].complete=true;
   saveState();
-}
-function markDayComplete(day){
-  if(!state.days) state.days={};
-  var key='day'+day;
-  if(!state.days[key]) state.days[key]={};
-  state.days[key].complete=true;
-  saveState();
-  var b=document.getElementById('badge-save'+day);
+  var b=document.getElementById('sb'+day);
   if(b){b.classList.add('show');setTimeout(function(){b.classList.remove('show');},2000);}
   buildBadges(day);
 }
 
-// === BADGES ===
-var BADGE_LIST=[
+var BADGES=[
   {id:'b7',label:'One Week',icon:'🌱',day:7},
   {id:'b14',label:'Two Weeks',icon:'🔥',day:14},
   {id:'b21',label:'Three Weeks',icon:'⚓',day:21},
@@ -869,30 +934,40 @@ var BADGE_LIST=[
   {id:'b35',label:'35 Days',icon:'⚔️',day:35},
   {id:'b40',label:'Forty Days',icon:'👑',day:40},
 ];
-function buildBadges(currentDay){
-  var grid=document.getElementById('badgeGrid');
-  if(!grid) return;
-  grid.innerHTML='';
-  BADGE_LIST.forEach(function(b){
-    var earned = currentDay>=b.day;
+function buildBadges(cur){
+  var grid=document.getElementById('badgeGrid');if(!grid)return;grid.innerHTML='';
+  BADGES.forEach(function(b){
+    var earned=cur>=b.day;
     var div=document.createElement('div');
     div.className='badge'+(earned?' earned':' locked');
-    div.innerHTML='<span class="icon">'+b.icon+'</span><span class="name">'+b.label+'</span>';
+    div.innerHTML='<span class="icon">'+b.icon+'</span><span class="bname">'+b.label+'</span>';
     grid.appendChild(div);
   });
 }
-
-// === CERTIFICATE ===
 function showCert(){
-  var cert=document.getElementById('certSection');
-  if(cert){ cert.style.display=''; document.getElementById('certName').textContent=state.name||'Faithful Servant'; }
+  var c=document.getElementById('certSection');
+  if(c){c.style.display='';document.getElementById('certName').textContent=state.name||'Faithful Servant';}
+  var lv=LEVELS[state.level]||LEVELS.bronze;
+  var cl=document.getElementById('certLevel');
+  if(cl)cl.textContent=lv.icon+' '+lv.name+' Level';
+}
+function copyLink(){
+  var url='https://joinrrn.com/40DaysToFreedom.html';
+  if(navigator.clipboard){navigator.clipboard.writeText(url).then(function(){showToast('Link copied!');});}
+  else{var t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showToast('Link copied!');}
+}
+function showToast(msg){
+  var t=document.getElementById('toast40');
+  if(!t)return;
+  t.textContent=msg;t.style.opacity='1';
+  setTimeout(function(){t.style.opacity='0';},2200);
 }
 
-// === INIT ===
 loadState();
 runCountdown();
-if(state.registered) showDash(); else document.getElementById('regSection').style.display='';
-
+if(state.registered)showDash();
+else document.getElementById('regSection').style.display='';
+if(state.level)selectLevel(state.level);
 </script>
 </body>
 </html>
