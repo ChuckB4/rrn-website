@@ -404,6 +404,8 @@ section{padding:clamp(72px,9vw,110px) 0;}
 
 
 .fbot p{font-size:11px;color:rgba(255,255,255,.2);}
+#rrShareModal{display:none!important;position:fixed;inset:0;z-index:700;background:rgba(4,9,18,.78);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:18px;}
+#rrShareModal.open{display:flex!important;}
 </style>
 </head>
 <body>
@@ -416,11 +418,10 @@ section{padding:clamp(72px,9vw,110px) 0;}
         <div class="dd">
           <a href="https://joinrrn.com/#caleb">CALEB</a>
           <a href="https://joinrrn.com/#curriculum">Curriculum</a>
-<a href="https://joinrrn.com/journal.html">Journal</a>
-<a href="https://joinrrn.com/40DaysToFreedom.html">40 Days to Freedom</a>
-<a href="https://joinrrn.com/tools.html">Free Tools</a>
-<a href="https://joinrrn.com/recovery-tracker.html">Recovery Tracker</a>
-<a href="https://joinrrn.com/local-radio.html">Local Business Radio</a>
+<a href="journal.html">Journal</a>
+<a href="40DaysToFreedom.html">40 Days to Freedom</a>
+<a href="tools.html">Free Tools</a>
+<a href="local-radio.html">Local Business Radio</a>
           <a href="https://joinrrn.com/#steps">The 12 Steps</a>
           <a href="https://joinrrn.com/#video">Video Sessions</a>
           <a href="https://joinrrn.com/#workforce">Workforce</a>
@@ -448,8 +449,8 @@ section{padding:clamp(72px,9vw,110px) 0;}
           <a href="https://joinrrn.com/#blog">Blog &amp; Teaching</a>
           <a href="https://joinrrn.com/#bookstore">Bookstore</a>
           <a href="https://joinrrn.com/#verse">Verse of the Day</a>
-          <a href="https://joinrrn.com/events.html">Events &amp; Testimony Nights</a>
-<a href="https://joinrrn.com/journal/hope-anchored-my-soul.html">Share a Testimony</a>
+          <a href="events.html">Events &amp; Testimony Nights</a>
+<a href="journal/hope-anchored-my-soul.html">Share a Testimony</a>
           <a href="https://joinrrn.com/#hopewall">Hope Wall</a>
           <a href="https://joinrrn.com/#prayer">Prayer Request</a>
           <a href="https://joinrrn.com/#advertise">Advertise</a>
@@ -478,7 +479,6 @@ section{padding:clamp(72px,9vw,110px) 0;}
   <a href="journal.html" onclick="cMM()">Journal</a>
   <a href="tools.html" onclick="cMM()">Free Tools</a>
   <a href="local-radio.html" onclick="cMM()">Local Business Radio</a>
-  <a href="recovery-tracker.html" onclick="cMM()">Recovery Tracker</a>
   <div class="mg">Support</div>
   <a href="https://joinrrn.com/#courts" onclick="cMM()">Courts &amp; Compliance</a>
   <a href="https://joinrrn.com/#documents" onclick="cMM()">Document Recovery</a>
@@ -624,26 +624,7 @@ function openMM(){var m=document.getElementById('mm');m.style.display=m.style.di
 function cMM(){var m=document.getElementById('mm');m.style.display='none';}
 document.addEventListener('click',function(e){if(!e.target.closest('.grp'))document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});});
 window.addEventListener('scroll',function(){var n=document.getElementById('nav');if(window.scrollY>10)n.classList.add('on');else n.classList.remove('on');});</script>
-<div id="rrShareModal" role="dialog" aria-label="Share Refined Radio">
-  <div class="rrsm-card">
-    <button class="rrsm-x" onclick="rrCloseShare()" aria-label="Close">&times;</button>
-    <h3 class="rrsm-h">Share hope. Save a life.</h3>
-    <p class="rrsm-sub">Pick a message, then post it anywhere &mdash; every share reaches someone who needs it.</p>
-    <span class="rrsm-lab">Choose a message</span>
-    <select id="rrShareSel"></select>
-    <span class="rrsm-lab">Your post (edit if you like)</span>
-    <textarea id="rrShareText"></textarea>
-    <div class="rrsm-row">
-      <button class="rrsm-btn rrsm-primary" onclick="rrShareNative()">Share</button>
-      <button class="rrsm-btn rrsm-ghost" onclick="rrShareCopy()">Copy</button>
-    </div>
-    <div class="rrsm-row">
-      <button class="rrsm-btn rrsm-ghost" onclick="rrShareFB()">Facebook</button>
-      <button class="rrsm-btn rrsm-ghost" onclick="rrShareX()">X / Twitter</button>
-    </div>
-    <p class="rrsm-note">&ldquo;Share&rdquo; opens your phone&rsquo;s share menu. &ldquo;Copy&rdquo; lets you paste into any post.</p>
-  </div>
-</div>
+
 <div id="rrPlayer">
   <div class="rrp-tab" onclick="document.getElementById('rrPlayer').classList.toggle('rrShow')">
     <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> Refined Radio
