@@ -57,15 +57,79 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
 .fbot{border-top:0.5px solid rgba(255,255,255,.06);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
 .fbot p{font-size:11px;color:rgba(255,255,255,.2);}
 .fv{font-family:var(--fd);font-style:italic;font-size:12px;color:rgba(200,145,58,.4);}
+#rrPlayer{position:fixed;left:0;right:0;bottom:0;z-index:600;background:rgba(6,13,24,.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--gold-br);transform:translateY(100%);transition:transform .35s ease;}
+#rrPlayer.rrShow{transform:translateY(0);}
+.rrp-bar{padding:6px 14px;display:flex;align-items:center;gap:11px;min-height:46px;}
+#rrPlayer .rrp-hint,#rrPlayer .rrp-share{display:none!important;}
+.rrp-pp{width:40px;height:40px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .2s;}
+.rrp-pp:hover{opacity:.88;}
+.rrp-pp svg{width:16px;height:16px;fill:var(--ink);}
+.rrp-sk{background:none;border:none;cursor:pointer;padding:6px;display:flex;}
+.rrp-sk svg{width:16px;height:16px;fill:rgba(255,255,255,.55);}
+.rrp-sk:hover svg{fill:var(--gold);}
+.rrp-now{flex:2 1 200px;min-width:175px;margin-right:10px;}
+.rrp-now .tt{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rrp-now .sb{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.rrp-live{color:#4ade80;font-weight:700;display:inline-flex;align-items:center;gap:5px;vertical-align:middle;}
+.rrp-live i{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:rrPulse 1.6s infinite;}
+@keyframes rrPulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.rrp-prog{flex:1 1 90px;height:4px;background:rgba(255,255,255,.12);border-radius:3px;cursor:pointer;position:relative;min-width:70px;}
+.rrp-fill{height:100%;background:var(--gold);border-radius:3px;width:0;}
+.rrp-vol{width:74px;accent-color:var(--gold);}
+.rrp-genre{background:var(--gold-lo);border:1px solid var(--gold-br);color:var(--gold);font-size:11.5px;font-weight:700;padding:8px 12px;border-radius:100px;cursor:pointer;white-space:nowrap;font-family:var(--fb);max-width:172px;-webkit-appearance:none;appearance:none;}
+.rrp-genre:hover{background:rgba(200,145,58,.2);}
+.rrp-genre option{background:#0b1322;color:#f0e8d8;}
+.rrp-tab{position:absolute;top:-32px;right:6%;background:rgba(6,13,24,.97);border:1px solid var(--gold-br);border-bottom:none;border-radius:10px 10px 0 0;padding:7px 15px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;color:var(--gold);letter-spacing:.04em;}
+.rrp-tab svg{width:13px;height:13px;fill:var(--gold);}
+@media(max-width:640px){.rrp-bar{flex-wrap:wrap;gap:10px;}.rrp-vol{display:none;}}
+
+
+.rrp-rate{display:flex;gap:6px;flex-shrink:0;align-items:center;}
+.rrp-rb{background:none;border:1px solid rgba(255,255,255,.14);border-radius:50%;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.rrp-rb svg{width:14px;height:14px;fill:rgba(255,255,255,.55);}
+.rrp-rb:hover{border-color:var(--gold-br);}
+.rrp-rb:hover svg{fill:var(--gold);}
+.rrp-rb.on{background:var(--gold-lo);border-color:var(--gold-br);}
+.rrp-rb.on svg{fill:var(--gold);}
+#rrDn.on svg{fill:#fff;}
+.rrp-react{display:none!important;}
+.rrp-react.open{display:flex!important;flex-wrap:wrap;gap:6px;}
+@media(max-width:640px){.rrp-rate{order:5;}}
 
 .page-body{padding-top:0;min-height:100vh;background:var(--off);}
+
+/* ==== grouped nav dropdowns (matches existing nav theme) ==== */
+.nl .grp{position:relative;display:flex;align-items:center;}
+.nl .grp>button{display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,.65);font-size:12.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-family:var(--fb);padding:6px 0;transition:color .2s;}
+.nl .grp>button:hover,.nl .grp.open>button,.nl .grp:hover>button{color:var(--gold);}
+.nl .grp .cv{width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-top:-2px;transition:transform .25s;}
+.nl .grp.open .cv{transform:rotate(-135deg);margin-top:2px;}
+.nl .dd{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%) translateY(8px);min-width:228px;background:rgba(11,24,41,.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--gold-br);border-radius:14px;padding:8px;opacity:0;visibility:hidden;transition:all .22s;box-shadow:0 24px 70px rgba(0,0,0,.5);}
+.nl .grp.open .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.nl .dd a{display:block;color:rgba(255,255,255,.72);font-size:13px;font-weight:500;letter-spacing:.02em;text-transform:none;padding:10px 14px;border-radius:9px;white-space:nowrap;}
+.nl .dd a:hover{background:var(--gold-lo);color:var(--gold);}
+.mm .mg{font-size:10.5px;font-weight:700;color:var(--gold);letter-spacing:.13em;text-transform:uppercase;padding:18px 6% 6px;}
+
+
+
+
+
+
+
+
+
+
+.fbot p{font-size:11px;color:rgba(255,255,255,.2);}
+
+
+.page-
 
 /* ── HERO ── */
 .lbr-hero{background:var(--ink);position:relative;overflow:hidden;padding:clamp(100px,14vw,160px) clamp(20px,6%,80px) clamp(60px,8vw,100px);}
 .lbr-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(200,145,58,.12) 0%,transparent 70%);}
 .lbr-hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;}
 .lbr-eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
-.lbr-hero h1{font-family:var(--fd);font-size:clamp(2.2rem,5.5vw,4rem);color:#fff;font-weight:700;line-height:1.08;margin-bottom:20px;max-width:760px;}
+.lbr-hero 
 .lbr-hero h1 em{color:var(--gold);font-style:normal;}
 .lbr-hero-sub{font-size:clamp(1rem,1.8vw,1.2rem);color:rgba(255,255,255,.65);max-width:580px;line-height:1.7;margin-bottom:36px;}
 .lbr-hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
@@ -167,42 +231,42 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
 #lbrToast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--gold);padding:12px 26px;border-radius:100px;font-size:13px;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;border:1px solid rgba(200,145,58,.4);}
 
 
-#rrPlayer{position:fixed;left:0;right:0;bottom:0;z-index:600;background:rgba(6,13,24,.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--gold-br);transform:translateY(100%);transition:transform .35s ease;}
+
 #rrPlayer.rrShow{transform:translateY(0);}
-.rrp-bar{padding:6px 14px;display:flex;align-items:center;gap:11px;min-height:46px;}
-#rrPlayer .rrp-hint,#rrPlayer .rrp-share{display:none!important;}
-.rrp-pp{width:40px;height:40px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .2s;}
-.rrp-pp:hover{opacity:.88;}
-.rrp-pp svg{width:16px;height:16px;fill:var(--ink);}
-.rrp-sk{background:none;border:none;cursor:pointer;padding:6px;display:flex;}
-.rrp-sk svg{width:16px;height:16px;fill:rgba(255,255,255,.55);}
-.rrp-sk:hover svg{fill:var(--gold);}
-.rrp-now{flex:2 1 200px;min-width:175px;margin-right:10px;}
-.rrp-now .tt{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.rrp-now .sb{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
-.rrp-live{color:#4ade80;font-weight:700;display:inline-flex;align-items:center;gap:5px;vertical-align:middle;}
-.rrp-live i{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:rrPulse 1.6s infinite;}
+
+#rrPlayer 
+
+
+
+
+
+
+
+
+
+
+
 @keyframes rrPulse{0%,100%{opacity:1;}50%{opacity:.3;}}
-.rrp-prog{flex:1 1 90px;height:4px;background:rgba(255,255,255,.12);border-radius:3px;cursor:pointer;position:relative;min-width:70px;}
-.rrp-fill{height:100%;background:var(--gold);border-radius:3px;width:0;}
-.rrp-vol{width:74px;accent-color:var(--gold);}
-.rrp-genre{background:var(--gold-lo);border:1px solid var(--gold-br);color:var(--gold);font-size:11.5px;font-weight:700;padding:8px 12px;border-radius:100px;cursor:pointer;white-space:nowrap;font-family:var(--fb);max-width:172px;-webkit-appearance:none;appearance:none;}
-.rrp-genre:hover{background:rgba(200,145,58,.2);}
-.rrp-genre option{background:#0b1322;color:#f0e8d8;}
-.rrp-tab{position:absolute;top:-32px;right:6%;background:rgba(6,13,24,.97);border:1px solid var(--gold-br);border-bottom:none;border-radius:10px 10px 0 0;padding:7px 15px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;color:var(--gold);letter-spacing:.04em;}
-.rrp-tab svg{width:13px;height:13px;fill:var(--gold);}
-@media(max-width:640px){.rrp-bar{flex-wrap:wrap;gap:10px;}.rrp-vol{display:none;}}
 
 
-.rrp-rate{display:flex;gap:6px;flex-shrink:0;align-items:center;}
-.rrp-rb{background:none;border:1px solid rgba(255,255,255,.14);border-radius:50%;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
-.rrp-rb svg{width:14px;height:14px;fill:rgba(255,255,255,.55);}
-.rrp-rb:hover{border-color:var(--gold-br);}
-.rrp-rb:hover svg{fill:var(--gold);}
-.rrp-rb.on{background:var(--gold-lo);border-color:var(--gold-br);}
-.rrp-rb.on svg{fill:var(--gold);}
+
+
+
+
+
+
+@media(max-width:640px){}
+
+
+
+
+
+
+
+
+
 #rrDn.on svg{fill:#fff;}
-@media(max-width:640px){.rrp-rate{order:5;}}
+@media(max-width:640px){}
 </style>
 </head>
 <body>
@@ -215,11 +279,11 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
         <div class="dd">
           <a href="https://joinrrn.com/#caleb">CALEB</a>
           <a href="https://joinrrn.com/#curriculum">Curriculum</a>
-<a href="journal.html">Journal</a>
-<a href="40DaysToFreedom.html">40 Days to Freedom</a>
-<a href="tools.html">Free Tools</a>
-<a href="recovery-tracker.html">Recovery Tracker</a>
-<a href="scripture-search.html">Scripture</a>
+<a href="https://joinrrn.com/journal.html">Journal</a>
+<a href="https://joinrrn.com/40DaysToFreedom.html">40 Days to Freedom</a>
+<a href="https://joinrrn.com/tools.html">Free Tools</a>
+<a href="https://joinrrn.com/recovery-tracker.html">Recovery Tracker</a>
+<a href="https://joinrrn.com/local-radio.html">Local Business Radio</a>
           <a href="https://joinrrn.com/#steps">The 12 Steps</a>
           <a href="https://joinrrn.com/#video">Video Sessions</a>
           <a href="https://joinrrn.com/#workforce">Workforce</a>
@@ -247,8 +311,8 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
           <a href="https://joinrrn.com/#blog">Blog &amp; Teaching</a>
           <a href="https://joinrrn.com/#bookstore">Bookstore</a>
           <a href="https://joinrrn.com/#verse">Verse of the Day</a>
-          <a href="events.html">Events &amp; Testimony Nights</a>
-          <a href="https://joinrrn.com/#events">Events &amp; Openings</a>
+          <a href="https://joinrrn.com/events.html">Events &amp; Testimony Nights</a>
+<a href="https://joinrrn.com/journal/hope-anchored-my-soul.html">Share a Testimony</a>
           <a href="https://joinrrn.com/#hopewall">Hope Wall</a>
           <a href="https://joinrrn.com/#prayer">Prayer Request</a>
           <a href="https://joinrrn.com/#advertise">Advertise</a>
@@ -275,6 +339,8 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
   <a href="40DaysToFreedom.html" onclick="cMM()">40 Days to Freedom</a>
   <a href="journal.html" onclick="cMM()">Journal</a>
   <a href="tools.html" onclick="cMM()">Free Tools</a>
+  <a href="local-radio.html" onclick="cMM()">Local Business Radio</a>
+  <a href="recovery-tracker.html" onclick="cMM()">Recovery Tracker</a>
   <div class="mg">Support</div>
   <a href="https://joinrrn.com/#courts" onclick="cMM()">Courts &amp; Compliance</a>
   <a href="https://joinrrn.com/#documents" onclick="cMM()">Document Recovery</a>
@@ -290,7 +356,7 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
   <a href="https://joinrrn.com/#bookstore" onclick="cMM()">Bookstore</a>
   <a href="https://joinrrn.com/#verse" onclick="cMM()">Verse of the Day</a>
   <a href="events.html" onclick="cMM()">Events &amp; Testimony Nights</a>
-  <a href="https://joinrrn.com/#events" onclick="cMM()">Events &amp; Openings</a>
+  <a href="journal/hope-anchored-my-soul.html" onclick="cMM()">Share a Testimony</a>
   <a href="https://joinrrn.com/#prayer" onclick="cMM()">Prayer Request</a>
   <a href="https://joinrrn.com/#advertise" onclick="cMM()">Advertise</a>
   <a href="https://joinrrn.com/#rewards" onclick="cMM()">Listener Rewards</a>
