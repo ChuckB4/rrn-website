@@ -4442,7 +4442,20 @@ var RR_LIBRARY = [
   {title:"Spirit, Don't Let Me Check My Messages", artist:"RRN", src:"music/Spirit, Don’t Let Me Check My Messages”.mp3", genre:"Christian Worship Pop"},
   {title:"I Tried to Run, But the Choir Caught Me", artist:"RRN", src:"music/I Tried to Run, But the Choir Caught Me.mp3", genre:"Christian Gospel Soul"},
   {title:"Devil Lost My Address", artist:"RRN", src:"music/Devil Lost My Address.mp3", genre:"Christian Outlaw Country"},
-  {title:"Your Way Is Better", artist:"RRN", src:"music/Your Way Is Better (Contemporary Christian Pop Worship with Hip-Hop Elements).mp3", genre:"Christian Hip-Hop Worship"}
+  {title:"Your Way Is Better", artist:"RRN", src:"music/Your Way Is Better (Contemporary Christian Pop Worship with Hip-Hop Elements).mp3", genre:"Christian Hip-Hop Worship"},
+  {title:"When the River Parts (Indie Folk Pop)", artist:"RRN", src:"music/When the River Parts (Indie Folk Pop).mp3", genre:"Pop", tags:["pop","christian","recovery"]},
+  {title:"Daddy\'s Home (Country Pop)", artist:"RRN", src:"music/Daddy's Home (Country - Pop).mp3", genre:"Country", tags:["country","christian","recovery"]},
+  {title:"Late Night Prayer (Outlaw Country)", artist:"RRN", src:"music/Late Night Prayer (Outlaw Country).mp3", genre:"Country", tags:["country","christian","recovery"]},
+  {title:"Through the Open Door (Radio)", artist:"RRN", src:"music/Through the Open Door (Radio).mp3", genre:"Christian", tags:["christian","christian","recovery"]},
+  {title:"Praise Him Loud (EDM)", artist:"RRN", src:"music/Praise Him Loud (EDM).mp3", genre:"EDM", tags:["edm","christian","recovery"]},
+  {title:"Praise Him Loud (Hip-Hop)", artist:"RRN", src:"music/Praise Him Loud (Hip - Hop) (1).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]},
+  {title:"Praise Him Loud (Alt) (Hip-Hop)", artist:"RRN", src:"music/Praise Him Loud (Hip - Hop).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]},
+  {title:"Beautiful Lie (Pop)", artist:"RRN", src:"music/Beautiful lie (Pop).mp3", genre:"Pop", tags:["pop","christian","recovery"]},
+  {title:"The Lord Comes Quickly (Brooklyn Boom Bap x Reggaeton)", artist:"RRN", src:"music/The Lord Comes Quickly (Brooklyn Boom Bap x Puerto Rican Reggaeton Remix).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]},
+  {title:"A Reckoning (Radio)", artist:"RRN", src:"music/A Reconing (Radio).mp3", genre:"Christian", tags:["christian","christian","recovery"]},
+  {title:"Jesus Christ Alive in Me (Southern Blues Rock)", artist:"RRN", src:"music/Jesus Christ Alive in Me (Southern Blues Rock).mp3", genre:"Rock", tags:["rock","christian","recovery"]},
+  {title:"Four Rivers of Eden (Indie Folk Pop)", artist:"RRN", src:"music/Four Rivers of Eden (Indie Folk Pop).mp3", genre:"Pop", tags:["pop","christian","recovery"]},
+  {title:"Reverse the Curse (Hip-Hop)", artist:"RRN", src:"music/Reverse The Curse (Hip - Hop).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]}
 ];
 
 /* RRN AVAILABLE-NOW RESOLVER: points the existing playlist at the songs already on GitHub.
@@ -4628,7 +4641,11 @@ function rrPick(){
 }
 function rrUpNext(){ if(!rrBag.length) rrBag=rrBuildBag(); return rrBag.length?rrBag[rrBag.length-1]:null; }
 function rrPlayTrack(t){
-  if(!t)return; rrCur=t; try{rrFamLast[rrFamKey(t)]=Date.now();}catch(_e){} rrA.src=rrUrl(t._real||t.src);
+  if(!t)return; rrCur=t;
+  // push to history for back button
+  rrHistory.push(t);
+  if(rrHistory.length>rrHistMax)rrHistory.shift();
+ try{rrFamLast[rrFamKey(t)]=Date.now();}catch(_e){} rrA.src=rrUrl(t._real||t.src);
   document.getElementById('rrTitle').textContent=t.title||'Refined Radio';
   var rrNx=rrUpNext();document.getElementById('rrSub').textContent=(t.artist?t.artist+' \u00b7 ':'')+rrFormat().label+(rrNx?' \u00b7 Next: '+rrNx.title:'');
   rrRecent.push(t.src); var cap=Math.min(4,Math.max(1,rrPool().length-1)); while(rrRecent.length>cap)rrRecent.shift();
@@ -4742,7 +4759,16 @@ function rrToggle(){
   if(rrPlaying)rrA.pause(); else rrA.play().catch(function(){});
 }
 function rrNext(){ if(RR_LIBRARY.length){ if(rrCur)rrEvent('skip'); rrAdvance(); } }
-function rrPrev(){ if(RR_LIBRARY.length)rrAdvance(); }
+var rrHistory=[],rrHistMax=50;
+function rrPrev(){
+  if(rrHistory.length>1){
+    // pop current, then play the one before it
+    rrHistory.pop();
+    var prev=rrHistory.pop();
+    if(prev){rrPlayTrack(prev);return;}
+  }
+  if(RR_LIBRARY.length)rrAdvance();
+}
 function rrVol(v){rrA.volume=parseFloat(v);}
 function rrSeek(e){if(!rrA.duration)return;var r=document.getElementById('rrProg').getBoundingClientRect();rrA.currentTime=((e.clientX-r.left)/r.width)*rrA.duration;}
 function rrRate(d){if(!rrCur)return;var tk=rrCur.src;var s=(rrScore[tk]||0)+d;s=Math.max(-3,Math.min(5,s));rrScore[tk]=s;rrSave();rrPaint();rrStarBump();rrFloat(d>0?"\uD83D\uDC4D":"\uD83D\uDC4E",d>0?"up":"down");rrEvent(d>0?"like":"dislike");try{fetch(RR_API+"/api/radio/rate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({voter:rrVid,track:tk,delta:d})}).then(function(r){return r.json();}).then(function(res){if(res&&typeof res.score==="number"){rrScore[res.track||tk]=res.score;rrSave();if(rrCur&&rrCur.src===tk)rrPaint();}}).catch(function(){});}catch(e){}rrRenderLoved();rrMaybeAskEmail();if(rrCur)rrNowCard(rrCur);}
