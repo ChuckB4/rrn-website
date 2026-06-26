@@ -125,7 +125,7 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
 .page-
 
 /* ── HERO ── */
-.lbr-hero{background:var(--ink);position:relative;overflow:hidden;padding:clamp(100px,14vw,160px) clamp(20px,6%,80px) clamp(60px,8vw,100px);}
+.lbr-hero{background:#060d18!important;position:relative;overflow:hidden;padding:120px clamp(20px,6%,80px) clamp(60px,8vw,100px);}
 .lbr-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(200,145,58,.12) 0%,transparent 70%);}
 .lbr-hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;}
 .lbr-eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
@@ -267,8 +267,6 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
 
 #rrDn.on svg{fill:#fff;}
 @media(max-width:640px){}
-#rrShareModal{display:none!important;position:fixed;inset:0;z-index:700;background:rgba(4,9,18,.78);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:18px;}
-#rrShareModal.open{display:flex!important;}
 </style>
 </head>
 <body>
@@ -369,7 +367,7 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
 <div class="page-body">
 
 <!-- HERO -->
-<div class="lbr-hero">
+<div class="lbr-hero" style="background:#060d18!important;">
   <div class="lbr-hero-inner">
     <div class="lbr-eyebrow">Local Business Radio Network &mdash; Port Allen Pilot</div>
     <h1>Turn Local Foot Traffic Into <em>Daily Audio Exposure</em></h1>
@@ -704,7 +702,26 @@ function lbrShareFB(){
   lbrToast('Opening Facebook share…');
 }
 </script>
-
+<div id="rrShareModal" role="dialog" style="display:none;" aria-label="Share Refined Radio">
+  <div class="rrsm-card">
+    <button class="rrsm-x" onclick="rrCloseShare()" aria-label="Close">&times;</button>
+    <h3 class="rrsm-h">Share hope. Save a life.</h3>
+    <p class="rrsm-sub">Pick a message, then post it anywhere &mdash; every share reaches someone who needs it.</p>
+    <span class="rrsm-lab">Choose a message</span>
+    <select id="rrShareSel"></select>
+    <span class="rrsm-lab">Your post (edit if you like)</span>
+    <textarea id="rrShareText"></textarea>
+    <div class="rrsm-row">
+      <button class="rrsm-btn rrsm-primary" onclick="rrShareNative()">Share</button>
+      <button class="rrsm-btn rrsm-ghost" onclick="rrShareCopy()">Copy</button>
+    </div>
+    <div class="rrsm-row">
+      <button class="rrsm-btn rrsm-ghost" onclick="rrShareFB()">Facebook</button>
+      <button class="rrsm-btn rrsm-ghost" onclick="rrShareX()">X / Twitter</button>
+    </div>
+    <p class="rrsm-note">&ldquo;Share&rdquo; opens your phone&rsquo;s share menu. &ldquo;Copy&rdquo; lets you paste into any post.</p>
+  </div>
+</div>
 <div id="rrPlayer">
   <div class="rrp-tab" onclick="document.getElementById('rrPlayer').classList.toggle('rrShow')">
     <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> Refined Radio
@@ -1540,7 +1557,7 @@ window.rrValidate=function(){
   return r;
 };
 
-window.addEventListener('load',function(){setTimeout(function(){document.getElementById('rrPlayer').classList.add('rrShow');},1400);if(RR_LIBRARY.length)rrHour=new Date().getHours();rrFillGenres();rrLoadScores();rrResolveRealPaths(rrCheckPreview);rrTab('trending');try{if(!sessionStorage.getItem('rrn_visited')){sessionStorage.setItem('rrn_visited','1');rrEvent('visit','site');}}catch(e){}setInterval(rrLoadScores,90000);setInterval(function(){if(rrPlaying){try{fetch(RR_API+"/api/radio/ping",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({voter:rrVid})}).catch(function(){});}catch(e){}}},60000);});
+window.addEventListener('load',function(){window.scrollTo(0,0);setTimeout(function(){document.getElementById('rrPlayer').classList.add('rrShow');},1400);if(RR_LIBRARY.length)rrHour=new Date().getHours();rrFillGenres();rrLoadScores();rrResolveRealPaths(rrCheckPreview);rrTab('trending');try{if(!sessionStorage.getItem('rrn_visited')){sessionStorage.setItem('rrn_visited','1');rrEvent('visit','site');}}catch(e){}setInterval(rrLoadScores,90000);setInterval(function(){if(rrPlaying){try{fetch(RR_API+"/api/radio/ping",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({voter:rrVid})}).catch(function(){});}catch(e){}}},60000);});
 
 
 </script>
