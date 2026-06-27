@@ -1294,7 +1294,7 @@ var EVENTS = [
     const newOnes = live.filter(e => !titles.has(e.title.toLowerCase()));
     if (newOnes.length) {
       EVENTS.push(...newOnes);
-      renderGrid();
+      renderEvents();
     }
   } catch(e) { /* silent fail — static events still show */ }
 })();
@@ -1590,6 +1590,7 @@ function submitEvent() {
 // ===== SEARCH =====
 document.addEventListener('DOMContentLoaded', function() {
   renderEvents();
+  window.onload = function(){ if(!document.getElementById('evGrid').innerHTML.trim()) renderEvents(); };
   document.getElementById('evSearch').addEventListener('input', function() {
     activeSearch = this.value.trim();
     renderEvents();
@@ -1895,6 +1896,30 @@ var RR_LIBRARY = [
   {title:"I Tried to Run, But the Choir Caught Me", artist:"RRN", src:"music/I Tried to Run, But the Choir Caught Me.mp3", genre:"Christian Gospel Soul"},
   {title:"Devil Lost My Address", artist:"RRN", src:"music/Devil Lost My Address.mp3", genre:"Christian Outlaw Country"},
   {title:"Your Way Is Better", artist:"RRN", src:"music/Your Way Is Better (Contemporary Christian Pop Worship with Hip-Hop Elements).mp3", genre:"Christian Hip-Hop Worship"}
+
+  {title:"The Lord Comes Quickly (Brooklyn Boom Bap x Puerto Rican Reggaeton Remix)", artist:"RRN", src:"music/The Lord Comes Quickly (Brooklyn Boom Bap x Puerto Rican Reggaeton Remix).mp3", genre:"Christian Hip Hop & Urban"},
+  {title:"A Reckoning (Radio)", artist:"RRN", src:"music/A Reconing (Radio).mp3", genre:"Christian Contemporary / CCM / Pop"},
+  {title:"Jesus Christ Alive in Me (Southern Blues Rock)", artist:"RRN", src:"music/Jesus Christ Alive in Me (Southern Blues Rock).mp3", genre:"Christian Blues & Soul"},
+  {title:"Out of the Deep Waters (Country)", artist:"RRN", src:"music/Out of the Deep Waters (Country).mp3", genre:"Christian Southern / Country / Bluegrass"},
+  {title:"How Long (Country)", artist:"RRN", src:"music/How Long (Country).mp3", genre:"Christian Southern / Country / Bluegrass"},
+  {title:"Be Still (Country)", artist:"RRN", src:"music/Be Still  (Country).mp3", genre:"Christian Southern / Country / Bluegrass"},
+  {title:"Out of the Depths (Country)", artist:"RRN", src:"music/Out of the Depths (Country).mp3", genre:"Christian Southern / Country / Bluegrass"},
+  {title:"Like That (Hip-Hop)", artist:"RRN", src:"music/Like That (Hip - Hop).mp3", genre:"Christian Hip Hop & Urban"},
+  {title:"When the Wind Moves (Pop)", artist:"RRN", src:"music/When the Wind Moves (Pop).mp3", genre:"Christian Contemporary / CCM / Pop"},
+  {title:"Daddy's Home (Country-Pop)", artist:"RRN", src:"music/Daddy's Home (Country - Pop).mp3", genre:"Christian Southern / Country / Bluegrass"},
+  {title:"When the River Parts (Indie Folk Pop)", artist:"RRN", src:"music/When the River Parts (Indie Folk Pop).mp3", genre:"Christian Folk / Acoustic / Americana"},
+  {title:"Reverse the Curse (Hip-Hop)", artist:"RRN", src:"music/Reverse The Curse (Hip - Hop).mp3", genre:"Christian Hip Hop & Urban"},
+  {title:"Four Rivers of Eden (Indie Folk Pop)", artist:"RRN", src:"music/Four Rivers of Eden (Indie Folk Pop).mp3", genre:"Christian Folk / Acoustic / Americana"},
+  {title:"Hosea's Song (Country)", artist:"RRN", src:"music/Hosea's Song (Country).mp3", genre:"Christian Southern / Country / Bluegrass"},
+  {title:"Jeremiah's Cry (Country)", artist:"RRN", src:"music/Jeremiah's Cry (Country).mp3", genre:"Christian Southern / Country / Bluegrass"},
+  {title:"Galilee's Shoreline (Country)", artist:"RRN", src:"music/Galilee's Shoreline (Country).mp3", genre:"Christian Southern / Country / Bluegrass"},
+  {title:"Can't Wear That (Hip-Hop)", artist:"RRN", src:"music/Can't Wear That (Hip- Hop).mp3", genre:"Christian Hip Hop & Urban"},
+  {title:"Stockyard Cafe", artist:"RRN", src:"music/Stockyard Cafe.mp3", genre:"Christian Southern / Country / Bluegrass"},
+  {title:"Late Night Prayer (Outlaw Country)", artist:"RRN", src:"music/Late Night Prayer (Outlaw Country).mp3", genre:"Christian Southern / Country / Bluegrass"},
+  {title:"Through the Open Door (Radio)", artist:"RRN", src:"music/Through the Open Door (Radio).mp3", genre:"Christian Contemporary / CCM / Pop"},
+  {title:"Praise Him Loud (EDM)", artist:"RRN", src:"music/Praise Him Loud (EDM).mp3", genre:"Christian Contemporary / CCM / Pop"},
+  {title:"Praise Him Loud (Hip-Hop)", artist:"RRN", src:"music/Praise Him Loud (Hip - Hop).mp3", genre:"Christian Hip Hop & Urban"},
+  {title:"Beautiful Lie (Pop)", artist:"RRN", src:"music/Beautiful lie (Pop).mp3", genre:"Christian Contemporary / CCM / Pop"},
 ];
 
 
@@ -2643,5 +2668,27 @@ document.addEventListener('click',function(e){
 });
 </script>
 
+
+<script>
+(function() {
+  var API = 'https://rrn-api-production.up.railway.app/api/intake';
+  var SESSION = 'rrn_sess_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+  function logEvent(type, extra) {
+    fetch(API, {
+      method:'POST', headers:{'Content-Type':'application/json'}, keepalive:true,
+      body: JSON.stringify(Object.assign({program:'radio_analytics',session:SESSION,event:type,page:window.location.pathname,ts:new Date().toISOString()},extra||{}))
+    }).catch(function(){});
+  }
+  window.addEventListener('load', function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(p){logEvent('page_load',{lat:p.coords.latitude.toFixed(3),lon:p.coords.longitude.toFixed(3)});},
+        function(){logEvent('page_load',{lat:'denied'});},{timeout:5000}
+      );
+    } else { logEvent('page_load'); }
+  });
+  window.RRN_LOG = logEvent;
+})();
+</script>
 </body>
 </html>
