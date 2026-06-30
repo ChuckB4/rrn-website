@@ -65,7 +65,7 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
 .fbot{border-top:0.5px solid rgba(255,255,255,.06);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
 .fbot p{font-size:11px;color:rgba(255,255,255,.2);}
 .fv{font-family:var(--fd);font-style:italic;font-size:12px;color:rgba(200,145,58,.4);}
-#rrPlayer{position:fixed;left:0;right:0;bottom:0;z-index:600;background:rgba(6,13,24,.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--gold-br);transform:translateY(0);transition:transform .35s ease;}
+#rrPlayer{position:fixed;left:0;right:0;bottom:0;z-index:600;background:rgba(6,13,24,.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--gold-br);transform:translateY(100%);transition:transform .35s ease;}
 #rrPlayer.rrShow{transform:translateY(0);}
 .rrp-bar{padding:6px 14px;display:flex;align-items:center;gap:11px;min-height:46px;}
 #rrPlayer .rrp-hint,#rrPlayer .rrp-share{display:none!important;}
@@ -393,7 +393,41 @@ p{margin:0 0 18px;font-size:1.05rem;line-height:1.8;color:#2a3340;}
   </div>
 </footer>
 
-
+<div id="rrPlayer">
+  <div class="rrp-tab" onclick="document.getElementById('rrPlayer').classList.toggle('rrShow')">
+    <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> Refined Radio
+  </div>
+  <div class="rrp-bar">
+    <button class="rrp-sk" onclick="rrPrev()" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M19 20L9 12l10-8v16zM5 19V5h2v14z"/></svg></button>
+    <button class="rrp-pp" id="rrPP" onclick="rrToggle()" aria-label="Play"><svg id="rrIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+    <button class="rrp-sk" onclick="rrNext()" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M5 4l10 8-10 8V4zm12 1h2v14h-2z"/></svg></button>
+    <div class="rrp-now">
+      <div class="tt" id="rrTitle">Refined Radio &mdash; tap play to begin</div>
+      <div class="sb"><span class="rrp-live"><i></i>LIVE</span> &middot; <span id="rrSub">Continuous Worship &amp; Recovery</span></div>
+    </div>
+    <div class="rrp-rate"><button class="rrp-rb" id="rrUp" onclick="rrRate(1)" title="Bump this song up so it plays more often" aria-label="Thumbs up / request more plays"><svg viewBox="0 0 24 24"><path d="M2 20h2a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1H2zM22 10h-6.31l.95-4.57.03-.32a1.5 1.5 0 0 0-.44-1.06L15.17 3 8.59 9.59A2 2 0 0 0 8 11v7a2 2 0 0 0 2 2h7a2 2 0 0 0 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1a2 2 0 0 0-2-2z"/></svg></button><button class="rrp-rb" id="rrDn" onclick="rrRate(-1)" title="Play this less" aria-label="Thumbs down"><svg viewBox="0 0 24 24"><path d="M22 4h-2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2zM2 14h6.31l-.95 4.57-.03.32a1.5 1.5 0 0 0 .44 1.06L8.83 21l6.58-6.59A2 2 0 0 0 16 13V6a2 2 0 0 0-2-2H7a2 2 0 0 0-1.84 1.22L2.14 12.27c-.09.23-.14.47-.14.73v1a2 2 0 0 0 2 2z"/></svg></button><button class="rrp-rb" id="rrReq" onclick="rrRequest()" title="Request this song (boosts rotation)" aria-label="Request this song"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg></button><button class="rrp-rb" id="rrShSong" onclick="rrShareSong()" title="Share this song" aria-label="Share this song"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg></button><button class="rrp-rb" id="rrHeart" onclick="rrReactToggle(event)" title="Quick reactions" aria-label="Quick reactions"><svg viewBox="0 0 24 24"><path d="M12 21s-7.55-4.74-10.05-9.24C.6 9.1 1.7 5.8 4.7 4.85 6.85 4.17 9.1 5.1 12 8c2.9-2.9 5.15-3.83 7.3-3.15 3 .95 4.1 4.25 2.75 6.91C19.55 16.26 12 21 12 21z"/></svg></button><div id="rrReactMenu" class="rrp-react"><button onclick="rrLikeSong()">❤️ Like this song</button><button onclick="rrMoreLikeThis()">🎶 Need more like this</button><button onclick="rrTestimony()">🙏 “This song helped me”</button><button onclick="rrFav()">⭐ Save to favorites</button></div><span id="rrStars" class="rrp-stars" title="This song&rsquo;s rating &mdash; 4&#9733; and 5&#9733; play more" style="color:var(--gold);font-size:12px;letter-spacing:1px;margin-left:7px;white-space:nowrap;"></span></div><div class="rrp-prog" id="rrProg" onclick="rrSeek(event)"><div class="rrp-fill" id="rrFill"></div></div>
+    <input class="rrp-vol" type="range" min="0" max="1" step="0.05" value="0.8" oninput="rrVol(this.value)" aria-label="Volume">
+    <select class="rrp-genre" id="rrGenre" onchange="rrSetGenre(this.value)" aria-label="Choose a genre" title="Choose a genre"><option value="">All Genres &middot; Auto Mix</option></select>
+    <div class="rrp-hint" style="flex-basis:100%;width:100%;font-size:11px;color:var(--gold);opacity:.85;text-align:center;padding:5px 8px 0;letter-spacing:.02em;line-height:1.45;">Love this song? Tap <strong>&#128077;</strong> to move it up the station playlist. Top-rated songs play more often and can be featured at the top of the hour.</div>
+    <div class="rrp-share" style="flex-basis:100%;width:100%;display:flex;gap:13px;justify-content:center;align-items:center;flex-wrap:wrap;font-size:11px;padding-top:4px;"><span style="color:#9aa4b1;">Enjoying the station? Share it &rarr;</span><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjoinrrn.com%2F" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;">Facebook</a><a href="https://twitter.com/intent/tweet?text=%F0%9F%8E%B5%20Listening%20to%20Refined%20Recovery%20Network%20Radio%0AChristian%20music%2C%20recovery%2C%20restoration%2C%20and%20hope%20through%20Jesus%20Christ.%0AJoin%20us%20live%20and%20be%20among%20the%20first%20to%20hear%20about%20the%20upcoming%20Recovery%20App.%0AListen%20now%3A%20https%3A%2F%2Fjoinrrn.com%2F" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;">X</a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjoinrrn.com%2F" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;">LinkedIn</a><a href="https://t.me/share/url?url=https%3A%2F%2Fjoinrrn.com%2F&text=%F0%9F%8E%B5%20Refined%20Recovery%20Network%20Radio%20%E2%80%94%20Christian%20music%2C%20recovery%2C%20restoration%2C%20and%20hope%20through%20Jesus%20Christ.%20Listen%20live%21" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;">Telegram</a><a href="mailto:?subject=Refined%20Recovery%20Network%20Radio&body=%F0%9F%8E%B5%20Listening%20to%20Refined%20Recovery%20Network%20Radio%0AChristian%20music%2C%20recovery%2C%20restoration%2C%20and%20hope%20through%20Jesus%20Christ.%0AJoin%20us%20live%20and%20be%20among%20the%20first%20to%20hear%20about%20the%20upcoming%20Recovery%20App.%0AListen%20now%3A%20https%3A%2F%2Fjoinrrn.com%2F" style="color:var(--gold);font-weight:700;text-decoration:none;">Email</a><a href="sms:?&body=%F0%9F%8E%B5%20Listening%20to%20Refined%20Recovery%20Network%20Radio%0AChristian%20music%2C%20recovery%2C%20restoration%2C%20and%20hope%20through%20Jesus%20Christ.%0AJoin%20us%20live%20and%20be%20among%20the%20first%20to%20hear%20about%20the%20upcoming%20Recovery%20App.%0AListen%20now%3A%20https%3A%2F%2Fjoinrrn.com%2F" style="color:var(--gold);font-weight:700;text-decoration:none;">Text</a></div>
+  </div>
+  <style id="rrFxCss">
+@keyframes rrFloatUp{0%{opacity:0;transform:translateY(0) scale(.5);}18%{opacity:1;}100%{opacity:0;transform:translateY(-78px) scale(1.25);}}
+.rr-float{position:fixed;z-index:99999;font-size:30px;line-height:1;pointer-events:none;will-change:transform,opacity;animation:rrFloatUp 1s ease-out forwards;text-shadow:0 2px 6px rgba(0,0,0,.35);}
+@keyframes rrStarPulse{0%{transform:scale(1);}40%{transform:scale(1.32);}100%{transform:scale(1);}}
+.rr-star-pulse{display:inline-block;animation:rrStarPulse .45s ease;}
+.rr-star{cursor:pointer;transition:transform .12s ease;}
+.rr-star:hover{transform:scale(1.25);}
+@keyframes rrBtnPop{0%{transform:scale(1);}50%{transform:scale(1.3);}100%{transform:scale(1);}}
+.rrp-rb.pop{animation:rrBtnPop .35s ease;}
+.rr-emailbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:rgba(8,15,28,.96);border-top:1px solid rgba(200,145,58,.35);padding:9px 12px;font-size:12.5px;color:#e8edf4;}
+.rr-emailbar span{color:#cbd5e2;}
+.rr-emailbar input{flex:1;min-width:130px;padding:7px 9px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;font-size:12.5px;}
+.rr-emailbar button{padding:7px 12px;border:none;border-radius:8px;background:var(--gold,#c8913a);color:#10131a;font-weight:700;font-size:12px;cursor:pointer;}
+.rr-emailbar .rr-em-x{background:transparent;color:#9aa4b1;font-size:16px;padding:2px 6px;font-weight:400;}
+</style>
+  <audio id="rrAudio" preload="metadata"></audio>
+</div>
 <script>
 var RR_LIBRARY = [
   {title:"A Vapor Breath (2000s Alternative Metal)", artist:"RRN", src:"music/A Vapor Breath.mp3", genre:"Christian 2000s Alternative Metal"},
@@ -456,7 +490,7 @@ var RR_LIBRARY = [
   {title:"Fragile Heart, Eternal Light (80's)", artist:"RRN", src:"music/FRAGILE HEART, ETERNAL LIGHTt6 (1).mp3", genre:"Christian 80's"},
   {title:"From Pit to Purpose (EDM)", artist:"RRN", src:"music/FROM PIT TO PURPOSE.mp3", genre:"Christian EDM"},
   {title:"From Pit to Purpose (Worship Rock)", artist:"RRN", src:"music/FROM PIT TO PURPOSEt7 (1).mp3", genre:"Worship Rock"},
-  {title:"Give God Your Burden (Country)", artist:"RRN", src:"music/Give God Your Burden (Country).mp3", genre:"Christian Country", isNew:true, priority:true},
+  {title:"Give God Your Burden (Country)", artist:"RRN", src:"music/Give God Your Burden (Country).mp3", genre:"Christian Country", isNew:true},
   {title:"Go a Little Further (Testimony)", artist:"RRN", src:"music/Go a Little Further (1).mp3", genre:"Testimony Songs"},
   {title:"God's Glory Ends My Story (Country)", artist:"RRN", src:"music/God's Glory Ends My Story Modern country-pop.mp3", genre:"Christian Country"},
   {title:"God's Glory Ends My Story (Praise & Worship Ballad)", artist:"RRN", src:"music/God's Glory Ends My Story Gospel Soul Worship Ballad.mp3", genre:"Praise & Worship"},
@@ -492,7 +526,7 @@ var RR_LIBRARY = [
   {title:"Hes Comming Back (EDM)", artist:"RRN", src:"music/Hes comming back.mp3", genre:"Christian EDM"},
   {title:"Hidden Glory (R&B)", artist:"RRN", src:"music/Hidden Glory R&B.mp3", genre:"Christian R&B"},
   {title:"Hidden in the Shadow of His Wings (LoFi)", artist:"RRN", src:"music/Hidden in the Shadow of His Wings (LoFi).mp3", genre:"Christian LoFi", isNew:true},
-  {title:"His Mercy Runs Deep (R&B)", artist:"RRN", src:"music/His Mercy Runs Deep (R&B).mp3", genre:"Christian R&B", isNew:true, priority:true},
+  {title:"His Mercy Runs Deep (R&B)", artist:"RRN", src:"music/His Mercy Runs Deep (R&B).mp3", genre:"Christian R&B", isNew:true},
   {title:"Holy Rest (80's)", artist:"RRN", src:"music/Holy Rest (1).mp3", genre:"Christian 80's"},
   {title:"Holy Rest (Alternative R&B)", artist:"RRN", src:"music/Holy Rest R&B JAZZ CHILL.mp3", genre:"Christian Alternative R&B"},
   {title:"Holy Rest (Freestyle) (80's)", artist:"RRN", src:"music/Holy Rest (Freestyle).mp3", genre:"Christian 80's"},
@@ -513,7 +547,7 @@ var RR_LIBRARY = [
   {title:"In a Dry and Weary Land (Hip-Hop)", artist:"RRN", src:"music/In a Dry and Weary Land Alternative R&B, Pop, Hip Hop.mp3", genre:"Christian Hip-Hop"},
   {title:"In His Grace (Hip-Hop)", artist:"RRN", src:"music/Bounce in His grace l.mp3", genre:"Christian Hip-Hop"},
   {title:"In the Shape You Left Behind (Lo-Fi)", artist:"RRN", src:"music/In the Shape You Left Behind (LoFi).mp3", genre:"Christian LoFi", isNew:true},
-  {title:"In Your Presence (Bluegrass)", artist:"RRN", src:"music/In Your Presence (Bluegrass).mp3", genre:"Christian Bluegrass", isNew:true, priority:true},
+  {title:"In Your Presence (Bluegrass)", artist:"RRN", src:"music/In Your Presence (Bluegrass).mp3", genre:"Christian Bluegrass", isNew:true},
   {title:"Issue of Blood (Teaching)", artist:"RRN Teaching", src:"music/Issue_Blood.mp3", genre:"Biblical Teaching"},
   {title:"I'm Free (Country Pop)", artist:"RRN", src:"music/I’M FREE.mp3", genre:"Christian Country - Pop"},
   {title:"Joyful Noise (Celebrate His Name Mix) (EDM)", artist:"RRN", src:"music/Joyful Noise (Celebrate His Name Mix).mp3", genre:"Christian EDM"},
@@ -653,73 +687,24 @@ var RR_LIBRARY = [
   {title:"What Must I Do (Alt Rock)", artist:"RRN", src:"music/What Must I Do (2000s Alternative Metal).mp3", genre:"Christian Alternative Rock", isNew:true},
   {title:"One Promise (R&B)", artist:"RRN", src:"music/One Promise (R&B).mp3", genre:"Christian R&B", isNew:true},
   {title:"Boots-A-Stompin’ (For the King) (Country)", artist:"RRN", src:"music/Boots-A-Stompin’ (For the King) (Country).mp3", genre:"Christian Country", isNew:true},
-  {title:"Spirit, Don't Let Me Check My Messages", artist:"RRN", src:"music/Spirit, Don’t Let Me Check My Messages”.mp3", genre:"Christian Worship Pop", priority:true},
+  {title:"Spirit, Don't Let Me Check My Messages", artist:"RRN", src:"music/Spirit, Don’t Let Me Check My Messages”.mp3", genre:"Christian Worship Pop"},
   {title:"I Tried to Run, But the Choir Caught Me", artist:"RRN", src:"music/I Tried to Run, But the Choir Caught Me.mp3", genre:"Christian Gospel Soul"},
   {title:"Devil Lost My Address", artist:"RRN", src:"music/Devil Lost My Address.mp3", genre:"Christian Outlaw Country"},
-  {title:"Your Way Is Better", artist:"RRN", src:"music/Your Way Is Better (Contemporary Christian Pop Worship with Hip-Hop Elements).mp3", genre:"Christian Hip-Hop Worship"}
-
-  {title:"The Lord Comes Quickly (Brooklyn Boom Bap x Puerto Rican Reggaeton Remix)", artist:"RRN", src:"music/The Lord Comes Quickly (Brooklyn Boom Bap x Puerto Rican Reggaeton Remix).mp3", genre:"Christian Hip Hop & Urban"},
-  {title:"A Reckoning (Radio)", artist:"RRN", src:"music/A Reconing (Radio).mp3", genre:"Christian Contemporary / CCM / Pop"},
-  {title:"Jesus Christ Alive in Me (Southern Blues Rock)", artist:"RRN", src:"music/Jesus Christ Alive in Me (Southern Blues Rock).mp3", genre:"Christian Blues & Soul"},
-  {title:"Out of the Deep Waters (Country)", artist:"RRN", src:"music/Out of the Deep Waters (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"How Long (Country)", artist:"RRN", src:"music/How Long (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Be Still (Country)", artist:"RRN", src:"music/Be Still  (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Out of the Depths (Country)", artist:"RRN", src:"music/Out of the Depths (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Like That (Hip-Hop)", artist:"RRN", src:"music/Like That (Hip - Hop).mp3", genre:"Christian Hip Hop & Urban"},
-  {title:"When the Wind Moves (Pop)", artist:"RRN", src:"music/When the Wind Moves (Pop).mp3", genre:"Christian Contemporary / CCM / Pop", priority:true},
-  {title:"Daddy's Home (Country-Pop)", artist:"RRN", src:"music/Daddy's Home (Country - Pop).mp3", genre:"Christian Southern / Country / Bluegrass"},
-  {title:"When the River Parts (Indie Folk Pop)", artist:"RRN", src:"music/When the River Parts (Indie Folk Pop).mp3", genre:"Christian Folk / Acoustic / Americana"},
-  {title:"Reverse the Curse (Hip-Hop)", artist:"RRN", src:"music/Reverse The Curse (Hip - Hop).mp3", genre:"Christian Hip Hop & Urban"},
-  {title:"Four Rivers of Eden (Indie Folk Pop)", artist:"RRN", src:"music/Four Rivers of Eden (Indie Folk Pop).mp3", genre:"Christian Folk / Acoustic / Americana"},
-  {title:"Hosea's Song (Country)", artist:"RRN", src:"music/Hosea's Song (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Jeremiah's Cry (Country)", artist:"RRN", src:"music/Jeremiah's Cry (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Galilee's Shoreline (Country)", artist:"RRN", src:"music/Galilee's Shoreline (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Can't Wear That (Hip-Hop)", artist:"RRN", src:"music/Can't Wear That (Hip- Hop).mp3", genre:"Christian Hip Hop & Urban"},
-  {title:"Stockyard Cafe", artist:"RRN", src:"music/Stockyard Cafe.mp3", genre:"Christian Southern / Country / Bluegrass"},
-  {title:"Late Night Prayer (Outlaw Country)", artist:"RRN", src:"music/Late Night Prayer (Outlaw Country).mp3", genre:"Christian Southern / Country / Bluegrass"},
-  {title:"Through the Open Door (Radio)", artist:"RRN", src:"music/Through the Open Door (Radio).mp3", genre:"Christian Contemporary / CCM / Pop"},
-  {title:"Praise Him Loud (EDM)", artist:"RRN", src:"music/Praise Him Loud (EDM).mp3", genre:"Christian Contemporary / CCM / Pop"},
-  {title:"Praise Him Loud (Hip-Hop)", artist:"RRN", src:"music/Praise Him Loud (Hip - Hop).mp3", genre:"Christian Hip Hop & Urban"},
-  {title:"Beautiful Lie (Pop)", artist:"RRN", src:"music/Beautiful lie (Pop).mp3", genre:"Christian Contemporary / CCM / Pop"},
-
-  {title:"A Mind to Work (K-Pop)", artist:"RRN", src:"music/A Mind to Work (K-Pop).mp3", genre:"Christian Contemporary / CCM / Pop", priority:true},
-  {title:"A Well in the Wilderness (Outlaw Country)", artist:"RRN", src:"music/A Well in the Wilderness (Outlaw Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Be Still (Country)", artist:"RRN", src:"music/Be Still  (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Boots-A-Stompin' (For the King) (Country)", artist:"RRN", src:"music/Boots-A-Stompin' (For the King) (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Called by Name (Outlaw Country)", artist:"RRN", src:"music/Called by Name (Outlaw Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Can't Wear That (Hip- Hop)", artist:"RRN", src:"music/Can't Wear That (Hip- Hop).mp3", genre:"Christian Hip Hop & Urban", priority:true},
-  {title:"Come Back Home (EDM)", artist:"RRN", src:"music/Come Back Home (EDM).mp3", genre:"Christian Contemporary / CCM / Pop", priority:true},
-  {title:"Consumed Upon the Alter (Worship)", artist:"RRN", src:"music/Consumed Upon the Alter (Worship).mp3", genre:"Christian Worship & Praise", priority:true},
-  {title:"Deeper Than Shame (Outlaw Country)", artist:"RRN", src:"music/Deeper Than Shame  (Outlaw Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Devil Under My Soles", artist:"RRN", src:"music/Devil Under My Soles.mp3", genre:"Christian Other / Mixed", priority:true},
-  {title:"Don't You Cry Anymore", artist:"RRN", src:"music/Don't You Cry Anymore.mp3", genre:"Christian Other / Mixed", priority:true},
-  {title:"First Love Again (Country)", artist:"RRN", src:"music/First Love Again (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Galilee's Shoreline (Country)", artist:"RRN", src:"music/Galilee's Shoreline (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Give God Your Burden (Country)", artist:"RRN", src:"music/Give God Your Burden (Country) (1).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"He Forgave Me First (CCM)", artist:"RRN", src:"music/He Forgave Me First (CCM).mp3", genre:"Christian Contemporary / CCM / Pop", priority:true},
-  {title:"Her Past Was Known, Her Witness Now Is Life (Outlaw Country)", artist:"RRN", src:"music/Her Past Was Known, Her Witness Now Is Life (Outlaw Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"His Mercy Runs Deep (R&B)", artist:"RRN", src:"music/His Mercy Runs Deep (R&B) (2).mp3", genre:"Christian R&B / Soul / Funk", priority:true},
-  {title:"Hosea's Song (Country)", artist:"RRN", src:"music/Hosea's Song (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"How Long (Country)", artist:"RRN", src:"music/How Long (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"In Your Presence (Bluegrass)", artist:"RRN", src:"music/In Your Presence (Bluegrass) (1).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Issue Blood", artist:"RRN", src:"music/Issue Blood.mp3", genre:"Christian Other / Mixed", priority:true},
-  {title:"Jeremiah's Cry (Country)", artist:"RRN", src:"music/Jeremiah's Cry (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Like That (Hip - Hop)", artist:"RRN", src:"music/Like That (Hip - Hop).mp3", genre:"Christian Hip Hop & Urban", priority:true},
-  {title:"One More Chance (Southern Blues Rock)", artist:"RRN", src:"music/One More Chance (Southern Blues Rock) (1).mp3", genre:"Christian Blues & Soul", priority:true},
-  {title:"Out of the Deep Waters (Country)", artist:"RRN", src:"music/Out of the Deep Waters (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Out of the Depths (Country)", artist:"RRN", src:"music/Out of the Depths (Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Out of the Pit I Was Called (Outlaw Country)", artist:"RRN", src:"music/Out of the Pit I Was Called (Outlaw Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Pulling Down Strongholds (Worship)", artist:"RRN", src:"music/Pulling Down Strongholds (Worship).mp3", genre:"Christian Worship & Praise", priority:true},
-  {title:"Set a Table for My Enemies (Outlaw Country)", artist:"RRN", src:"music/Set a Table for My Enemies (Outlaw Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"She Will Rise Again (Outlaw Country)", artist:"RRN", src:"music/She Will Rise Again (Outlaw Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"Simon Peter", artist:"RRN", src:"music/Simon Peter.mp3", genre:"Christian Other / Mixed", priority:true},
-  {title:"Spirit, Don't Let Me Check My Messages", artist:"RRN", src:"music/Spirit, Don't Let Me Check My Messages\".mp3", genre:"Christian Other / Mixed", priority:true},
-  {title:"Spoken For", artist:"RRN", src:"music/Spoken For.mp3", genre:"Christian Other / Mixed", priority:true},
-  {title:"The Flute for Darius' Daughter (Outlaw Country)", artist:"RRN", src:"music/The Flute for Darius' Daughter (Outlaw Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"The Scarlet Thread (Alternative 2000s Rock)", artist:"RRN", src:"music/The Scarlet Thread (Alternative 2000s Rock).mp3", genre:"Christian Rock & Alternative Metal", priority:true},
-  {title:"Their Words Will Fall (Outlaw Country)", artist:"RRN", src:"music/Their Words Will Fall (Outlaw Country).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},
-  {title:"When the Wind Moves (Pop)", artist:"RRN", src:"music/When the Wind Moves (Pop).mp3", genre:"Christian Contemporary / CCM / Pop", priority:true},
-  {title:"Wind In My Sail (Outlaw Country)", artist:"RRN", src:"music/Wind In My Sail (Outlaw Country) (2).mp3", genre:"Christian Southern / Country / Bluegrass", priority:true},];
+  {title:"Your Way Is Better", artist:"RRN", src:"music/Your Way Is Better (Contemporary Christian Pop Worship with Hip-Hop Elements).mp3", genre:"Christian Hip-Hop Worship"},
+  {title:"When the River Parts (Indie Folk Pop)", artist:"RRN", src:"music/When the River Parts (Indie Folk Pop).mp3", genre:"Pop", tags:["pop","christian","recovery"]},
+  {title:"Daddy\'s Home (Country Pop)", artist:"RRN", src:"music/Daddy's Home (Country - Pop).mp3", genre:"Country", tags:["country","christian","recovery"]},
+  {title:"Late Night Prayer (Outlaw Country)", artist:"RRN", src:"music/Late Night Prayer (Outlaw Country).mp3", genre:"Country", tags:["country","christian","recovery"]},
+  {title:"Through the Open Door (Radio)", artist:"RRN", src:"music/Through the Open Door (Radio).mp3", genre:"Christian", tags:["christian","christian","recovery"]},
+  {title:"Praise Him Loud (EDM)", artist:"RRN", src:"music/Praise Him Loud (EDM).mp3", genre:"EDM", tags:["edm","christian","recovery"]},
+  {title:"Praise Him Loud (Hip-Hop)", artist:"RRN", src:"music/Praise Him Loud (Hip - Hop) (1).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]},
+  {title:"Praise Him Loud (Alt) (Hip-Hop)", artist:"RRN", src:"music/Praise Him Loud (Hip - Hop).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]},
+  {title:"Beautiful Lie (Pop)", artist:"RRN", src:"music/Beautiful lie (Pop).mp3", genre:"Pop", tags:["pop","christian","recovery"]},
+  {title:"The Lord Comes Quickly (Brooklyn Boom Bap x Reggaeton)", artist:"RRN", src:"music/The Lord Comes Quickly (Brooklyn Boom Bap x Puerto Rican Reggaeton Remix).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]},
+  {title:"A Reckoning (Radio)", artist:"RRN", src:"music/A Reconing (Radio).mp3", genre:"Christian", tags:["christian","christian","recovery"]},
+  {title:"Jesus Christ Alive in Me (Southern Blues Rock)", artist:"RRN", src:"music/Jesus Christ Alive in Me (Southern Blues Rock).mp3", genre:"Rock", tags:["rock","christian","recovery"]},
+  {title:"Four Rivers of Eden (Indie Folk Pop)", artist:"RRN", src:"music/Four Rivers of Eden (Indie Folk Pop).mp3", genre:"Pop", tags:["pop","christian","recovery"]},
+  {title:"Reverse the Curse (Hip-Hop)", artist:"RRN", src:"music/Reverse The Curse (Hip - Hop).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]}
+];
 
 
 /* RRN AVAILABLE-NOW RESOLVER: points the existing playlist at the songs already on GitHub.
@@ -868,7 +853,7 @@ function rrSongListAll(){ // every playable song (commercials, station IDs, teac
 }
 function rrSongList(){ // PLAY-ALL: every song is always eligible, so the whole catalog is heard at any hour
   var all=rrSongListAll();
-  if(rrForcedGenre) return all.filter(function(t){return (t.genre||"").toLowerCase()===rrForcedGenre;});
+  if(rrForcedGenre) return all.filter(function(t){return (typeof rrGroupGenre==="function"?rrGroupGenre(t.genre):(t.genre||"").toLowerCase())===rrForcedGenre;});
   var pool=all.filter(function(t){ return (t.genre||"").toLowerCase()!==RR_G_BOUNCE; }); // bounce drops sprinkle in via the specialty path
   return pool.length?pool:all;
 }
@@ -1338,70 +1323,54 @@ document.addEventListener('click',function(e){if(!e.target.closest('.grp'))docum
 window.addEventListener('scroll',function(){var n=document.getElementById('nav');if(window.scrollY>10)n.classList.add('on');else n.classList.remove('on');});
 document.addEventListener('DOMContentLoaded',function(){tscApply();});
 </script>
-<div id="rrPlayer">
-  <div class="rrp-tab" onclick="document.getElementById('rrPlayer').classList.toggle('rrShow')">
-    <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> Refined Radio
-  </div>
-  <div class="rrp-bar">
-    <button class="rrp-sk" onclick="rrPrev()" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M19 20L9 12l10-8v16zM5 19V5h2v14z"/></svg></button>
-    <button class="rrp-pp" id="rrPP" onclick="rrToggle()" aria-label="Play"><svg id="rrIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-    <button class="rrp-sk" onclick="rrNext()" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M5 4l10 8-10 8V4zm12 1h2v14h-2z"/></svg></button>
-    <div class="rrp-now">
-      <div class="tt" id="rrTitle">Refined Radio &mdash; tap play to begin</div>
-      <div class="sb"><span class="rrp-live"><i></i>LIVE</span> &middot; <span id="rrSub">Continuous Worship &amp; Recovery</span></div>
-    </div>
-    <div class="rrp-rate"><button class="rrp-rb" id="rrUp" onclick="rrRate(1)" title="Bump this song up so it plays more often" aria-label="Thumbs up / request more plays"><svg viewBox="0 0 24 24"><path d="M2 20h2a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1H2zM22 10h-6.31l.95-4.57.03-.32a1.5 1.5 0 0 0-.44-1.06L15.17 3 8.59 9.59A2 2 0 0 0 8 11v7a2 2 0 0 0 2 2h7a2 2 0 0 0 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1a2 2 0 0 0-2-2z"/></svg></button><button class="rrp-rb" id="rrDn" onclick="rrRate(-1)" title="Play this less" aria-label="Thumbs down"><svg viewBox="0 0 24 24"><path d="M22 4h-2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2zM2 14h6.31l-.95 4.57-.03.32a1.5 1.5 0 0 0 .44 1.06L8.83 21l6.58-6.59A2 2 0 0 0 16 13V6a2 2 0 0 0-2-2H7a2 2 0 0 0-1.84 1.22L2.14 12.27c-.09.23-.14.47-.14.73v1a2 2 0 0 0 2 2z"/></svg></button><button class="rrp-rb" id="rrReq" onclick="rrRequest()" title="Request this song (boosts rotation)" aria-label="Request this song"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg></button><button class="rrp-rb" id="rrShSong" onclick="rrShareSong()" title="Share this song" aria-label="Share this song"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg></button><button class="rrp-rb" id="rrHeart" onclick="rrReactToggle(event)" title="Quick reactions" aria-label="Quick reactions"><svg viewBox="0 0 24 24"><path d="M12 21s-7.55-4.74-10.05-9.24C.6 9.1 1.7 5.8 4.7 4.85 6.85 4.17 9.1 5.1 12 8c2.9-2.9 5.15-3.83 7.3-3.15 3 .95 4.1 4.25 2.75 6.91C19.55 16.26 12 21 12 21z"/></svg></button><div id="rrReactMenu" class="rrp-react"><button onclick="rrLikeSong()">❤️ Like this song</button><button onclick="rrMoreLikeThis()">🎶 Need more like this</button><button onclick="rrTestimony()">🙏 “This song helped me”</button><button onclick="rrFav()">⭐ Save to favorites</button></div><span id="rrStars" class="rrp-stars" title="This song&rsquo;s rating &mdash; 4&#9733; and 5&#9733; play more" style="color:var(--gold);font-size:12px;letter-spacing:1px;margin-left:7px;white-space:nowrap;"></span></div><div class="rrp-prog" id="rrProg" onclick="rrSeek(event)"><div class="rrp-fill" id="rrFill"></div></div>
-    <input class="rrp-vol" type="range" min="0" max="1" step="0.05" value="0.8" oninput="rrVol(this.value)" aria-label="Volume">
-    <select class="rrp-genre" id="rrGenre" onchange="rrSetGenre(this.value)" aria-label="Choose a genre" title="Choose a genre"><option value="">All Genres &middot; Auto Mix</option></select>
-    <div class="rrp-hint" style="flex-basis:100%;width:100%;font-size:11px;color:var(--gold);opacity:.85;text-align:center;padding:5px 8px 0;letter-spacing:.02em;line-height:1.45;">Love this song? Tap <strong>&#128077;</strong> to move it up the station playlist. Top-rated songs play more often and can be featured at the top of the hour.</div>
-    <div class="rrp-share" style="flex-basis:100%;width:100%;display:flex;gap:13px;justify-content:center;align-items:center;flex-wrap:wrap;font-size:11px;padding-top:4px;"><span style="color:#9aa4b1;">Enjoying the station? Share it &rarr;</span><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjoinrrn.com%2F" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;">Facebook</a><a href="https://twitter.com/intent/tweet?text=%F0%9F%8E%B5%20Listening%20to%20Refined%20Recovery%20Network%20Radio%0AChristian%20music%2C%20recovery%2C%20restoration%2C%20and%20hope%20through%20Jesus%20Christ.%0AJoin%20us%20live%20and%20be%20among%20the%20first%20to%20hear%20about%20the%20upcoming%20Recovery%20App.%0AListen%20now%3A%20https%3A%2F%2Fjoinrrn.com%2F" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;">X</a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjoinrrn.com%2F" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;">LinkedIn</a><a href="https://t.me/share/url?url=https%3A%2F%2Fjoinrrn.com%2F&text=%F0%9F%8E%B5%20Refined%20Recovery%20Network%20Radio%20%E2%80%94%20Christian%20music%2C%20recovery%2C%20restoration%2C%20and%20hope%20through%20Jesus%20Christ.%20Listen%20live%21" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;">Telegram</a><a href="mailto:?subject=Refined%20Recovery%20Network%20Radio&body=%F0%9F%8E%B5%20Listening%20to%20Refined%20Recovery%20Network%20Radio%0AChristian%20music%2C%20recovery%2C%20restoration%2C%20and%20hope%20through%20Jesus%20Christ.%0AJoin%20us%20live%20and%20be%20among%20the%20first%20to%20hear%20about%20the%20upcoming%20Recovery%20App.%0AListen%20now%3A%20https%3A%2F%2Fjoinrrn.com%2F" style="color:var(--gold);font-weight:700;text-decoration:none;">Email</a><a href="sms:?&body=%F0%9F%8E%B5%20Listening%20to%20Refined%20Recovery%20Network%20Radio%0AChristian%20music%2C%20recovery%2C%20restoration%2C%20and%20hope%20through%20Jesus%20Christ.%0AJoin%20us%20live%20and%20be%20among%20the%20first%20to%20hear%20about%20the%20upcoming%20Recovery%20App.%0AListen%20now%3A%20https%3A%2F%2Fjoinrrn.com%2F" style="color:var(--gold);font-weight:700;text-decoration:none;">Text</a></div>
-  </div>
-  <style id="rrFxCss">
-@keyframes rrFloatUp{0%{opacity:0;transform:translateY(0) scale(.5);}18%{opacity:1;}100%{opacity:0;transform:translateY(-78px) scale(1.25);}}
-.rr-float{position:fixed;z-index:99999;font-size:30px;line-height:1;pointer-events:none;will-change:transform,opacity;animation:rrFloatUp 1s ease-out forwards;text-shadow:0 2px 6px rgba(0,0,0,.35);}
-@keyframes rrStarPulse{0%{transform:scale(1);}40%{transform:scale(1.32);}100%{transform:scale(1);}}
-.rr-star-pulse{display:inline-block;animation:rrStarPulse .45s ease;}
-.rr-star{cursor:pointer;transition:transform .12s ease;}
-.rr-star:hover{transform:scale(1.25);}
-@keyframes rrBtnPop{0%{transform:scale(1);}50%{transform:scale(1.3);}100%{transform:scale(1);}}
-.rrp-rb.pop{animation:rrBtnPop .35s ease;}
-.rr-emailbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:rgba(8,15,28,.96);border-top:1px solid rgba(200,145,58,.35);padding:9px 12px;font-size:12.5px;color:#e8edf4;}
-.rr-emailbar span{color:#cbd5e2;}
-.rr-emailbar input{flex:1;min-width:130px;padding:7px 9px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;font-size:12.5px;}
-.rr-emailbar button{padding:7px 12px;border:none;border-radius:8px;background:var(--gold,#c8913a);color:#10131a;font-weight:700;font-size:12px;cursor:pointer;}
-.rr-emailbar .rr-em-x{background:transparent;color:#9aa4b1;font-size:16px;padding:2px 6px;font-weight:400;}
-</style>
-  <audio id="rrAudio" preload="metadata"></audio>
-</div>
 
 <script>
+// ── RRN: Populate radio genre dropdown + grouped genre matching ─────────────
 (function() {
-  function forceCloseMenu() {
-    var m = document.getElementById('mm');
-    if (m) m.style.display = 'none';
+  function groupGenre(raw) {
+    var g = (raw || '').toLowerCase();
+    if (g.indexOf('country') > -1 || g.indexOf('bluegrass') > -1) return 'southern / country / bluegrass';
+    if (g.indexOf('blues') > -1) return 'blues & soul';
+    if (g.indexOf('hip-hop') > -1 || g.indexOf('hip hop') > -1 || g.indexOf('rap') > -1 || g.indexOf('trap') > -1 || g.indexOf('bounce') > -1) return 'hip hop & urban';
+    if (g.indexOf('alternative') > -1 || g.indexOf('metal') > -1 || g.indexOf('rock') > -1 || g.indexOf('psychedelic') > -1) return 'rock & alternative';
+    if (g.indexOf('gospel') > -1 || g.indexOf('soul') > -1) return 'gospel & soul';
+    if (g.indexOf('r&b') > -1 || g.indexOf('funk') > -1) return 'r&b / funk';
+    if (g.indexOf('worship') > -1 || g.indexOf('praise') > -1) return 'worship & praise';
+    if (g.indexOf('pop') > -1 || g.indexOf('ccm') > -1 || g.indexOf('contemporary') > -1) return 'contemporary / ccm / pop';
+    if (g.indexOf('folk') > -1 || g.indexOf('acoustic') > -1 || g.indexOf('americana') > -1) return 'folk / acoustic';
+    if (g.indexOf('lofi') > -1 || g.indexOf('chillwave') > -1 || g.indexOf('trip-hop') > -1) return 'lofi / chill';
+    if (g.indexOf('edm') > -1 || g.indexOf('dance') > -1 || g.indexOf('k-pop') > -1) return 'edm / dance / k-pop';
+    if (g.indexOf('testimony') > -1 || g.indexOf('teaching') > -1) return 'testimony & teaching';
+    return 'mixed / other';
   }
-  window.addEventListener('load', forceCloseMenu);
-  window.addEventListener('hashchange', forceCloseMenu);
-  window.addEventListener('resize', function() { if (window.innerWidth > 900) forceCloseMenu(); });
-  forceCloseMenu();
+  window.rrGroupGenre = groupGenre;
+
+  function populateGenreDropdown() {
+    var sel = document.getElementById('rrGenre');
+    if (!sel || typeof RR_LIBRARY === 'undefined') return;
+    var groups = {};
+    var labelMap = {};
+    RR_LIBRARY.forEach(function(song) {
+      var g = (song.genre || '').toLowerCase();
+      if (g === 'commercial' || g === 'station id' || g === 'station-id') return;
+      var key = groupGenre(song.genre);
+      groups[key] = (groups[key] || 0) + 1;
+      labelMap[key] = key.replace(/\b\w/g, function(c){return c.toUpperCase();});
+    });
+    var sortedKeys = Object.keys(groups).sort();
+    var html = '<option value="">All Genres &middot; Auto Mix</option>';
+    sortedKeys.forEach(function(k) {
+      html += '<option value="' + k + '">' + labelMap[k] + ' (' + groups[k] + ')</option>';
+    });
+    sel.innerHTML = html;
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', populateGenreDropdown);
+  } else {
+    populateGenreDropdown();
+  }
 })();
 </script>
-
-// ── RRN: Priority rotation for newest songs ──────────────────────────────────
-function buildPlayQueue() {
-  var priority = RR_LIBRARY.filter(function(s){ return s.priority; });
-  var regular = RR_LIBRARY.filter(function(s){ return !s.priority; });
-  function shuffle(arr){ for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;} return arr; }
-  priority = shuffle(priority.slice());
-  regular = shuffle(regular.slice());
-  var queue = [];
-  var pi = 0, ri = 0;
-  while (pi < priority.length || ri < regular.length) {
-    if (pi < priority.length) queue.push(priority[pi++]);
-    for (var k = 0; k < 4 && ri < regular.length; k++) queue.push(regular[ri++]);
-  }
-  return queue;
-}
-
 </body>
 </html>
