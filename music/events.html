@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hope Anchored My Soul | Refiner's Journal | Refined Recovery Network</title>
-<meta name="description" content="Tiffany Howard grew up in trauma, addiction, and loss and found that no pit is too deep for God's grace.">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Hope Anchored My Soul \u2014 Tiffany Howard">
-<meta property="og:description" content="No pit is too deep, no addiction too strong, and no life too broken for God's grace.">
-<meta property="og:url" content="https://joinrrn.com/journal/hope-anchored-my-soul.html">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChuckB4/rrn-website/main/images/tiffany-testimony-night.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/ChuckB4/rrn-website/main/images/tiffany-testimony-night.jpg">
-<link rel="canonical" href="https://joinrrn.com/journal/hope-anchored-my-soul.html">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="description" content="Recovery events, testimony nights, and community gatherings in your area — powered by Refined Recovery Network.">
+<title>Events & Testimony Nights | Refined Recovery Network</title>
+<meta property="og:title" content="Events & Testimony Nights | Refined Recovery Network">
+<meta property="og:description" content="Recovery events, testimony nights, and community gatherings near you.">
+<meta property="og:url" content="https://joinrrn.com/events.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://joinrrn.com/events.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23060d18'/><text x='32' y='45' font-family='Georgia,serif' font-size='40' font-weight='700' text-anchor='middle' fill='%23c8913a'>R</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 
 :root{
@@ -100,81 +98,390 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
 .rrp-rb.on{background:var(--gold-lo);border-color:var(--gold-br);}
 .rrp-rb.on svg{fill:var(--gold);}
 #rrDn.on svg{fill:#fff;}
+.rrp-react{display:none!important;}
+.rrp-react.open{display:flex!important;flex-wrap:wrap;gap:6px;}
 @media(max-width:640px){.rrp-rate{order:5;}}
-#rrShareModal{display:none!important;}
 
-/* ── Testimony Share Card ── */
-.test-share-card{background:#fff;border-radius:16px;padding:clamp(20px,3vw,32px);
-  box-shadow:0 2px 20px rgba(0,0,0,.07);margin:32px 0;}
-.test-share-card h3{font-family:var(--fd);font-size:1.2rem;color:var(--ink);margin:0 0 6px;}
-.test-share-card .sub{font-size:.85rem;color:var(--muted);margin-bottom:18px;}
-.tsc-label{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--muted);display:block;margin-bottom:6px;}
-.tsc-select{width:100%;background:#f6f4ee;border:1.5px solid rgba(200,145,58,.3);
-  border-radius:10px;padding:11px 14px;color:var(--ink);font-family:var(--fb);
-  font-size:.9rem;margin-bottom:14px;outline:none;transition:border .2s;
-  appearance:none;-webkit-appearance:none;}
-.tsc-select:focus{border-color:var(--gold);}
-.tsc-textarea{width:100%;background:#f6f4ee;border:1.5px solid rgba(200,145,58,.3);
-  border-radius:10px;padding:12px 14px;color:var(--ink);font-family:var(--fb);
-  font-size:.88rem;line-height:1.65;min-height:180px;resize:vertical;outline:none;
-  transition:border .2s;box-sizing:border-box;}
-.tsc-textarea:focus{border-color:var(--gold);}
-.tsc-hashtags{margin:8px 0 16px;font-size:.78rem;color:rgba(200,145,58,.9);
-  line-height:1.9;word-break:break-word;background:rgba(200,145,58,.07);
-  border-radius:8px;padding:8px 12px;}
-.tsc-hashtag-label{font-size:10px;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;}
-.tsc-btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
-.tsc-btn-fb{background:#1877F2;color:#fff;font-weight:700;font-size:.9rem;
-  padding:12px 22px;border-radius:100px;border:none;cursor:pointer;
-  display:inline-flex;align-items:center;gap:8px;transition:opacity .2s;text-decoration:none;}
-.tsc-btn-fb:hover{opacity:.88;}
-.tsc-btn-copy{background:rgba(200,145,58,.12);color:var(--gold);font-weight:700;
-  font-size:.9rem;padding:12px 22px;border-radius:100px;
-  border:1.5px solid rgba(200,145,58,.4);cursor:pointer;transition:all .2s;}
-.tsc-btn-copy:hover{background:var(--gold);color:var(--ink);}
-.tsc-flyer-note{font-size:.75rem;color:#9aa4b1;margin-top:10px;text-align:center;}
-#tscToast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);
-  background:var(--ink);color:var(--gold);padding:10px 22px;border-radius:100px;
-  font-size:13px;font-weight:700;z-index:1000;opacity:0;transition:opacity .3s;
-  pointer-events:none;border:1px solid rgba(200,145,58,.4);}
-</style>
-<style>
-body{background:#f6f4ee;}
-.page-body{padding-top:90px;min-height:100vh;background:#f6f4ee;}
-.art-wrap{max-width:800px;margin:0 auto;padding:clamp(48px,6vw,72px) clamp(16px,4%,40px);}
-.art-crumb{font-size:12px;color:var(--muted);margin-bottom:20px;}
-.art-crumb a{color:var(--muted);text-decoration:none;}
-.art-crumb a:hover{color:var(--gold);}
-.art-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:rgba(200,145,58,.1);border:1px solid rgba(200,145,58,.3);padding:4px 12px;border-radius:20px;margin-bottom:14px;}
-.art-title{font-family:var(--fd);font-size:clamp(1.9rem,5vw,2.8rem);font-weight:700;color:var(--ink);line-height:1.15;margin:10px 0 20px;}
-p{margin:0 0 18px;font-size:1.05rem;line-height:1.8;color:#2a3340;}
-.art-verse{border-left:3px solid var(--gold);margin:24px 0;padding:10px 0 10px 20px;font-family:var(--fd);font-size:1.15rem;font-style:italic;color:#3a4654;}
-.art-verse cite{display:block;font-style:normal;font-weight:700;color:var(--gold);font-size:.8rem;letter-spacing:.06em;margin-top:8px;}
-.art-flyer{width:100%;max-height:400px;object-fit:cover;border-radius:14px;margin:0 0 28px;box-shadow:0 4px 28px rgba(0,0,0,.14);}
-.art-cta{background:var(--ink);color:#fff;border-radius:14px;padding:clamp(22px,4vw,36px);text-align:center;margin:36px 0 0;}
-.art-cta h3{font-family:var(--fd);font-size:1.3rem;color:var(--gold);margin:0 0 10px;}
-.art-cta p{color:rgba(255,255,255,.75);font-size:.95rem;margin-bottom:20px;}
-.btn-gold{display:inline-block;background:var(--gold);color:var(--ink);font-weight:700;font-size:.95rem;padding:13px 30px;border-radius:100px;text-decoration:none;transition:opacity .2s;}
-.btn-gold:hover{opacity:.85;}
-.test-share-card{background:#fff;border-radius:16px;padding:clamp(20px,3vw,32px);box-shadow:0 2px 20px rgba(0,0,0,.07);margin:32px 0;}
-.test-share-card h3{font-family:var(--fd);font-size:1.2rem;color:var(--ink);margin:0 0 6px;}
-.test-share-card .sub{font-size:.85rem;color:var(--muted);margin-bottom:18px;}
-.tsc-label{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
-.tsc-select{width:100%;background:#f6f4ee;border:1.5px solid rgba(200,145,58,.3);border-radius:10px;padding:11px 14px;color:var(--ink);font-family:var(--fb);font-size:.9rem;margin-bottom:14px;outline:none;transition:border .2s;}
-.tsc-select:focus{border-color:var(--gold);}
-.tsc-textarea{width:100%;background:#f6f4ee;border:1.5px solid rgba(200,145,58,.3);border-radius:10px;padding:12px 14px;color:var(--ink);font-family:var(--fb);font-size:.88rem;line-height:1.65;min-height:180px;resize:vertical;outline:none;transition:border .2s;box-sizing:border-box;}
-.tsc-textarea:focus{border-color:var(--gold);}
-.tsc-hashtags{margin:8px 0 16px;font-size:.78rem;color:rgba(200,145,58,.9);line-height:1.9;word-break:break-word;background:rgba(200,145,58,.07);border-radius:8px;padding:8px 12px;}
-.tsc-hashtag-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;}
-.tsc-btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
-.tsc-btn-fb{background:#1877F2;color:#fff;font-weight:700;font-size:.9rem;padding:12px 22px;border-radius:100px;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:opacity .2s;}
-.tsc-btn-fb:hover{opacity:.88;}
-.tsc-btn-copy{background:rgba(200,145,58,.12);color:var(--gold);font-weight:700;font-size:.9rem;padding:12px 22px;border-radius:100px;border:1.5px solid rgba(200,145,58,.4);cursor:pointer;transition:all .2s;}
-.tsc-btn-copy:hover{background:var(--gold);color:var(--ink);}
-.tsc-flyer-note{font-size:.75rem;color:#9aa4b1;margin-top:10px;text-align:center;}
-#tscToast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--gold);padding:10px 22px;border-radius:100px;font-size:13px;font-weight:700;z-index:1000;opacity:0;transition:opacity .3s;pointer-events:none;border:1px solid rgba(200,145,58,.4);}
+.page-body{padding-top:0;min-height:100vh;background:#f6f4ee;}
+.wrap{max-width:1200px;margin:0 auto;padding:clamp(48px,6vw,72px) clamp(16px,4%,48px);}
+
+/* ==== grouped nav dropdowns (matches existing nav theme) ==== */
+.nl .grp{position:relative;display:flex;align-items:center;}
+.nl .grp>button{display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,.65);font-size:12.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-family:var(--fb);padding:6px 0;transition:color .2s;}
+.nl .grp>button:hover,.nl .grp.open>button,.nl .grp:hover>button{color:var(--gold);}
+.nl .grp .cv{width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-top:-2px;transition:transform .25s;}
+.nl .grp.open .cv{transform:rotate(-135deg);margin-top:2px;}
+.nl .dd{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%) translateY(8px);min-width:228px;background:rgba(11,24,41,.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--gold-br);border-radius:14px;padding:8px;opacity:0;visibility:hidden;transition:all .22s;box-shadow:0 24px 70px rgba(0,0,0,.5);}
+.nl .grp.open .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.nl .dd a{display:block;color:rgba(255,255,255,.72);font-size:13px;font-weight:500;letter-spacing:.02em;text-transform:none;padding:10px 14px;border-radius:9px;white-space:nowrap;}
+.nl .dd a:hover{background:var(--gold-lo);color:var(--gold);}
+.mm .mg{font-size:10.5px;font-weight:700;color:var(--gold);letter-spacing:.13em;text-transform:uppercase;padding:18px 6% 6px;}
+
+
+
+
+
+
+
+
+
+
+.fbot p{font-size:11px;color:rgba(255,255,255,.2);}
+
+
+.page-
+
+
+/* ── Wrap / page layout ── */
+
+
+
+.hero{height:100svh;min-height:680px;background:var(--ink);position:relative;overflow:hidden;display:flex;align-items:flex-end;}
+.hero-img{position:absolute;inset:0;}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 25%;}
+.hero-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,13,24,.97) 0%,rgba(6,13,24,.5) 55%,rgba(6,13,24,.1) 100%);}
+.hero-
+.hero-logo{display:block;max-width:700px;width:86%;margin-top:clamp(10px,3.5vh,42px);margin-bottom:clamp(12px,2.2vw,22px);filter:drop-shadow(0 4px 24px rgba(200,145,58,.3));}
+.hero 
+.hero h1 i{color:var(--gold-hi);font-style:italic;}
+.hero-sub{font-size:clamp(14px,1.7vw,17px);color:rgba(255,255,255,.58);line-height:1.88;margin-bottom:clamp(26px,4vw,42px);max-width:520px;font-weight:300;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-pri{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--ink);padding:14px 32px;border-radius:100px;font-size:14.5px;font-weight:700;text-decoration:none;transition:opacity .2s;border:none;cursor:pointer;font-family:var(--fb);}
+.btn-pri:hover{opacity:.88;}
+.btn-sec{display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(255,255,255,.25);color:#fff;padding:13px 28px;border-radius:100px;font-size:14.5px;font-weight:500;text-decoration:none;transition:all .2s;background:none;cursor:pointer;font-family:var(--fb);}
+.btn-sec:hover{border-color:var(--gold);color:var(--gold);}
+.give-strip{background:var(--gold);overflow-x:auto;scrollbar-width:none;}
+.give-strip::-webkit-scrollbar{display:none;}
+.gs-inner{display:flex;padding:var(--pad);padding-top:0;padding-bottom:0;}
+.gs-tile{flex:1;min-width:145px;padding:20px 16px;display:flex;flex-direction:column;align-items:center;gap:6px;border-right:1px solid rgba(6,13,24,.12);cursor:pointer;text-decoration:none;transition:background .18s;}
+.gs-tile:last-child{border-right:none;}
+.gs-tile:hover{background:rgba(6,13,24,.08);}
+.gs-tile svg{width:20px;height:20px;stroke:var(--ink);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.gs-label{font-size:12.5px;font-weight:700;color:var(--ink);}
+.gs-sub{font-size:11px;color:rgba(6,13,24,.5);text-align:center;line-height:1.3;}
+.ticker{background:var(--ink2);border-bottom:1px solid var(--gold-br);overflow:hidden;height:34px;display:flex;align-items:center;}
+.t-track{display:flex;animation:scroll-t 55s linear infinite;white-space:nowrap;}
+.t-item{display:flex;align-items:center;gap:7px;padding:0 24px;border-right:1px solid rgba(255,255,255,.04);flex-shrink:0;}
+.t-label{font-size:11px;color:rgba(255,255,255,.42);letter-spacing:.03em;}
+.t-live{font-size:9.5px;padding:2px 7px;border-radius:100px;font-weight:700;background:rgba(74,222,128,.13);color:#4ade80;border:1px solid rgba(74,222,128,.22);}
+.t-build{font-size:9.5px;padding:2px 7px;border-radius:100px;font-weight:700;background:var(--gold-lo);color:var(--gold);border:1px solid var(--gold-br);}
+.t-net{font-size:9.5px;padding:2px 7px;border-radius:100px;font-weight:700;background:rgba(120,176,255,.1);color:#78b0ff;border:1px solid rgba(120,176,255,.2);}
+@keyframes scroll-t{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+section{padding:clamp(72px,9vw,110px) 0;}
+.si{padding:var(--pad);}
+
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--gold);}
+.sh{font-family:var(--fd);font-size:clamp(26px,4.2vw,50px);color:var(--ink);line-height:1.06;font-weight:700;margin-bottom:16px;}
+.sh i{color:var(--gold);font-style:italic;}
+.sh-w{color:#fff;}
+.sl{font-size:clamp(14px,1.5vw,16px);color:var(--muted);line-height:1.9;margin-bottom:48px;font-weight:300;max-width:640px;}
+.sl-w{color:rgba(255,255,255,.52);}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,72px);align-items:start;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.ga{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+.ga-sm{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;}
+
+.card::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-hi));transform:scaleX(0);transition:transform .3s;transform-origin:left;}
+.card:hover{transform:translateY(-3px);box-shadow:0 18px 48px rgba(0,0,0,.08);}
+.card:hover::after{transform:scaleX(1);}
+.card-dk{background:rgba(255,255,255,.08);border:1px solid rgba(200,145,58,.35);border-radius:16px;padding:26px;transition:all .3s;}
+.card-dk:hover{background:rgba(255,255,255,.07);border-color:rgba(200,145,58,.4);}
+.card-icon{width:42px;height:42px;border-radius:11px;background:rgba(200,145,58,0.18);border:1px solid rgba(200,145,58,0.35);display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.card-icon svg{width:19px;height:19px;stroke:var(--gold);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.ct{font-weight:700;color:#0a0a18;margin-bottom:7px;font-size:15px;line-height:1.3;}
+.ct-w{color:#ffffff;font-size:16px;}
+.cx{font-size:13.5px;color:#4a4a62;line-height:1.72;}
+.cx-w{color:rgba(255,255,255,.72);}
+.ph{border-radius:22px;overflow:hidden;position:relative;margin-bottom:clamp(32px,4vw,48px);}
+.ph img{width:100%;display:block;object-fit:cover;}
+.ph-sm img{height:420px;}
+.ph-md img{height:400px;}
+.ph-lg img{height:500px;}
+.ph-ov{position:absolute;inset:0;}
+.ph-
+.ph-tag{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.13em;text-transform:uppercase;margin-bottom:10px;}
+.ph-title{font-family:var(--fd);font-size:clamp(20px,3.2vw,38px);color:#fff;font-weight:700;line-height:1.15;max-width:600px;}
+.ph-text{font-size:14px;color:rgba(255,255,255,.62);margin-top:9px;max-width:500px;line-height:1.75;}
+.feat-row{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:0.5px solid rgba(0,0,0,.06);}
+.feat-row:last-child{border-bottom:none;}
+.feat-ic{width:38px;height:38px;border-radius:10px;background:var(--gold-lo);border:0.5px solid var(--gold-br);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.feat-ic svg{width:17px;height:17px;stroke:var(--gold);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.feat-t{font-weight:700;color:var(--ink);margin-bottom:3px;font-size:14.5px;}
+.feat-x{font-size:13px;color:var(--muted);line-height:1.65;}
+.dark-card{background:var(--ink2);border-radius:16px;padding:28px;}
+.dark-card h3{font-family:var(--fd);font-size:20px;color:#fff;font-weight:700;margin-bottom:10px;}
+.dark-card p{font-size:13.5px;color:rgba(255,255,255,.52);line-height:1.8;margin-bottom:16px;}
+.check-list{display:flex;flex-direction:column;gap:8px;}
+.check-item{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:rgba(255,255,255,.72);line-height:1.5;}
+.check-item svg{width:14px;height:14px;stroke:#4ade80;stroke-width:2.5;fill:none;flex-shrink:0;margin-top:2px;}
+.fbox{background:rgba(255,255,255,.03);border:0.5px solid var(--gold-br);border-radius:16px;padding:clamp(24px,3.5vw,44px);}
+.fbox-w{background:#fff;border:0.5px solid rgba(0,0,0,.08);border-radius:16px;padding:clamp(24px,3.5vw,40px);box-shadow:0 4px 28px rgba(0,0,0,.06);}
+.f-title{font-family:var(--fd);font-size:clamp(19px,2.4vw,25px);color:#fff;font-weight:700;margin-bottom:7px;}
+.f-title-dk{color:var(--ink);}
+.f-sub{font-size:13.5px;color:rgba(255,255,255,.45);margin-bottom:22px;line-height:1.65;}
+.f-sub-dk{color:var(--muted);}
+.fg{margin-bottom:12px;}
+.fg label{display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;}
+.fg label.dk{color:var(--muted);}
+.fg input,.fg select,.fg textarea{width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-family:var(--fb);font-size:13.5px;color:#fff;background:rgba(255,255,255,.05);outline:none;transition:all .2s;}
+.fg input.dk,.fg select.dk,.fg textarea.dk{border-color:rgba(0,0,0,.1);color:var(--body);background:#eeece9;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,145,58,.1);}
+.fg textarea{min-height:75px;resize:vertical;}
+.fg-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.amt-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px;}
+.amt-btn{padding:10px 4px;border:1px solid rgba(255,255,255,.12);border-radius:8px;background:transparent;color:rgba(255,255,255,.58);font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--fb);text-align:center;transition:all .2s;}
+.amt-btn.on{border-color:var(--gold);background:rgba(200,145,58,.1);color:var(--gold);}
+.f-ok{display:none;padding:18px;background:rgba(74,222,128,.07);border:0.5px solid rgba(74,222,128,.22);border-radius:9px;color:#dcfce7;font-weight:600;font-size:14px;line-height:1.65;text-align:center;margin-top:12px;}
+.f-disc{font-size:11px;color:rgba(255,255,255,.22);margin-top:10px;line-height:1.7;text-align:center;}
+.f-disc-dk{color:var(--muted);}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:44px;}
+.svc{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;position:relative;}
+.svc:hover{border-color:var(--gold-br);transform:translateY(-2px);}
+.svc.on{border-color:var(--gold);background:rgba(200,145,58,.04);box-shadow:0 0 0 3px rgba(200,145,58,.1);}
+.svc-chk{position:absolute;top:10px;right:10px;width:18px;height:18px;border-radius:50%;background:var(--gold);display:none;align-items:center;justify-content:center;}
+.svc-chk svg{width:9px;height:9px;stroke:var(--ink);stroke-width:2.5;fill:none;}
+.svc.on .svc-chk{display:flex;}
+.svc-icon{width:34px;height:34px;border-radius:9px;background:var(--gold-lo);border:0.5px solid var(--gold-br);display:flex;align-items:center;justify-content:center;margin-bottom:9px;}
+.svc-icon svg{width:15px;height:15px;stroke:var(--gold);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.sv-t{font-weight:700;color:var(--ink);margin-bottom:2px;font-size:12.5px;}
+.sv-x{font-size:11.5px;color:var(--muted);line-height:1.4;}
+.legal{background:rgba(0,0,0,.45);padding:16px 0;}
+.legal-
+.legal-body strong{color:rgba(255,255,255,.45);}
+
+
+
+
+
+
+
+
+
+.fbot p{font-size:11px;color:rgba(255,255,255,.2);}
+
+.parallax-hero{position:relative;overflow:hidden;height:clamp(320px,42vw,540px);display:flex;align-items:flex-end;border-radius:20px;margin-bottom:clamp(36px,5vw,60px);}
+.parallax-hero img{position:absolute;inset:0;width:100%;height:130%;object-fit:cover;object-position:center;will-change:transform;}
+.parallax-hero .ph-overlay{position:absolute;inset:0;}
+.parallax-hero .ph-content{position:relative;z-index:1;padding:clamp(28px,4vw,52px);width:100%;}
+.parallax-hero .ph-eyebrow{font-size:10.5px;font-weight:700;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.parallax-hero .ph-eyebrow::before{content:"";width:18px;height:1px;background:var(--gold);}
+.parallax-hero h2{font-family:var(--fd);font-size:clamp(24px,4vw,52px);color:#fff;font-weight:700;line-height:1.05;margin-bottom:12px;}
+.parallax-hero h2 i{color:var(--gold-hi);font-style:italic;}
+.parallax-hero p{font-size:clamp(13px,1.5vw,15.5px);color:rgba(255,255,255,.65);line-height:1.85;max-width:560px;margin-bottom:20px;}
+.parallax-hero 
+.ph-cta-row{display:flex;gap:10px;flex-wrap:wrap;}
+.social-strip{background:var(--ink);border-top:0.5px solid var(--gold-br);border-bottom:0.5px solid var(--gold-br);padding:14px 0;}
+.social-inner{padding:var(--pad);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.social-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;flex-shrink:0;}
+.social-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.s-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:100px;font-size:12px;font-weight:600;text-decoration:none;border:1px solid;transition:all .2s;font-family:var(--fb);}
+.s-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.2);}
+.s-fb{color:#4267B2;border-color:rgba(66,103,178,.3);background:rgba(66,103,178,.06);}
+.s-fb:hover{background:rgba(66,103,178,.15);}
+.s-yt{color:#FF0000;border-color:rgba(255,0,0,.3);background:rgba(255,0,0,.06);}
+.s-yt:hover{background:rgba(255,0,0,.15);}
+.s-li{color:#0A66C2;border-color:rgba(10,102,194,.3);background:rgba(10,102,194,.06);}
+.s-li:hover{background:rgba(10,102,194,.15);}
+.s-ig{color:#E1306C;border-color:rgba(225,48,108,.3);background:rgba(225,48,108,.06);}
+.s-ig:hover{background:rgba(225,48,108,.15);}
+.s-tt{color:#69C9D0;border-color:rgba(105,201,208,.3);background:rgba(105,201,208,.06);}
+.s-tt:hover{background:rgba(105,201,208,.15);}
+.s-tw{color:#fff;border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+.s-tw:hover{background:rgba(255,255,255,.1);}
+@media(max-width:640px){.parallax-hero{height:clamp(260px,70vw,360px);}.parallax-hero img{height:150%;}}
+.up{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease;}
+.up.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion){.up{opacity:1;transform:none;}}
+.up.in{opacity:1;transform:none;}
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.04em;}
+.sb-live{background:rgba(74,222,128,.13);color:#4ade80;border:1px solid rgba(74,222,128,.22);}
+.sb-beta{background:var(--gold-lo);color:var(--gold);border:1px solid var(--gold-br);}
+.sb-soon{background:rgba(120,176,255,.1);color:#78b0ff;border:1px solid rgba(120,176,255,.2);}
+.dot{width:6px;height:6px;border-radius:50%;}
+.dot-live{background:#4ade80;}
+.dot-beta{background:var(--gold);}
+.dot-soon{background:#78b0ff;}
+@media(max-width:1024px){
+.pillars-grid{grid-template-columns:1fr 1fr!important;}
+
+  .g2,.g3,
+   
+}
+@media(max-width:640px){
+.pillars-grid{grid-template-columns:1fr!important;}
+
+  section{padding:64px 0;}
+  .gs-inner{flex-direction:column;}
+  .gs-tile{border-right:none;border-bottom:0.5px solid rgba(6,13,24,.1);flex-direction:row;justify-content:flex-start;gap:12px;padding:14px 5%;}
+  .ph-sm img{height:280px;} .ph-md img{height:220px;}
+  .ph-lg img{height:280px;}
+  .fg-2,.amt-grid{grid-template-columns:1fr 1fr;}
+}
+
+/* ==== grouped nav dropdowns (matches existing nav theme) ==== */
+.nl .grp{position:relative;display:flex;align-items:center;}
+.nl .grp>button{display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,.65);font-size:12.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-family:var(--fb);padding:6px 0;transition:color .2s;}
+.nl .grp>button:hover,.nl .grp.open>button,.nl .grp:hover>button{color:var(--gold);}
+.nl .grp .cv{width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-top:-2px;transition:transform .25s;}
+.nl .grp.open .cv{transform:rotate(-135deg);margin-top:2px;}
+.nl .dd{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%) translateY(8px);min-width:228px;background:rgba(11,24,41,.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--gold-br);border-radius:14px;padding:8px;opacity:0;visibility:hidden;transition:all .22s;box-shadow:0 24px 70px rgba(0,0,0,.5);}
+.nl .grp.open .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.nl .dd a{display:block;color:rgba(255,255,255,.72);font-size:13px;font-weight:500;letter-spacing:.02em;text-transform:none;padding:10px 14px;border-radius:9px;white-space:nowrap;}
+.nl .dd a:hover{background:var(--gold-lo);color:var(--gold);}
+.mm 
+/* ==== 12-step grid ==== */
+.steps-g{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.step-c{background:#fff;border:1px solid rgba(0,0,0,.12);border-radius:16px;padding:24px;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);transition:all .3s;}
+.step-c::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-hi));transform:scaleX(0);transition:transform .3s;transform-origin:left;}
+.step-c:hover{transform:translateY(-3px);box-shadow:0 18px 48px rgba(0,0,0,.08);}
+.step-c:hover::after{transform:scaleX(1);}
+.step-n{font-family:var(--fd);font-size:42px;font-weight:700;color:var(--gold);line-height:.9;opacity:.5;}
+.step-t{font-family:var(--fd);font-weight:700;color:var(--ink);font-size:21px;margin:4px 0 7px;}
+.step-x{font-size:13px;color:#4a4a62;line-height:1.65;}
+.step-r{font-family:var(--fd);font-style:italic;font-size:13px;color:var(--gold);margin-top:9px;display:block;}
+@media(max-width:1024px){.steps-g{grid-template-columns:1fr 1fr;}}
+@media(max-width:640px){.steps-g{grid-template-columns:1fr;}}
+/* ==== Refined Radio music player (matches ink/gold theme) ==== */
+
+#rrPlayer.rrShow{transform:translateY(0);}
+
+#rrPlayer 
+
+
+
+
+
+
+
+
+
+
+
+@keyframes rrPulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+
+
+
+
+
+
+
+@media(max-width:640px){}
+
+
+
+
+
+
+
+
+
+#rrDn.on svg{fill:#fff;}
+@media(max-width:640px){}
+
+
+
+.ev-hero{background:var(--ink);padding:clamp(40px,7vw,80px) clamp(16px,4%,48px);color:#fff;}
+.ev-hero 
+.ev-hero 
+.ev-hero p{color:#aab3c0;font-size:1rem;max-width:560px;margin:0;}
+.ev-wrap{max-width:1100px;margin:0 auto;padding:clamp(32px,5vw,60px) clamp(16px,4%,48px);}
+
+/* Submit bar */
+.submit-bar{background:#fff;border-radius:14px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 2px 16px rgba(0,0,0,.06);margin-bottom:32px;}
+.submit-bar p{font-size:.9rem;color:#444;margin:0;}
+.btn-gold{background:var(--gold);color:var(--ink);border:none;padding:12px 26px;border-radius:100px;font-size:13.5px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity .2s;}
+.btn-gold:hover{opacity:.88;}
+.btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--gold);padding:10px 22px;border-radius:100px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s;}
+.btn-outline:hover{background:var(--gold);}
+
+/* Filter tabs */
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.ftab{padding:7px 18px;border-radius:100px;font-size:12.5px;font-weight:600;border:1.5px solid rgba(0,0,0,.12);background:transparent;cursor:pointer;color:#555;transition:all .2s;}
+.ftab.active{background:var(--ink);color:var(--gold);border-color:var(--ink);}
+
+/* Event grid */
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px;}
+
+/* Event card */
+.ev-card{background:#fff;border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.06);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;}
+.ev-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.1);}
+.ev-card-img{width:100%;height:200px;object-fit:cover;background:var(--ink);}
+.ev-card-img-placeholder{height:200px;background:linear-gradient(135deg,var(--ink),#1a2a3f);display:flex;align-items:center;justify-content:center;font-size:3rem;}
+.ev-card-
+.ev-type-badge{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:10px;}
+
+
+
+
+
+.ev-card h3{font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--ink);margin:0 0 8px;line-height:1.3;}
+.ev-meta{font-size:.82rem;color:#666;display:flex;flex-direction:column;gap:4px;margin-bottom:14px;}
+.ev-meta span{display:flex;align-items:center;gap:6px;}
+.ev-meta svg{flex-shrink:0;opacity:.6;}
+.ev-desc{font-size:.88rem;color:#444;line-height:1.65;margin-bottom:16px;flex:1;}
+.ev-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;}
+.ev-actions a,.ev-actions button{font-size:12px;font-weight:700;padding:8px 14px;border-radius:100px;cursor:pointer;text-decoration:none;border:none;transition:all .2s;}
+.btn-cal{background:var(--ink);color:var(--gold);}
+.btn-cal:hover{background:#1a2a3f;}
+.btn-share-fb{background:#1877f2;color:#fff;}
+.btn-share-fb:hover{opacity:.88;}
+.btn-share-copy{background:#f0ede8;color:var(--ink);}
+.btn-share-copy:hover{background:#e0ddd8;}
+.btn-source{background:transparent;color:var(--gold);border:1px solid rgba(200,145,58,.4)!important;padding:8px 14px!important;}
+.btn-source:hover{background:rgba(200,145,58,.08);}
+
+/* Featured / hero card */
+.ev-featured{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;border-radius:18px;overflow:hidden;box-shadow:0 4px 32px rgba(0,0,0,.1);background:#fff;}
+.ev-featured .ev-card-img{height:100%;min-height:280px;}
+.ev-featured .ev-card-
+.ev-featured h3{font-size:1.6rem;}
+.featured-tag{display:inline-block;background:var(--gold);color:var(--ink);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:14px;}
+
+/* Submit modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:900;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:#fff;border-radius:20px;padding:36px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;}
+.modal h2{font-family:var(--fd);font-size:1.5rem;color:var(--ink);margin:0 0 4px;}
+.modal 
+.form-group{margin-bottom:16px;}
+label.fl{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#444;display:block;margin-bottom:5px;}
+input[type=text],input[type=email],input[type=date],input[type=time],input[type=url],select,textarea{
+  width:100%;padding:11px 14px;border:1.5px solid #ddd;border-radius:8px;
+  font-size:14px;color:var(--ink);background:#faf9f7;transition:border-color .2s;outline:none;font-family:inherit;}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);}
+textarea{min-height:90px;resize:vertical;}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;}
+.close-btn{position:absolute;top:16px;right:20px;background:none;border:none;font-size:22px;cursor:pointer;color:#888;}
+
+/* Share toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--gold);padding:12px 28px;border-radius:100px;font-size:13px;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;}
+.toast.show{opacity:1;}
+
+/* Empty state */
+.empty-state{text-align:center;padding:60px 20px;color:#888;}
+.empty-state .icon{font-size:3rem;display:block;margin-bottom:16px;}
+
+@media(max-width:700px){
+  .ev-featured{grid-template-columns:1fr;}
+  .ev-featured .ev-card-img{height:220px;}
+  .ev-featured .ev-card-
+  .form-row-2{grid-template-columns:1fr;}
+}
+
+
+
+
+
+
+
+
+
+
+.fbot p{font-size:11px;color:rgba(255,255,255,.2);}
+#rrShareModal{display:none!important;position:fixed;inset:0;z-index:700;background:rgba(4,9,18,.78);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:18px;}
+#rrShareModal.open{display:flex!important;}
 </style>
 </head>
 <body>
@@ -236,6 +543,7 @@ p{margin:0 0 18px;font-size:1.05rem;line-height:1.8;color:#2a3340;}
     <button class="hbtn" onclick="openMM()" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
+>
 <div class="mm" id="mm">
   <div class="mg">Programs</div>
   <a href="https://joinrrn.com/#caleb" onclick="cMM()">CALEB</a>
@@ -275,56 +583,113 @@ p{margin:0 0 18px;font-size:1.05rem;line-height:1.8;color:#2a3340;}
   <a href="give.html" onclick="cMM()">Give Now</a>
 </div>
 <div class="page-body">
-  <div class="art-wrap">
-    <div class="art-crumb"><a href="https://joinrrn.com/">Home</a> &rsaquo; <a href="https://joinrrn.com/journal.html">Refiner's Journal</a> &rsaquo; Hope Anchored My Soul</div>
-    <span class="art-tag">Testimony &middot; Tiffany Howard</span>
-    <h1 class="art-title">Hope Anchored My Soul</h1>
-    <img class="art-flyer" src="https://raw.githubusercontent.com/ChuckB4/rrn-website/main/images/tiffany-testimony-night.jpg" alt="Tiffany Howard Testimony Night - Bridgepoint Church Gramercy LA">
-    <p>A little girl grew up surrounded by trauma, abuse, addiction, and loss &mdash; and carried every one of those wounds straight into addiction, jail, losing her children, and more than one brush with death. By every earthly measure, her story should have ended in that pit.</p>
-    <p>It did not. Through every trial she refused to stop believing in God, and she found out something the pit could not teach her: He does not abandon His children, even when they wander. Time after time she saw His protection, His mercy, and His power to do what willpower never could.</p>
-    <p>Today Tiffany is free, restored, and writing so that others can see it too &mdash; that no pit is too deep, no addiction too strong, and no life too broken for God&rsquo;s grace. Hope anchored her soul. Faith set it free.</p>
-    <blockquote class="art-verse">&ldquo;Whosoever shall call upon the name of the Lord shall be saved.&rdquo;<cite>&mdash; Romans 10:13 KJV</cite></blockquote>
 
-    <div class="test-share-card">
-      <h3>&#128293; Share Tiffany&rsquo;s Story</h3>
-      <p class="sub">Choose a message template below, edit it if you want, then hit Share on Facebook or Copy Post to paste it anywhere. The flyer image attaches automatically when Facebook reads the link.</p>
-      <label class="tsc-label" for="tscTemplate">Choose a message template</label>
-      <select class="tsc-select" id="tscTemplate" onchange="tscApply()">
-        <option value="0">&#128293; Testimony Night Invitation &mdash; Come Hear Her Story</option>
-        <option value="1">&#128079; Personal Share &mdash; This Changed Me</option>
-        <option value="2">&#128139; For Someone Who Needs Hope Right Now</option>
-        <option value="3">&#128172; Casual Invite &mdash; You Have to Come</option>
-        <option value="4">&#128591; Prayer &amp; Worship Night Invite</option>
-        <option value="5">&#10024; All Are Welcome &mdash; Open Invite</option>
-        <option value="6">&#127758; Community Announcement</option>
-        <option value="7">&#128293; Urgency &mdash; Tonight Only</option>
-        <option value="8">&#128205; Location Spotlight &mdash; Bridgepoint Church Gramercy</option>
-        <option value="9">&#128081; Recovery Is Possible &mdash; Her Proof</option>
-      </select>
-      <label class="tsc-label" for="tscText">Your post &mdash; edit freely before sharing</label>
-      <textarea class="tsc-textarea" id="tscText"></textarea>
-      <div class="tsc-hashtags">
-        <span class="tsc-hashtag-label">Hashtags included in your post</span>
-        <span id="tscHashtags"></span>
-      </div>
-      <div class="tsc-btn-row">
-        <button class="tsc-btn-fb" onclick="tscShareFB()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
-          Share on Facebook
-        </button>
-        <button class="tsc-btn-copy" onclick="tscCopy()">&#128203; Copy Post</button>
-      </div>
-      <p class="tsc-flyer-note">&#128247; Facebook displays the flyer image automatically when the link is shared. If it does not appear, tap the image icon inside your Facebook post to add it manually.</p>
+  <div class="ev-hero">
+    <div class="eyebrow">Community Events</div>
+    <h1>Events & Testimony Nights</h1>
+    <p>Recovery meetings, testimony nights, workshops, and church events — submitted by the community, reviewed by RRN. Add them to your calendar and share with someone who needs to hear it.</p>
+  </div>
+
+  <div class="ev-wrap">
+
+    <div class="submit-bar">
+      <p>📣 <strong>Have an event to share?</strong> Submit it below — we review and post within 24 hours. Paste a Facebook post link and we'll pull the details.</p>
+      <button class="btn-gold" onclick="openSubmit()">Submit an Event →</button>
     </div>
 
-    <div class="art-cta">
-      <h3>You don&rsquo;t have to walk this out alone.</h3>
-      <p>Refined Recovery Network is a faith-based peer recovery ministry &mdash; worship radio, discipleship, workforce help, and people who will walk with you.</p>
-      <a class="btn-gold" href="https://joinrrn.com/">Start at joinrrn.com &rarr;</a>
+    <!-- Search + filters -->
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px;">
+      <input type="text" id="evSearch" placeholder="Search events, speakers, locations…"
+        style="flex:1;min-width:200px;padding:10px 16px;border-radius:100px;border:1.5px solid #ddd;font-size:14px;outline:none;background:#fff;">
+    </div>
+    <div class="filter-row">
+      <button class="ftab active" data-filter="all" onclick="setFilter('all')">All Events</button>
+      <button class="ftab" data-filter="upcoming" onclick="setFilter('upcoming')">Upcoming</button>
+      <button class="ftab" data-filter="testimony" onclick="setFilter('testimony')">Testimony Nights</button>
+      <button class="ftab" data-filter="meeting" onclick="setFilter('meeting')">Recovery Meetings</button>
+      <button class="ftab" data-filter="workshop" onclick="setFilter('workshop')">Workshops</button>
+      <button class="ftab" data-filter="church" onclick="setFilter('church')">Church Events</button>
+      <button class="ftab" data-filter="past" onclick="setFilter('past')">Past Events</button>
+    </div>
+
+    <div class="ev-grid" id="evGrid"></div>
+
+  </div>
+</div>
+
+<!-- Calendar options target -->
+<div id="calOptions"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Submit Modal -->
+<div class="modal-overlay" id="submitModal" onclick="if(event.target===this)closeSubmit()">
+  <div class="modal" style="position:relative;">
+    <button class="close-btn" onclick="closeSubmit()">✕</button>
+    <h2>Submit an Event</h2>
+    <p class="sub">Testimony nights, recovery meetings, workshops, church events. We review all submissions within 24 hours. You can paste a Facebook event URL and we'll link back to the original post.</p>
+    
+    <div class="form-group">
+      <label class="fl" for="sub_title">Event Title *</label>
+      <input type="text" id="sub_title" placeholder="e.g. Testimony Night at Bridgepoint Church">
+    </div>
+    <div class="form-row-2">
+      <div class="form-group">
+        <label class="fl" for="sub_date">Date *</label>
+        <input type="date" id="sub_date">
+      </div>
+      <div class="form-group">
+        <label class="fl" for="sub_time">Time</label>
+        <input type="time" id="sub_time">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="fl" for="sub_type">Event Type *</label>
+      <select id="sub_type">
+        <option value="testimony">Testimony Night</option>
+        <option value="meeting">Recovery Meeting</option>
+        <option value="workshop">Workshop / Training</option>
+        <option value="church">Church Event</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group">
+        <label class="fl" for="sub_location">Venue / Church Name *</label>
+        <input type="text" id="sub_location" placeholder="e.g. Bridgepoint Church">
+      </div>
+      <div class="form-group">
+        <label class="fl" for="sub_address">City, State</label>
+        <input type="text" id="sub_address" placeholder="e.g. Gramercy, Louisiana">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="fl" for="sub_desc">Description *</label>
+      <textarea id="sub_desc" placeholder="Tell us about the event — speaker, what to expect, who should come…"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="fl" for="sub_url">Facebook Post / Event URL (optional)</label>
+      <input type="url" id="sub_url" placeholder="https://facebook.com/...">
+    </div>
+    <div class="form-row-2">
+      <div class="form-group">
+        <label class="fl" for="sub_name">Your Name *</label>
+        <input type="text" id="sub_name" placeholder="First and last name">
+      </div>
+      <div class="form-group">
+        <label class="fl" for="sub_email">Your Email *</label>
+        <input type="email" id="sub_email" placeholder="you@email.com">
+      </div>
+    </div>
+    <p style="font-size:.78rem;color:#999;margin-top:4px;">Submissions are reviewed before posting. Your email is used only to confirm your event was posted.</p>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeSubmit()">Cancel</button>
+      <button class="btn-gold" onclick="submitEvent()">Submit Event →</button>
     </div>
   </div>
 </div>
-<div id="tscToast"></div>
+
 <footer>
   <div class="fi">
     <div class="ftop">
@@ -394,6 +759,310 @@ p{margin:0 0 18px;font-size:1.05rem;line-height:1.8;color:#2a3340;}
     </div>
   </div>
 </footer>
+<script>function rrTog(btn){var g=btn.parentElement,open=g.classList.contains('open');document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});if(!open)g.classList.add('open');}
+function openMM(){var m=document.getElementById('mm');m.style.display=m.style.display==='flex'?'none':'flex';}
+function cMM(){var m=document.getElementById('mm');m.style.display='none';}
+document.addEventListener('click',function(e){if(!e.target.closest('.grp'))document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});});
+window.addEventListener('scroll',function(){var n=document.getElementById('nav');if(window.scrollY>10)n.classList.add('on');else n.classList.remove('on');});</script>
+<script>
+// ===== EVENT DATA =====
+var EVENTS = [
+  {
+    id: 'ev_001',
+    type: 'testimony',
+    featured: true,
+    title: 'Testimony Night at Celebrate Recovery',
+    date: '2026-06-25',
+    time: '18:30',
+    location: 'Bridgepoint Church',
+    address: 'Gramercy, Louisiana',
+    host: 'Celebrate Recovery at Bridgepoint Church',
+    speaker: 'Tiffany Howard',
+    description: 'Tiffany Howard shares her powerful testimony of God\'s redeeming grace — how He turns brokenness into purpose. A powerful evening of worship, testimony, and encounter. All are welcome.',
+    flyer: 'images/tiffany-testimony-night.jpg',
+    sourceUrl: '',
+    facebookUrl: '',
+    addedBy: 'RRN Admin',
+    approved: true,
+    tags: ['testimony', 'celebrate recovery', 'Tiffany Howard', 'Gramercy']
+  }
+];
+
+// Pending (submitted by community, awaiting admin approval)
+var PENDING = JSON.parse(localStorage.getItem('rrn_ev_pending') || '[]');
+
+// ===== FILTERS =====
+var activeFilter = 'all';
+var activeSearch = '';
+
+function setFilter(type) {
+  activeFilter = type;
+  document.querySelectorAll('.ftab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelector('[data-filter="'+type+'"]').classList.add('active');
+  renderEvents();
+}
+
+// ===== RENDER =====
+function renderEvents() {
+  var grid = document.getElementById('evGrid');
+  var now = new Date().setHours(0,0,0,0);
+  
+  var filtered = EVENTS.filter(function(e) {
+    if (!e.approved) return false;
+    var evDate = new Date(e.date+'T00:00:00').getTime();
+    if (activeFilter === 'upcoming' && evDate < now) return false;
+    if (activeFilter === 'past' && evDate >= now) return false;
+    if (activeFilter !== 'all' && activeFilter !== 'upcoming' && activeFilter !== 'past' && e.type !== activeFilter) return false;
+    if (activeSearch) {
+      var q = activeSearch.toLowerCase();
+      return (e.title+e.description+e.location+e.speaker+e.address).toLowerCase().includes(q);
+    }
+    return true;
+  });
+
+  // Sort: featured first, then by date ascending
+  filtered.sort(function(a,b){
+    if (a.featured && !b.featured) return -1;
+    if (!a.featured && b.featured) return 1;
+    return new Date(a.date) - new Date(b.date);
+  });
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty-state"><span class="icon">🕊️</span><p>No events found. <button class="btn-gold" onclick="openSubmit()">Submit an Event</button></p></div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(function(e, i) {
+    return e.featured ? renderFeatured(e) : renderCard(e);
+  }).join('');
+}
+
+function formatDate(dateStr, timeStr) {
+  var d = new Date(dateStr + 'T' + (timeStr || '00:00') + ':00');
+  var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var time = '';
+  if (timeStr) {
+    var h = d.getHours(), m = d.getMinutes();
+    time = ' · ' + (h > 12 ? h-12 : (h===0?12:h)) + (m ? ':'+String(m).padStart(2,'0') : '') + (h >= 12 ? ' PM' : ' AM');
+  }
+  return days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear() + time;
+}
+
+function typeBadge(type) {
+  var map = {testimony:'badge-testimony',meeting:'badge-meeting',workshop:'badge-workshop',church:'badge-church',other:'badge-other'};
+  var labels = {testimony:'Testimony Night',meeting:'Recovery Meeting',workshop:'Workshop',church:'Church Event',other:'Event'};
+  return '<span class="ev-type-badge '+(map[type]||'badge-other')+'">'+(labels[type]||'Event')+'</span>';
+}
+
+function actionBtns(e) {
+  var btns = '';
+  btns += '<button class="ev-actions btn-cal" onclick="addToCalendar(\''+e.id+'\')">📅 Add to Calendar</button>';
+  btns += '<button class="ev-actions btn-share-copy" onclick="copyLink(\''+e.id+'\')">🔗 Copy Link</button>';
+  btns += '<button class="ev-actions btn-share-fb" onclick="openEvShare(\''+e.id+'\')" >&#128293; Share on Facebook</button>';
+  if (e.sourceUrl) btns += '<a class="ev-actions btn-source" href="'+e.sourceUrl+'" target="_blank" rel="noopener">View Original Post →</a>';
+  return btns;
+}
+
+function renderFeatured(e) {
+  var img = e.flyer
+    ? '<img class="ev-card-img" src="'+e.flyer+'" alt="'+e.title+'">'
+    : '<div class="ev-card-img-placeholder">🎤</div>';
+  return '<div class="ev-card ev-featured" id="'+e.id+'">'
+    + img
+    + '<div class="ev-card-body">'
+    + '<span class="featured-tag">⭐ Featured Event</span>'
+    + typeBadge(e.type)
+    + '<h3>'+e.title+'</h3>'
+    + '<div class="ev-meta">'
+    + '<span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' + formatDate(e.date, e.time) + '</span>'
+    + '<span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>' + e.location + (e.address ? ' · ' + e.address : '') + '</span>'
+    + (e.speaker ? '<span>🎤 ' + e.speaker + '</span>' : '')
+    + (e.host ? '<span>🏠 Hosted by ' + e.host + '</span>' : '')
+    + '</div>'
+    + '<p class="ev-desc">'+e.description+'</p>'
+    + '<div class="ev-actions">'+actionBtns(e)+'</div>'
+    + '</div></div>';
+}
+
+function renderCard(e) {
+  var img = e.flyer
+    ? '<img class="ev-card-img" src="'+e.flyer+'" alt="'+e.title+'">'
+    : '<div class="ev-card-img-placeholder">🕊️</div>';
+  return '<div class="ev-card" id="'+e.id+'">'
+    + img
+    + '<div class="ev-card-body">'
+    + typeBadge(e.type)
+    + '<h3>'+e.title+'</h3>'
+    + '<div class="ev-meta">'
+    + '<span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' + formatDate(e.date, e.time) + '</span>'
+    + '<span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>' + e.location + (e.address ? ', '+e.address : '') + '</span>'
+    + (e.speaker ? '<span>🎤 '+e.speaker+'</span>' : '')
+    + '</div>'
+    + '<p class="ev-desc">'+e.description+'</p>'
+    + '<div class="ev-actions">'+actionBtns(e)+'</div>'
+    + '</div></div>';
+}
+
+// ===== CALENDAR =====
+function addToCalendar(id) {
+  var e = EVENTS.find(function(x){return x.id===id;});
+  if (!e) return;
+  
+  var start = e.date.replace(/-/g,'') + (e.time ? 'T' + e.time.replace(':','') + '00' : '');
+  var end = e.date.replace(/-/g,'') + (e.time ? 'T' + (String(parseInt(e.time.split(':')[0])+2)).padStart(2,'0') + e.time.split(':')[1] + '00' : '');
+  
+  var details = e.description + '\n\nHosted by: ' + (e.host||'RRN Community') + (e.speaker ? '\nSpeaker: '+e.speaker : '');
+  var location = e.location + (e.address ? ', '+e.address : '');
+  
+  // Show calendar options
+  var sheet = document.getElementById('calSheet');
+  if (sheet) {
+    sheet.dataset.id = id;
+    sheet.style.display = 'flex';
+    return;
+  }
+  
+  // Fallback: Google Calendar
+  var gcal = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+    + '&text=' + encodeURIComponent(e.title)
+    + '&dates=' + start + '/' + end
+    + '&details=' + encodeURIComponent(details)
+    + '&location=' + encodeURIComponent(location);
+  window.open(gcal, '_blank');
+}
+
+function openCalOptions(id) {
+  var e = EVENTS.find(function(x){return x.id===id;});
+  if (!e) return;
+  
+  var dateStr = e.date.replace(/-/g,'');
+  var timeStart = e.time ? e.time.replace(':','') + '00' : '000000';
+  var h2 = String(parseInt(e.time ? e.time.split(':')[0] : 0) + 2).padStart(2,'0');
+  var m2 = e.time ? e.time.split(':')[1] : '00';
+  var timeEnd = h2 + m2 + '00';
+  var start = dateStr + (e.time ? 'T' + timeStart : '');
+  var end = dateStr + (e.time ? 'T' + timeEnd : '');
+  
+  var title = encodeURIComponent(e.title);
+  var loc = encodeURIComponent(e.location + (e.address?', '+e.address:''));
+  var desc = encodeURIComponent(e.description + (e.speaker?'\nSpeaker: '+e.speaker:''));
+  
+  var gcal = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+title+'&dates='+start+'/'+end+'&details='+desc+'&location='+loc;
+  var outlook = 'https://outlook.live.com/calendar/0/deeplink/compose?subject='+title+'&startdt='+e.date+(e.time?'T'+e.time+':00':'')+'&enddt='+e.date+(e.time?'T'+h2+':'+m2+':00':'')+'&location='+loc+'&body='+desc;
+  
+  // Build ICS file content for Apple/download
+  var ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//RRN//Events//EN',
+    'BEGIN:VEVENT',
+    'UID:'+id+'@joinrrn.com',
+    'DTSTAMP:'+new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z',
+    'DTSTART:'+start,
+    'DTEND:'+end,
+    'SUMMARY:'+e.title,
+    'DESCRIPTION:'+e.description.replace(/\n/g,'\\n'),
+    'LOCATION:'+e.location+(e.address?', '+e.address:''),
+    'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  
+  var blob = new Blob([ics], {type:'text/calendar'});
+  var url = URL.createObjectURL(blob);
+  
+  // Show options overlay
+  document.getElementById('calOptions').innerHTML =
+    '<div style="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:950;display:flex;align-items:flex-end;justify-content:center;padding:20px" onclick="this.remove()">'
+    +'<div style="background:#fff;border-radius:20px 20px 0 0;padding:28px 24px;width:100%;max-width:480px" onclick="event.stopPropagation()">'
+    +'<div style="font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:18px;">Add to Calendar</div>'
+    +'<a href="'+gcal+'" target="_blank" style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;border:1.5px solid #eee;text-decoration:none;color:var(--ink);margin-bottom:10px;font-weight:600">📅 Google Calendar</a>'
+    +'<a href="'+outlook+'" target="_blank" style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;border:1.5px solid #eee;text-decoration:none;color:var(--ink);margin-bottom:10px;font-weight:600">📅 Outlook Calendar</a>'
+    +'<a href="'+url+'" download="'+e.title.replace(/\s+/g,'-')+'.ics" style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;border:1.5px solid #eee;text-decoration:none;color:var(--ink);font-weight:600">📱 Apple Calendar (.ics)</a>'
+    +'<button onclick="this.closest(\'[style*=fixed]\').remove()" style="margin-top:16px;width:100%;padding:12px;border-radius:100px;border:none;background:#f0ede8;font-weight:700;cursor:pointer;">Cancel</button>'
+    +'</div></div>';
+  
+  document.getElementById('calOptions').firstChild.onclick = function(ev){ if(ev.target===this) this.remove(); };
+}
+
+// Override addToCalendar to use options sheet
+function addToCalendar(id) { openCalOptions(id); }
+
+// ===== SHARE =====
+function copyLink(id) {
+  var url = 'https://joinrrn.com/events.html#' + id;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(function(){ showToast('Link copied!'); });
+  } else {
+    var t = document.createElement('textarea');
+    t.value = url; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t);
+    showToast('Link copied!');
+  }
+}
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+
+// ===== SUBMIT MODAL =====
+function openSubmit() { document.getElementById('submitModal').classList.add('open'); }
+function closeSubmit() { document.getElementById('submitModal').classList.remove('open'); }
+
+function submitEvent() {
+  var title = document.getElementById('sub_title').value.trim();
+  var date  = document.getElementById('sub_date').value;
+  var time  = document.getElementById('sub_time').value;
+  var loc   = document.getElementById('sub_location').value.trim();
+  var addr  = document.getElementById('sub_address').value.trim();
+  var type  = document.getElementById('sub_type').value;
+  var desc  = document.getElementById('sub_desc').value.trim();
+  var url   = document.getElementById('sub_url').value.trim();
+  var name  = document.getElementById('sub_name').value.trim();
+  var email = document.getElementById('sub_email').value.trim();
+  
+  if (!title || !date || !loc || !desc || !name || !email) {
+    alert('Please fill in all required fields (title, date, location, description, your name and email).'); return;
+  }
+  
+  var ev = {
+    id: 'ev_' + Date.now(),
+    type: type, title: title, date: date, time: time,
+    location: loc, address: addr, description: desc,
+    sourceUrl: url, submittedBy: name, submittedEmail: email,
+    approved: false, featured: false,
+    submittedAt: new Date().toISOString()
+  };
+  
+  var pending = JSON.parse(localStorage.getItem('rrn_ev_pending')||'[]');
+  pending.push(ev);
+  localStorage.setItem('rrn_ev_pending', JSON.stringify(pending));
+  
+  // Also POST to Railway backend
+  fetch('https://rrn-api-production.up.railway.app/api/intake', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      program: 'event_submission',
+      name: name, email: email,
+      notes: 'EVENT SUBMISSION: '+title+' | '+date+(time?' at '+time:'')+' | '+loc+(addr?', '+addr:'')+' | Type: '+type+' | URL: '+url+' | Description: '+desc
+    })
+  }).catch(function(){});
+  
+  closeSubmit();
+  document.getElementById('sub_title').value=''; document.getElementById('sub_date').value='';
+  document.getElementById('sub_time').value=''; document.getElementById('sub_location').value='';
+  document.getElementById('sub_address').value=''; document.getElementById('sub_desc').value='';
+  document.getElementById('sub_url').value=''; document.getElementById('sub_name').value='';
+  document.getElementById('sub_email').value='';
+  
+  showToast('Event submitted! We\'ll review and post it within 24 hours.');
+}
+
+// ===== SEARCH =====
+document.addEventListener('DOMContentLoaded', function() {
+  renderEvents();
+  document.getElementById('evSearch').addEventListener('input', function() {
+    activeSearch = this.value.trim();
+    renderEvents();
+  });
+});
+</script>
 
 <div id="rrPlayer">
   <div class="rrp-tab" onclick="document.getElementById('rrPlayer').classList.toggle('rrShow')">
@@ -692,20 +1361,7 @@ var RR_LIBRARY = [
   {title:"Spirit, Don't Let Me Check My Messages", artist:"RRN", src:"music/Spirit, Don’t Let Me Check My Messages”.mp3", genre:"Christian Worship Pop"},
   {title:"I Tried to Run, But the Choir Caught Me", artist:"RRN", src:"music/I Tried to Run, But the Choir Caught Me.mp3", genre:"Christian Gospel Soul"},
   {title:"Devil Lost My Address", artist:"RRN", src:"music/Devil Lost My Address.mp3", genre:"Christian Outlaw Country"},
-  {title:"Your Way Is Better", artist:"RRN", src:"music/Your Way Is Better (Contemporary Christian Pop Worship with Hip-Hop Elements).mp3", genre:"Christian Hip-Hop Worship"},
-  {title:"When the River Parts (Indie Folk Pop)", artist:"RRN", src:"music/When the River Parts (Indie Folk Pop).mp3", genre:"Pop", tags:["pop","christian","recovery"]},
-  {title:"Daddy\'s Home (Country Pop)", artist:"RRN", src:"music/Daddy's Home (Country - Pop).mp3", genre:"Country", tags:["country","christian","recovery"]},
-  {title:"Late Night Prayer (Outlaw Country)", artist:"RRN", src:"music/Late Night Prayer (Outlaw Country).mp3", genre:"Country", tags:["country","christian","recovery"]},
-  {title:"Through the Open Door (Radio)", artist:"RRN", src:"music/Through the Open Door (Radio).mp3", genre:"Christian", tags:["christian","christian","recovery"]},
-  {title:"Praise Him Loud (EDM)", artist:"RRN", src:"music/Praise Him Loud (EDM).mp3", genre:"EDM", tags:["edm","christian","recovery"]},
-  {title:"Praise Him Loud (Hip-Hop)", artist:"RRN", src:"music/Praise Him Loud (Hip - Hop) (1).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]},
-  {title:"Praise Him Loud (Alt) (Hip-Hop)", artist:"RRN", src:"music/Praise Him Loud (Hip - Hop).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]},
-  {title:"Beautiful Lie (Pop)", artist:"RRN", src:"music/Beautiful lie (Pop).mp3", genre:"Pop", tags:["pop","christian","recovery"]},
-  {title:"The Lord Comes Quickly (Brooklyn Boom Bap x Reggaeton)", artist:"RRN", src:"music/The Lord Comes Quickly (Brooklyn Boom Bap x Puerto Rican Reggaeton Remix).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]},
-  {title:"A Reckoning (Radio)", artist:"RRN", src:"music/A Reconing (Radio).mp3", genre:"Christian", tags:["christian","christian","recovery"]},
-  {title:"Jesus Christ Alive in Me (Southern Blues Rock)", artist:"RRN", src:"music/Jesus Christ Alive in Me (Southern Blues Rock).mp3", genre:"Rock", tags:["rock","christian","recovery"]},
-  {title:"Four Rivers of Eden (Indie Folk Pop)", artist:"RRN", src:"music/Four Rivers of Eden (Indie Folk Pop).mp3", genre:"Pop", tags:["pop","christian","recovery"]},
-  {title:"Reverse the Curse (Hip-Hop)", artist:"RRN", src:"music/Reverse The Curse (Hip - Hop).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]}
+  {title:"Your Way Is Better", artist:"RRN", src:"music/Your Way Is Better (Contemporary Christian Pop Worship with Hip-Hop Elements).mp3", genre:"Christian Hip-Hop Worship"}
 ];
 
 
@@ -1247,6 +1903,7 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
 
 
 </script>
+<script>
 (function(){
   var LINK="https://joinrrn.com/";
   window.RR_SHARE_CAPTIONS=[
@@ -1285,45 +1942,173 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') window.rrCloseShare(); });
 })();
 </script>
-<script>
-var TSC_URL='https://joinrrn.com/journal/hope-anchored-my-soul.html';
-var TSC_HASHTAGS='#Testimony #RefinedRecovery #FaithAndRecovery #JoinRRN #GodsGrace #RecoveryIsPossible #TestimonyNight #HopeAnchoredMySoul #WhatGodHasDone #TiffanyHoward #BridgepointChurch #Gramercy #Louisiana #FaithBasedRecovery #SoberLiving #HopeInChrist #NoMoreChains #FromTheAshes';
-var TSC_T=[
-'?? TESTIMONY NIGHT\n\nTiffany Howard is sharing her story and it is not one you want to miss.\n\nShe grew up surrounded by trauma, addiction, and loss. She went through jail, losing her children, and more than one brush with death. By every earthly measure her story should have ended in that pit.\n\nIt did not.\n\nCome hear what God did. A powerful evening of worship, testimony, and encounter.\n\n?? Bridgepoint Church · Gramercy, Louisiana\n\nAll are welcome. Bring someone who needs to hear it.\n\n?? '+TSC_URL+'\n\n',
-'I read this testimony and I had to share it.\n\nTiffany Howard’s story reminds you that no pit is too deep for God’s grace. She came from trauma, addiction, loss — and God turned every single wound into a testimony.\n\nIf you or someone you love is in the pit right now, read this.\n\n?? '+TSC_URL+'\n\n',
-'If you know someone who feels like it’s too late or they’ve done too much — share this with them right now.\n\nTiffany Howard’s story is living proof that no addiction is too strong, no life is too broken, and no past is too dark for the grace of God.\n\nHope anchored her soul. Faith set it free.\n\n?? '+TSC_URL+'\n\n',
-'Hey — you have to come to this.\n\nTiffany Howard is sharing her testimony and it is powerful. Real story. Real transformation. Real God.\n\n?? Bridgepoint Church · Gramercy, Louisiana\n\nBring a friend. Come as you are.\n\n?? '+TSC_URL+'\n\n',
-'?? A night of worship, prayer, and testimony.\n\nTiffany Howard shares how God took a life the world had written off and turned it into a story of redemption and restoration.\n\nCome expecting God to move.\n\n?? Bridgepoint Church · Gramercy, Louisiana\n\nAll are welcome.\n\n?? '+TSC_URL+'\n\n',
-'✨ ALL ARE WELCOME\n\nNo matter where you are in your journey — free, still fighting, or sitting with someone who is — you belong in this room.\n\nTiffany Howard is sharing what God did in her life and it will change the atmosphere.\n\n?? Bridgepoint Church · Gramercy, Louisiana\n\nShare this. Someone in your feed needs to see it.\n\n?? '+TSC_URL+'\n\n',
-'?? Our community is hosting something powerful.\n\nRefined Recovery Network and our ministry partners invite you to a Testimony Night with Tiffany Howard at Bridgepoint Church in Gramercy, Louisiana.\n\nHer story represents what this ministry is built for — proof that God restores what the enemy tried to destroy.\n\nCome be part of it.\n\n?? '+TSC_URL+'\n\n',
-'?? TONIGHT\n\nTiffany Howard. Bridgepoint Church. Gramercy, Louisiana.\n\nHer testimony will wreck you in the best way. This is not one to miss.\n\nShare this right now. Someone in your circle needs to be in that room tonight.\n\n?? '+TSC_URL+'\n\n',
-'?? Bridgepoint Church in Gramercy, Louisiana is hosting a Testimony Night.\n\nTiffany Howard will share her story of transformation — from trauma, addiction, and loss to freedom, restoration, and purpose in God.\n\nCome support what God is doing in our community.\n\n?? '+TSC_URL+'\n\n',
-'Recovery is possible. Tiffany Howard is the proof.\n\nShe lost everything. She faced what most people do not survive. And God brought her back — not just to survive but to testify.\n\nIf you are in recovery, know someone who is, or have given up believing it is possible — read her story.\n\n?? '+TSC_URL+'\n\n'
-];
-function tscApply(){
-  var sel=parseInt(document.getElementById('tscTemplate').value)||0;
-  document.getElementById('tscText').value=TSC_T[sel]+TSC_HASHTAGS;
-  document.getElementById('tscHashtags').textContent=TSC_HASHTAGS;
-}
-function tscShareFB(){
-  var text=document.getElementById('tscText').value;
-  function openFB(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(TSC_URL),'_blank','noopener,width=620,height=500');tscToast('?? Post copied — paste it into your Facebook post ??');}
-  if(navigator.clipboard){navigator.clipboard.writeText(text).then(openFB).catch(openFB);}
-  else{var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);openFB();}
-}
-function tscCopy(){
-  var text=document.getElementById('tscText').value;
-  function ok(){tscToast('Post copied to clipboard ✓');}
-  if(navigator.clipboard){navigator.clipboard.writeText(text).then(ok).catch(function(){var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();});}
-  else{var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();}
-}
-function tscToast(msg){var t=document.getElementById('tscToast');if(!t)return;t.textContent=msg;t.style.opacity='1';setTimeout(function(){t.style.opacity='0';},3000);}
-function rrTog(btn){var g=btn.parentElement,open=g.classList.contains('open');document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});if(!open)g.classList.add('open');}
-function openMM(){var m=document.getElementById('mm');m.style.display=m.style.display==='flex'?'none':'flex';}
-function cMM(){var m=document.getElementById('mm');m.style.display='none';}
-document.addEventListener('click',function(e){if(!e.target.closest('.grp'))document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});});
-window.addEventListener('scroll',function(){var n=document.getElementById('nav');if(window.scrollY>10)n.classList.add('on');else n.classList.remove('on');});
-document.addEventListener('DOMContentLoaded',function(){tscApply();});
 </script>
+
+<!-- EVENT SHARE MODAL -->
+<div id="evShareModal" style="display:none;position:fixed;inset:0;z-index:800;background:rgba(4,9,18,.82);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;">
+  <div style="background:#0d1a2b;border:1px solid rgba(200,145,58,.3);border-radius:18px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div style="font-family:var(--fd);font-size:1.2rem;color:#fff;font-weight:700;">Share This Event</div>
+      <button onclick="closeEvShare()" style="background:none;border:none;color:#7d8aa0;font-size:22px;cursor:pointer;padding:0 4px;">&times;</button>
+    </div>
+    <!-- Flyer preview -->
+    <div id="evsFlyer" style="display:none;margin-bottom:16px;border-radius:10px;overflow:hidden;">
+      <img id="evsFlyerImg" src="" alt="Event flyer" style="width:100%;max-height:220px;object-fit:cover;display:block;">
+    </div>
+    <!-- Template dropdown -->
+    <label style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);display:block;margin-bottom:6px;">Choose a message template</label>
+    <select id="evsTemplate" onchange="evsApplyTemplate()" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(200,145,58,.3);border-radius:8px;padding:10px 12px;color:#fff;font-family:var(--fb);font-size:.9rem;margin-bottom:14px;outline:none;">
+      <option value="0">&#128293; Testimony Night Invitation</option>
+      <option value="1">&#128079; Community Invitation</option>
+      <option value="2">&#127811; Recovery Meeting Invite</option>
+      <option value="3">&#128591; Prayer &amp; Worship Night</option>
+      <option value="4">&#128172; Personal Invitation (Casual)</option>
+      <option value="5">&#128139; For Someone Who Needs Hope</option>
+      <option value="6">&#9878; Church &amp; Ministry Event</option>
+      <option value="7">&#128293; Urgent &mdash; Tonight Only</option>
+      <option value="8">&#128205; Location Spotlight</option>
+      <option value="9">&#10024; All Are Welcome (Open Invite)</option>
+    </select>
+    <!-- Editable post text -->
+    <label style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);display:block;margin-bottom:6px;">Your post (edit freely)</label>
+    <textarea id="evsText" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(200,145,58,.3);border-radius:8px;padding:12px 14px;color:#fff;font-family:var(--fb);font-size:.88rem;line-height:1.65;min-height:160px;resize:vertical;outline:none;box-sizing:border-box;" placeholder="Your post will appear here..."></textarea>
+    <!-- Hashtags -->
+    <div id="evsHashtags" style="margin:10px 0 16px;font-size:.78rem;color:rgba(200,145,58,.8);line-height:1.8;word-break:break-word;"></div>
+    <!-- Action buttons -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button onclick="evsShareFB()" style="flex:1;background:#1877F2;color:#fff;font-weight:700;font-size:.9rem;padding:12px 20px;border-radius:100px;border:none;cursor:pointer;min-width:140px;">&#9654; Share on Facebook</button>
+      <button onclick="evsCopyPost()" style="flex:1;background:rgba(200,145,58,.15);color:var(--gold);font-weight:700;font-size:.9rem;padding:12px 20px;border-radius:100px;border:1px solid rgba(200,145,58,.4);cursor:pointer;min-width:120px;">&#128203; Copy Post</button>
+    </div>
+    <div style="font-size:.75rem;color:#4a5568;margin-top:12px;text-align:center;">Facebook will show the flyer image when you paste the post &mdash; upload it manually if needed.</div>
+  </div>
+</div>
+
+<div id="evToast" style="position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#0d1a2b;color:var(--gold);padding:10px 22px;border-radius:100px;font-size:13px;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;border:1px solid rgba(200,145,58,.3);"></div>
+
+
+<script>
+var _evsEvent = null;
+
+var EV_TEMPLATES = [
+  // 0 Testimony Night
+  function(e){ return '\uD83D\uDD25 TONIGHT | Testimony Night\n\n'+e.title+'\n\n'+e.description+'\n\n\uD83D\uDCCD '+e.location+(e.address?', '+e.address:'')+' \u00b7 '+(e.time?fmtTime(e.time):'')+' \u00b7 '+(e.date?formatDate(e.date):'')+'\n\nAll are welcome. Come hear what God has done.\n\n'+evHashtags(e); },
+  // 1 Community
+  function(e){ return '\uD83D\uDC4B You are invited!\n\n'+e.title+'\n\n'+e.description+'\n\n\uD83D\uDCCD '+e.location+(e.address?', '+e.address:'')+' \u00b7 '+(e.time?fmtTime(e.time):'')+' \u00b7 '+(e.date?formatDate(e.date):'')+'\n\nBring a friend. Share this post.\n\n'+evHashtags(e); },
+  // 2 Recovery Meeting
+  function(e){ return '\uD83C\uDF3B Recovery Meeting\n\n'+e.title+'\n\n'+e.description+'\n\nFree. Confidential. No judgment. If you or someone you love is struggling, this is for you.\n\n\uD83D\uDCCD '+e.location+(e.address?', '+e.address:'')+' \u00b7 '+(e.time?fmtTime(e.time):'')+' \u00b7 '+(e.date?formatDate(e.date):'')+'\n\n'+evHashtags(e); },
+  // 3 Prayer & Worship
+  function(e){ return '\uD83D\uDE4F Join us for worship and prayer\n\n'+e.title+'\n\n'+e.description+'\n\n\uD83D\uDCCD '+e.location+(e.address?', '+e.address:'')+' \u00b7 '+(e.time?fmtTime(e.time):'')+' \u00b7 '+(e.date?formatDate(e.date):'')+'\n\nGod is moving. Come be part of it.\n\n'+evHashtags(e); },
+  // 4 Personal Casual
+  function(e){ return 'Hey friends \u2014 I\'m going to this and you should come too.\n\n'+e.title+'\n\n'+e.description+'\n\n\uD83D\uDCCD '+e.location+(e.address?', '+e.address:'')+' \u00b7 '+(e.time?fmtTime(e.time):'')+' \u00b7 '+(e.date?formatDate(e.date):'')+'\n\n'+evHashtags(e); },
+  // 5 Someone Who Needs Hope
+  function(e){ return 'If you know someone who needs to hear a story of real transformation \u2014 share this.\n\n'+e.title+'\n\n'+e.description+'\n\n\uD83D\uDCCD '+e.location+(e.address?', '+e.address:'')+' \u00b7 '+(e.time?fmtTime(e.time):'')+' \u00b7 '+(e.date?formatDate(e.date):'')+'\n\n No pit is too deep for God\'s grace.\n\n'+evHashtags(e); },
+  // 6 Church & Ministry
+  function(e){ return '\u26FE '+e.title+'\n\nHosted by: '+(e.host||'RRN Ministry Partners')+'\n\n'+e.description+'\n\n\uD83D\uDCCD '+e.location+(e.address?', '+e.address:'')+' \u00b7 '+(e.time?fmtTime(e.time):'')+' \u00b7 '+(e.date?formatDate(e.date):'')+'\n\n'+evHashtags(e); },
+  // 7 Urgent Tonight
+  function(e){ return '\uD83D\uDD25 TONIGHT \u2014 DO NOT MISS THIS\n\n'+e.title+'\n\n'+e.description+'\n\n\uD83D\uDCCD '+e.location+(e.address?', '+e.address:'')+' \u00b7 '+(e.time?fmtTime(e.time):'')+' \u00b7 '+(e.date?formatDate(e.date):'')+'\n\nShare now. Someone needs this tonight.\n\n'+evHashtags(e); },
+  // 8 Location Spotlight
+  function(e){ return '\uD83D\uDCCD '+e.location+(e.address?', '+e.address:'')+' is hosting something powerful.\n\n'+e.title+'\n\n'+e.description+'\n\n'+e.date+' \u00b7 '+(e.time?fmtTime(e.time):'')+'\n\nCome out and support what God is doing in our community.\n\n'+evHashtags(e); },
+  // 9 All Are Welcome
+  function(e){ return '\u2728 ALL ARE WELCOME\n\n'+e.title+'\n\n'+e.description+'\n\nNo matter where you are in your journey \u2014 you belong here.\n\n\uD83D\uDCCD '+e.location+(e.address?', '+e.address:'')+' \u00b7 '+(e.time?fmtTime(e.time):'')+' \u00b7 '+(e.date?formatDate(e.date):'')+'\n\n'+evHashtags(e); },
+];
+
+var EV_HASHTAG_MAP = {
+  testimony: '#Testimony #RefinedRecovery #FaithAndRecovery #JoinRRN #GodsGrace #RecoveryIsPossible #TestimonyNight #WhatGodHasDone',
+  recovery: '#Recovery #FaithBasedRecovery #RecoveryIsPossible #JoinRRN #RefinedRecovery #SoberLiving #HopeInChrist',
+  worship: '#Worship #PrayerNight #JoinRRN #RefinedRecovery #FaithCommunity #HolySpirit #WorshipNight',
+  workshop: '#Workshop #RefinedRecovery #JoinRRN #RecoveryTools #FaithAndRecovery #CommunitySupport',
+  church: '#Church #LocalChurch #JoinRRN #RefinedRecovery #FaithCommunity #Louisiana',
+};
+
+function evHashtags(e){
+  var base = EV_HASHTAG_MAP[e.type] || EV_HASHTAG_MAP.recovery;
+  if(e.location) base += ' #'+e.location.replace(/[^a-zA-Z0-9]/g,'');
+  return base;
+}
+
+function fmtTime(t){
+  if(!t)return '';
+  var parts=t.split(':'),h=parseInt(parts[0]),m=parts[1];
+  var ampm=h>=12?'PM':'AM';h=h%12||12;
+  return h+(m&&m!=='00'?':'+m:'')+' '+ampm;
+}
+
+function openEvShare(evId){
+  var ev=null;
+  for(var i=0;i<EVENTS.length;i++){if(EVENTS[i].id===evId){ev=EVENTS[i];break;}}
+  if(!ev)return;
+  _evsEvent=ev;
+  // Flyer
+  var flyerWrap=document.getElementById('evsFlyer');
+  var flyerImg=document.getElementById('evsFlyerImg');
+  if(ev.flyer&&flyerWrap&&flyerImg){
+    flyerImg.src=ev.flyer;
+    flyerWrap.style.display='block';
+  } else if(flyerWrap){
+    flyerWrap.style.display='none';
+  }
+  // Default template
+  document.getElementById('evsTemplate').value='0';
+  evsApplyTemplate();
+  // Show modal
+  var m=document.getElementById('evShareModal');
+  if(m){m.style.display='flex';document.body.style.overflow='hidden';}
+}
+
+function closeEvShare(){
+  var m=document.getElementById('evShareModal');
+  if(m){m.style.display='none';document.body.style.overflow='';}
+}
+
+function evsApplyTemplate(){
+  if(!_evsEvent)return;
+  var sel=parseInt(document.getElementById('evsTemplate').value)||0;
+  var fn=EV_TEMPLATES[sel]||EV_TEMPLATES[0];
+  document.getElementById('evsText').value=fn(_evsEvent);
+  document.getElementById('evsHashtags').textContent=evHashtags(_evsEvent);
+}
+
+function evsShareFB(){
+  if(!_evsEvent)return;
+  var text=document.getElementById('evsText').value;
+  var url='https://joinrrn.com/events.html#'+_evsEvent.id;
+  // Copy text to clipboard first, then open FB
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(function(){
+      window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url),'_blank','noopener');
+      evToast('Post copied \u2014 paste it into your Facebook post \uD83D\uDC4D');
+    });
+  } else {
+    window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url),'_blank','noopener');
+    evToast('Opening Facebook \u2014 paste your copied post text');
+  }
+}
+
+function evsCopyPost(){
+  var text=document.getElementById('evsText').value;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(function(){
+      evToast('Post copied to clipboard \u2713');
+    });
+  } else {
+    var ta=document.createElement('textarea');ta.value=text;
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');
+    document.body.removeChild(ta);
+    evToast('Post copied \u2713');
+  }
+}
+
+function evToast(msg){
+  var t=document.getElementById('evToast');if(!t)return;
+  t.textContent=msg;t.style.opacity='1';
+  setTimeout(function(){t.style.opacity='0';},3000);
+}
+
+document.addEventListener('click',function(e){
+  var m=document.getElementById('evShareModal');
+  if(m&&e.target===m)closeEvShare();
+});
+</script>
+
 </body>
 </html>

@@ -1,20 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hope Anchored My Soul | Refiner's Journal | Refined Recovery Network</title>
-<meta name="description" content="Tiffany Howard grew up in trauma, addiction, and loss and found that no pit is too deep for God's grace.">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Hope Anchored My Soul \u2014 Tiffany Howard">
-<meta property="og:description" content="No pit is too deep, no addiction too strong, and no life too broken for God's grace.">
-<meta property="og:url" content="https://joinrrn.com/journal/hope-anchored-my-soul.html">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChuckB4/rrn-website/main/images/tiffany-testimony-night.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/ChuckB4/rrn-website/main/images/tiffany-testimony-night.jpg">
-<link rel="canonical" href="https://joinrrn.com/journal/hope-anchored-my-soul.html">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="description" content="Type a word and instantly find KJV scriptures for the recovery road.">
+<title>Ask the Bible — Search KJV Scripture | Refined Recovery Network</title>
+<link rel="canonical" href="https://joinrrn.com/scripture-search.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23060d18'/><text x='32' y='45' font-family='Georgia,serif' font-size='40' font-weight='700' text-anchor='middle' fill='%23c8913a'>R</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 
 :root{
@@ -100,81 +94,126 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
 .rrp-rb.on{background:var(--gold-lo);border-color:var(--gold-br);}
 .rrp-rb.on svg{fill:var(--gold);}
 #rrDn.on svg{fill:#fff;}
+.rrp-react{display:none!important;}
+.rrp-react.open{display:flex!important;flex-wrap:wrap;gap:6px;}
 @media(max-width:640px){.rrp-rate{order:5;}}
-#rrShareModal{display:none!important;}
 
-/* ── Testimony Share Card ── */
-.test-share-card{background:#fff;border-radius:16px;padding:clamp(20px,3vw,32px);
-  box-shadow:0 2px 20px rgba(0,0,0,.07);margin:32px 0;}
-.test-share-card h3{font-family:var(--fd);font-size:1.2rem;color:var(--ink);margin:0 0 6px;}
-.test-share-card .sub{font-size:.85rem;color:var(--muted);margin-bottom:18px;}
-.tsc-label{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--muted);display:block;margin-bottom:6px;}
-.tsc-select{width:100%;background:#f6f4ee;border:1.5px solid rgba(200,145,58,.3);
-  border-radius:10px;padding:11px 14px;color:var(--ink);font-family:var(--fb);
-  font-size:.9rem;margin-bottom:14px;outline:none;transition:border .2s;
-  appearance:none;-webkit-appearance:none;}
-.tsc-select:focus{border-color:var(--gold);}
-.tsc-textarea{width:100%;background:#f6f4ee;border:1.5px solid rgba(200,145,58,.3);
-  border-radius:10px;padding:12px 14px;color:var(--ink);font-family:var(--fb);
-  font-size:.88rem;line-height:1.65;min-height:180px;resize:vertical;outline:none;
-  transition:border .2s;box-sizing:border-box;}
-.tsc-textarea:focus{border-color:var(--gold);}
-.tsc-hashtags{margin:8px 0 16px;font-size:.78rem;color:rgba(200,145,58,.9);
-  line-height:1.9;word-break:break-word;background:rgba(200,145,58,.07);
-  border-radius:8px;padding:8px 12px;}
-.tsc-hashtag-label{font-size:10px;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;}
-.tsc-btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
-.tsc-btn-fb{background:#1877F2;color:#fff;font-weight:700;font-size:.9rem;
-  padding:12px 22px;border-radius:100px;border:none;cursor:pointer;
-  display:inline-flex;align-items:center;gap:8px;transition:opacity .2s;text-decoration:none;}
-.tsc-btn-fb:hover{opacity:.88;}
-.tsc-btn-copy{background:rgba(200,145,58,.12);color:var(--gold);font-weight:700;
-  font-size:.9rem;padding:12px 22px;border-radius:100px;
-  border:1.5px solid rgba(200,145,58,.4);cursor:pointer;transition:all .2s;}
-.tsc-btn-copy:hover{background:var(--gold);color:var(--ink);}
-.tsc-flyer-note{font-size:.75rem;color:#9aa4b1;margin-top:10px;text-align:center;}
-#tscToast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);
-  background:var(--ink);color:var(--gold);padding:10px 22px;border-radius:100px;
-  font-size:13px;font-weight:700;z-index:1000;opacity:0;transition:opacity .3s;
-  pointer-events:none;border:1px solid rgba(200,145,58,.4);}
-</style>
-<style>
-body{background:#f6f4ee;}
-.page-body{padding-top:90px;min-height:100vh;background:#f6f4ee;}
-.art-wrap{max-width:800px;margin:0 auto;padding:clamp(48px,6vw,72px) clamp(16px,4%,40px);}
-.art-crumb{font-size:12px;color:var(--muted);margin-bottom:20px;}
-.art-crumb a{color:var(--muted);text-decoration:none;}
-.art-crumb a:hover{color:var(--gold);}
-.art-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:rgba(200,145,58,.1);border:1px solid rgba(200,145,58,.3);padding:4px 12px;border-radius:20px;margin-bottom:14px;}
-.art-title{font-family:var(--fd);font-size:clamp(1.9rem,5vw,2.8rem);font-weight:700;color:var(--ink);line-height:1.15;margin:10px 0 20px;}
-p{margin:0 0 18px;font-size:1.05rem;line-height:1.8;color:#2a3340;}
-.art-verse{border-left:3px solid var(--gold);margin:24px 0;padding:10px 0 10px 20px;font-family:var(--fd);font-size:1.15rem;font-style:italic;color:#3a4654;}
-.art-verse cite{display:block;font-style:normal;font-weight:700;color:var(--gold);font-size:.8rem;letter-spacing:.06em;margin-top:8px;}
-.art-flyer{width:100%;max-height:400px;object-fit:cover;border-radius:14px;margin:0 0 28px;box-shadow:0 4px 28px rgba(0,0,0,.14);}
-.art-cta{background:var(--ink);color:#fff;border-radius:14px;padding:clamp(22px,4vw,36px);text-align:center;margin:36px 0 0;}
-.art-cta h3{font-family:var(--fd);font-size:1.3rem;color:var(--gold);margin:0 0 10px;}
-.art-cta p{color:rgba(255,255,255,.75);font-size:.95rem;margin-bottom:20px;}
-.btn-gold{display:inline-block;background:var(--gold);color:var(--ink);font-weight:700;font-size:.95rem;padding:13px 30px;border-radius:100px;text-decoration:none;transition:opacity .2s;}
-.btn-gold:hover{opacity:.85;}
-.test-share-card{background:#fff;border-radius:16px;padding:clamp(20px,3vw,32px);box-shadow:0 2px 20px rgba(0,0,0,.07);margin:32px 0;}
-.test-share-card h3{font-family:var(--fd);font-size:1.2rem;color:var(--ink);margin:0 0 6px;}
-.test-share-card .sub{font-size:.85rem;color:var(--muted);margin-bottom:18px;}
-.tsc-label{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
-.tsc-select{width:100%;background:#f6f4ee;border:1.5px solid rgba(200,145,58,.3);border-radius:10px;padding:11px 14px;color:var(--ink);font-family:var(--fb);font-size:.9rem;margin-bottom:14px;outline:none;transition:border .2s;}
-.tsc-select:focus{border-color:var(--gold);}
-.tsc-textarea{width:100%;background:#f6f4ee;border:1.5px solid rgba(200,145,58,.3);border-radius:10px;padding:12px 14px;color:var(--ink);font-family:var(--fb);font-size:.88rem;line-height:1.65;min-height:180px;resize:vertical;outline:none;transition:border .2s;box-sizing:border-box;}
-.tsc-textarea:focus{border-color:var(--gold);}
-.tsc-hashtags{margin:8px 0 16px;font-size:.78rem;color:rgba(200,145,58,.9);line-height:1.9;word-break:break-word;background:rgba(200,145,58,.07);border-radius:8px;padding:8px 12px;}
-.tsc-hashtag-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;}
-.tsc-btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
-.tsc-btn-fb{background:#1877F2;color:#fff;font-weight:700;font-size:.9rem;padding:12px 22px;border-radius:100px;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:opacity .2s;}
-.tsc-btn-fb:hover{opacity:.88;}
-.tsc-btn-copy{background:rgba(200,145,58,.12);color:var(--gold);font-weight:700;font-size:.9rem;padding:12px 22px;border-radius:100px;border:1.5px solid rgba(200,145,58,.4);cursor:pointer;transition:all .2s;}
-.tsc-btn-copy:hover{background:var(--gold);color:var(--ink);}
-.tsc-flyer-note{font-size:.75rem;color:#9aa4b1;margin-top:10px;text-align:center;}
-#tscToast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--gold);padding:10px 22px;border-radius:100px;font-size:13px;font-weight:700;z-index:1000;opacity:0;transition:opacity .3s;pointer-events:none;border:1px solid rgba(200,145,58,.4);}
+body{background:var(--ink)!important;color:#e8eaef!important;}
+.page-body{background:var(--ink)!important;padding-top:80px;min-height:100vh;}
+.hero{max-width:780px;margin:0 auto;padding:48px 22px 14px;text-align:center;}
+.eyebrow{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+h1{font-family:var(--fd);font-weight:700;font-size:clamp(34px,6vw,58px);line-height:1.05;margin:10px 0 6px;color:#fff;}
+.sub{color:#aab3c0;font-size:17px;max-width:560px;margin:0 auto;}
+.wrap{max-width:780px;margin:0 auto;padding:8px 22px 70px;}
+.searchbar{position:relative;margin:26px 0 8px;}
+#q{width:100%;padding:18px 20px 18px 52px;font-size:18px;font-family:var(--fb);color:#fff;background:var(--ink2);border:1px solid rgba(200,145,58,.4);border-radius:14px;outline:none;}
+#q:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,145,58,.15);}
+.searchbar svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);opacity:.6;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0 6px;}
+.chip{font-size:13px;padding:7px 14px;border-radius:20px;background:rgba(200,145,58,.1);border:1px solid rgba(200,145,58,.35);color:#e7c98a;cursor:pointer;font-family:var(--fb);}
+.chip:hover{background:rgba(200,145,58,.22);color:#fff;}
+.count{text-align:center;color:#8b94a2;font-size:13.5px;margin:18px 0 2px;min-height:18px;}
+.verse{background:linear-gradient(180deg,var(--ink2),#0a1320);border:1px solid rgba(255,255,255,.06);border-left:3px solid var(--gold);border-radius:12px;padding:20px 22px;margin:14px 0;}
+.verse .text{font-family:var(--fd);font-size:23px;line-height:1.4;color:#f1ece1;}
+.verse .ref{margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.verse .ref b{color:var(--gold);font-family:var(--fb);font-weight:700;letter-spacing:.4px;font-size:14px;}
+.verse .tags{display:flex;gap:6px;flex-wrap:wrap;}
+.verse .tag{font-size:11px;color:#9aa3b1;background:rgba(255,255,255,.05);padding:3px 9px;border-radius:12px;}
+.copy{font-size:12px;color:#8b94a2;background:none;border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:5px 11px;cursor:pointer;font-family:var(--fb);}
+.copy:hover{color:#fff;border-color:var(--gold);}
+.empty{text-align:center;color:#8b94a2;padding:40px 10px;}
+.note{text-align:center;color:#727c8a;font-size:12.5px;margin-top:30px;}
+
+/* ==== grouped nav dropdowns (matches existing nav theme) ==== */
+.nl .grp{position:relative;display:flex;align-items:center;}
+.nl .grp>button{display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,.65);font-size:12.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-family:var(--fb);padding:6px 0;transition:color .2s;}
+.nl .grp>button:hover,.nl .grp.open>button,.nl .grp:hover>button{color:var(--gold);}
+.nl .grp .cv{width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-top:-2px;transition:transform .25s;}
+.nl .grp.open .cv{transform:rotate(-135deg);margin-top:2px;}
+.nl .dd{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%) translateY(8px);min-width:228px;background:rgba(11,24,41,.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--gold-br);border-radius:14px;padding:8px;opacity:0;visibility:hidden;transition:all .22s;box-shadow:0 24px 70px rgba(0,0,0,.5);}
+.nl .grp.open .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.nl .dd a{display:block;color:rgba(255,255,255,.72);font-size:13px;font-weight:500;letter-spacing:.02em;text-transform:none;padding:10px 14px;border-radius:9px;white-space:nowrap;}
+.nl .dd a:hover{background:var(--gold-lo);color:var(--gold);}
+.mm .mg{font-size:10.5px;font-weight:700;color:var(--gold);letter-spacing:.13em;text-transform:uppercase;padding:18px 6% 6px;}
+
+
+
+
+
+
+
+
+
+
+.fbot p{font-size:11px;color:rgba(255,255,255,.2);}
+
+
+
+.page-
+.hero{max-width:780px;margin:0 auto;padding:48px 22px 14px;text-align:center;}
+
+
+
+
+.searchbar{position:relative;margin:26px 0 8px;}
+#q{width:100%;padding:18px 20px 18px 52px;font-size:18px;font-family:var(--fb);color:#fff;background:var(--ink2);border:1px solid rgba(200,145,58,.4);border-radius:14px;outline:none;}
+#q:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,145,58,.15);}
+.searchbar svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);opacity:.6;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0 6px;}
+.chip{font-size:13px;padding:7px 14px;border-radius:20px;background:rgba(200,145,58,.1);border:1px solid rgba(200,145,58,.35);color:#e7c98a;cursor:pointer;font-family:var(--fb);}
+.chip:hover{background:rgba(200,145,58,.22);color:#fff;}
+.count{text-align:center;color:#8b94a2;font-size:13.5px;margin:18px 0 2px;min-height:18px;}
+.verse{background:linear-gradient(180deg,var(--ink2),#0a1320);border:1px solid rgba(255,255,255,.06);border-left:3px solid var(--gold);border-radius:12px;padding:20px 22px;margin:14px 0;}
+.verse .text{font-family:var(--fd);font-size:23px;line-height:1.4;color:#f1ece1;}
+.verse .ref{margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.verse .ref b{color:var(--gold);font-family:var(--fb);font-weight:700;letter-spacing:.4px;font-size:14px;}
+.verse .tags{display:flex;gap:6px;flex-wrap:wrap;}
+.verse .tag{font-size:11px;color:#9aa3b1;background:rgba(255,255,255,.05);padding:3px 9px;border-radius:12px;}
+.copy{font-size:12px;color:#8b94a2;background:none;border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:5px 11px;cursor:pointer;font-family:var(--fb);}
+.copy:hover{color:#fff;border-color:var(--gold);}
+.empty{text-align:center;color:#8b94a2;padding:40px 10px;}
+.note{text-align:center;color:#727c8a;font-size:12.5px;margin-top:30px;}
+
+
+
+
+#rrPlayer.rrShow{transform:translateY(0);}
+
+#rrPlayer 
+
+
+
+
+
+
+
+
+
+
+
+@keyframes rrPulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+
+
+
+
+
+
+
+@media(max-width:640px){}
+
+
+
+
+
+
+
+
+
+#rrDn.on svg{fill:#fff;}
+@media(max-width:640px){}
+#rrShareModal{display:none!important;position:fixed;inset:0;z-index:700;background:rgba(4,9,18,.78);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:18px;}
+#rrShareModal.open{display:flex!important;}
 </style>
 </head>
 <body>
@@ -236,6 +275,7 @@ p{margin:0 0 18px;font-size:1.05rem;line-height:1.8;color:#2a3340;}
     <button class="hbtn" onclick="openMM()" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
+>
 <div class="mm" id="mm">
   <div class="mg">Programs</div>
   <a href="https://joinrrn.com/#caleb" onclick="cMM()">CALEB</a>
@@ -275,56 +315,25 @@ p{margin:0 0 18px;font-size:1.05rem;line-height:1.8;color:#2a3340;}
   <a href="give.html" onclick="cMM()">Give Now</a>
 </div>
 <div class="page-body">
-  <div class="art-wrap">
-    <div class="art-crumb"><a href="https://joinrrn.com/">Home</a> &rsaquo; <a href="https://joinrrn.com/journal.html">Refiner's Journal</a> &rsaquo; Hope Anchored My Soul</div>
-    <span class="art-tag">Testimony &middot; Tiffany Howard</span>
-    <h1 class="art-title">Hope Anchored My Soul</h1>
-    <img class="art-flyer" src="https://raw.githubusercontent.com/ChuckB4/rrn-website/main/images/tiffany-testimony-night.jpg" alt="Tiffany Howard Testimony Night - Bridgepoint Church Gramercy LA">
-    <p>A little girl grew up surrounded by trauma, abuse, addiction, and loss &mdash; and carried every one of those wounds straight into addiction, jail, losing her children, and more than one brush with death. By every earthly measure, her story should have ended in that pit.</p>
-    <p>It did not. Through every trial she refused to stop believing in God, and she found out something the pit could not teach her: He does not abandon His children, even when they wander. Time after time she saw His protection, His mercy, and His power to do what willpower never could.</p>
-    <p>Today Tiffany is free, restored, and writing so that others can see it too &mdash; that no pit is too deep, no addiction too strong, and no life too broken for God&rsquo;s grace. Hope anchored her soul. Faith set it free.</p>
-    <blockquote class="art-verse">&ldquo;Whosoever shall call upon the name of the Lord shall be saved.&rdquo;<cite>&mdash; Romans 10:13 KJV</cite></blockquote>
-
-    <div class="test-share-card">
-      <h3>&#128293; Share Tiffany&rsquo;s Story</h3>
-      <p class="sub">Choose a message template below, edit it if you want, then hit Share on Facebook or Copy Post to paste it anywhere. The flyer image attaches automatically when Facebook reads the link.</p>
-      <label class="tsc-label" for="tscTemplate">Choose a message template</label>
-      <select class="tsc-select" id="tscTemplate" onchange="tscApply()">
-        <option value="0">&#128293; Testimony Night Invitation &mdash; Come Hear Her Story</option>
-        <option value="1">&#128079; Personal Share &mdash; This Changed Me</option>
-        <option value="2">&#128139; For Someone Who Needs Hope Right Now</option>
-        <option value="3">&#128172; Casual Invite &mdash; You Have to Come</option>
-        <option value="4">&#128591; Prayer &amp; Worship Night Invite</option>
-        <option value="5">&#10024; All Are Welcome &mdash; Open Invite</option>
-        <option value="6">&#127758; Community Announcement</option>
-        <option value="7">&#128293; Urgency &mdash; Tonight Only</option>
-        <option value="8">&#128205; Location Spotlight &mdash; Bridgepoint Church Gramercy</option>
-        <option value="9">&#128081; Recovery Is Possible &mdash; Her Proof</option>
-      </select>
-      <label class="tsc-label" for="tscText">Your post &mdash; edit freely before sharing</label>
-      <textarea class="tsc-textarea" id="tscText"></textarea>
-      <div class="tsc-hashtags">
-        <span class="tsc-hashtag-label">Hashtags included in your post</span>
-        <span id="tscHashtags"></span>
-      </div>
-      <div class="tsc-btn-row">
-        <button class="tsc-btn-fb" onclick="tscShareFB()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
-          Share on Facebook
-        </button>
-        <button class="tsc-btn-copy" onclick="tscCopy()">&#128203; Copy Post</button>
-      </div>
-      <p class="tsc-flyer-note">&#128247; Facebook displays the flyer image automatically when the link is shared. If it does not appear, tap the image icon inside your Facebook post to add it manually.</p>
-    </div>
-
-    <div class="art-cta">
-      <h3>You don&rsquo;t have to walk this out alone.</h3>
-      <p>Refined Recovery Network is a faith-based peer recovery ministry &mdash; worship radio, discipleship, workforce help, and people who will walk with you.</p>
-      <a class="btn-gold" href="https://joinrrn.com/">Start at joinrrn.com &rarr;</a>
-    </div>
-  </div>
+<div class="hero">
+  <div class="eyebrow">Ask the Bible</div>
+  <h1>Search the Scriptures</h1>
+  <p class="sub">Type what you&rsquo;re facing &mdash; fear, addiction, hope, healing &mdash; and find the Word for it. King James Version only.</p>
 </div>
-<div id="tscToast"></div>
+
+<div class="wrap">
+  <div class="searchbar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8913a" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="q" type="text" placeholder="Search a word or feeling…" autocomplete="off" autofocus>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="count" id="count"></div>
+  <div id="results"></div>
+  <p class="note">All verses King James Version (public domain). This is Scripture for encouragement &mdash; if you are in crisis, call or text <a href="tel:988">988</a>.</p>
+</div>
+
+
+</div>
 <footer>
   <div class="fi">
     <div class="ftop">
@@ -394,6 +403,131 @@ p{margin:0 0 18px;font-size:1.05rem;line-height:1.8;color:#2a3340;}
     </div>
   </div>
 </footer>
+<script>function rrTog(btn){var g=btn.parentElement,open=g.classList.contains('open');document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});if(!open)g.classList.add('open');}
+function openMM(){var m=document.getElementById('mm');m.style.display=m.style.display==='flex'?'none':'flex';}
+function cMM(){var m=document.getElementById('mm');m.style.display='none';}
+document.addEventListener('click',function(e){if(!e.target.closest('.grp'))document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});});
+window.addEventListener('scroll',function(){var n=document.getElementById('nav');if(window.scrollY>10)n.classList.add('on');else n.classList.remove('on');});</script>
+<script>
+var VERSES=[
+{r:"Philippians 4:13",t:"I can do all things through Christ which strengtheneth me.",k:["strength","addiction","perseverance","power","temptation"]},
+{r:"Philippians 4:6-7",t:"Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus.",k:["anxiety","fear","peace","worry","prayer"]},
+{r:"Philippians 4:19",t:"But my God shall supply all your need according to his riches in glory by Christ Jesus.",k:["provision","need","money","hope"]},
+{r:"Isaiah 41:10",t:"Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.",k:["fear","strength","anxiety","help","alone"]},
+{r:"Isaiah 40:31",t:"But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint.",k:["strength","renewal","hope","perseverance","weary","rest"]},
+{r:"Isaiah 26:3",t:"Thou wilt keep him in perfect peace, whose mind is stayed on thee: because he trusteth in thee.",k:["peace","anxiety","trust","mind"]},
+{r:"Isaiah 53:5",t:"But he was wounded for our transgressions, he was bruised for our iniquities: the chastisement of our peace was upon him; and with his stripes we are healed.",k:["healing","forgiveness","peace","salvation"]},
+{r:"Isaiah 43:18-19",t:"Remember ye not the former things, neither consider the things of old. Behold, I will do a new thing.",k:["new life","renewal","past","shame","hope"]},
+{r:"Psalm 23:1-4",t:"The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters. He restoreth my soul... Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me.",k:["fear","comfort","peace","rest","alone","death"]},
+{r:"Psalm 34:18",t:"The LORD is nigh unto them that are of a broken heart; and saveth such as be of a contrite spirit.",k:["grief","broken","comfort","sorrow","alone"]},
+{r:"Psalm 46:1",t:"God is our refuge and strength, a very present help in trouble.",k:["strength","fear","help","trouble","refuge"]},
+{r:"Psalm 51:10",t:"Create in me a clean heart, O God; and renew a right spirit within me.",k:["renewal","forgiveness","new life","repentance"]},
+{r:"Psalm 147:3",t:"He healeth the broken in heart, and bindeth up their wounds.",k:["healing","broken","grief","comfort"]},
+{r:"Psalm 30:5",t:"For his anger endureth but a moment; in his favour is life: weeping may endure for a night, but joy cometh in the morning.",k:["joy","grief","hope","sorrow","morning"]},
+{r:"Psalm 121:1-2",t:"I will lift up mine eyes unto the hills, from whence cometh my help. My help cometh from the LORD, which made heaven and earth.",k:["help","hope","strength"]},
+{r:"Psalm 27:1",t:"The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?",k:["fear","strength","salvation","courage"]},
+{r:"Psalm 91:1-2",t:"He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty. I will say of the LORD, He is my refuge and my fortress: my God; in him will I trust.",k:["fear","refuge","trust","protection"]},
+{r:"Psalm 103:12",t:"As far as the east is from the west, so far hath he removed our transgressions from us.",k:["forgiveness","shame","guilt","past"]},
+{r:"Psalm 32:7",t:"Thou art my hiding place; thou shalt preserve me from trouble; thou shalt compass me about with songs of deliverance.",k:["deliverance","refuge","trouble","protection"]},
+{r:"Psalm 40:1-3",t:"I waited patiently for the LORD; and he inclined unto me, and heard my cry. He brought me up also out of an horrible pit, out of the miry clay, and set my feet upon a rock... And he hath put a new song in my mouth.",k:["deliverance","addiction","hope","new life","pit","rescue"]},
+{r:"Psalm 34:17",t:"The righteous cry, and the LORD heareth, and delivereth them out of all their troubles.",k:["deliverance","prayer","trouble","help"]},
+{r:"John 3:16",t:"For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.",k:["love","salvation","hope","faith"]},
+{r:"John 8:36",t:"If the Son therefore shall make you free, ye shall be free indeed.",k:["freedom","addiction","deliverance","bondage"]},
+{r:"John 14:27",t:"Peace I leave with you, my peace I give unto you: not as the world giveth, give I unto you. Let not your heart be troubled, neither let it be afraid.",k:["peace","fear","anxiety","comfort"]},
+{r:"John 14:6",t:"Jesus saith unto him, I am the way, the truth, and the life: no man cometh unto the Father, but by me.",k:["faith","salvation","identity","truth"]},
+{r:"John 16:33",t:"These things I have spoken unto you, that in me ye might have peace. In the world ye shall have tribulation: but be of good cheer; I have overcome the world.",k:["peace","trouble","courage","hope","overcome"]},
+{r:"John 10:10",t:"The thief cometh not, but for to steal, and to kill, and to destroy: I am come that they might have life, and that they might have it more abundantly.",k:["new life","addiction","hope","abundance"]},
+{r:"Romans 8:28",t:"And we know that all things work together for good to them that love God, to them who are the called according to his purpose.",k:["hope","purpose","trust","trouble"]},
+{r:"Romans 8:1",t:"There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit.",k:["shame","guilt","forgiveness","condemnation"]},
+{r:"Romans 8:38-39",t:"For I am persuaded, that neither death, nor life... nor any other creature, shall be able to separate us from the love of God, which is in Christ Jesus our Lord.",k:["love","fear","assurance","alone"]},
+{r:"Romans 12:2",t:"And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God.",k:["renewal","mind","new life","transformation"]},
+{r:"Romans 10:13",t:"For whosoever shall call upon the name of the Lord shall be saved.",k:["salvation","hope","prayer"]},
+{r:"2 Corinthians 5:17",t:"Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new.",k:["new life","identity","past","shame","transformation"]},
+{r:"2 Corinthians 12:9",t:"And he said unto me, My grace is sufficient for thee: for my strength is made perfect in weakness.",k:["weakness","strength","grace","powerless"]},
+{r:"2 Corinthians 5:7",t:"For we walk by faith, not by sight.",k:["faith","trust","fear"]},
+{r:"Matthew 11:28-30",t:"Come unto me, all ye that labour and are heavy laden, and I will give you rest. Take my yoke upon you, and learn of me; for I am meek and lowly in heart: and ye shall find rest unto your souls.",k:["rest","weary","comfort","peace","burden"]},
+{r:"Matthew 6:33",t:"But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you.",k:["purpose","provision","faith","priorities"]},
+{r:"Jeremiah 29:11",t:"For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.",k:["hope","future","purpose","peace"]},
+{r:"Jeremiah 31:3",t:"The LORD hath appeared of old unto me, saying, Yea, I have loved thee with an everlasting love.",k:["love","comfort","worth","identity"]},
+{r:"1 John 1:9",t:"If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness.",k:["forgiveness","guilt","shame","confession","repentance"]},
+{r:"1 John 4:18",t:"There is no fear in love; but perfect love casteth out fear: because fear hath torment.",k:["fear","love","anxiety"]},
+{r:"James 1:2-4",t:"My brethren, count it all joy when ye fall into divers temptations; Knowing this, that the trying of your faith worketh patience. But let patience have her perfect work.",k:["perseverance","trials","joy","patience","temptation"]},
+{r:"James 4:7",t:"Submit yourselves therefore to God. Resist the devil, and he will flee from you.",k:["temptation","addiction","spiritual","strength"]},
+{r:"James 4:8",t:"Draw nigh to God, and he will draw nigh to you. Cleanse your hands, ye sinners; and purify your hearts, ye double minded.",k:["prayer","repentance","renewal","near"]},
+{r:"James 5:16",t:"Confess your faults one to another, and pray one for another, that ye may be healed. The effectual fervent prayer of a righteous man availeth much.",k:["healing","confession","prayer","accountability","community"]},
+{r:"James 1:5",t:"If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him.",k:["wisdom","decisions","prayer"]},
+{r:"1 Peter 5:7",t:"Casting all your care upon him; for he careth for you.",k:["anxiety","worry","comfort","care"]},
+{r:"1 Peter 5:8-9",t:"Be sober, be vigilant; because your adversary the devil, as a roaring lion, walketh about, seeking whom he may devour: Whom resist stedfast in the faith.",k:["temptation","addiction","vigilance","spiritual","relapse"]},
+{r:"1 Peter 2:24",t:"Who his own self bare our sins in his own body on the tree... by whose stripes ye were healed.",k:["healing","forgiveness","salvation"]},
+{r:"Galatians 2:20",t:"I am crucified with Christ: nevertheless I live; yet not I, but Christ liveth in me.",k:["identity","new life","surrender","transformation"]},
+{r:"Galatians 5:1",t:"Stand fast therefore in the liberty wherewith Christ hath made us free, and be not entangled again with the yoke of bondage.",k:["freedom","addiction","bondage","relapse","deliverance"]},
+{r:"Galatians 6:9",t:"And let us not be weary in well doing: for in due season we shall reap, if we faint not.",k:["perseverance","weary","hope","patience"]},
+{r:"Ephesians 2:8-9",t:"For by grace are ye saved through faith; and that not of yourselves: it is the gift of God: Not of works, lest any man should boast.",k:["grace","salvation","worth","faith"]},
+{r:"Acts 2:38",t:"Then Peter said unto them, Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins, and ye shall receive the gift of the Holy Ghost.",k:["salvation","repentance","baptism","new life","forgiveness"]},
+{r:"Acts 1:8",t:"But ye shall receive power, after that the Holy Ghost is come upon you.",k:["power","strength","spiritual","new life"]},
+{r:"Acts 16:31",t:"And they said, Believe on the Lord Jesus Christ, and thou shalt be saved, and thy house.",k:["salvation","faith","family","hope"]},
+{r:"Proverbs 3:5-6",t:"Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.",k:["trust","decisions","wisdom","surrender","guidance"]},
+{r:"Proverbs 18:10",t:"The name of the LORD is a strong tower: the righteous runneth into it, and is safe.",k:["refuge","strength","safety","fear"]},
+{r:"Joshua 1:9",t:"Have not I commanded thee? Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest.",k:["courage","fear","strength","alone"]},
+{r:"Deuteronomy 31:6",t:"Be strong and of a good courage, fear not, nor be afraid of them: for the LORD thy God, he it is that doth go with thee; he will not fail thee, nor forsake thee.",k:["courage","fear","strength","alone","abandonment"]},
+{r:"Hebrews 13:5",t:"Let your conversation be without covetousness; and be content with such things as ye have: for he hath said, I will never leave thee, nor forsake thee.",k:["alone","comfort","contentment","abandonment"]},
+{r:"Hebrews 4:16",t:"Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need.",k:["grace","prayer","help","mercy","need"]},
+{r:"Hebrews 11:1",t:"Now faith is the substance of things hoped for, the evidence of things not seen.",k:["faith","hope","trust"]},
+{r:"Hebrews 12:1-2",t:"Let us lay aside every weight, and the sin which doth so easily beset us, and let us run with patience the race that is set before us, Looking unto Jesus the author and finisher of our faith.",k:["perseverance","addiction","temptation","focus","relapse"]},
+{r:"Lamentations 3:22-23",t:"It is of the LORD'S mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness.",k:["hope","mercy","new life","morning","grief"]},
+{r:"Nahum 1:7",t:"The LORD is good, a strong hold in the day of trouble; and he knoweth them that trust in him.",k:["refuge","trouble","trust","comfort"]},
+{r:"Zephaniah 3:17",t:"The LORD thy God in the midst of thee is mighty; he will save... he will joy over thee with singing.",k:["love","joy","worth","comfort"]},
+{r:"1 Corinthians 10:13",t:"There hath no temptation taken you but such as is common to man: but God is faithful, who will not suffer you to be tempted above that ye are able; but will with the temptation also make a way to escape.",k:["temptation","addiction","relapse","strength","hope"]},
+{r:"1 Corinthians 6:11",t:"And such were some of you: but ye are washed, but ye are sanctified, but ye are justified in the name of the Lord Jesus, and by the Spirit of our God.",k:["identity","past","new life","shame","forgiveness"]},
+{r:"2 Timothy 1:7",t:"For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.",k:["fear","anxiety","power","mind","courage"]},
+{r:"Titus 3:5",t:"Not by works of righteousness which we have done, but according to his mercy he saved us, by the washing of regeneration, and renewing of the Holy Ghost.",k:["grace","salvation","new life","mercy"]},
+{r:"Mark 16:16",t:"He that believeth and is baptized shall be saved; but he that believeth not shall be damned.",k:["salvation","faith","baptism"]},
+{r:"Colossians 3:1-2",t:"If ye then be risen with Christ, seek those things which are above... Set your affection on things above, not on things on the earth.",k:["focus","new life","purpose","mind"]},
+{r:"Psalm 42:11",t:"Why art thou cast down, O my soul? and why art thou disquieted within me? hope thou in God: for I shall yet praise him.",k:["depression","grief","hope","despair","sorrow"]},
+{r:"Matthew 5:4",t:"Blessed are they that mourn: for they shall be comforted.",k:["grief","comfort","sorrow","loss"]},
+{r:"Romans 5:8",t:"But God commendeth his love toward us, in that, while we were yet sinners, Christ died for us.",k:["love","worth","salvation","shame"]},
+{r:"Psalm 139:14",t:"I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works.",k:["worth","identity","self","value"]},
+{r:"Ecclesiastes 3:1",t:"To every thing there is a season, and a time to every purpose under the heaven.",k:["purpose","patience","time","hope"]}
+];
+
+var THEMES=["fear","addiction","hope","healing","peace","strength","forgiveness","temptation","anxiety","grief","new life","freedom","love","worth","prayer","alone","relapse","salvation","rest","courage"];
+
+function rrnCopy(txt,btn,ok){function done(){if(btn){var o=btn.textContent;btn.textContent=ok||'Copied ✓';setTimeout(function(){btn.textContent=o;},1400);}}
+ if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(done).catch(fb);}else{fb();}
+ function fb(){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');done();}catch(e){prompt('Copy this:',txt);}document.body.removeChild(ta);}}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function render(list,query){
+  var R=document.getElementById('results'), C=document.getElementById('count');
+  if(!list.length){ C.textContent=''; R.innerHTML='<div class="empty">No verses matched &ldquo;'+esc(query)+'&rdquo;. Try a word like <b>fear</b>, <b>hope</b>, <b>addiction</b>, or <b>peace</b>.</div>'; return; }
+  C.textContent=list.length+' verse'+(list.length>1?'s':'')+(query?' for "'+query+'"':'');
+  R.innerHTML=list.map(function(v){
+    return '<div class="verse"><div class="text">&ldquo;'+esc(v.t)+'&rdquo;</div>'+
+      '<div class="ref"><b>'+esc(v.r)+' (KJV)</b>'+
+      '<button class="copy" onclick="cp(this,'+VERSES.indexOf(v)+')">Copy</button></div>'+
+      '<div class="tags">'+v.k.slice(0,5).map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('')+'</div></div>';
+  }).join('');
+}
+function cp(btn,i){var v=VERSES[i];rrnCopy('"'+v.t+'" — '+v.r+' (KJV)',btn,'Copied ✓');}
+function search(qraw){
+  var q=(qraw||'').trim().toLowerCase();
+  if(!q){ render(VERSES.slice(0,12),''); document.getElementById('count').textContent='Showing '+Math.min(12,VERSES.length)+' of '+VERSES.length+' — type to search'; return; }
+  var scored=VERSES.map(function(v){
+    var s=0;
+    v.k.forEach(function(t){ if(t===q)s+=10; else if(t.indexOf(q)>=0||q.indexOf(t)>=0)s+=6; });
+    if(v.t.toLowerCase().indexOf(q)>=0)s+=3;
+    if(v.r.toLowerCase().indexOf(q)>=0)s+=4;
+    return {v:v,s:s};
+  }).filter(function(x){return x.s>0;}).sort(function(a,b){return b.s-a.s;}).map(function(x){return x.v;});
+  render(scored,qraw.trim());
+}
+// chips
+var chipBox=document.getElementById('chips');
+THEMES.forEach(function(t){var c=document.createElement('span');c.className='chip';c.textContent=t;c.onclick=function(){document.getElementById('q').value=t;search(t);};chipBox.appendChild(c);});
+// live search
+var qEl=document.getElementById('q');
+qEl.addEventListener('input',function(){search(qEl.value);});
+search('');
+</script>
 
 <div id="rrPlayer">
   <div class="rrp-tab" onclick="document.getElementById('rrPlayer').classList.toggle('rrShow')">
@@ -692,20 +826,7 @@ var RR_LIBRARY = [
   {title:"Spirit, Don't Let Me Check My Messages", artist:"RRN", src:"music/Spirit, Don’t Let Me Check My Messages”.mp3", genre:"Christian Worship Pop"},
   {title:"I Tried to Run, But the Choir Caught Me", artist:"RRN", src:"music/I Tried to Run, But the Choir Caught Me.mp3", genre:"Christian Gospel Soul"},
   {title:"Devil Lost My Address", artist:"RRN", src:"music/Devil Lost My Address.mp3", genre:"Christian Outlaw Country"},
-  {title:"Your Way Is Better", artist:"RRN", src:"music/Your Way Is Better (Contemporary Christian Pop Worship with Hip-Hop Elements).mp3", genre:"Christian Hip-Hop Worship"},
-  {title:"When the River Parts (Indie Folk Pop)", artist:"RRN", src:"music/When the River Parts (Indie Folk Pop).mp3", genre:"Pop", tags:["pop","christian","recovery"]},
-  {title:"Daddy\'s Home (Country Pop)", artist:"RRN", src:"music/Daddy's Home (Country - Pop).mp3", genre:"Country", tags:["country","christian","recovery"]},
-  {title:"Late Night Prayer (Outlaw Country)", artist:"RRN", src:"music/Late Night Prayer (Outlaw Country).mp3", genre:"Country", tags:["country","christian","recovery"]},
-  {title:"Through the Open Door (Radio)", artist:"RRN", src:"music/Through the Open Door (Radio).mp3", genre:"Christian", tags:["christian","christian","recovery"]},
-  {title:"Praise Him Loud (EDM)", artist:"RRN", src:"music/Praise Him Loud (EDM).mp3", genre:"EDM", tags:["edm","christian","recovery"]},
-  {title:"Praise Him Loud (Hip-Hop)", artist:"RRN", src:"music/Praise Him Loud (Hip - Hop) (1).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]},
-  {title:"Praise Him Loud (Alt) (Hip-Hop)", artist:"RRN", src:"music/Praise Him Loud (Hip - Hop).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]},
-  {title:"Beautiful Lie (Pop)", artist:"RRN", src:"music/Beautiful lie (Pop).mp3", genre:"Pop", tags:["pop","christian","recovery"]},
-  {title:"The Lord Comes Quickly (Brooklyn Boom Bap x Reggaeton)", artist:"RRN", src:"music/The Lord Comes Quickly (Brooklyn Boom Bap x Puerto Rican Reggaeton Remix).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]},
-  {title:"A Reckoning (Radio)", artist:"RRN", src:"music/A Reconing (Radio).mp3", genre:"Christian", tags:["christian","christian","recovery"]},
-  {title:"Jesus Christ Alive in Me (Southern Blues Rock)", artist:"RRN", src:"music/Jesus Christ Alive in Me (Southern Blues Rock).mp3", genre:"Rock", tags:["rock","christian","recovery"]},
-  {title:"Four Rivers of Eden (Indie Folk Pop)", artist:"RRN", src:"music/Four Rivers of Eden (Indie Folk Pop).mp3", genre:"Pop", tags:["pop","christian","recovery"]},
-  {title:"Reverse the Curse (Hip-Hop)", artist:"RRN", src:"music/Reverse The Curse (Hip - Hop).mp3", genre:"Hip-Hop", tags:["hip-hop","christian","recovery"]}
+  {title:"Your Way Is Better", artist:"RRN", src:"music/Your Way Is Better (Contemporary Christian Pop Worship with Hip-Hop Elements).mp3", genre:"Christian Hip-Hop Worship"}
 ];
 
 
@@ -1247,6 +1368,7 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
 
 
 </script>
+<script>
 (function(){
   var LINK="https://joinrrn.com/";
   window.RR_SHARE_CAPTIONS=[
@@ -1285,45 +1407,6 @@ window.addEventListener('load',function(){setTimeout(function(){document.getElem
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') window.rrCloseShare(); });
 })();
 </script>
-<script>
-var TSC_URL='https://joinrrn.com/journal/hope-anchored-my-soul.html';
-var TSC_HASHTAGS='#Testimony #RefinedRecovery #FaithAndRecovery #JoinRRN #GodsGrace #RecoveryIsPossible #TestimonyNight #HopeAnchoredMySoul #WhatGodHasDone #TiffanyHoward #BridgepointChurch #Gramercy #Louisiana #FaithBasedRecovery #SoberLiving #HopeInChrist #NoMoreChains #FromTheAshes';
-var TSC_T=[
-'?? TESTIMONY NIGHT\n\nTiffany Howard is sharing her story and it is not one you want to miss.\n\nShe grew up surrounded by trauma, addiction, and loss. She went through jail, losing her children, and more than one brush with death. By every earthly measure her story should have ended in that pit.\n\nIt did not.\n\nCome hear what God did. A powerful evening of worship, testimony, and encounter.\n\n?? Bridgepoint Church · Gramercy, Louisiana\n\nAll are welcome. Bring someone who needs to hear it.\n\n?? '+TSC_URL+'\n\n',
-'I read this testimony and I had to share it.\n\nTiffany Howard’s story reminds you that no pit is too deep for God’s grace. She came from trauma, addiction, loss — and God turned every single wound into a testimony.\n\nIf you or someone you love is in the pit right now, read this.\n\n?? '+TSC_URL+'\n\n',
-'If you know someone who feels like it’s too late or they’ve done too much — share this with them right now.\n\nTiffany Howard’s story is living proof that no addiction is too strong, no life is too broken, and no past is too dark for the grace of God.\n\nHope anchored her soul. Faith set it free.\n\n?? '+TSC_URL+'\n\n',
-'Hey — you have to come to this.\n\nTiffany Howard is sharing her testimony and it is powerful. Real story. Real transformation. Real God.\n\n?? Bridgepoint Church · Gramercy, Louisiana\n\nBring a friend. Come as you are.\n\n?? '+TSC_URL+'\n\n',
-'?? A night of worship, prayer, and testimony.\n\nTiffany Howard shares how God took a life the world had written off and turned it into a story of redemption and restoration.\n\nCome expecting God to move.\n\n?? Bridgepoint Church · Gramercy, Louisiana\n\nAll are welcome.\n\n?? '+TSC_URL+'\n\n',
-'✨ ALL ARE WELCOME\n\nNo matter where you are in your journey — free, still fighting, or sitting with someone who is — you belong in this room.\n\nTiffany Howard is sharing what God did in her life and it will change the atmosphere.\n\n?? Bridgepoint Church · Gramercy, Louisiana\n\nShare this. Someone in your feed needs to see it.\n\n?? '+TSC_URL+'\n\n',
-'?? Our community is hosting something powerful.\n\nRefined Recovery Network and our ministry partners invite you to a Testimony Night with Tiffany Howard at Bridgepoint Church in Gramercy, Louisiana.\n\nHer story represents what this ministry is built for — proof that God restores what the enemy tried to destroy.\n\nCome be part of it.\n\n?? '+TSC_URL+'\n\n',
-'?? TONIGHT\n\nTiffany Howard. Bridgepoint Church. Gramercy, Louisiana.\n\nHer testimony will wreck you in the best way. This is not one to miss.\n\nShare this right now. Someone in your circle needs to be in that room tonight.\n\n?? '+TSC_URL+'\n\n',
-'?? Bridgepoint Church in Gramercy, Louisiana is hosting a Testimony Night.\n\nTiffany Howard will share her story of transformation — from trauma, addiction, and loss to freedom, restoration, and purpose in God.\n\nCome support what God is doing in our community.\n\n?? '+TSC_URL+'\n\n',
-'Recovery is possible. Tiffany Howard is the proof.\n\nShe lost everything. She faced what most people do not survive. And God brought her back — not just to survive but to testify.\n\nIf you are in recovery, know someone who is, or have given up believing it is possible — read her story.\n\n?? '+TSC_URL+'\n\n'
-];
-function tscApply(){
-  var sel=parseInt(document.getElementById('tscTemplate').value)||0;
-  document.getElementById('tscText').value=TSC_T[sel]+TSC_HASHTAGS;
-  document.getElementById('tscHashtags').textContent=TSC_HASHTAGS;
-}
-function tscShareFB(){
-  var text=document.getElementById('tscText').value;
-  function openFB(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(TSC_URL),'_blank','noopener,width=620,height=500');tscToast('?? Post copied — paste it into your Facebook post ??');}
-  if(navigator.clipboard){navigator.clipboard.writeText(text).then(openFB).catch(openFB);}
-  else{var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);openFB();}
-}
-function tscCopy(){
-  var text=document.getElementById('tscText').value;
-  function ok(){tscToast('Post copied to clipboard ✓');}
-  if(navigator.clipboard){navigator.clipboard.writeText(text).then(ok).catch(function(){var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();});}
-  else{var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();}
-}
-function tscToast(msg){var t=document.getElementById('tscToast');if(!t)return;t.textContent=msg;t.style.opacity='1';setTimeout(function(){t.style.opacity='0';},3000);}
-function rrTog(btn){var g=btn.parentElement,open=g.classList.contains('open');document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});if(!open)g.classList.add('open');}
-function openMM(){var m=document.getElementById('mm');m.style.display=m.style.display==='flex'?'none':'flex';}
-function cMM(){var m=document.getElementById('mm');m.style.display='none';}
-document.addEventListener('click',function(e){if(!e.target.closest('.grp'))document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});});
-window.addEventListener('scroll',function(){var n=document.getElementById('nav');if(window.scrollY>10)n.classList.add('on');else n.classList.remove('on');});
-document.addEventListener('DOMContentLoaded',function(){tscApply();});
 </script>
 </body>
 </html>
