@@ -514,8 +514,8 @@ input:focus,select:focus{border-color:var(--gold);}
 <a href="journal.html">Journal</a>
 <a href="40DaysToFreedom.html">40 Days to Freedom</a>
 <a href="tools.html">Free Tools</a>
-<a href="recovery-tracker.html">Recovery Tracker</a>
-<a href="local-radio.html">Local Business Radio</a>
+
+
           <a href="https://joinrrn.com/#steps">The 12 Steps</a>
           <a href="https://joinrrn.com/#video">Video Sessions</a>
           <a href="https://joinrrn.com/#workforce">Workforce</a>
@@ -544,6 +544,8 @@ input:focus,select:focus{border-color:var(--gold);}
           <a href="https://joinrrn.com/#bookstore">Bookstore</a>
           <a href="https://joinrrn.com/#verse">Verse of the Day</a>
           <a href="events.html">Events &amp; Testimony Nights</a>
+<a href="refined-night.html">Refined Night</a>
+<a href="refined-podcast.html">Refined Podcast</a>
 <a href="journal/hope-anchored-my-soul.html">Share a Testimony</a>
           <a href="https://joinrrn.com/#hopewall">Hope Wall</a>
           <a href="https://joinrrn.com/#prayer">Prayer Request</a>
@@ -560,7 +562,6 @@ input:focus,select:focus{border-color:var(--gold);}
     <button class="hbtn" onclick="openMM()" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
->
 <div class="mm" id="mm">
   <div class="mg">Programs</div>
   <a href="https://joinrrn.com/#caleb" onclick="cMM()">CALEB</a>
@@ -572,8 +573,8 @@ input:focus,select:focus{border-color:var(--gold);}
   <a href="40DaysToFreedom.html" onclick="cMM()">40 Days to Freedom</a>
   <a href="journal.html" onclick="cMM()">Journal</a>
   <a href="tools.html" onclick="cMM()">Free Tools</a>
-  <a href="local-radio.html" onclick="cMM()">Local Business Radio</a>
-  <a href="recovery-tracker.html" onclick="cMM()">Recovery Tracker</a>
+  
+  
   <div class="mg">Support</div>
   <a href="https://joinrrn.com/#courts" onclick="cMM()">Courts &amp; Compliance</a>
   <a href="https://joinrrn.com/#documents" onclick="cMM()">Document Recovery</a>
@@ -588,7 +589,7 @@ input:focus,select:focus{border-color:var(--gold);}
   <a href="https://joinrrn.com/#blog" onclick="cMM()">Blog &amp; Teaching</a>
   <a href="https://joinrrn.com/#bookstore" onclick="cMM()">Bookstore</a>
   <a href="https://joinrrn.com/#verse" onclick="cMM()">Verse of the Day</a>
-  <a href="events.html" onclick="cMM()">Events &amp; Testimony Nights</a>
+  <a href="events.html" onclick="cMM()">Events &amp; Testimony Nights</a> <a href="refined-night.html" onclick="cMM()">Refined Night</a> <a href="refined-podcast.html" onclick="cMM()">Refined Podcast</a>
   <a href="journal/hope-anchored-my-soul.html" onclick="cMM()">Share a Testimony</a>
   <a href="https://joinrrn.com/#prayer" onclick="cMM()">Prayer Request</a>
   <a href="https://joinrrn.com/#advertise" onclick="cMM()">Advertise</a>
@@ -1525,6 +1526,17 @@ var RR_LIBRARY = [
 {"title":"Shouting Down the Walls (Dance)","artist":"RRN","src":"music/Shouting Down the Walls (Dance).mp3","genre":"Christian Dance","priority":true},
 {"title":"Their Words Will Fall (Worship)","artist":"RRN","src":"music/Their Words Will Fall (Worship).mp3","genre":"Contemporary Worship","priority":true},
 {"title":"Walk It Out (Club)","artist":"RRN","src":"music/Walk It Out (Club).mp3","genre":"Christian Dance","priority":true}
+,
+{"title":"Alive in You (EDM)","artist":"RRN","src":"music/Alive in You (EDM).mp3","genre":"Christian EDM","priority":true},
+{"title":"God's Got a Plan (Country Radio)","artist":"RRN","src":"music/God's Got a Plan (Country Radio) (2).mp3","genre":"Christian Country","priority":true},
+{"title":"Holy Rest (Freestyle)","artist":"RRN","src":"music/Batch040/Holy Rest (Freestyle).mp3","genre":"Christian Hip Hop & Urban","priority":true},
+{"title":"The Last Stand (Christian Gospel Soul)","artist":"RRN","src":"music/The Last Stand (Christian Gospel Soul.mp3","genre":"Christian Gospel Soul","priority":true},
+{"title":"Walk It Out — Jesus is Enough (Club)","artist":"RRN","src":"music/Walk It Out Jesus is Enouth (Club).mp3","genre":"Christian Dance","priority":true},
+{"title":"When I Cannot See You","artist":"RRN","src":"music/When I Cannot See You (1).mp3","genre":"Christian Other / Mixed","priority":true},
+{"title":"You Can't Scare a Man That Died (Outlaw Country)","artist":"RRN","src":"music/You Can't Scare a Man That Died (Outlaw Country).mp3","genre":"Christian Outlaw Country","priority":true}
+,
+{"title":"God's Glory Ends My Story (Country Rock)","artist":"RRN","src":"music/Batch027/God's Glory Ends My Story  Country Rock.mp3","genre":"Christian Country Rock","priority":true},
+{"title":"Nightlight (Salvation Band Southern Rock)","artist":"RRN","src":"music/Batch051/Nightlight Salvation Band Southern Rock.mp3","genre":"Southern Christian Rock","priority":true}
 ];
 
 
@@ -1540,7 +1552,7 @@ var RR_LIBRARY = [
       var k=_norm(RR_LIBRARY[i].src);
       if(GMAP[k]){ RR_LIBRARY[i].src=GMAP[k]; hit++; }
     }
-    if(window.console)console.log('RRN resolver: '+hit+' of '+RR_LIBRARY.length+' songs pointed at live files.');
+    if(window.console)console.log('RRN legacy path map (informational): '+hit+' of '+RR_LIBRARY.length+' songs re-pointed to genre subfolders. This is NOT the playable count — see the [Refined Radio] resolved line, or run rrValidate() for the full per-track report.');
   }catch(e){ if(window.console)console.warn('RRN resolver error',e); }
 })();
 
