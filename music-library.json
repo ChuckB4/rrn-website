@@ -1,0 +1,101 @@
+{
+  "version": "1.0",
+  "generated": "2026-07-17",
+  "description": "Music library inventory for Refined Recovery Network. This metadata supports future migration to database-driven playlist management.",
+  "activeDirectories": {
+    "Worship": {
+      "count": 500,
+      "purpose": "Primary worship and recovery songs",
+      "status": "active"
+    },
+    "Southern Rock": {
+      "count": 23,
+      "purpose": "Recovery-themed Southern Rock and Outlaw Country",
+      "status": "active"
+    },
+    "EDM-Club": {
+      "count": 15,
+      "purpose": "Contemporary electronic dance worship remixes",
+      "status": "active"
+    },
+    "Radio": {
+      "count": 9,
+      "purpose": "Broadcast-ready edits of worship songs",
+      "status": "active"
+    },
+    "Jazz": {
+      "count": 3,
+      "purpose": "Jazz interpretations of recovery themes",
+      "status": "active"
+    },
+    "Trance": {
+      "count": 2,
+      "purpose": "Ambient trance worship",
+      "status": "active"
+    },
+    "Acoustic": {
+      "count": 2,
+      "purpose": "Acoustic guitar worship",
+      "status": "active"
+    },
+    "Country": {
+      "count": 1,
+      "purpose": "Country style worship",
+      "status": "active"
+    },
+    "Chill": {
+      "count": 1,
+      "purpose": "Chill/ambient worship",
+      "status": "active"
+    },
+    "R&B": {
+      "count": 1,
+      "purpose": "R&B style worship",
+      "status": "active"
+    },
+    "Blues": {
+      "count": 1,
+      "purpose": "Blues gospel",
+      "status": "active"
+    }
+  },
+  "otherAssets": {
+    "stationIds": {
+      "location": "ids/",
+      "count": 3,
+      "purpose": "Station identification and branding audio"
+    },
+    "advertisements": {
+      "location": "ads/",
+      "count": 8,
+      "purpose": "Promotional and program advertisements"
+    }
+  },
+  "archivedAssets": {
+    "location": "archive/unreferenced-audio/",
+    "count": 30,
+    "purpose": "Unreferenced audio files pending categorization",
+    "note": "These files are not currently referenced in refined-radio.js or any active code. They are preserved for future review and intentional integration."
+  },
+  "totalActiveSongs": 558,
+  "totalArchivedSongs": 30,
+  "statistics": {
+    "repositorySize": "3.2 GB",
+    "musicFileSize": "~1.5 GB",
+    "generatedDate": "2026-07-17",
+    "lastCleanup": "2026-07-17"
+  },
+  "config": {
+    "primaryConfig": "refined-radio.js",
+    "adminInterface": "Refined_Radio_Manager_3.html",
+    "previewPlayer": "preview.html"
+  },
+  "futureEnhancements": [
+    "Database-driven playlist management",
+    "Metadata tagging (artist, genre, mood, recovery-stage)",
+    "Listener ratings and engagement tracking",
+    "Dynamic playlist generation based on recovery stage",
+    "Artist and songwriter attribution",
+    "Licensing and royalty tracking"
+  ]
+}
