@@ -41,13 +41,11 @@ body{font-family:var(--fb);background:var(--off);color:var(--body);overflow-x:hi
 .mm{display:none;position:fixed;top:66px;left:0;right:0;background:rgba(6,13,24,.98);backdrop-filter:blur(24px);z-index:499;max-height:calc(100svh - 66px);overflow-y:auto;}
 .mm a{display:block;color:rgba(255,255,255,.75);padding:16px 6%;font-size:15px;border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none;}
 .mm a:last-child{color:var(--gold);font-weight:600;}
-.hero{height:100svh;min-height:680px;background:var(--ink);position:relative;overflow:hidden;display:flex;align-items:flex-end;}
 .hero-img{position:absolute;inset:0;}
 .hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 25%;}
 .hero-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,13,24,.97) 0%,rgba(6,13,24,.5) 55%,rgba(6,13,24,.1) 100%);}
 .hero-body{position:relative;z-index:1;padding:var(--pad);padding-bottom:clamp(60px,8vw,100px);width:100%;}
 .hero-logo{display:block;max-width:700px;width:86%;margin-top:clamp(10px,3.5vh,42px);margin-bottom:clamp(12px,2.2vw,22px);filter:drop-shadow(0 4px 24px rgba(200,145,58,.3));}
-.hero h1{font-family:var(--fd);font-size:clamp(34px,5.5vw,70px);color:#fff;line-height:1.03;font-weight:700;margin-bottom:16px;max-width:760px;}
 .hero h1 i{color:var(--gold-hi);font-style:italic;}
 .hero-sub{font-size:clamp(14px,1.7vw,17px);color:rgba(255,255,255,.58);line-height:1.88;margin-bottom:clamp(26px,4vw,42px);max-width:520px;font-weight:300;}
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
@@ -629,6 +627,123 @@ THEMES.forEach(function(t){var c=document.createElement('span');c.className='chi
 var qEl=document.getElementById('q');
 qEl.addEventListener('input',function(){search(qEl.value);});
 search('');
+</script>
+  <!-- REFINED RADIO -->
+<div id="rrPlayer">
+  <div class="rrp-tab" onclick="document.getElementById('rrPlayer').classList.toggle('rrShow')">
+    <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> Refined Radio
+  </div>
+  <div class="rrp-bar">
+    <button class="rrp-sk" onclick="rrPrev()" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M19 20L9 12l10-8v16zM5 19V5h2v14z"/></svg></button>
+    <button class="rrp-pp" id="rrPP" onclick="rrToggle()" aria-label="Play"><svg id="rrIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+    <button class="rrp-sk" onclick="rrNext()" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M5 4l10 8-10 8V4zm12 1h2v14h-2z"/></svg></button>
+    <div class="rrp-now">
+      <div class="tt" id="rrTitle">Refined Radio &mdash; tap play to begin</div>
+      <div class="sb"><span class="rrp-live"><i></i>LIVE</span> &middot; <span id="rrSub">Continuous Worship &amp; Recovery</span></div>
+    </div>
+    <div class="rrp-rate"><button class="rrp-rb" id="rrUp" onclick="rrRate(1)" title="Bump this song up so it plays more often" aria-label="Thumbs up / request more plays"><svg viewBox="0 0 24 24"><path d="M2 20h2a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1H2zM22 10h-6.31l.95-4.57.03-.32a1.5 1.5 0 0 0-.44-1.06L15.17 3 8.59 9.59A2 2 0 0 0 8 11v7a2 2 0 0 0 2 2h7a2 2 0 0 0 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1a2 2 0 0 0-2-2z"/></svg></button><button class="rrp-rb" id="rrDn" onclick="rrRate(-1)" title="Play this less" aria-label="Thumbs down"><svg viewBox="0 0 24 24"><path d="M22 4h-2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2zM2 14h6.31l-.95 4.57-.03.32a1.5 1.5 0 0 0 .44 1.06L8.83 21l6.58-6.59A2 2 0 0 0 16 13V6a2 2 0 0 0-2-2H7a2 2 0 0 0-1.84 1.22L2.14 12.27c-.09.23-.14.47-.14.73v1a2 2 0 0 0 2 2z"/></svg></button><button class="rrp-rb" id="rrReq" onclick="rrRequest()" title="Request this song (boosts rotation)" aria-label="Request this song"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg></button><button class="rrp-rb" id="rrShSong" onclick="rrShareSong()" title="Share this song" aria-label="Share this song"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg></button><button class="rrp-rb" id="rrHeart" onclick="rrReactToggle(event)" title="Quick reactions" aria-label="Quick reactions"><svg viewBox="0 0 24 24"><path d="M12 21s-7.55-4.74-10.05-9.24C.6 9.1 1.7 5.8 4.7 4.85 6.85 4.17 9.1 5.1 12 8c2.9-2.9 5.15-3.83 7.3-3.15 3 .95 4.1 4.25 2.75 6.91C19.55 16.26 12 21 12 21z"/></svg></button><div id="rrReactMenu" class="rrp-react"><button onclick="rrLikeSong()">❤️ Like this song</button><button onclick="rrMoreLikeThis()">🎶 Need more like this</button><button onclick="rrTestimony()">🙏 “This song helped me”</button><button onclick="rrFav()">⭐ Save to favorites</button></div><span id="rrStars" class="rrp-stars" title="This song&rsquo;s rating &mdash; 4&#9733; and 5&#9733; play more" style="color:var(--gold);font-size:12px;letter-spacing:1px;margin-left:7px;white-space:nowrap;"></span></div><div class="rrp-prog" id="rrProg" onclick="rrSeek(event)"><div class="rrp-fill" id="rrFill"></div></div>
+    <input class="rrp-vol" type="range" min="0" max="1" step="0.05" value="0.8" oninput="rrVol(this.value)" aria-label="Volume">
+    <select class="rrp-genre" id="rrGenre" onchange="rrSetGenre(this.value)" aria-label="Choose a genre" title="Choose a genre"><option value="">All Genres &middot; Auto Mix</option></select>
+    <div class="rrp-hint" style="flex-basis:100%;width:100%;font-size:11px;color:var(--gold);opacity:.85;text-align:center;padding:5px 8px 0;letter-spacing:.02em;line-height:1.45;">Love this song? Tap <strong>&#128077;</strong> to move it up the station playlist. Top-rated songs play more often and can be featured at the top of the hour.</div>
+    <div class="rrp-share" style="flex-basis:100%;width:100%;display:flex;gap:13px;justify-content:center;align-items:center;flex-wrap:wrap;font-size:11px;padding-top:4px;"><span style="color:#9aa4b1;">Enjoying the station? Share it &rarr;</span><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjoinrrn.com%2F" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;">Facebook</a><a href="https://twitter.com/intent/tweet?text=%F0%9F%8E%B5%20Listening%20to%20Refined%20Recovery%20Network%20Radio%0AChristian%20music%2C%20recovery%2C%20restoration%2C%20and%20hope%20through%20Jesus%20Christ.%0AJoin%20us%20live%20and%20be%20among%20the%20first%20to%20hear%20about%20the%20upcoming%20Recovery%20App.%0AListen%20now%3A%20https%3A%2F%2Fjoinrrn.com%2F" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;">X</a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjoinrrn.com%2F" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;">LinkedIn</a><a href="https://t.me/share/url?url=https%3A%2F%2Fjoinrrn.com%2F&text=%F0%9F%8E%B5%20Refined%20Recovery%20Network%20Radio%20%E2%80%94%20Christian%20music%2C%20recovery%2C%20restoration%2C%20and%20hope%20through%20Jesus%20Christ.%20Listen%20live%21" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;">Telegram</a><a href="mailto:?subject=Refined%20Recovery%20Network%20Radio&body=%F0%9F%8E%B5%20Listening%20to%20Refined%20Recovery%20Network%20Radio%0AChristian%20music%2C%20recovery%2C%20restoration%2C%20and%20hope%20through%20Jesus%20Christ.%0AJoin%20us%20live%20and%20be%20among%20the%20first%20to%20hear%20about%20the%20upcoming%20Recovery%20App.%0AListen%20now%3A%20https%3A%2F%2Fjoinrrn.com%2F" style="color:var(--gold);font-weight:700;text-decoration:none;">Email</a><a href="sms:?&body=%F0%9F%8E%B5%20Listening%20to%20Refined%20Recovery%20Network%20Radio%0AChristian%20music%2C%20recovery%2C%20restoration%2C%20and%20hope%20through%20Jesus%20Christ.%0AJoin%20us%20live%20and%20be%20among%20the%20first%20to%20hear%20about%20the%20upcoming%20Recovery%20App.%0AListen%20now%3A%20https%3A%2F%2Fjoinrrn.com%2F" style="color:var(--gold);font-weight:700;text-decoration:none;">Text</a></div>
+  </div>
+  <style id="rrFxCss">
+@keyframes rrFloatUp{0%{opacity:0;transform:translateY(0) scale(.5);}18%{opacity:1;}100%{opacity:0;transform:translateY(-78px) scale(1.25);}}
+.rr-float{position:fixed;z-index:99999;font-size:30px;line-height:1;pointer-events:none;will-change:transform,opacity;animation:rrFloatUp 1s ease-out forwards;text-shadow:0 2px 6px rgba(0,0,0,.35);}
+@keyframes rrStarPulse{0%{transform:scale(1);}40%{transform:scale(1.32);}100%{transform:scale(1);}}
+.rr-star-pulse{display:inline-block;animation:rrStarPulse .45s ease;}
+.rr-star{cursor:pointer;transition:transform .12s ease;}
+.rr-star:hover{transform:scale(1.25);}
+@keyframes rrBtnPop{0%{transform:scale(1);}50%{transform:scale(1.3);}100%{transform:scale(1);}}
+.rrp-rb.pop{animation:rrBtnPop .35s ease;}
+.rr-emailbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:rgba(8,15,28,.96);border-top:1px solid rgba(200,145,58,.35);padding:9px 12px;font-size:12.5px;color:#e8edf4;}
+.rr-emailbar span{color:#cbd5e2;}
+.rr-emailbar input{flex:1;min-width:130px;padding:7px 9px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;font-size:12.5px;}
+.rr-emailbar button{padding:7px 12px;border:none;border-radius:8px;background:var(--gold,#c8913a);color:#10131a;font-weight:700;font-size:12px;cursor:pointer;}
+.rr-emailbar .rr-em-x{background:transparent;color:#9aa4b1;font-size:16px;padding:2px 6px;font-weight:400;}
+.rrp-rate{position:relative;}
+.rrp-react{position:absolute;bottom:calc(100% + 12px);right:0;min-width:230px;background:rgba(11,24,41,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--gold-br,rgba(200,145,58,.4));border-radius:14px;padding:7px;box-shadow:0 22px 64px rgba(0,0,0,.55);display:none;z-index:640;}
+.rrp-react.open{display:block;}
+.rrp-react button{display:block;width:100%;text-align:left;background:none;border:none;color:rgba(255,255,255,.86);font-family:var(--fb,inherit);font-size:13.5px;padding:11px 13px;border-radius:9px;cursor:pointer;white-space:nowrap;}
+.rrp-react button:hover{background:var(--gold-lo,rgba(200,145,58,.14));color:var(--gold,#c8913a);}
+#rrHeart.liked{border-color:var(--gold,#c8913a);color:var(--gold,#c8913a);}
+</style>
+  <audio id="rrAudio" preload="metadata"></audio>
+</div>
+<script src="radio-player.js"></script>
+<style>
+#rrShareModal{display:none;position:fixed;inset:0;z-index:700;background:rgba(4,9,18,.78);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:18px;}
+.rrsm-card{width:100%;max-width:500px;max-height:92vh;overflow:auto;background:#0c1626;border:1px solid rgba(200,145,58,.35);border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,.6);padding:22px;color:#e9eef5;font-family:var(--fb,system-ui,sans-serif);}
+.rrsm-h{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;color:#c8913a;margin:0 0 3px;}
+.rrsm-sub{font-size:12.5px;color:#9fb0c4;margin:0 0 16px;}
+.rrsm-lab{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#c8913a;margin:0 0 6px;display:block;}
+#rrShareSel{width:100%;background:#0a1322;color:#e9eef5;border:1px solid rgba(200,145,58,.4);border-radius:10px;padding:11px;font-size:14px;margin-bottom:14px;cursor:pointer;}
+#rrShareText{width:100%;min-height:150px;background:#0a1322;color:#e9eef5;border:1px solid rgba(200,145,58,.3);border-radius:10px;padding:12px;font-size:13.5px;line-height:1.55;resize:vertical;font-family:inherit;}
+.rrsm-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px;}
+.rrsm-btn{flex:1;min-width:120px;border:none;border-radius:999px;padding:12px 14px;font-size:13.5px;font-weight:700;cursor:pointer;}
+.rrsm-primary{background:#c8913a;color:#1a1206;}
+.rrsm-ghost{background:transparent;border:1px solid rgba(200,145,58,.45);color:#c8913a;}
+.rrsm-x{float:right;background:none;border:none;color:#9fb0c4;font-size:24px;cursor:pointer;margin:-8px -4px 0 0;}
+.rrsm-note{font-size:11.5px;color:#7d8aa0;margin-top:12px;text-align:center;}
+</style>
+<div id="rrShareModal" role="dialog" aria-label="Share Refined Radio">
+  <div class="rrsm-card">
+    <button class="rrsm-x" onclick="rrCloseShare()" aria-label="Close">&times;</button>
+    <h3 class="rrsm-h">Share hope. Save a life.</h3>
+    <p class="rrsm-sub">Pick a message, then post it anywhere &mdash; every share reaches someone who needs it.</p>
+    <span class="rrsm-lab">Choose a message</span>
+    <select id="rrShareSel"></select>
+    <span class="rrsm-lab">Your post (edit if you like)</span>
+    <textarea id="rrShareText"></textarea>
+    <div class="rrsm-row">
+      <button class="rrsm-btn rrsm-primary" onclick="rrShareNative()">Share</button>
+      <button class="rrsm-btn rrsm-ghost" onclick="rrShareCopy()">Copy</button>
+    </div>
+    <div class="rrsm-row">
+      <button class="rrsm-btn rrsm-ghost" onclick="rrShareFB()">Facebook</button>
+      <button class="rrsm-btn rrsm-ghost" onclick="rrShareX()">X / Twitter</button>
+    </div>
+    <p class="rrsm-note">&ldquo;Share&rdquo; opens your phone&rsquo;s share menu. &ldquo;Copy&rdquo; lets you paste into any post.</p>
+  </div>
+</div>
+<script>
+(function(){
+  var LINK="https://joinrrn.com/";
+  window.RR_SHARE_CAPTIONS=[
+   {label:"💬 You are not your lowest moment", text:"There’s a song I want to share today for anyone who feels overlooked, tired, or like they are not enough. You are not defined by your lowest moment, your past mistakes, or how others have treated you. Value isn’t something you earn by being perfect — it’s something you were given. If your confidence has been worn down, I hope this reminds you that there is still purpose in you, still strength in you, and a future ahead that hasn’t been written yet. Don’t give up on yourself. Keep going. Healing and rebuilding take time, but they are real. Share this with someone who needs encouragement today. 🔥\n\n{link}\n\n#Hope #Encouragement #KeepGoing #YouMatter #RefinedRadio #RecoveryIsPossible"},
+   {label:"💬 If no one told you today", text:"If no one has told you today: you matter. You are not too far gone, too broken, or too late. The mistakes behind you don’t get to write the story ahead of you. Healing can be slow and quiet, but it is real — and so is the strength still inside you. Hold on. Keep going. Don’t give up on yourself. 💛 Listen, breathe, and pass this to someone who needs it:\n\n{link}\n\n#YouMatter #KeepGoing #ThereIsHope #RecoveryIsPossible #RefinedRadio"},
+   {label:"💬 One overdose is too many (long)", text:"One overdose is too many. Behind every number is a son, a daughter, a mother, a friend — a whole life worth fighting for. If you’re struggling, you are not alone, and it is never too late to begin again. And if you’ve made it through, reach back and pull someone else up. We recover together, and hope is real. 💛 Share it with someone today:\n\n{link}\n\n#OneOverdoseIsTooMany #RecoveryIsPossible #WeRecoverTogether #EveryLifeMatters #RefinedRadio"},
+   {label:"💬 There is purpose in you", text:"To anyone who is tired, overlooked, or feeling like they’re not enough — hear this: your worth was never based on your performance, your past, or how people have treated you. It was given to you, and it cannot be taken away. There is still purpose in your life and a future that hasn’t been written yet. Don’t quit on yourself now. 🔥\n\n{link}\n\n#Encouragement #YouAreEnough #ThereIsHope #RefinedRecovery #KeepGoing"},
+   {label:"💬 He doesn’t waste the fire", text:"Rebuilding a life takes time. Some days you’ll feel the progress; other days you’ll just have to trust it’s happening. But the God who refines us doesn’t waste a single fire — your past doesn’t disqualify you, it’s the very thing He redeems. There is purpose in you and a future ahead. Keep going. 🔥\n\n{link}\n\n#FaithOverFear #Refined #RecoveryIsPossible #KeepGoing #Hope"},
+   {label:"One overdose is too many", text:"One overdose is too many. 💛 Recovery is real, hope is real, and no one has to fight alone. Listen to Refined Radio and share the hope: {link}\n\n#OneOverdoseIsTooMany #RecoveryIsPossible #RefinedRadio #YouAreNotAlone"},
+   {label:"You are not alone", text:"If you’re struggling today, you are not alone. There is hope, and there is a way forward. 🔥 Refined Radio — music, recovery, and restoration: {link}\n\n#YouAreNotAlone #RecoveryIsPossible #ThereIsHope #RefinedRecovery"},
+   {label:"Be someone’s hope", text:"Be the reason someone doesn’t give up today. Share hope. Save a life. 💛 {link}\n\n#BeSomeonesHope #RecoveryCommunity #OneOverdoseIsTooMany #RefinedRadio"},
+   {label:"Recovery is possible", text:"Recovery is possible — it’s never too late to start again. 🔥 Tune in to Refined Radio: {link}\n\n#RecoveryIsPossible #NeverTooLate #RefinedRecovery #HopeDealer"},
+   {label:"Now playing / invite", text:"🎵 Now playing on Refined Radio — Christian music, recovery, and hope, 24/7. Come listen with me: {link}\n\n#RefinedRadio #ChristianMusic #RecoveryRadio #Hope"},
+   {label:"Hold on (for someone struggling)", text:"To anyone in the fight right now: hold on. One more day. One more breath. You matter. 💛 {link}\n\n#HoldOn #YouMatter #RecoveryIsPossible #OneDayAtATime"},
+   {label:"Addiction doesn’t win", text:"Addiction doesn’t get the last word — hope does. Share this with someone who needs it today. 🔥 {link}\n\n#ThereIsHope #RecoveryIsPossible #RefinedRecovery #OneOverdoseIsTooMany"},
+   {label:"We recover together", text:"If you’ve made it through, reach back and pull someone else up. We recover together. 🤝 {link}\n\n#WeRecoverTogether #RecoveryCommunity #BeSomeonesHope #RefinedRadio"},
+   {label:"Every life matters", text:"Every life is worth fighting for. Every person is worth saving. One overdose is too many. 💛 {link}\n\n#OneOverdoseIsTooMany #EveryLifeMatters #RecoveryAwareness #RefinedRecovery"}
+  ];
+  function build(t){ var song=(window.rrCur&&rrCur.title)?rrCur.title:""; return t.replace(/\{link\}/g,LINK).replace(/\{song\}/g,song||"this song"); }
+  window.rrOpenShare=function(){
+    var m=document.getElementById('rrShareModal'); if(!m) return;
+    var sel=document.getElementById('rrShareSel'), ta=document.getElementById('rrShareText');
+    if(!sel.options.length){ RR_SHARE_CAPTIONS.forEach(function(c,i){ var o=document.createElement('option'); o.value=i; o.textContent=c.label; sel.appendChild(o); }); }
+    function setT(){ ta.value=build(RR_SHARE_CAPTIONS[sel.value||0].text); }
+    sel.onchange=setT; if(sel.selectedIndex<0) sel.selectedIndex=0; setT();
+    m.style.display='flex'; document.body.style.overflow='hidden';
+  };
+  window.rrCloseShare=function(){ var m=document.getElementById('rrShareModal'); if(m)m.style.display='none'; document.body.style.overflow=''; };
+  window.rrShareCopy=function(){ var ta=document.getElementById('rrShareText'); function ok(){ if(window.rrToast)rrToast('Copied \u2014 paste it into any post'); }
+    if(navigator.clipboard){ navigator.clipboard.writeText(ta.value).then(ok).catch(function(){ta.select();document.execCommand('copy');ok();}); } else { ta.select(); document.execCommand('copy'); ok(); } };
+  window.rrShareNative=function(){ var ta=document.getElementById('rrShareText');
+    if(navigator.share){ navigator.share({title:"Refined Radio",text:ta.value,url:LINK}).catch(function(){}); } else { window.rrShareCopy(); } };
+  window.rrShareFB=function(){ window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(LINK),"_blank","noopener"); window.rrShareCopy(); if(window.rrToast)rrToast('Caption copied \u2014 paste it into your Facebook post'); };
+  window.rrShareX=function(){ var ta=document.getElementById('rrShareText'); window.open("https://twitter.com/intent/tweet?text="+encodeURIComponent(ta.value),"_blank","noopener"); };
+  document.addEventListener('click',function(e){ if(e.target&&e.target.id==='rrShareModal') window.rrCloseShare(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') window.rrCloseShare(); });
+})();
 </script>
 </body>
 </html>
