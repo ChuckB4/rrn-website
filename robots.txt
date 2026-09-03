@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+Disallow: /UPLOAD-THIS-TO-rrn-website-repo-ONLY.html
+Disallow: /recoverytracker.html
+Disallow: /scripturesearch.html
+
 Sitemap: https://joinrrn.com/sitemap.xml
