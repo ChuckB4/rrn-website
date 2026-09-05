@@ -7,30 +7,6 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://joinrrn.com/journal.html</loc>
-    <lastmod>2026-09-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://joinrrn.com/tools.html</loc>
-    <lastmod>2026-09-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://joinrrn.com/recovery-tracker.html</loc>
-    <lastmod>2026-09-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://joinrrn.com/scripture-search.html</loc>
-    <lastmod>2026-09-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://joinrrn.com/events.html</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>monthly</changefreq>
