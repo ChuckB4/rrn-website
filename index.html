@@ -2619,6 +2619,8 @@ function submitNehJob(){
 .votd .vr{color:var(--gold);font-weight:700;letter-spacing:.05em;font-size:15px;}
 .evt-card,.adslot{background:#0d1626;border:0.5px solid rgba(255,255,255,.10);border-radius:16px;padding:26px;}
 .evt-soon{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:4px 12px;border-radius:100px;margin-bottom:14px;}
+.evt-open{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0f1b14;background:#4ade80;padding:4px 12px;border-radius:100px;margin-bottom:14px;}
+.evt-open::before{content:"";width:6px;height:6px;border-radius:50%;background:#0f1b14;}
 .adslot{border:1px dashed var(--gold-br);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:150px;}
 .rrn-form{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:14px;}
 .rrn-form input,.rrn-form textarea{width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.04);color:#fff;font-size:15px;font-family:var(--fb);}
@@ -2696,9 +2698,11 @@ function submitNehJob(){
     <h2 class="sh sh-w">Events &amp; <i>Openings</i></h2>
     <p class="sl sl-w">New Refined Place locations are opening across Louisiana. Event calendars go live as each house opens. Want to put your business or ministry in front of our community? Ad space is available below.</p>
     <div class="ga">
-      <div class="evt-card up"><div class="evt-soon">Opening Soon</div><div class="ct ct-w">Port Allen</div><div class="cx cx-w">12883 Highway 190 West, Port Allen, LA 70767. Our flagship Refined Place &mdash; recovery, worship, and community.</div></div>
-      <div class="evt-card up"><div class="evt-soon">Opening Soon</div><div class="ct ct-w">Pineville</div><div class="cx cx-w">104 Blair Road, Pineville, LA 71360. Central Louisiana recovery household and gathering space.</div></div>
-      <div class="evt-card up"><div class="evt-soon">Opening Soon</div><div class="ct ct-w">LaPlace</div><div class="cx cx-w">River Parishes location coming soon. Serving the LaPlace community with Christ-centered recovery.</div></div>
+      <div class="evt-card up"><div class="evt-open">Now Open</div><div class="ct ct-w">Port Allen</div><div class="cx cx-w">12883 Highway 190 West, Port Allen, LA 70767. Our flagship Refined Place &mdash; recovery, worship, and community.</div></div>
+      <div class="evt-card up"><div class="evt-open">Now Open</div><div class="ct ct-w">Pineville</div><div class="cx cx-w">104 Blair Road, Pineville, LA 71360. Central Louisiana recovery household and gathering space.</div></div>
+      <div class="evt-card up"><div class="evt-open">Now Open</div><div class="ct ct-w">St. Amant</div><div class="cx cx-w">45188 Teddy Babin Road, St. Amant, LA 70774. Anchored In Hope Ministry &mdash; Tiffany Howard.</div></div>
+      <div class="evt-card up"><div class="evt-soon">Coming Soon</div><div class="ct ct-w">LaPlace</div><div class="cx cx-w">An upcoming local church partnership serving the River Parishes community. Location to be announced once confirmed.</div></div>
+      <div class="evt-card up"><div class="evt-soon">Coming Soon</div><div class="ct ct-w">Hammond</div><div class="cx cx-w">A future Refined Place location serving the Hammond community. Details to come.</div></div>
     </div>
     <div class="evt-card up" style="margin-top:34px;border:1px solid var(--gold-br);background:linear-gradient(135deg,#13203a,#0d1626);">
       <div class="evt-soon">Planned &middot; Volunteers Needed</div>
