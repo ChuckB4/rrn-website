@@ -680,6 +680,7 @@ var EVENTS = [
     speaker: '',
     description: 'By the Biblical Blueprint of Marriage. Renew. Reconnect. Rekindle. Because the best is yet to come. Friday 3:00 PM arrival, Saturday 5:00 PM departure. Meals and room included. $187.00 per couple ($50.00 non-refundable deposit due by September 20th). "And a threefold cord is not quickly broken." — Ecclesiastes 4:12. For registration, call Tina Bushnell with Bushnell\'s Front Porch Ministries at 225-202-5153.',
     flyer: 'images/i-still-do-marriage-retreat.webp',
+    flyerPosition: 'center 78%', // the flyer is a tall portrait -- the default center crop shows the scenic middle and cuts off the "scan to pay" QR code near the bottom. The title is already shown as page text (h3 below), so it's safe to bias the thumbnail crop toward the QR/payment section instead.
     sourceUrl: '',
     facebookUrl: '',
     addedBy: 'RRN Admin',
@@ -766,7 +767,7 @@ function actionBtns(e) {
 
 function renderFeatured(e) {
   var img = e.flyer
-    ? '<img class="ev-card-img" src="'+e.flyer+'" alt="'+e.title+'">'
+    ? '<img class="ev-card-img" src="'+e.flyer+'" alt="'+e.title+'" style="object-position:'+(e.flyerPosition||'center')+';">'
     : '<div class="ev-card-img-placeholder">🎤</div>';
   return '<div class="ev-card ev-featured" id="'+e.id+'">'
     + img
@@ -787,7 +788,7 @@ function renderFeatured(e) {
 
 function renderCard(e) {
   var img = e.flyer
-    ? '<img class="ev-card-img" src="'+e.flyer+'" alt="'+e.title+'">'
+    ? '<img class="ev-card-img" src="'+e.flyer+'" alt="'+e.title+'" style="object-position:'+(e.flyerPosition||'center')+';">'
     : '<div class="ev-card-img-placeholder">🕊️</div>';
   return '<div class="ev-card" id="'+e.id+'">'
     + img
