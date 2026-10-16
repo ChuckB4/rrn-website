@@ -33,11 +33,85 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Stage production allowlist into _site
+        # Narrowed deployment (canonical cleanup, user condition 8):
+        # instead of publishing the entire repo root (path: '.'), copy ONLY the
+        # explicit production allowlist into _site/. This is defense-in-depth so
+        # that any stray/backend/build-artifact file that ever lands in the repo
+        # root is never served publicly. Each copy is guarded by an existence
+        # check so a missing optional file does not fail the build.
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site
+
+          copy_file() {
+            # copy_file <relative-path>
+            if [ -e "$1" ]; then
+              mkdir -p "_site/$(dirname "$1")"
+              cp -p "$1" "_site/$1"
+            fi
+          }
+
+          copy_dir() {
+            # copy_dir <relative-dir>
+            if [ -d "$1" ]; then
+              mkdir -p "_site/$1"
+              cp -R "$1/." "_site/$1/"
+            fi
+          }
+
+          # (a) Root canonical HTML pages
+          for f in \
+            index.html events.html 40DaysToFreedom.html give.html tools.html \
+            journal.html lessons.html scripture-search.html recovery-tracker.html \
+            local-radio.html ministry-partnerships.html refined-night.html \
+            refined-podcast.html privacy.html terms.html recovery-plan.html \
+            court-letter.html document-center.html reference-letter.html \
+            resources.html resume-builder.html testimony-builder.html \
+            prayer-journal.html pricing.html 404.html; do
+            copy_file "$f"
+          done
+
+          # (b) Whole content trees (devotionals + lessons, in sitemap)
+          copy_dir journal
+          copy_dir lessons
+
+          # (c) Asset directories
+          for d in images ads ids data Batch085 music; do
+            copy_dir "$d"
+          done
+
+          # (d) All root *.mp3 (NUL-delimited to preserve spaces in filenames)
+          find . -maxdepth 1 -type f -name '*.mp3' -print0 \
+            | while IFS= read -r -d '' mp3; do
+                cp -p "$mp3" "_site/${mp3#./}"
+              done
+
+          # (e) JavaScript players
+          copy_file radio-player.js
+          copy_file refined-radio.js
+
+          # (f) Social / share images
+          for f in \
+            help-us-save-lives.jpg share-banner.jpg share-banner_1.jpg \
+            share-banner_4.jpg share-square.jpg unnamed.jpg \
+            refined-podcast-ep1-tiffany.jpg; do
+            copy_file "$f"
+          done
+
+          # (g) Infra files
+          for f in sitemap.xml robots.txt CNAME; do
+            copy_file "$f"
+          done
+
+          echo "Staged _site contents:"
+          find _site -maxdepth 1 | sort
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          # Upload only the explicit production allowlist staged above.
+          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
