@@ -8705,16 +8705,16 @@ function RestorationPipeline({ platform, update, toast, session }) {
 
 var CONTRIBUTION_PATHS = [
   { id:'mission-discount',   icon:'🤝', label:'Mission Discount Rental',
-    desc:'Reduced-rate rental supporting recovery. Difference from market rate is potentially deductible as charitable contribution.',
+    desc:'Reduced-rate rental supporting recovery. Partner offers housing below market rate to support the mission.',
     fields:['marketRent','partnerRent','occupancyMonths'],
-    legalDoc:'Mission Rental Agreement + Charitable Contribution Letter',
-    taxNote:'Rent reduction below fair market value may qualify as charitable contribution',
+    legalDoc:'Mission Rental Agreement',
+    taxNote:'Recorded as an in-kind ministry gift.',
     reportObligation:'Monthly occupancy report + annual impact letter',
     impactCategory:'Housing Access'},
-  { id:'charitable-donation', icon:'🏡', label:'Charitable Housing Donation',
-    desc:'Property donated or provided at no cost. Full market rental value may be deductible as in-kind charitable contribution.',
+  { id:'charitable-donation', icon:'🏡', label:'Mission Housing Gift',
+    desc:'Property donated or provided at no cost to support the mission.',
     fields:['marketRent','occupancyMonths','propertyValue'],
-    legalDoc:'In-Kind Donation Agreement + IRS Form 8283 (if >$500)',
+    legalDoc:'In-Kind Gift Agreement',
     taxNote:'Recorded as an in-kind ministry gift.',
     reportObligation:'Annual valuation certification + impact statement',
     impactCategory:'Mission Housing'},
@@ -8722,7 +8722,7 @@ var CONTRIBUTION_PATHS = [
     desc:'Short-term housing tied to job placement. Partner provides stable housing for employed program graduates.',
     fields:['marketRent','partnerRent','occupancyMonths','jobLocation'],
     legalDoc:'Workforce Housing Agreement + Employer Coordination MOU',
-    taxNote:'Discounted workforce housing may qualify as charitable contribution or business deduction',
+    taxNote:'Recorded as an in-kind ministry gift.',
     reportObligation:'Employment verification + 90-day retention report',
     impactCategory:'Economic Independence'},
   { id:'sponsored-unit',      icon:'⭐', label:'Sponsored Recovery Unit',
@@ -8736,14 +8736,14 @@ var CONTRIBUTION_PATHS = [
     desc:'Short-term emergency shelter for crisis intake. Highest impact per dollar, priority placement for critical cases.',
     fields:['marketRent','occupancyMonths'],
     legalDoc:'Emergency Housing MOU + Liability Agreement',
-    taxNote:'Emergency shelter provision is highest-priority charitable contribution category',
+    taxNote:'Recorded as an in-kind ministry gift.',
     reportObligation:'Incident report access + weekly occupancy summary',
     impactCategory:'Crisis Response'},
   { id:'family-reintegration', icon:'👨', label:'Long Term Family Reintegration',
     desc:'Extended housing supporting parent-child reunification. Multi-year commitment with court documentation support.',
     fields:['marketRent','partnerRent','occupancyMonths','reunificationTarget'],
     legalDoc:'Family Reintegration Housing Agreement + Court Letter Template',
-    taxNote:'Long-term charitable housing contributions accumulate maximum deductible value',
+    taxNote:'Recorded as an in-kind ministry gift.',
     reportObligation:'Monthly reunification progress reports + court documentation packets',
     impactCategory:'Family Restoration'},
 ];
@@ -8808,16 +8808,16 @@ function PropertyPartnershipPlatform({ platform, update, toast, session }) {
   var setF = function(k){ return function(e){ setRegForm(function(p){ var n=Object.assign({},p); n[k]=e.target.value; return n; }); }; };
 
   // Tax estimator logic
+  // In-kind mission value of the housing gift (market rate minus partner rate).
+  // This is a plain description of the gift's value, NOT a tax-deduction estimate.
   var calcTax = function(p) {
     var mr = parseFloat(p.marketRent)||0;
     var pr = parseFloat(p.partnerRent)||0;
     var months = parseInt(p.occupancyMonths)||12;
-    var deductibleMonthly = mr - pr;
-    var annualDeductible = deductibleMonthly * months;
-    var taxAdvantageMin = Math.round(annualDeductible * 0.22);
-    var taxAdvantageMax = Math.round(annualDeductible * 0.37);
+    var monthlyGiftValue = mr - pr;
+    var annualGiftValue = monthlyGiftValue * months;
     var impactScore = Math.min(100, Math.round((p.livesHoused||0)*8 + (p.reunifications||0)*15 + (p.jobsEnabled||0)*6 + (p.graduates||0)*10));
-    return { deductibleMonthly, annualDeductible, taxAdvantageMin, taxAdvantageMax, impactScore };
+    return { monthlyGiftValue, annualGiftValue, impactScore };
   };
 
   // Partner tier logic
@@ -8848,7 +8848,7 @@ function PropertyPartnershipPlatform({ platform, update, toast, session }) {
   var VIEWS = [
     {id:'dashboard', icon:'🏠', label:'Partner Dashboard'},
     {id:'register',  icon:'➕', label:'Register Property'},
-    {id:'tax',       icon:'💰', label:'Tax Estimator'},
+    {id:'tax',       icon:'💰', label:'Mission Value Estimator'},
     {id:'portal',    icon:'👤', label:'Partner Portal'},
     {id:'match',     icon:'💼', label:'Workforce Match'},
     {id:'analytics', icon:'📊', label:'Pipeline Analytics'},
@@ -8914,7 +8914,7 @@ function PropertyPartnershipPlatform({ platform, update, toast, session }) {
                   );
                 })
               ),
-              tx.annualDeductible>0&&React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--gold)',fontWeight:600}},'Est. tax advantage: $'+(tx.taxAdvantageMin.toLocaleString())+' – $'+(tx.taxAdvantageMax.toLocaleString())+'/yr')
+              tx.annualGiftValue>0&&React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--gold)',fontWeight:600}},'Est. in-kind mission value: $'+(tx.annualGiftValue.toLocaleString())+'/yr')
             )
           );
         })
@@ -9049,16 +9049,16 @@ function PropertyPartnershipPlatform({ platform, update, toast, session }) {
         // Results
         React.createElement('div',null,
           React.createElement('div',{className:'d-card',style:{marginBottom:'1rem'}},
-            React.createElement('div',{className:'d-card-head'},React.createElement('span',{className:'d-card-title'},'TAX ADVANTAGE ESTIMATE')),
+            React.createElement('div',{className:'d-card-head'},React.createElement('span',{className:'d-card-title'},'IN-KIND MISSION VALUE ESTIMATE')),
             React.createElement('div',{className:'d-card-body'},
               React.createElement('div',{style:{textAlign:'center',padding:'1.25rem 0',marginBottom:'1rem',borderBottom:'1px solid var(--bdr)'}},
-                React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)',textTransform:'uppercase',letterSpacing:'0.12em',marginBottom:'0.4rem'}},'Estimated Annual Tax Advantage Range'),
+                React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)',textTransform:'uppercase',letterSpacing:'0.12em',marginBottom:'0.4rem'}},'Estimated Annual In-Kind Mission Value'),
                 React.createElement('div',{style:{fontSize:'2.25rem',fontWeight:700,fontFamily:'var(--font-serif)',color:'var(--gold)'}},
-                  tx.taxAdvantageMin>0 ? ('$'+tx.taxAdvantageMin.toLocaleString()+' – $'+tx.taxAdvantageMax.toLocaleString()) : '—'
+                  tx.annualGiftValue>0 ? ('$'+tx.annualGiftValue.toLocaleString()) : '—'
                 ),
-                React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)',marginTop:'0.35rem'}},'Based on 22%–37% federal bracket range')
+                React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)',marginTop:'0.35rem'}},'Market rate minus partner rate over the occupancy period')
               ),
-              [['Monthly Deductible Amount','$'+tx.deductibleMonthly.toLocaleString(),'var(--l2)'],['Annual Deductible Total','$'+tx.annualDeductible.toLocaleString(),'var(--l5)'],['Occupancy Period',calc.occupancyMonths+' months','var(--dmuted)'],['Impact Category',path.impactCategory,'var(--gold)']].map(function(row){
+              [['Monthly Gift Value','$'+tx.monthlyGiftValue.toLocaleString(),'var(--l2)'],['Annual Gift Value','$'+tx.annualGiftValue.toLocaleString(),'var(--l5)'],['Occupancy Period',calc.occupancyMonths+' months','var(--dmuted)'],['Impact Category',path.impactCategory,'var(--gold)']].map(function(row){
                 return React.createElement('div',{key:row[0],style:{display:'flex',justifyContent:'space-between',padding:'0.45rem 0',borderBottom:'1px solid var(--bdr)',fontSize:'0.82rem'}},
                   React.createElement('span',{style:{color:'var(--dmuted)'}},'',row[0]),
                   React.createElement('span',{style:{color:row[2],fontWeight:600}},'',row[1])
@@ -9123,22 +9123,22 @@ function PropertyPartnershipPlatform({ platform, update, toast, session }) {
         )
       ),
 
-      // Two-col: Tax advantage + Risk mitigation
+      // Two-col: In-kind mission value + Risk mitigation
       React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1.25rem',marginBottom:'1.25rem'}},
         React.createElement('div',{className:'d-card'},
-          React.createElement('div',{className:'d-card-head'},React.createElement('span',{className:'d-card-title'},'💰 TAX ADVANTAGE SUMMARY')),
+          React.createElement('div',{className:'d-card-head'},React.createElement('span',{className:'d-card-title'},'💰 IN-KIND MISSION VALUE SUMMARY')),
           React.createElement('div',{className:'d-card-body'},
             React.createElement('div',{style:{textAlign:'center',marginBottom:'0.85rem'}},
-              React.createElement('div',{style:{fontSize:'1.75rem',fontWeight:700,fontFamily:'var(--font-serif)',color:'var(--gold)'}},'$'+tx.taxAdvantageMin.toLocaleString()+' – $'+tx.taxAdvantageMax.toLocaleString()),
-              React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)'}},'Estimated Annual Tax Advantage')
+              React.createElement('div',{style:{fontSize:'1.75rem',fontWeight:700,fontFamily:'var(--font-serif)',color:'var(--gold)'}},'$'+tx.annualGiftValue.toLocaleString()),
+              React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)'}},'Estimated Annual In-Kind Mission Value')
             ),
-            [['Annual Deductible','$'+tx.annualDeductible.toLocaleString()],['Monthly Deductible','$'+tx.deductibleMonthly.toLocaleString()],['Occupancy Period',p.occupancyMonths+' months'],['Partner Rent','$'+p.partnerRent+'/mo'],['Market Rate','$'+p.marketRent+'/mo']].map(function(row){
+            [['Annual Gift Value','$'+tx.annualGiftValue.toLocaleString()],['Monthly Gift Value','$'+tx.monthlyGiftValue.toLocaleString()],['Occupancy Period',p.occupancyMonths+' months'],['Partner Rent','$'+p.partnerRent+'/mo'],['Market Rate','$'+p.marketRent+'/mo']].map(function(row){
               return React.createElement('div',{key:row[0],style:{display:'flex',justifyContent:'space-between',padding:'0.4rem 0',borderBottom:'1px solid var(--bdr)',fontSize:'0.8rem'}},
                 React.createElement('span',{style:{color:'var(--dmuted)'}},'',row[0]),
                 React.createElement('span',{style:{color:'var(--dtxt)',fontWeight:500}},'',row[1])
               );
             }),
-            React.createElement('button',{onClick:function(){toast({icon:'📄',title:'📄 Tax package generated',body:'Document saved to Mission Vault. Copy mailed to partner.'});var taxNote={id:'tx'+Date.now(),title:'📄 Tax Package Ready — '+p.name,body:'Annual tax documentation prepared for '+p.name+'. Document saved to partner record.',type:'info',sentAt:new Date().toISOString(),requireResponse:false,responses:[]};update('notifications',[...(platform.notifications||[]),taxNote]); },style:{marginTop:'0.85rem',width:'100%',padding:'0.6rem',borderRadius:8,background:'rgba(200,145,58,0.1)',border:'1px solid rgba(200,145,58,0.2)',color:'var(--gold)',cursor:'pointer',fontWeight:700,fontSize:'0.8rem'}},'📄 Generate Annual Tax Package')
+            React.createElement('button',{onClick:function(){toast({icon:'📄',title:'📄 Impact package generated',body:'Document saved to Mission Vault. Copy mailed to partner.'});var taxNote={id:'tx'+Date.now(),title:'📄 Impact Package Ready — '+p.name,body:'Annual impact documentation prepared for '+p.name+'. Document saved to partner record.',type:'info',sentAt:new Date().toISOString(),requireResponse:false,responses:[]};update('notifications',[...(platform.notifications||[]),taxNote]); },style:{marginTop:'0.85rem',width:'100%',padding:'0.6rem',borderRadius:8,background:'rgba(200,145,58,0.1)',border:'1px solid rgba(200,145,58,0.2)',color:'var(--gold)',cursor:'pointer',fontWeight:700,fontSize:'0.8rem'}},'📄 Generate Annual Impact Package')
           )
         ),
         React.createElement('div',{className:'d-card'},
@@ -9321,8 +9321,8 @@ function PropertyPartnershipPlatform({ platform, update, toast, session }) {
                 React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)',marginTop:'0.15rem'}},p.yearsActive,' yrs ',p.livesHoused,' lives ',p.reunifications,' reunifications')
               ),
               React.createElement('div',{style:{textAlign:'right'}},
-                React.createElement('div',{style:{fontSize:'0.82rem',color:'var(--gold)',fontWeight:700}},'$'+tx.taxAdvantageMin.toLocaleString()+'–$'+tx.taxAdvantageMax.toLocaleString()),
-                React.createElement('div',{style:{fontSize:'0.65rem',color:'var(--ddim)'}},'est. tax advantage')
+                React.createElement('div',{style:{fontSize:'0.82rem',color:'var(--gold)',fontWeight:700}},'$'+tx.annualGiftValue.toLocaleString()),
+                React.createElement('div',{style:{fontSize:'0.65rem',color:'var(--ddim)'}},'est. in-kind mission value')
               )
             );
           })
@@ -11562,7 +11562,7 @@ function TokenizationPanel({ platform, toast, update, session }) {
      headline:'Tokenized Refined Place Properties',
      yield:'6–10% projected', min:'$50', structure:'Reg CF / Reg D LLC',
      desc:'Own fractional shares of certified Refined Place recovery homes in Louisiana. Earn rental yield from member fees, Section 8/VASH vouchers, and SAMHSA housing grants. Real-time impact dashboard shows occupancy, curriculum completion, and employment placements on your property.',
-     returns:['8–15% projected annual yield','Rental income from member fees + housing vouchers','SAMHSA and state housing grant income stream','Real-time tenant accountability data — no other RE investment shows you this','Tax advantages: charitable donation, LIHTC credits, impact housing incentives'],
+     returns:['8–15% projected annual yield','Rental income from member fees + housing vouchers','SAMHSA and state housing grant income stream','Real-time tenant accountability data — no other RE investment shows you this','Measurable community impact — housing, recovery, and employment outcomes'],
      structure_detail:'Wyoming DAO LLC or Louisiana LLC per property. Tokens issued via Securitize or Lofty. Reg CF (up to $5M/yr, any investor) or Reg D (accredited, no cap). Smart contract distributions.'},
     {id:'chariot',   icon:'🚗', label:'Chariot Fleet',    color:'#2563eb',
      headline:'Tokenized Chariot Transportation Fleet',
@@ -12130,7 +12130,7 @@ function PitchBuilder({ platform, toast, session }) {
       housing:[
         { tag:'The Need',      headline:'Recovery housing is the missing piece.', body:'There is more demand for structured recovery housing in Southern Louisiana than there are beds. RRN\'s housing network currently has '+M.hotelBeds+' beds across '+M.partnerCount+' properties. We need '+city+' landlords to expand that mission.', stat:M.hotelBeds, statLabel:'Current Beds', icon:'🏠' },
         { tag:'How It Works',  headline:'Structured residents. Supervised living. Rent stability.', body:'RRN residents pay consistent program fees. Every home has a dedicated House Supervisor providing daily oversight, behavioral tracking, drug testing coordination, and incident documentation. You receive a professional operations partner — not just a tenant.', stat:'100%', statLabel:'Supervised', icon:'🛡️' },
-        { tag:'Your Benefit',  headline:'Mission-aligned. Financially stable. Professionally managed.', body:'RRN property partners receive: monthly occupancy reporting, annual tax documentation, charitable contribution certification, donor recognition, and full platform access to see the impact of their property. Est. tax advantage: $'+Math.round((850-400)*12*0.28/100)*100+'–$'+Math.round((850-400)*12*0.37/100)*100+'/yr.', stat:'$'+Math.round((850-400)*12*0.28/100)*100+'–$'+Math.round((850-400)*12*0.37/100)*100, statLabel:'Est. Tax Advantage/yr', icon:'💰' },
+        { tag:'Your Benefit',  headline:'Mission-aligned. Financially stable. Professionally managed.', body:'RRN property partners receive: monthly occupancy reporting, annual impact documentation, donor recognition, and full platform access to see the impact of their property. Est. in-kind mission value: $'+Math.round((850-400)*12/100)*100+'/yr.', stat:'$'+Math.round((850-400)*12/100)*100, statLabel:'Est. In-Kind Mission Value/yr', icon:'💰' },
         { tag:'Proof',         headline:'"'+metrics.testimony2.body.slice(0,150)+'..."', body:'— '+metrics.testimony2.author+' '+M.reunifications+' family reunifications enabled by stable housing', stat:M.reunifications, statLabel:'Families Restored', icon:'👨' },
         { tag:'Partner Today', headline:form.cta||'List your property with Refined Recovery Network.', body:'Registration takes 10 minutes. We handle the rest — placement, oversight, reporting, and recognition. Walk well alongside us.', stat:M.partnerCount, statLabel:'Partners Joined', icon:'✅', isCTA:true },
       ],
@@ -24078,7 +24078,7 @@ function UnifiedFinancialOverview({ platform, update, session, toast, setActive 
         React.createElement('div',{className:'d-card-head'},React.createElement('span',{className:'d-card-title'},'TAX CLASSIFICATION RULES')),
         React.createElement('div',{className:'d-card-body'},
           React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'0.85rem'}},
-            [{label:'NONPROFIT (Tax-Exempt)',color:'var(--l5)',items:TAX_RULES.nonprofit},
+            [{label:'MINISTRY GIFT',color:'var(--l5)',items:TAX_RULES.nonprofit},
              {label:'TAXABLE REVENUE',color:'var(--l2)',items:TAX_RULES.taxable},
              {label:'UBI RISK — Review',color:'#fc8181',items:TAX_RULES.ubi_risk},
             ].map(function(col){
@@ -25744,7 +25744,7 @@ function GuestDonatePanel({ platform, toast, update, session, setActive }) {
 
   var handleSubmit = function() {
     if (!form.name || !form.email) {
-      toast({ icon:'⚠️', title:'Name and email required', body:'So we can send you a tax receipt.' });
+      toast({ icon:'⚠️', title:'Name and email required', body:'So we can confirm your gift.' });
       return;
     }
     if (!form.amount && !form.customAmount) {
@@ -25755,14 +25755,12 @@ function GuestDonatePanel({ platform, toast, update, session, setActive }) {
     if (amt <= 0) { toast({ icon:'⚠️', title:'Please enter a valid amount' }); return; }
 
     var receiptId = 'RRN-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-6);
-    var taxNum = ((platform.taxExemptNumbers||{})[platform.defaultCampus||'default']) ||
-                 ((platform.taxExemptNumbers||{})['default']) || '87-1234567';
 
     var newDon = {
       id: 'pub' + Date.now(), donor: form.name, email: form.email, phone: form.phone,
       amount: amt, campaign: form.campaign, donationType: form.donationType,
       date: new Date().toISOString().split('T')[0], notes: form.message,
-      campus: 'General', taxExemptNum: taxNum, receiptId: receiptId,
+      campus: 'General', receiptId: receiptId,
       source: 'public-form', recordedBy: 'public'
     };
 
@@ -25773,13 +25771,13 @@ function GuestDonatePanel({ platform, toast, update, session, setActive }) {
       id: 'pubdon_' + Date.now(),
       title: '🫶 Public Donation — $' + amt.toLocaleString(),
       body: form.name + ' donated $' + amt.toLocaleString() + ' via the public form. Campaign: ' +
-            form.campaign + '. Receipt: ' + receiptId + '. Email: ' + form.email,
+            form.campaign + '. Ref: ' + receiptId + '. Email: ' + form.email,
       type: 'info', sentAt: new Date().toISOString(), requireResponse: false, responses: []
     }]);
 
     setForm(function(p){ return Object.assign({},p,{ submitted:true, receiptId:receiptId, amt:amt }); });
     toast({ icon:'📖', title:'Thank you, ' + form.name + '!',
-      body:'Donation received. Receipt #' + receiptId + ' will be sent to ' + form.email });
+      body:'Gift received. A gift confirmation (Ref #' + receiptId + ') will be sent to ' + form.email });
   };
 
   var CSS_CARD = { background:'var(--bg2)', border:'1px solid var(--bdr)', borderRadius:14,
@@ -25802,7 +25800,7 @@ function GuestDonatePanel({ platform, toast, update, session, setActive }) {
       React.createElement('p', { style:{ fontSize:'0.9rem', color:'var(--dmuted)', lineHeight:1.75,
         marginBottom:'1.5rem' } },
         'Your gift of $' + (form.amt||'').toLocaleString() + ' to ' + form.campaign +
-        ' has been received. A tax receipt (Receipt #' + form.receiptId + ') will be sent to ' +
+        ' has been received. A gift confirmation (Ref #' + form.receiptId + ') will be sent to ' +
         form.email + '.'
       ),
       React.createElement('div', { style:{ padding:'1.25rem', background:'rgba(91,196,110,0.07)',
@@ -36431,10 +36429,6 @@ function DonationsPanel({ platform, update, toast, setActive, session }) {
     return { campus: cp, income: i, expenses: o, net: i - o };
   });
 
-  // Tax-exempt number per campus (stored in platform)
-  var taxNums = platform.taxExemptNumbers || {};
-  var campusTaxNum = taxNums[(camp || 'default')] || taxNums['default'] || '87-1234567';
-
   // Receipt state
   var _receiptState = React.useState(null);
   var receiptDon = _receiptState[0], setReceiptDon = _receiptState[1];
@@ -36535,7 +36529,6 @@ function DonationsPanel({ platform, update, toast, setActive, session }) {
       campus:   donForm.campus,
       date:     new Date().toISOString().split('T')[0],
       notes:    donForm.notes,
-      taxExemptNum: campusTaxNum,
       receiptId: 'RRN-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-6),
       recordedBy: session && session.username || 'staff'
     };
@@ -36554,12 +36547,12 @@ function DonationsPanel({ platform, update, toast, setActive, session }) {
       id:'don_notif'+Date.now(),
       title: isInKind ? '🍎 In-Kind Donation — '+newDon.itemDesc : '💙 Donation — $'+amt.toLocaleString(),
       body:(donForm.donor||'Anonymous')+' donated '+(isInKind?donForm.itemDesc+' (est. $'+donForm.itemValue+')'
-        :'$'+amt.toLocaleString())+' to '+donForm.campaign+' ('+donForm.campus+'). Receipt #'+newDon.receiptId,
+        :'$'+amt.toLocaleString())+' to '+donForm.campaign+' ('+donForm.campus+'). Ref #'+newDon.receiptId,
       type:'info', sentAt:new Date().toISOString(), requireResponse:false, responses:[]
     }]);
     setReceiptDon(newDon);
     setDonForm({donor:'',email:'',phone:'',amount:'',itemDesc:'',itemValue:'',donationType:'cash',campaign:'General Fund',campus:'All Campuses',notes:'',showForm:false});
-    toast({icon:'✅',title:'Donation recorded + Receipt ready',body:'Receipt #'+newDon.receiptId+' generated.'});
+    toast({icon:'✅',title:'Donation recorded + Gift confirmation ready',body:'Gift confirmation '+newDon.receiptId+' generated.'});
   };
 
   // -- RECEIPT MODAL --
@@ -36579,13 +36572,13 @@ function DonationsPanel({ platform, update, toast, setActive, session }) {
         React.createElement('div',{style:{textAlign:'center',marginBottom:'1.5rem',borderBottom:'1px solid var(--bdr)',paddingBottom:'1.25rem'}},
           React.createElement('div',{style:{fontSize:'1.5rem',marginBottom:'0.25rem'}},'🙏'),
           React.createElement('div',{style:{fontFamily:'var(--font-serif)',fontSize:'1.3rem',fontWeight:700,color:'var(--gold)'}},'Refined Recovery Network'),
-          React.createElement('div',{style:{fontSize:'0.75rem',color:'var(--dmuted)'}},'Charitable Contribution Receipt'),
+          React.createElement('div',{style:{fontSize:'0.75rem',color:'var(--dmuted)'}},'Gift Confirmation — Not a Tax Receipt'),
           React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)',marginTop:'0.2rem'}},
             'refinedrecovery.com  ')
         ),
         // Receipt details grid
         React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.75rem 1.5rem',marginBottom:'1.25rem'}},
-          [['Receipt #', d.receiptId],
+          [['Ref #', d.receiptId],
            ['Date', d.date],
            ['Donor', d.donor || 'Anonymous'],
            ['Email', d.email || '—'],
@@ -36610,16 +36603,12 @@ function DonationsPanel({ platform, update, toast, setActive, session }) {
                 React.createElement('div',{style:{fontSize:'0.65rem',textTransform:'uppercase',color:'var(--dmuted)',marginBottom:'0.35rem'}},'Item / Property Donated'),
                 React.createElement('div',{style:{fontSize:'1.1rem',fontWeight:700,color:'var(--dtxt)',marginBottom:'0.25rem'}},d.itemDesc),
                 d.itemValue && React.createElement('div',{style:{fontSize:'0.82rem',color:'var(--gold)'}},
-                  'Donor-stated fair market value: $'+parseFloat(d.itemValue).toLocaleString()),
-                React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)',marginTop:'0.35rem',fontStyle:'italic'}},
-                  'RRN did not provide any goods or services in return for this donation.')
+                  'Donor-stated value: $'+parseFloat(d.itemValue).toLocaleString())
               )
             : React.createElement('div',null,
                 React.createElement('div',{style:{fontSize:'0.65rem',textTransform:'uppercase',color:'var(--dmuted)',marginBottom:'0.25rem'}},'Amount Donated'),
                 React.createElement('div',{style:{fontFamily:'var(--font-serif)',fontSize:'2rem',fontWeight:700,color:'var(--gold)'}},
-                  '$'+d.amount.toLocaleString()),
-                React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)',marginTop:'0.25rem',fontStyle:'italic'}},
-                  'No goods or services were provided in exchange for this contribution.')
+                  '$'+d.amount.toLocaleString())
               )
         ),
         // Gift receipt notice
@@ -36627,11 +36616,8 @@ function DonationsPanel({ platform, update, toast, setActive, session }) {
           background:'rgba(91,196,110,0.06)',border:'1px solid rgba(91,196,110,0.2)',
           borderRadius:8,padding:'0.85rem 1rem',marginBottom:'1.5rem',fontSize:'0.78rem',color:'var(--dtxt)',lineHeight:1.65
         }},
-          React.createElement('span',{style:{fontWeight:700,color:'var(--l5)'}},'✅ Thank You: '),
-          'Your gift to Refined Recovery Network LLC supports recovery programs. ',
-          'Reference Number: ',
-          React.createElement('strong',null,d.taxExemptNum || campusTaxNum),
-          '. This receipt serves as documentation of your gift. Please retain for your records.',
+          React.createElement('span',{style:{fontWeight:700,color:'var(--l5)'}},'💚 Thank you. '),
+          'Your gift to Refined Recovery Network supports recovery programs. This is not a tax receipt and should not be used for tax-deduction purposes. Please retain for your records.',
           d.notes && React.createElement('div',{style:{marginTop:'0.5rem',color:'var(--dmuted)'}}, 'Notes: '+d.notes)
         ),
         // Print / email actions
@@ -36639,14 +36625,13 @@ function DonationsPanel({ platform, update, toast, setActive, session }) {
           React.createElement('button',{onClick:function(){window.print();},
             style:{padding:'0.65rem 1.5rem',borderRadius:9,background:'linear-gradient(135deg,var(--gold),#8b5e2a)',
                    color:'var(--navy)',border:'none',cursor:'pointer',fontWeight:700,fontFamily:'var(--font-serif)'}},
-            '🖨️ Print Receipt'),
+            '🖨️ Print'),
           React.createElement('button',{onClick:function(){
-              var text='Donation Receipt\nReceipt #: '+d.receiptId+'\nDate: '+d.date+'\nDonor: '+d.donor
+              var text='Gift Confirmation (not a tax receipt)\nRef #: '+d.receiptId+'\nDate: '+d.date+'\nDonor: '+d.donor
                 +'\nEmail: '+(d.email||'—')+'\nPhone: '+(d.phone||'—')+'\nAmount: '+(isIK?d.itemDesc+' est. $'+d.itemValue:'$'+d.amount.toLocaleString())
                 +'\nCampaign: '+d.campaign+'\nCampus: '+d.campus
-                +'\nReference: '+(d.taxExemptNum||campusTaxNum)
-                +'\n\nYour gift to Refined Recovery Network LLC supports recovery programs. No goods or services provided in exchange.';
-              navigator.clipboard.writeText(text).then(function(){toast({icon:'📋',title:'Receipt copied to clipboard',body:'Paste into email to donor.'});});},
+                +'\n\nYour gift to Refined Recovery Network supports recovery programs. This is not a tax receipt.';
+              navigator.clipboard.writeText(text).then(function(){toast({icon:'📋',title:'Copied to clipboard',body:'Paste into email to donor.'});});},
             style:{padding:'0.65rem 1.25rem',borderRadius:9,background:'var(--bg3)',border:'1px solid var(--bdr2)',color:'var(--dtxt)',cursor:'pointer',fontWeight:600}},
             '📋 Copy for Email'),
           React.createElement('button',{onClick:function(){setReceiptDon(null);},
@@ -36677,7 +36662,7 @@ function DonationsPanel({ platform, update, toast, setActive, session }) {
         React.createElement('button',{onClick:function(){setReceiptDon(d);},
           style:{padding:'0.15rem 0.55rem',borderRadius:5,border:'1px solid rgba(200,145,58,0.3)',
                  background:'rgba(200,145,58,0.06)',color:'var(--gold)',cursor:'pointer',fontSize:'0.68rem',fontWeight:700}},
-          '🧾 Receipt')
+          '🧾 Gift Confirmation')
       )
     );
   };
@@ -36738,31 +36723,6 @@ function DonationsPanel({ platform, update, toast, setActive, session }) {
             React.createElement('div',{style:{fontSize:'0.62rem',color:'var(--dmuted)',textTransform:'uppercase',letterSpacing:'0.08em',marginTop:'0.2rem'}},row.label)
           );
         })
-      ),
-
-      // -- Tax-Exempt Number Manager --
-      React.createElement('div',{className:'d-card',style:{marginBottom:'1.25rem'}},
-        React.createElement('div',{className:'d-card-head'},
-          React.createElement('span',{className:'d-card-title'},'🏛️️ TAX-EXEMPT NUMBERS PER LOCATION'),
-          React.createElement('span',{style:{fontSize:'0.72rem',color:'var(--dmuted)'}},'Appears on all donation receipts')
-        ),
-        React.createElement('div',{className:'d-card-body'},
-          CAMPUSES.map(function(cp){
-            var txVal = taxNums[cp] || taxNums['default'] || '';
-            return React.createElement('div',{key:cp,style:{display:'flex',alignItems:'center',gap:'0.65rem',marginBottom:'0.55rem'}},
-              React.createElement('div',{style:{flex:1,fontSize:'0.82rem',color:'var(--dtxt)',fontWeight:500,minWidth:180}},cp==='All Campuses'?'Default (all campuses)':cp),
-              React.createElement('input',{value:txVal,onChange:function(e){setTxVal(e.target.value);},
-                placeholder:'EIN e.g. 87-1234567',
-                style:{flex:2,padding:'0.4rem 0.65rem',borderRadius:7,border:'1px solid var(--bdr2)',background:'var(--bg3)',color:'var(--dtxt)',fontSize:'0.82rem',outline:'none',fontFamily:'var(--font-mono)'}}),
-              React.createElement('button',{onClick:function(){
-                  var updated = Object.assign({},taxNums,{[cp]:txVal});
-                  update('taxExemptNumbers',updated);
-                  toast({icon:'✅',title:'Tax-exempt number saved',body:cp+': '+txVal});},
-                style:{padding:'0.4rem 0.75rem',borderRadius:7,background:'rgba(91,196,110,0.1)',border:'1px solid rgba(91,196,110,0.3)',color:'var(--l5)',cursor:'pointer',fontWeight:700,fontSize:'0.75rem'}},
-                'Save')
-            );
-          })
-        )
       ),
 
       // -- Record Donation form --
@@ -45705,7 +45665,7 @@ function PartnerPage({ setPage, toast, page, session, mobileOpen, setMobileOpen 
      learnMoreLink:'thrift'},
     {id:'foodbank',       icon:'\U0001f371', label:'Food Ministry Partner',    color:'var(--l5)',
      desc:'Donate food — fresh, packaged, or prepared — to keep RRN households fed while members rebuild their financial foundation.',
-     benefits:['Restaurants, grocers, and caterers can donate surplus daily or weekly','Businesses can sponsor a meal or a week of meals for a full campus','All food donations logged and receipted for tax documentation','Reduces food insecurity — a documented relapse risk factor'],
+     benefits:['Restaurants, grocers, and caterers can donate surplus daily or weekly','Businesses can sponsor a meal or a week of meals for a full campus','All food donations logged and confirmed with a gift confirmation','Reduces food insecurity — a documented relapse risk factor'],
      cta:'Donate Food to RRN',
      details:'Food insecurity is one of the most immediate stressors in early recovery. Refined Recovery Network Food Ministry Partners donate food — canned goods, produce, prepared meals, catered surplus, bakery items, and restaurant overage — to keep RRN households consistently fed. When residents do not have to worry about food, they can focus on recovery, work, and rebuilding their lives. Restaurant partners can set up weekly surplus donation schedules. Grocery partners can donate near-expiration items. Individuals can sponsor a week of meals for a campus.',
      learnMoreLink:'foodbank'},
@@ -47624,27 +47584,25 @@ function ChariotPanel({ platform, session, toast, setActive }) {
     var isNemt = form.category==='medical' && form.medicaidId;
     var miles = parseFloat(form.mileage)||0;
     var RATE = 0.67;
-    var CHARITY_RATE = 0.21;
     var baseCost = miles * RATE;
     var tipPct = form._tipPct !== undefined ? form._tipPct : 20;
     var tipAmt = baseCost * (tipPct/100);
     var totalCost = baseCost + tipAmt;
     var isMileageEligible = ['recovery','medical','education','employment','community'].includes(form.category);
-    var charitableDeduction = miles * CHARITY_RATE;
     var reqId = 'chr-'+Date.now();
 
-    // Generate mileage receipt if applicable
+    // Generate a plain trip summary if applicable
     if(isMileageEligible && miles > 0){
       var today = new Date();
       var receiptLines = [
         '════════════════════════════════════════════════════',
         '     REFINED RECOVERY NETWORK — CHARIOT PROGRAM',
-        '          CHARITABLE CONTRIBUTION RECEIPT',
+        '                 TRIP SUMMARY',
         '════════════════════════════════════════════════════',
         'Date:          '+today.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}),
-        'Receipt No:    '+reqId,
-        'Donor:         '+(userName||'Member'),
-        'Organization:  Refined Recovery Network LLC',
+        'Ref No:        '+reqId,
+        'Rider:         '+(userName||'Member'),
+        'Organization:  Refined Recovery Network',
         '────────────────────────────────────────────────────',
         'TRIP DETAILS',
         'Purpose:       '+form.purpose,
@@ -47654,30 +47612,19 @@ function ChariotPanel({ platform, session, toast, setActive }) {
         'To:            '+form.destination,
         'Miles:         '+miles+' miles',
         '────────────────────────────────────────────────────',
-        'TAX DEDUCTION CALCULATION (IRS §170)',
-        'Charitable mileage rate 2024: $0.21/mile',
-        'Qualified miles:  '+miles+' mi',
-        'Deductible amt:   $'+charitableDeduction.toFixed(2),
-        '',
-        'Note: Medical transportation (if applicable) may',
-        'qualify at the medical rate of $0.21/mile under',
-        'IRS Publication 502. Consult your tax advisor.',
-        '────────────────────────────────────────────────────',
         'COST SUMMARY',
         'Base fare:        $'+baseCost.toFixed(2)+' ('+miles+' mi × $'+RATE.toFixed(2)+')',
         'Driver tip ('+tipPct+'%): $'+tipAmt.toFixed(2),
         'Total paid:       $'+totalCost.toFixed(2),
         '────────────────────────────────────────────────────',
-        'No goods or services were provided in exchange for',
-        'this charitable contribution beyond the transportation',
-        'service itself. This receipt is provided for your',
-        'tax records per IRS §170 requirements.',
+        'This is a trip summary for your records.',
+        'It is not a tax receipt.',
         '════════════════════════════════════════════════════',
       ].join('\n');
-      // Save receipt to localStorage for download
+      // Save trip summary to localStorage for download
       try {
         var receipts = JSON.parse(localStorage.getItem('rrn_chariot_receipts')||'[]');
-        receipts.unshift({id:reqId, date:today.toISOString(), rider:userName, receipt:receiptLines, miles:miles, deduction:charitableDeduction, total:totalCost});
+        receipts.unshift({id:reqId, date:today.toISOString(), rider:userName, receipt:receiptLines, miles:miles, total:totalCost});
         localStorage.setItem('rrn_chariot_receipts', JSON.stringify(receipts.slice(0,50)));
       } catch(e){}
       // Offer download
@@ -47685,7 +47632,7 @@ function ChariotPanel({ platform, session, toast, setActive }) {
         var blob = new Blob([receiptLines],{type:'text/plain'});
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
-        a.href=url; a.download='Chariot_TaxReceipt_'+reqId+'.txt';
+        a.href=url; a.download='Chariot_TripSummary_'+reqId+'.txt';
         document.body.appendChild(a); a.click();
         document.body.removeChild(a); URL.revokeObjectURL(url);
       } catch(e){}
@@ -47698,7 +47645,7 @@ function ChariotPanel({ platform, session, toast, setActive }) {
       created:new Date().toISOString(), matchedDriver:null,
       // Cost data
       baseCost:baseCost, tipPct:tipPct, tipAmt:tipAmt, totalCost:totalCost,
-      isMileageEligible:isMileageEligible, charitableDeduction:charitableDeduction,
+      isMileageEligible:isMileageEligible,
       // Safety data
       femaleDriverPref:form.femaleDriverPref||false,
       trustedContactName:form.trustedContactName||'',
@@ -47710,7 +47657,7 @@ function ChariotPanel({ platform, session, toast, setActive }) {
       }
     }));
     setForm({category:'',subcategory:'',purpose:'',pickup:'',destination:'',date:'',time:'',notes:'',recurring:false,passengers:1,medicaidId:'',isVeteran:false,isSenior:false,isDisabled:false,employerId:'',mileage:'',femaleDriverPref:false,trustedContactName:'',trustedContactPhone:'',safetyPingEnabled:true,_tipPct:20});
-    toast({icon:'chr',title:'Chariot request submitted',body: isMileageEligible && miles>0 ? 'Mileage receipt downloaded. Driver matched shortly.' : isNemt?'NEMT request queued for Medicaid verification.':'A driver will be matched shortly.'});
+    toast({icon:'chr',title:'Chariot request submitted',body: isMileageEligible && miles>0 ? 'Trip summary downloaded. Driver matched shortly.' : isNemt?'NEMT request queued for Medicaid verification.':'A driver will be matched shortly.'});
     setTab('my');
   }
 
@@ -47990,16 +47937,14 @@ function ChariotPanel({ platform, session, toast, setActive }) {
         ),
         // ── COST CALCULATOR ─────────────────────────────────────────────────────
         (function(){
-          var RATE = 0.67; // IRS standard mileage rate 2024 — medical/charity = $0.21, but Chariot uses full $0.67 for employer/employment
-          var CHARITY_RATE = 0.21; // IRS §170 charitable contribution rate per mile
+          var RATE = 0.67; // Chariot per-mile cost estimate
           var miles = parseFloat(form.mileage) || 0;
           var baseCost = miles > 0 ? (miles * RATE) : 0;
           var tipPct = form._tipPct !== undefined ? form._tipPct : 20;
           var tipAmt = baseCost * (tipPct / 100);
           var total = baseCost + tipAmt;
-          // Mileage eligible: recovery, medical, education, employment trips = charitable mileage
+          // Mileage eligible categories get a logged trip summary
           var isMileageEligible = ['recovery','medical','education','employment','community'].includes(form.category);
-          var charitableDeduction = miles > 0 ? (miles * CHARITY_RATE) : 0;
           if (miles === 0) return null;
           return React.createElement('div',{style:{padding:'0.85rem',borderRadius:8,background:'rgba(200,145,58,0.07)',border:'1px solid rgba(200,145,58,0.3)',marginBottom:'0.75rem'}},
             React.createElement('div',{style:{fontSize:'0.68rem',fontWeight:700,color:'var(--gold)',textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:'0.65rem'}},'💰 Cost Estimate'),
@@ -48033,11 +47978,9 @@ function ChariotPanel({ platform, session, toast, setActive }) {
             ),
             // Mileage eligible badge + info
             isMileageEligible && React.createElement('div',{style:{padding:'0.55rem 0.7rem',borderRadius:6,background:'rgba(52,211,153,0.08)',border:'1px solid rgba(52,211,153,0.3)'}},
-              React.createElement('div',{style:{fontSize:'0.72rem',fontWeight:700,color:'#34d399',marginBottom:'0.2rem'}},'✅ Charitable Mileage Eligible'),
+              React.createElement('div',{style:{fontSize:'0.72rem',fontWeight:700,color:'#34d399',marginBottom:'0.2rem'}},'✅ Trip Summary Eligible'),
               React.createElement('div',{style:{fontSize:'0.68rem',color:'var(--dmuted)',lineHeight:1.5}},
-                'IRS §170: '+miles+' mi × $0.21/mi = ',
-                React.createElement('strong',{style:{color:'#34d399'}},'$'+charitableDeduction.toFixed(2)+' charitable deduction'),
-                '. A receipt will be generated on submit for your tax records.'
+                miles+' miles logged. A trip summary will be generated on submit for your records.'
               )
             )
           );
