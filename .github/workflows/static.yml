@@ -42,6 +42,16 @@ jobs:
         # check so a missing optional file does not fail the build.
         run: |
           set -euo pipefail
+
+          # Force a UTF-8 locale for this step. 38 of the ~692 music/ MP3
+          # filenames contain non-ASCII characters (curly quotes, em-dashes).
+          # The filesystem-walking copy below (cp -R on music/.) copies the
+          # real on-disk tree and is byte-safe regardless of locale, but a
+          # runner that defaults to the C locale could still mangle these
+          # names in shell globbing/word-splitting elsewhere. Pinning UTF-8
+          # removes that ambiguity so the 38 non-ASCII tracks are never lost.
+          export LC_ALL=C.UTF-8 LANG=C.UTF-8
+
           rm -rf _site
           mkdir -p _site
 
@@ -78,6 +88,15 @@ jobs:
           copy_dir lessons
 
           # (c) Asset directories
+          #
+          # music/ holds ~692 MP3s, 38 of which have non-ASCII filenames
+          # (curly quotes, em-dashes). copy_dir uses `cp -R "music/." ...`,
+          # which walks the real filesystem tree rather than a git file list,
+          # so those escaped-in-git names are copied verbatim. Do NOT replace
+          # this with a `git ls-files`-driven copy: git prints non-ASCII paths
+          # in quoted octal-escaped form and such a copy would silently drop
+          # the 38 tracks. The count guard at the end of this step enforces
+          # that every source MP3 reaches _site.
           for d in images ads ids data Batch085 music; do
             copy_dir "$d"
           done
@@ -107,6 +126,20 @@ jobs:
 
           echo "Staged _site contents:"
           find _site -maxdepth 1 | sort
+
+          # Audio-preservation guard (user condition 6).
+          # Fail the build if the number of staged music MP3s does not equal
+          # the number of source music MP3s. This makes a silent drop of the
+          # 38 non-ASCII tracks (or any track) impossible: a locale/copy
+          # regression that mangles filenames would change the count and
+          # block the deploy instead of serving an incomplete catalog.
+          src_music_mp3=$(find music -type f -iname '*.mp3' | wc -l | tr -d ' ')
+          site_music_mp3=$(find _site/music -type f -iname '*.mp3' | wc -l | tr -d ' ')
+          echo "music mp3 count: source=$src_music_mp3 staged=$site_music_mp3"
+          if [ "$src_music_mp3" -ne "$site_music_mp3" ]; then
+            echo "::error::music MP3 count mismatch: source=$src_music_mp3 staged=$site_music_mp3 (audio tracks were dropped during staging)"
+            exit 1
+          fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
