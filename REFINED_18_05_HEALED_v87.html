@@ -977,17 +977,17 @@ var evaluatePromotion = function(r, weeklyReports, currentStage) {
 
 // TAX_RULES (constant)
 var TAX_RULES = {
-  // Nonprofit (501c3) income — tax-deductible to donor, NOT taxable to RRN
+  // Ministry gift income — recorded as a gift, NOT taxable to RRN
   nonprofit: ['donation','grant_award','campaign_gift','restricted_fund','unrestricted_fund','program_fee_exempt'],
   // Taxable revenue — earned income, not charitable
   taxable:   ['placement_fee','license_fee','setup_fee','per_resident','cohort_sponsor','consulting_fee','wotc_service','saas_revenue'],
-  // Housing — mixed (program fees = nonproft if mission-related, rental income = potentially UBI)
+  // Housing — mixed (program fees = ministry gift if mission-related, rental income = potentially UBI)
   ubi_risk:  ['housing','rental_income','investment_income','unrelated_business'],
 };
 
 // classifyTransaction
 var classifyTransaction = function(category, type) {
-  if(TAX_RULES.nonprofit.includes(category)) return {class:'nonprofit', label:'Tax-Deductible', color:'var(--l5)', deductible:true, taxable:false, ubiRisk:false};
+  if(TAX_RULES.nonprofit.includes(category)) return {class:'nonprofit', label:'Ministry Gift', color:'var(--l5)', deductible:false, taxable:false, ubiRisk:false};
   if(TAX_RULES.ubi_risk.includes(category))  return {class:'ubi_risk',  label:'UBI Risk — Review', color:'#fc8181', deductible:false, taxable:true,  ubiRisk:true};
   if(TAX_RULES.taxable.includes(category))   return {class:'taxable',   label:'Taxable Revenue', color:'var(--gold)', deductible:false, taxable:true, ubiRisk:false};
   return {class:'unclassified', label:'Unclassified — Review', color:'var(--dmuted)', deductible:false, taxable:false, ubiRisk:false};
@@ -8715,7 +8715,7 @@ var CONTRIBUTION_PATHS = [
     desc:'Property donated or provided at no cost. Full market rental value may be deductible as in-kind charitable contribution.',
     fields:['marketRent','occupancyMonths','propertyValue'],
     legalDoc:'In-Kind Donation Agreement + IRS Form 8283 (if >$500)',
-    taxNote:'Full fair market rental value deductible as in-kind charitable donation to registered 501(c)(3)',
+    taxNote:'Recorded as an in-kind ministry gift.',
     reportObligation:'Annual valuation certification + impact statement',
     impactCategory:'Mission Housing'},
   { id:'workforce-transition', icon:'💼', label:'Workforce Transition Housing',
@@ -8729,7 +8729,7 @@ var CONTRIBUTION_PATHS = [
     desc:'Business or individual sponsors a dedicated recovery unit. Named sponsorship opportunity with full impact reporting.',
     fields:['marketRent','sponsorContribution','occupancyMonths','sponsorName'],
     legalDoc:'Sponsorship Agreement + Named Unit Recognition Letter',
-    taxNote:'Cash sponsorship contributions to 501(c)(3) fully deductible',
+    taxNote:'Cash sponsorship contributions are recorded as ministry gifts.',
     reportObligation:'Quarterly impact reports + annual sponsor letter',
     impactCategory:'Community Investment'},
   { id:'emergency-intake',    icon:'🚨', label:'Emergency Intake Property',
@@ -11619,18 +11619,15 @@ function TokenizationPanel({ platform, toast, update, session }) {
     if(!iForm.name||!iForm.email){toast({icon:'⚠️',title:'Name and email required'});return;}
     if(!iForm.amount){toast({icon:'⚠️',title:'Please enter an interest level'});return;}
     var amt = parseFloat(iForm.amount)||0;
-    var esmFee   = Math.round(amt * 0.10 * 100)/100;
     var rrnFee   = Math.round(amt * 0.05 * 100)/100;
-    var netToOp  = Math.round(amt * 0.85 * 100)/100;
+    var netToOp  = Math.round(amt * 0.95 * 100)/100;
     var record = Object.assign({},iForm,{
       id:'inv'+Date.now(),submittedAt:new Date().toISOString(),
       status:'interested',source:'tokenization-panel',
       receiptId:'RRN-INV-'+String(Date.now()).slice(-6),
-      fiscalSponsor:'Eagle Summit Ministries',
-      fiscalEIN:'[ESM-EIN]',
-      esmFee:esmFee, rrnFee:rrnFee, netToOperator:netToOp,
-      taxClass:'nonprofit', deductible:true,
-      legalEntity:'Refined Recovery Network LLC under ESM 501(c)(3)',
+      rrnFee:rrnFee, netToOperator:netToOp,
+      taxClass:'nonprofit', deductible:false,
+      legalEntity:'Refined Recovery Network LLC',
       secStructure:'Reg CF / Reg D pending attorney review',
       contractRequired:true
     });
@@ -11863,7 +11860,7 @@ function TokenizationPanel({ platform, toast, update, session }) {
         ),
         React.createElement('div',{style:{fontWeight:700,color:'var(--dtxt)',margin:'0.5rem 0 0.4rem',fontSize:'0.82rem',textTransform:'uppercase',letterSpacing:'0.08em'}},'Contribution Type'),
         sel(pForm.path,setPF('path'),[
-          ['charitable-donation','Charitable Donation — Tax-deductible in-kind gift (IRS Form 8283)'],
+          ['charitable-donation','In-Kind Gift — Property or asset ministry gift'],
           ['equity-partnership','Equity Partnership — Retain ownership share'],
           ['sponsored-unit','Named Sponsorship — Impact reporting + recognition'],
           ['lease','Long-Term Lease to RRN — Market or reduced rate'],
@@ -11951,14 +11948,14 @@ function TokenizationPanel({ platform, toast, update, session }) {
     var conCat = CATS_CONTRACT.find(function(c){return c.id===selCon;})||CATS_CONTRACT[0];
     return React.createElement('div',null,
       React.createElement('div',{style:{fontFamily:'var(--font-serif,Georgia)',fontSize:'1.2rem',color:'var(--dtxt)',fontWeight:700,marginBottom:'0.4rem'}},'Investment Agreements & Legal Structure'),
-      React.createElement('p',{style:{fontSize:'0.85rem',color:'var(--dmuted)',lineHeight:1.7,marginBottom:'1.1rem'}},'All RRN investment offerings flow through the fiscal sponsorship of Eagle Summit Ministries (ESM), a registered 501(c)(3) nonprofit. The fee structure below applies to all categories. Formal agreements require attorney review before execution.'),
-      // ESM Financial Structure
+      React.createElement('p',{style:{fontSize:'0.85rem',color:'var(--dmuted)',lineHeight:1.7,marginBottom:'1.1rem'}},'The fee structure below applies to all RRN investment categories. Formal agreements require attorney review before execution.'),
+      // RRN Financial Structure
       React.createElement('div',{style:{background:'linear-gradient(135deg,#07101f,#1a0c03)',border:'1px solid rgba(200,145,58,0.3)',borderRadius:14,padding:'1.5rem',marginBottom:'1rem'}},
         React.createElement('div',{style:{fontSize:'0.68rem',fontWeight:700,color:'var(--gold,#c8913a)',letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:'0.75rem'}},'Financial Structure — All Investment Categories'),
-        React.createElement('div',{style:{fontFamily:'var(--font-serif,Georgia)',fontSize:'1.1rem',color:'white',fontWeight:700,marginBottom:'0.65rem'}},'Eagle Summit Ministries Fiscal Sponsorship'),
-        React.createElement('p',{style:{fontSize:'0.83rem',color:'rgba(255,255,255,0.62)',lineHeight:1.75,marginBottom:'1rem'}},'Refined Recovery Network LLC operates under the fiscal sponsorship of Eagle Summit Ministries, a 501(c)(3) nonprofit organization. All investment income, grant awards, donations, and licensing fees flow through ESM for tax-compliance purposes. ESM serves as the legal fiscal sponsor and required additional insured on all policies.'),
-        React.createElement('div',{style:{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'0.75rem',marginBottom:'0.85rem'}},
-          [{l:'ESM Administrative Fee',v:'10%',c:'#fc8181',s:'Gross investment income → ESM'},{l:'RRN Platform Fee',v:'5%',c:'var(--gold,#c8913a)',s:'Gross investment income → RRN LLC'},{l:'Net to Program',v:'85%',c:'#4ade80',s:'Deployed to investment category'}].map(function(f){
+        React.createElement('div',{style:{fontFamily:'var(--font-serif,Georgia)',fontSize:'1.1rem',color:'white',fontWeight:700,marginBottom:'0.65rem'}},'RRN Platform Fee Structure'),
+        React.createElement('p',{style:{fontSize:'0.83rem',color:'rgba(255,255,255,0.62)',lineHeight:1.75,marginBottom:'1rem'}},'Refined Recovery Network LLC is the program operator. Investment income, grant awards, gifts, and licensing fees are administered by RRN LLC. The fee structure below applies across all investment categories.'),
+        React.createElement('div',{style:{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:'0.75rem',marginBottom:'0.85rem'}},
+          [{l:'RRN Platform Fee',v:'5%',c:'var(--gold,#c8913a)',s:'Gross investment income → RRN LLC'},{l:'Net to Program',v:'95%',c:'#4ade80',s:'Deployed to investment category'}].map(function(f){
             return React.createElement('div',{key:f.l,style:{background:'rgba(255,255,255,0.05)',borderRadius:10,padding:'1rem',textAlign:'center'}},
               React.createElement('div',{style:{fontFamily:'var(--font-serif,Georgia)',fontSize:'1.6rem',color:f.c,fontWeight:700}},f.v),
               React.createElement('div',{style:{fontSize:'0.72rem',color:'rgba(255,255,255,0.5)',marginTop:4,lineHeight:1.4}},f.l),
@@ -11966,7 +11963,7 @@ function TokenizationPanel({ platform, toast, update, session }) {
           })
         ),
         React.createElement('div',{style:{background:'rgba(200,145,58,0.06)',border:'1px solid rgba(200,145,58,0.2)',borderRadius:9,padding:'0.85rem',fontSize:'0.78rem',color:'rgba(255,255,255,0.55)',lineHeight:1.7}},
-          React.createElement('strong',{style:{color:'rgba(200,145,58,0.9)'}},'ESM Contact: '),'Don Taylor — Eagle Summit Ministries. All fiscal sponsorship correspondence directed to ESM. RRN LLC is the program operator. ESM holds the 501(c)(3) exemption under which all tax-deductible contributions are received.')
+          React.createElement('strong',{style:{color:'rgba(200,145,58,0.9)'}},'Contact: '),'RRN LLC is the program operator. All agreement correspondence is directed to RRN LLC at info@joinrrn.com.')
       ),
       // Contract selector
       React.createElement('div',{style:{fontWeight:700,color:'var(--dtxt)',marginBottom:'0.65rem',fontSize:'0.85rem'}},'Required Agreements by Category'),
@@ -11983,11 +11980,9 @@ function TokenizationPanel({ platform, toast, update, session }) {
         React.createElement('div',{style:{fontWeight:700,color:'var(--dtxt)',marginBottom:'0.5rem',fontSize:'0.9rem'}},conCat.name),
         React.createElement('div',{style:{fontSize:'0.82rem',color:'var(--dmuted)',marginBottom:'0.75rem'}},'Required document: ',React.createElement('strong',{style:{color:'var(--dtxt)'}},conCat.doc)),
         React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:'0.5rem'}},
-          ['Three-party agreement: ESM (fiscal sponsor) + RRN LLC (program operator) + Investor/Partner',
-           'ESM 10% administrative fee deducted from gross investment income at source',
+          ['Agreement: RRN LLC (program operator) + Investor/Partner',
            'RRN LLC 5% platform management fee deducted at source',
-           '85% net deployed to '+conCat.name+' program operations',
-           'ESM required as additional insured on all relevant policies',
+           '95% net deployed to '+conCat.name+' program operations',
            'Reg CF or Reg D securities structure — SEC counsel required before formal offering',
            'Investor interest expressions collected now — no funds transferred until formal offering opens',
            'All agreements subject to attorney review by both parties before execution'
@@ -12001,15 +11996,15 @@ function TokenizationPanel({ platform, toast, update, session }) {
       React.createElement('div',{style:{background:'var(--bg2)',border:'1px solid var(--bdr)',borderRadius:12,padding:'1.25rem',marginBottom:'1rem'}},
         React.createElement('div',{style:{fontWeight:700,color:'var(--dtxt)',marginBottom:'0.75rem',fontSize:'0.85rem',textTransform:'uppercase',letterSpacing:'0.08em'}},'Letter of Intent — Pre-Agreement Summary'),
         React.createElement('div',{style:{fontSize:'0.8rem',color:'var(--dmuted)',lineHeight:1.9,fontFamily:'Georgia,serif',borderLeft:'2px solid rgba(200,145,58,0.3)',paddingLeft:'1rem'}},
-          'This Letter of Intent confirms that Refined Recovery Network LLC ("RRN"), operating under the fiscal sponsorship of Eagle Summit Ministries ("ESM"), is accepting investor interest expressions for the ',conCat.name,' program.',React.createElement('br'),React.createElement('br'),
-          'Fee Structure: 10% ESM administrative fee + 5% RRN platform management fee = 85% net to program deployment.',React.createElement('br'),React.createElement('br'),
+          'This Letter of Intent confirms that Refined Recovery Network LLC ("RRN") is accepting investor interest expressions for the ',conCat.name,' program.',React.createElement('br'),React.createElement('br'),
+          'Fee Structure: 5% RRN platform management fee = 95% net to program deployment.',React.createElement('br'),React.createElement('br'),
           'This document does not constitute a securities offering, a binding investment agreement, or a commitment of funds by either party. Formal investment agreements will be executed following SEC legal review and registration or exemption filing under Regulation CF or Regulation D.',React.createElement('br'),React.createElement('br'),
           'Required execution documents: ',conCat.doc,'.',React.createElement('br'),React.createElement('br'),
-          'Contact: info@joinrrn.com | Eagle Summit Ministries — Don Taylor | 12883 HWY 190 West, Port Allen, Louisiana 70767'
+          'Contact: info@joinrrn.com | Refined Recovery Network LLC'
         )
       ),
       canSee&&React.createElement('div',{style:{background:'rgba(74,222,128,0.06)',border:'1px solid rgba(74,222,128,0.2)',borderRadius:10,padding:'1rem',fontSize:'0.8rem',color:'var(--dmuted)',lineHeight:1.7}},
-        React.createElement('strong',{style:{color:'#4ade80'}},'Admin Note: '),'All investor interest records in the Dashboard tab include ESM fee routing (10%), RRN fee (5%), and net to program (85%). These figures appear on each submission record for internal accounting. Formal contract execution requires attorney sign-off. Contact Don Taylor at ESM before activating any investment category.')
+        React.createElement('strong',{style:{color:'#4ade80'}},'Admin Note: '),'All investor interest records in the Dashboard tab include the RRN platform fee (5%) and net to program (95%). These figures appear on each submission record for internal accounting. Formal contract execution requires attorney sign-off.')
     );
   };
 
@@ -12144,7 +12139,7 @@ function PitchBuilder({ platform, toast, session }) {
         { tag:'The Impact',    headline:'Your investment buys permanence.', body:'The RRN platform tracks every resident from intake through independence. You can see the journey — sobriety milestones, job placements, step completions, family reunification — in real time. This is not faith-based giving. This is faith-backed evidence.', stat:M.momentum+'%', statLabel:'Network Momentum', icon:'📈' },
         { tag:'The Need',      headline:'Expansion requires resource.', body:'We have '+M.leaders+' emerging leaders ready to plant new campuses. We have '+M.workforceReady+' workforce candidates who need placement support. We have families waiting for reunion. The infrastructure is built. The fuel is funding.', stat:M.leaders, statLabel:'Leaders Ready', icon:'🚀' },
         { tag:'Proof',         headline:'"'+testimony+'"', body:'— '+author+' '+M.donorTotal.toLocaleString()+' across '+M.donorCount+' donors', stat:M.donorCount, statLabel:'Active Donors', icon:'💛' },
-        { tag:'Give Now',      headline:form.cta||'Sponsor a resident. Fund a campus. Change a family.', body:'Monthly gifts start at any level. Designated giving for housing, workforce, or campus expansion available. All gifts acknowledged with impact reporting.', stat:'Tax Deductible', statLabel:'501(c)(3) Verified', icon:'✅', isCTA:true },
+        { tag:'Give Now',      headline:form.cta||'Sponsor a resident. Fund a campus. Change a family.', body:'Monthly gifts start at any level. Designated giving for housing, workforce, or campus expansion available. All gifts acknowledged with impact reporting.', stat:'Ministry Gift', statLabel:'Every gift matters', icon:'✅', isCTA:true },
       ],
       city:[
         { tag:'The Data',      headline:'Recovery saves cities money.', body:'Every person cycling through the justice system costs Louisiana taxpayers $35,000+/year. RRN\'s recovery model has maintained '+M.daysSoberAvg+'-day average sobriety among active residents — reducing recidivism, emergency services cost, and family court caseloads.', stat:M.totalMembers, statLabel:'Diverted from System', icon:'🌆' },
@@ -14399,15 +14394,15 @@ function TradePartnersPanel({ platform, update, toast, session, setActive }) {
 
 // ═══════════════════════════════════════════════════════════════════════════
 // SUB-OPERATOR ONBOARDING PANEL — Exhibit B Phase 1
-// Three-party agreement: ESM + RRN + Sub-Operator
-// Fee structure: 10% ESM + 5% RRN = 85% net to sub-op
+// Two-party agreement: RRN + Sub-Operator
+// Fee structure: 5% RRN = 95% net to sub-op
 // system-integrity-skill-highest-priority: full workflow, no stubs
 // ═══════════════════════════════════════════════════════════════════════════
 
 function SubOperatorOnboardingPanel({ platform, update, toast, session, setActive }) {
   var _s = React.useState('list'); var view = _s[0]; var setView = _s[1];
   var _f = React.useState({
-    legalName:'', entityType:'LLC', state:'Louisiana', ein:'', has501c3:'no',
+    legalName:'', entityType:'LLC', state:'Louisiana', ein:'', hasNonprofit:'no',
     address:'', city:'', zip:'', primaryContact:'', title:'', phone:'', email:'',
     ministryType:'recovery', campusCount:'1', estimatedMembers:'',
     tier:'tier1', insuranceConfirmed:'no', signedBy:'', signedTitle:'',
@@ -14436,7 +14431,7 @@ function SubOperatorOnboardingPanel({ platform, update, toast, session, setActiv
       createdAt: new Date().toISOString(),
       status: 'pending-review',
       agreementVersion: 'Exhibit B v5',
-      feeStructure: { esm: 0.10, rrn: 0.05, net: 0.85 }
+      feeStructure: { rrn: 0.05, net: 0.95 }
     });
     var ops2 = getOps();
     ops2.unshift(newOp);
@@ -14444,7 +14439,7 @@ function SubOperatorOnboardingPanel({ platform, update, toast, session, setActiv
     if(update) update(function(p){ var n=Object.assign({},p); n.subOperators=(n.subOperators||[]); n.subOperators.unshift(newOp); return n; });
     toast && toast({icon:'✅',title:'Sub-operator application submitted'});
     setView('list');
-    setForm({legalName:'',entityType:'LLC',state:'Louisiana',ein:'',has501c3:'no',address:'',city:'',zip:'',primaryContact:'',title:'',phone:'',email:'',ministryType:'recovery',campusCount:'1',estimatedMembers:'',tier:'tier1',insuranceConfirmed:'no',signedBy:'',signedTitle:'',agreementDate:new Date().toISOString().split('T')[0],credentialLevel:'L3',status:'pending'});
+    setForm({legalName:'',entityType:'LLC',state:'Louisiana',ein:'',hasNonprofit:'no',address:'',city:'',zip:'',primaryContact:'',title:'',phone:'',email:'',ministryType:'recovery',campusCount:'1',estimatedMembers:'',tier:'tier1',insuranceConfirmed:'no',signedBy:'',signedTitle:'',agreementDate:new Date().toISOString().split('T')[0],credentialLevel:'L3',status:'pending'});
   }
 
   function activate(id){
@@ -14481,14 +14476,13 @@ function SubOperatorOnboardingPanel({ platform, update, toast, session, setActiv
     React.createElement('div',{className:'lvl-header',style:{'--acc':'var(--l2)'}},
       React.createElement('div',{className:'lvh-tag'},'PLATFORM EXPANSION'),
       React.createElement('div',{className:'lvh-title'},'🏛️ Sub-Operator Onboarding'),
-      React.createElement('div',{className:'lvh-sub'},'Exhibit B — PWA Expansion Agreement v5 · ESM + RRN + Sub-Operator · Three-Party')
+      React.createElement('div',{className:'lvh-sub'},'Exhibit B — PWA Expansion Agreement v5 · RRN + Sub-Operator · Two-Party')
     ),
 
     // Fee waterfall summary
-    React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'0.65rem',marginBottom:'1rem'}},
-      [{label:'ESM Admin Fee',val:'10%',color:'#fc8181',sub:'Gross funds → ESM'},
-       {label:'RRN Platform Fee',val:'5%',color:'#c8913a',sub:'Gross funds → RRN'},
-       {label:'Sub-Op Net',val:'85%',color:'var(--l5)',sub:'After both deductions'}
+    React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.65rem',marginBottom:'1rem'}},
+      [{label:'RRN Platform Fee',val:'5%',color:'#c8913a',sub:'Gross funds → RRN'},
+       {label:'Sub-Op Net',val:'95%',color:'var(--l5)',sub:'After platform fee'}
       ].map(function(m){ return React.createElement('div',{key:m.label,className:'d-card',style:{textAlign:'center',padding:'0.75rem'}},
           React.createElement('div',{style:{fontSize:'0.65rem',color:'var(--dmuted)',textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:'0.25rem'}},m.label),
           React.createElement('div',{style:{fontSize:'1.4rem',fontWeight:900,color:m.color,fontFamily:'var(--font-mono)'}},m.val),
@@ -14543,7 +14537,7 @@ function SubOperatorOnboardingPanel({ platform, update, toast, session, setActiv
     React.createElement('div',{className:'lvl-header',style:{'--acc':'var(--l2)'}},
       React.createElement('div',{className:'lvh-tag'},'EXHIBIT B — PWA EXPANSION AGREEMENT v5'),
       React.createElement('div',{className:'lvh-title'},'New Sub-Operator Application'),
-      React.createElement('div',{className:'lvh-sub'},'Three-party agreement · ESM + RRN + Sub-Operator · All fields required for activation')
+      React.createElement('div',{className:'lvh-sub'},'RRN + Sub-Operator · Two-Party · All fields required for activation')
     ),
 
     React.createElement('button',{onClick:function(){setView('list');},style:{marginBottom:'1rem',padding:'0.4rem 0.9rem',borderRadius:6,border:'1px solid var(--bdr2)',background:'var(--bg3)',color:'var(--dmuted)',cursor:'pointer',fontSize:'0.78rem'}},'← Back'),
@@ -14557,7 +14551,7 @@ function SubOperatorOnboardingPanel({ platform, update, toast, session, setActiv
           inp('Entity Type','entityType',{select:true,options:[{v:'LLC',l:'LLC'},{v:'Nonprofit',l:'Nonprofit Corporation'},{v:'Church',l:'Church Corporation'},{v:'Other',l:'Other Incorporated Ministry'}]}),
           inp('State of Organization','state',{placeholder:'Louisiana'}),
           inp('Federal EIN (if applicable)','ein',{placeholder:'XX-XXXXXXX'}),
-          inp('501(c)(3) Status','has501c3',{select:true,options:[{v:'yes',l:'Yes — active 501(c)(3)'},{v:'no',l:'No'},{v:'pending',l:'Pending'}]}),
+          inp('Your Nonprofit Status','hasNonprofit',{select:true,options:[{v:'yes',l:'Yes — active nonprofit'},{v:'no',l:'No'},{v:'pending',l:'Pending'}]}),
           inp('Primary Ministry Address *','address',{required:true}),
           inp('City','city',{}),
           inp('ZIP Code','zip',{})
@@ -14633,7 +14627,7 @@ function SubOperatorOnboardingPanel({ platform, update, toast, session, setActiv
           inp('Title','signedTitle',{placeholder:'Executive Director, etc.'})
         ),
         React.createElement('div',{style:{marginTop:'0.75rem',padding:'0.75rem',background:'rgba(239,68,68,0.05)',border:'1px solid rgba(239,68,68,0.2)',borderRadius:6,fontSize:'0.75rem',color:'var(--dmuted)',lineHeight:1.5}},
-          '⚠️ By submitting this application, the Sub-Operator agrees to the Exhibit B PWA Expansion Agreement v5 — a three-party agreement between Eagle Summit Ministries (ESM), Refined Recovery Network LLC (RRN), and the Sub-Operator. Fee structure: 10% ESM administrative fee + 5% RRN platform fee = 85% net to Sub-Operator. ESM is required additional insured on all policies. Attorney review recommended before execution.'
+          '⚠️ By submitting this application, the Sub-Operator agrees to the Exhibit B PWA Expansion Agreement v5 — a two-party agreement between Refined Recovery Network LLC (RRN) and the Sub-Operator. Fee structure: 5% RRN platform fee = 95% net to Sub-Operator. RRN is required additional insured on all policies. Attorney review recommended before execution.'
         )
       )
     ),
@@ -17240,7 +17234,7 @@ function GrantApplicationBuilder({ grant, platform, onClose, toast }) {
 
     if(s==='attach') return React.createElement('div',null,
       React.createElement('div',{style:{fontSize:'0.82rem',color:'var(--dmuted)',marginBottom:'0.75rem',lineHeight:1.6}},'Checklist of required attachments. Assemble these as a packet with your application.'),
-      ['IRS 501(c)(3) Determination Letter','Most Recent Audited Financial Statements','Board of Directors Roster','Organizational Chart','Letters of Support / MOU from Partners',
+      ['IRS Determination Letter (if applicable)','Most Recent Audited Financial Statements','Board of Directors Roster','Organizational Chart','Letters of Support / MOU from Partners',
        'Resumes of Key Personnel','Logic Model / Theory of Change','Proof of Non-Discrimination Policy','Indirect Cost Rate Agreement (if applicable)'].map(function(a){
         var key = 'attach_'+a.replace(/\s+/g,'_');
         return React.createElement('div',{key:a,style:{display:'flex',alignItems:'center',gap:'0.5rem',padding:'0.45rem 0',borderBottom:'1px solid var(--bdr)',fontSize:'0.82rem',color:'var(--dtxt)'}},
@@ -19512,7 +19506,7 @@ function BizQRStudio({ platform, update, toast, session, setActive }) {
         '<div class="verse">&ldquo;I can do all things through Christ which strengtheneth me.&rdquo; &mdash; Phil. 4:13 KJV<\/div>',
         '<div class="contact">'+url+' \u00b7 '+ph+'<\/div>',
       '<\/div>',
-      '<div class="bot-bar"><div class="bot-text">Est. 2004 \u00b7 Thibodaux, LA \u00b7 Free \u00b7 Open to All \u00b7 501(c)(3) Nonprofit<\/div><\/div>',
+      '<div class="bot-bar"><div class="bot-text">Est. 2004 \u00b7 Thibodaux, LA \u00b7 Free \u00b7 Open to All<\/div><\/div>',
       '<'+'script>window.onload=function(){',
         'new QRCode(document.getElementById("qr"),{text:"'+url+'",',
         'width:280,height:280,colorDark:"#0c1a2e",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.H});',
@@ -19749,7 +19743,7 @@ function BizQRStudio({ platform, update, toast, session, setActive }) {
       '<\/div>',
       '<div class="bot-bar">',
         '<div class="bot-text">refinedrecovery.com<\/div>',
-        '<div class="bot-text">Est. 2004 \u00b7 South Louisiana \u00b7 501(c)(3) Nonprofit<\/div>',
+        '<div class="bot-text">Est. 2004 \u00b7 South Louisiana<\/div>',
         '<div class="bot-text">'+f.phone+'<\/div>',
       '<\/div>',
       '<'+'script>window.onload=function(){',
@@ -23697,16 +23691,16 @@ function ModuleControlCenter({ platform, update, session, toast }) {
 // -- TAX CLASSIFICATION ENGINE ----------------------------------------
 // -- FINANCIAL/TAX UTILS — pure, extracted to js/utils.js (Phase 3) ----------
 var TAX_RULES = {
-  // Nonprofit (501c3) income — tax-deductible to donor, NOT taxable to RRN
+  // Ministry gift income — recorded as a gift, NOT taxable to RRN
   nonprofit: ['donation','grant_award','campaign_gift','restricted_fund','unrestricted_fund','program_fee_exempt'],
   // Taxable revenue — earned income, not charitable
   taxable:   ['placement_fee','license_fee','setup_fee','per_resident','cohort_sponsor','consulting_fee','wotc_service','saas_revenue'],
-  // Housing — mixed (program fees = nonproft if mission-related, rental income = potentially UBI)
+  // Housing — mixed (program fees = ministry gift if mission-related, rental income = potentially UBI)
   ubi_risk:  ['housing','rental_income','investment_income','unrelated_business'],
 };
 
 var classifyTransaction = function(category, type) {
-  if(TAX_RULES.nonprofit.includes(category)) return {class:'nonprofit', label:'Tax-Deductible', color:'var(--l5)', deductible:true, taxable:false, ubiRisk:false};
+  if(TAX_RULES.nonprofit.includes(category)) return {class:'nonprofit', label:'Ministry Gift', color:'var(--l5)', deductible:false, taxable:false, ubiRisk:false};
   if(TAX_RULES.ubi_risk.includes(category))  return {class:'ubi_risk',  label:'UBI Risk — Review', color:'#fc8181', deductible:false, taxable:true,  ubiRisk:true};
   if(TAX_RULES.taxable.includes(category))   return {class:'taxable',   label:'Taxable Revenue', color:'var(--gold)', deductible:false, taxable:true, ubiRisk:false};
   return {class:'unclassified', label:'Unclassified — Review', color:'var(--dmuted)', deductible:false, taxable:false, ubiRisk:false};
@@ -23742,8 +23736,8 @@ var createZeffyEntry = function(platform, update, donation, session) {
     category:'donation', description:'Zeffy Donation — '+donation.donorName+(donation.campaign?' ['+donation.campaign+']':''),
     amount:donation.amount, date:donation.date||today,
     payer:donation.donorName, campus:donation.campus||'General',
-    status:'received', taxClass:'nonprofit', taxLabel:'Tax-Deductible',
-    deductible:true, ubiRisk:false,
+    status:'received', taxClass:'nonprofit', taxLabel:'Ministry Gift',
+    deductible:false, ubiRisk:false,
     zeffyRef:donation.zeffyRef||'', fundType:donation.fundType||'unrestricted',
     campaign:donation.campaign||'', donorEmail:donation.donorEmail||'',
     notes:donation.notes||''
@@ -23900,7 +23894,7 @@ function UnifiedFinancialOverview({ platform, update, session, toast, setActive 
     ),
 
     React.createElement('div',{style:{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'0.85rem',marginBottom:'1.25rem'}},
-      [{l:'🟢 Zeffy (Nonprofit)',v:fmt(zeffyTotal),c:'var(--l5)',sub:'Tax-deductible'},
+      [{l:'🟢 Zeffy (Gifts)',v:fmt(zeffyTotal),c:'var(--l5)',sub:'Ministry gifts'},
        {l:'🔵 PayPal (Revenue)',v:fmt(paypalTotal),c:'var(--l2)',sub:'Taxable earned income'},
        {l:'Total Income',v:fmt(totalIncome),c:'var(--gold)',sub:'All sources combined'},
        {l:'Net Position',v:fmt(netPosition),c:netPosition>=0?'var(--l5)':'#fc8181',sub:'Income minus expenses'},
@@ -23920,8 +23914,7 @@ function UnifiedFinancialOverview({ platform, update, session, toast, setActive 
     // Tabs
     React.createElement('div',{style:{display:'flex',gap:0,borderBottom:'1px solid var(--bdr)',marginBottom:'1.25rem',flexWrap:'wrap'}},
       [['overview','📊 Overview'],['zeffy','🟢 Zeffy / Donations'],['paypal','🔵 PayPal / Invoices'],
-       ['tax','⚖️ Tax Classification'],['splits','🔧 Split Engine'],['campus','🏘️️ By Campus'],
-       ['esm','🏛️ ESM / Fiscal']].map(function(t){
+       ['tax','⚖️ Tax Classification'],['splits','🔧 Split Engine'],['campus','🏘️️ By Campus']].map(function(t){
         return React.createElement('button',{key:t[0],onClick:function(){setTab(t[0]);},
           style:{padding:'0.5rem 0.9rem',fontSize:'0.8rem',fontWeight:tab===t[0]?700:500,
             color:tab===t[0]?'var(--gold)':'var(--dmuted)',background:'none',border:'none',
@@ -23983,7 +23976,7 @@ function UnifiedFinancialOverview({ platform, update, session, toast, setActive 
     tab==='zeffy'&&React.createElement('div',null,
       React.createElement('div',{style:{padding:'0.85rem 1rem',background:'rgba(91,196,110,0.05)',border:'1px solid rgba(91,196,110,0.2)',borderRadius:10,marginBottom:'1.25rem',fontSize:'0.8rem',color:'var(--dmuted)',lineHeight:1.7}},
         React.createElement('span',{style:{fontWeight:700,color:'var(--l5)'}},'🟢 Zeffy Integration: '),
-        'Zeffy is a zero-fee nonprofit donation platform. Donations collected via Zeffy arrive as tax-deductible gifts to RRN (501c3). Record each donation below — or import from your Zeffy dashboard export. All Zeffy entries are auto-classified as nonprofit/tax-deductible and are ',
+        'Zeffy is a zero-fee donation platform. Donations collected via Zeffy arrive as ministry gifts to RRN. Record each donation below — or import from your Zeffy dashboard export. All Zeffy entries are auto-classified as ministry gifts and are ',
         React.createElement('strong',null,'never mixed'),
         ' with PayPal revenue in reporting or splits.'
       ),
@@ -23993,7 +23986,7 @@ function UnifiedFinancialOverview({ platform, update, session, toast, setActive 
       React.createElement('div',{className:'d-card',style:{marginTop:'1rem'}},
         React.createElement('div',{className:'d-card-head',style:{justifyContent:'space-between'}},
           React.createElement('span',{className:'d-card-title'},'ZEFFY DONATIONS — '+fmt(zeffyTotal)+' total'),
-          React.createElement('span',{style:{fontSize:'0.72rem',color:'var(--l5)',fontWeight:700}},'All tax-deductible')
+          React.createElement('span',{style:{fontSize:'0.72rem',color:'var(--l5)',fontWeight:700}},'All ministry gifts')
         ),
         React.createElement('div',{className:'d-card-body'},
           zeffyEntries.length===0?
@@ -24006,7 +23999,7 @@ function UnifiedFinancialOverview({ platform, update, session, toast, setActive 
               ),
               React.createElement('div',{style:{textAlign:'right'}},
                 React.createElement('div',{style:{fontWeight:700,color:'var(--l5)',fontFamily:'var(--font-mono)'}},fmt(e.amount||0)),
-                React.createElement('div',{style:{fontSize:'0.62rem',color:'var(--l5)',fontWeight:700}},'TAX-DEDUCTIBLE')
+                React.createElement('div',{style:{fontSize:'0.62rem',color:'var(--l5)',fontWeight:700}},'MINISTRY GIFT')
               )
             );
           })
@@ -24068,7 +24061,7 @@ function UnifiedFinancialOverview({ platform, update, session, toast, setActive 
     // -- TAX CLASSIFICATION TAB --
     tab==='tax'&&React.createElement('div',null,
       React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'0.85rem',marginBottom:'1.25rem'}},
-        [{label:'🟢 Nonprofit / Tax-Deductible',val:fmt(nonprofitTotal),count:filteredLedger.filter(function(e){return e.taxClass==='nonprofit';}).length,color:'var(--l5)',desc:'Donations, grants, restricted/unrestricted gifts. Deductible to donor. Not taxable to Refined Recovery Network.'},
+        [{label:'🟢 Ministry Gifts',val:fmt(nonprofitTotal),count:filteredLedger.filter(function(e){return e.taxClass==='nonprofit';}).length,color:'var(--l5)',desc:'Donations, grants, restricted/unrestricted gifts. Recorded as ministry gifts. Not taxable to Refined Recovery Network.'},
          {label:'🔵 Taxable Revenue',val:fmt(taxableTotal),count:filteredLedger.filter(function(e){return e.taxClass==='taxable';}).length,color:'var(--l2)',desc:'Placement fees, license fees, service revenue. Subject to federal/state income tax.'},
          {label:'⚠️ UBI Risk',val:fmt(ubiRiskTotal),count:ubiFlags.length,color:'#fc8181',desc:'Unrelated Business Income. May trigger UBIT. Review with accountant. Housing income is common UBI risk for nonprofits.'},
         ].map(function(s){
@@ -24174,184 +24167,8 @@ function UnifiedFinancialOverview({ platform, update, session, toast, setActive 
         );
       })
     )
-,
 
-    // -- ESM / FISCAL TAB --
-    tab==='esm'&&React.createElement('div',null,
-
-      // Fee waterfall card
-      React.createElement('div',{className:'d-card',style:{marginBottom:'0.85rem'}},
-        React.createElement('div',{className:'d-card-head'},
-          React.createElement('span',{className:'d-card-title'},'\U0001f4b0 ESM FISCAL FEE WATERFALL'),
-          React.createElement('span',{style:{fontSize:'0.7rem',color:'var(--dmuted)'}},
-            'Per FSA Article III \xb7 Exhibit B \xa7 3.2')
-        ),
-        React.createElement('div',{className:'d-card-body'},
-          // Gross line
-          React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',
-            padding:'0.6rem 0.75rem',background:'rgba(91,196,110,0.08)',borderRadius:6,marginBottom:'0.4rem'}},
-            React.createElement('div',null,
-              React.createElement('div',{style:{fontWeight:700,color:'var(--dtxt)',fontSize:'0.88rem'}},'Gross funds received'),
-              React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)'}},'All grants, donations, program revenues through ESM\u2019s EIN')
-            ),
-            React.createElement('div',{style:{fontFamily:'var(--font-mono)',fontWeight:700,color:'var(--l5)',fontSize:'1rem'}},
-              fmt(totalIncome))
-          ),
-          // ESM deduction
-          React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',
-            padding:'0.6rem 0.75rem',background:'rgba(239,68,68,0.05)',borderRadius:6,marginBottom:'0.4rem'}},
-            React.createElement('div',null,
-              React.createElement('div',{style:{fontWeight:700,color:'var(--dtxt)',fontSize:'0.88rem'}},'\u2212 ESM administrative fee \xb7 10%'),
-              React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)'}},'Eagle Summit Ministries fiscal administration \xb7 FSA Art. III \xb7 501(c)(3) pass-through')
-            ),
-            React.createElement('div',{style:{fontFamily:'var(--font-mono)',fontWeight:700,color:'#fc8181',fontSize:'1rem'}},
-              '\u2212' + fmt(totalIncome * 0.10))
-          ),
-          // RRN platform fee (sub-ops only)
-          React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',
-            padding:'0.6rem 0.75rem',background:'rgba(239,68,68,0.04)',borderRadius:6,marginBottom:'0.4rem'}},
-            React.createElement('div',null,
-              React.createElement('div',{style:{fontWeight:700,color:'var(--dtxt)',fontSize:'0.88rem'}},'\u2212 RRN platform fee \xb7 5%'),
-              React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)'}},'Applied to sub-operator funds only \xb7 Exhibit B Part III \xb7 platform administration')
-            ),
-            React.createElement('div',{style:{fontFamily:'var(--font-mono)',fontWeight:700,color:'#fba97a',fontSize:'1rem'}},
-              '\u2212' + fmt(totalIncome * 0.05))
-          ),
-          // Net to program
-          React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',
-            padding:'0.75rem 0.85rem',background:'rgba(45,212,192,0.1)',border:'1px solid rgba(45,212,192,0.25)',
-            borderRadius:6,marginBottom:'0.4rem'}},
-            React.createElement('div',null,
-              React.createElement('div',{style:{fontWeight:700,color:'var(--dtxt)',fontSize:'0.9rem'}},'= Net to program (85%)'),
-              React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)'}},'Disbursed to RRN operating programs after all fees')
-            ),
-            React.createElement('div',{style:{fontFamily:'var(--font-mono)',fontWeight:800,color:'var(--l2)',fontSize:'1.1rem'}},
-              fmt(totalIncome * 0.85))
-          ),
-          // Continuity reserve
-          React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',
-            padding:'0.6rem 0.75rem',background:'rgba(200,145,58,0.06)',borderRadius:6}},
-            React.createElement('div',null,
-              React.createElement('div',{style:{fontWeight:700,color:'var(--dtxt)',fontSize:'0.88rem'}},'\U0001f6e1\ufe0f 30-day continuity reserve'),
-              React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)'}},'Addendum C Art. 4 \xb7 Protected Funds buffer \xb7 held in ESM escrow')
-            ),
-            React.createElement('div',{style:{fontFamily:'var(--font-mono)',fontWeight:700,color:'var(--gold)',fontSize:'1rem'}},
-              fmt((totalIncome / 12).toFixed(0)))
-          )
-        )
-      ),
-
-      // Agreement status cards
-      React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.75rem',marginBottom:'0.85rem'}},
-        // FSA status
-        React.createElement('div',{className:'d-card'},
-          React.createElement('div',{className:'d-card-head'},
-            React.createElement('span',{className:'d-card-title'},'FSA STATUS')
-          ),
-          React.createElement('div',{className:'d-card-body'},
-            React.createElement('div',{style:{fontSize:'0.82rem',color:'var(--dtxt)',fontWeight:600,marginBottom:'0.3rem'}},
-              'Fiscal Sponsorship Agreement v4'),
-            React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)',marginBottom:'0.5rem'}},
-              'Eagle Summit Ministries \xb7 ESM/RRN'),
-            ['ESM admin fee: 10% gross','Disbursement: within 30 days','Audit rights: annual',
-              'Termination notice: 90 days','Governing law: Louisiana'].map(function(item){
-              return React.createElement('div',{key:item,style:{display:'flex',alignItems:'center',gap:'0.4rem',
-                fontSize:'0.72rem',color:'var(--dmuted)',marginBottom:'0.2rem'}},
-                React.createElement('span',{style:{color:'var(--l5)'}},'✓'),item
-              );
-            }),
-            React.createElement('div',{style:{marginTop:'0.6rem',padding:'0.4rem 0.6rem',
-              background:'rgba(200,145,58,0.08)',borderRadius:4,fontSize:'0.68rem',color:'var(--gold)',fontWeight:700}},
-              '\u26a0\ufe0f Attorney review required before execution')
-          )
-        ),
-
-        // Exhibit B status
-        React.createElement('div',{className:'d-card'},
-          React.createElement('div',{className:'d-card-head'},
-            React.createElement('span',{className:'d-card-title'},'EXHIBIT B STATUS')
-          ),
-          React.createElement('div',{className:'d-card-body'},
-            React.createElement('div',{style:{fontSize:'0.82rem',color:'var(--dtxt)',fontWeight:600,marginBottom:'0.3rem'}},
-              'PWA Expansion Agreement v5'),
-            React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)',marginBottom:'0.5rem'}},
-              'ESM + RRN + Sub-Operator \xb7 3-party'),
-            ['RRN platform fee: 5% gross','Sub-op net: 85% of gross','Credential level assigned at onboarding',
-              'ESM is required additional insured','Insurance: per operator tier'].map(function(item){
-              return React.createElement('div',{key:item,style:{display:'flex',alignItems:'center',gap:'0.4rem',
-                fontSize:'0.72rem',color:'var(--dmuted)',marginBottom:'0.2rem'}},
-                React.createElement('span',{style:{color:'var(--l5)'}},'✓'),item
-              );
-            }),
-            React.createElement('div',{style:{marginTop:'0.6rem',padding:'0.4rem 0.6rem',
-              background:'rgba(91,196,110,0.08)',borderRadius:4,fontSize:'0.68rem',color:'var(--l5)',fontWeight:700}},
-              '\u2705 Active for sub-operator onboarding')
-          )
-        )
-      ),
-
-      // Addendum C / Succession
-      React.createElement('div',{className:'d-card',style:{marginBottom:'0.85rem'}},
-        React.createElement('div',{className:'d-card-head'},
-          React.createElement('span',{className:'d-card-title'},'\U0001f510 SUCCESSION & CONTINUITY — ADDENDUM C')
-        ),
-        React.createElement('div',{className:'d-card-body'},
-          React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'0.75rem'}},
-            React.createElement('div',{style:{padding:'0.6rem',background:'var(--dsub)',borderRadius:6}},
-              React.createElement('div',{style:{fontSize:'0.68rem',color:'var(--dmuted)',textTransform:'uppercase',
-                letterSpacing:'0.08em',fontWeight:700,marginBottom:'0.25rem'}},'Key man'),
-              React.createElement('div',{style:{fontWeight:700,color:'var(--dtxt)',fontSize:'0.85rem'}},'Don Taylor'),
-              React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)'}},'ESM authorized representative')
-            ),
-            React.createElement('div',{style:{padding:'0.6rem',background:'var(--dsub)',borderRadius:6}},
-              React.createElement('div',{style:{fontSize:'0.68rem',color:'var(--dmuted)',textTransform:'uppercase',
-                letterSpacing:'0.08em',fontWeight:700,marginBottom:'0.25rem'}},'Protected funds'),
-              React.createElement('div',{style:{fontWeight:700,color:'var(--l5)',fontFamily:'var(--font-mono)',fontSize:'0.85rem'}},
-                fmt(totalIncome)),
-              React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)'}},'All funds held by ESM')
-            ),
-            React.createElement('div',{style:{padding:'0.6rem',background:'var(--dsub)',borderRadius:6}},
-              React.createElement('div',{style:{fontSize:'0.68rem',color:'var(--dmuted)',textTransform:'uppercase',
-                letterSpacing:'0.08em',fontWeight:700,marginBottom:'0.25rem'}},'Continuity period'),
-              React.createElement('div',{style:{fontWeight:700,color:'var(--dtxt)',fontSize:'0.85rem'}},'30 days'),
-              React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)'}},'Key man event \u2192 successor')
-            )
-          ),
-          React.createElement('div',{style:{marginTop:'0.65rem',fontSize:'0.72rem',color:'var(--dmuted)',
-            padding:'0.4rem 0.6rem',background:'rgba(239,68,68,0.05)',borderRadius:4,lineHeight:1.5}},
-            '\u26a0\ufe0f Key Man Events: death \xb7 incapacity 30+ days \xb7 resignation \xb7 removal \xb7 criminal conviction. ',
-            'On any event, Protected Funds freeze within 24 hours. Backup Fiscal Sponsor assumes control within 30 days.'
-          )
-        )
-      ),
-
-      // Insurance tier reference
-      React.createElement('div',{className:'d-card'},
-        React.createElement('div',{className:'d-card-head'},
-          React.createElement('span',{className:'d-card-title'},'\U0001f6e1\ufe0f INSURANCE REQUIREMENTS BY TIER')
-        ),
-        React.createElement('div',{className:'d-card-body'},
-          [
-            {tier:'Tier 1',desc:'Weekly meetings, curriculum, peer support. No residential.',
-              gl:'$1M / $2M',prof:'Not required',umbrella:'$1M recommended'},
-            {tier:'Tier 2',desc:'Day program, transitional housing, structured schedule.',
-              gl:'$2M / $4M',prof:'$1M / $3M',umbrella:'$2M recommended'},
-            {tier:'Tier 3',desc:'Residential treatment, clinical services, court-referred.',
-              gl:'$3M / $5M',prof:'$2M / $5M',umbrella:'$5M required'},
-          ].map(function(t){
-            return React.createElement('div',{key:t.tier,style:{display:'flex',gap:'1rem',
-              padding:'0.55rem 0',borderBottom:'1px solid var(--bdr)',alignItems:'flex-start',fontSize:'0.78rem'}},
-              React.createElement('div',{style:{minWidth:52,fontWeight:700,color:'var(--l2)'}},t.tier),
-              React.createElement('div',{style:{flex:1,color:'var(--dmuted)'}},t.desc),
-              React.createElement('div',{style:{minWidth:90,color:'var(--dtxt)',fontWeight:600}},
-                React.createElement('div',{style:{fontSize:'0.65rem',color:'var(--dmuted)'}},'GL'),t.gl),
-              React.createElement('div',{style:{minWidth:90,color:'var(--dtxt)',fontWeight:600}},
-                React.createElement('div',{style:{fontSize:'0.65rem',color:'var(--dmuted)'}},'Prof. Liab.'),t.prof)
-            );
-          })
-        )
-      )
-    )
+    // -- Fiscal / fee-waterfall tab removed --
 
   );
 }
@@ -24377,7 +24194,7 @@ function ZeffyDonationForm({ platform, update, toast }) {
       zeffyRef:form.zeffyRef, notes:form.notes, method:form.method};
     createZeffyEntry(platform, update, entry, null);
     update('donations',[...(platform.donations||[]),Object.assign({},entry,{id:'don'+Date.now(),type:'donation',source:'zeffy',taxClass:'nonprofit',createdAt:new Date().toISOString()})]);
-    toast({icon:'\uD83D\uDC9A',title:'Zeffy donation recorded: $'+parseFloat(form.amount).toLocaleString(),body:'Tax-deductible. Fund type: '+(form.fundType)+'. Ledger updated.'});
+    toast({icon:'\uD83D\uDC9A',title:'Zeffy donation recorded: $'+parseFloat(form.amount).toLocaleString(),body:'Ministry gift. Fund type: '+(form.fundType)+'. Ledger updated.'});
     setForm({donorName:'',donorEmail:'',amount:'',date:new Date().toISOString().split('T')[0],fundType:'unrestricted',campaign:'',campus:'General',zeffyRef:'',notes:'',method:'zeffy_online'});
     setShow(false);
   };
@@ -24416,7 +24233,7 @@ function ZeffyDonationForm({ platform, update, toast }) {
         )
       ),
       React.createElement('div',{style:{padding:'0.5rem 0.75rem',background:'rgba(91,196,110,0.06)',borderRadius:6,marginBottom:'0.65rem',fontSize:'0.72rem',color:'var(--l5)',fontWeight:600}},
-        '\uD83D\uDCA1 This donation will be auto-classified as Nonprofit / Tax-Deductible and will NOT appear in PayPal revenue or splits. Fund type determines how the gift may be used.'),
+        '\uD83D\uDCA1 This donation will be auto-classified as a Ministry Gift and will NOT appear in PayPal revenue or splits. Fund type determines how the gift may be used.'),
       React.createElement('button',{onClick:save,
         style:{width:'100%',padding:'0.7rem',borderRadius:9,background:'linear-gradient(135deg,var(--l5),rgba(91,196,110,0.4))',color:'#0a0f1a',border:'none',cursor:'pointer',fontWeight:700,fontSize:'0.9rem',fontFamily:'var(--font-serif)'}},
         '\uD83D\uDC9A Record Zeffy Donation')
@@ -24646,7 +24463,7 @@ var SITE_CONTENT_DEFAULT = {
     zelleInfo:      'Zelle: 225-333-0330',
     cashAppInfo:    '',
     paypalInfo:     '',
-    taxNote:        'Refined Recovery Network LLC is a registered nonprofit. Donations may be tax-deductible. Consult your tax advisor.',
+    taxNote:        'Gifts to Refined Recovery Network support recovery programs. Consult your tax advisor regarding your own situation.',
   },
 
   // -- Partner Page ----------------------------------------
@@ -24662,7 +24479,7 @@ var SITE_CONTENT_DEFAULT = {
     courtBody:      'Structured referral programs with compliance reporting, attendance verification, and documented outcomes for drug court, family court, and diversion programs.',
     tradeHeadline:  'Trade School & Education Partners',
     tradeBody:      'Partner with Refined Recovery Network to provide reduced or waived tuition for qualifying referrals with monthly enrollment and completion reporting.',
-    cta501c3:       'Refined Recovery Network LLC operates as a faith-based nonprofit. Partners seeking 501(c)(3) documentation must obtain their own license. Contact us for details.',
+    ctaPartner:     'Refined Recovery Network LLC is a faith-based recovery ministry. Partners are responsible for their own licensing and documentation. Contact us for details.',
     ctaLabel:       'Express Interest →',
     ctaAction:      'guest-signup',
   },
@@ -24674,7 +24491,7 @@ var SITE_CONTENT_DEFAULT = {
     intro:          'Refined Recovery Network LLC is a Christ-centered, faith-based recovery ministry. We are not a licensed medical provider, therapist, or clinical addiction treatment center.',
     faithStatement: 'All programs are grounded in biblical faith. Participation is voluntary and open to anyone 21+ seeking change, healing, and freedom from destructive habits.',
     medicalDisclaimer: 'Nothing on this platform constitutes medical advice, psychiatric treatment, or clinical addiction therapy. For medical emergencies, call 911.',
-    c501note:       'Users of RRN\'s ministry framework must obtain their own 501(c)(3) or applicable license. Refined Recovery Network LLC is responsible for its own operations only.',
+    licenseNote:    'Users of RRN\'s ministry framework must obtain their own applicable licenses. Refined Recovery Network LLC is responsible for its own operations only.',
   },
 
   // -- Nav / Header ----------------------------------------
@@ -25991,8 +25808,8 @@ function GuestDonatePanel({ platform, toast, update, session, setActive }) {
       React.createElement('div', { style:{ padding:'1.25rem', background:'rgba(91,196,110,0.07)',
         border:'1px solid rgba(91,196,110,0.2)', borderRadius:12, marginBottom:'1.5rem',
         fontSize:'0.82rem', color:'var(--dtxt)', lineHeight:1.7 } },
-        React.createElement('span', { style:{ fontWeight:700, color:'var(--l5)' } }, '✅ Tax-Deductible: '),
-        orgName + ' is a registered 501(c)(3) nonprofit organization. Your donation is fully tax-deductible. ',
+        React.createElement('span', { style:{ fontWeight:700, color:'var(--l5)' } }, '✅ Thank You: '),
+        'Your gift to ' + orgName + ' supports recovery programs. ',
         'Keep your receipt confirmation for your records.'
       ),
       React.createElement('div', { style:{ display:'flex', gap:'0.75rem', justifyContent:'center', flexWrap:'wrap' } },
@@ -26107,12 +25924,12 @@ function GuestDonatePanel({ platform, toast, update, session, setActive }) {
         )
       ),
 
-      // 501c3 notice
+      // Gift notice
       React.createElement('div', { style:{ padding:'0.75rem 1rem', background:'rgba(91,196,110,0.06)',
         border:'1px solid rgba(91,196,110,0.18)', borderRadius:9, marginBottom:'1rem',
         fontSize:'0.75rem', color:'var(--dmuted)', lineHeight:1.6 } },
-        '✅ ', orgName, ' is a registered 501(c)(3) tax-exempt nonprofit. All donations are ',
-        'tax-deductible. A receipt will be emailed to you within 24 hours of your gift being processed.'
+        '✅ Your gift to ', orgName, ' supports recovery programs. ',
+        'A receipt will be emailed to you within 24 hours of your gift being processed.'
       ),
 
       // Payment note
@@ -36805,16 +36622,16 @@ function DonationsPanel({ platform, update, toast, setActive, session }) {
                   'No goods or services were provided in exchange for this contribution.')
               )
         ),
-        // Tax-exempt notice
+        // Gift receipt notice
         React.createElement('div',{style:{
           background:'rgba(91,196,110,0.06)',border:'1px solid rgba(91,196,110,0.2)',
           borderRadius:8,padding:'0.85rem 1rem',marginBottom:'1.5rem',fontSize:'0.78rem',color:'var(--dtxt)',lineHeight:1.65
         }},
-          React.createElement('span',{style:{fontWeight:700,color:'var(--l5)'}},'✅ Tax-Deductible: '),
-          'Refined Recovery Network LLC is a registered 501(c)(3) tax-exempt nonprofit organization. ',
-          'EIN / Tax-Exempt Number: ',
+          React.createElement('span',{style:{fontWeight:700,color:'var(--l5)'}},'✅ Thank You: '),
+          'Your gift to Refined Recovery Network LLC supports recovery programs. ',
+          'Reference Number: ',
           React.createElement('strong',null,d.taxExemptNum || campusTaxNum),
-          '. This receipt serves as documentation for your tax records. Please retain for your records.',
+          '. This receipt serves as documentation of your gift. Please retain for your records.',
           d.notes && React.createElement('div',{style:{marginTop:'0.5rem',color:'var(--dmuted)'}}, 'Notes: '+d.notes)
         ),
         // Print / email actions
@@ -36827,8 +36644,8 @@ function DonationsPanel({ platform, update, toast, setActive, session }) {
               var text='Donation Receipt\nReceipt #: '+d.receiptId+'\nDate: '+d.date+'\nDonor: '+d.donor
                 +'\nEmail: '+(d.email||'—')+'\nPhone: '+(d.phone||'—')+'\nAmount: '+(isIK?d.itemDesc+' est. $'+d.itemValue:'$'+d.amount.toLocaleString())
                 +'\nCampaign: '+d.campaign+'\nCampus: '+d.campus
-                +'\nEIN: '+(d.taxExemptNum||campusTaxNum)
-                +'\n\nRefined Recovery Network LLC is a 501(c)(3). No goods or services provided in exchange.';
+                +'\nReference: '+(d.taxExemptNum||campusTaxNum)
+                +'\n\nYour gift to Refined Recovery Network LLC supports recovery programs. No goods or services provided in exchange.';
               navigator.clipboard.writeText(text).then(function(){toast({icon:'📋',title:'Receipt copied to clipboard',body:'Paste into email to donor.'});});},
             style:{padding:'0.65rem 1.25rem',borderRadius:9,background:'var(--bg3)',border:'1px solid var(--bdr2)',color:'var(--dtxt)',cursor:'pointer',fontWeight:600}},
             '📋 Copy for Email'),
@@ -44280,7 +44097,7 @@ function SiteFooter({
     }
   }, "Give Now \u2192"))), /*#__PURE__*/React.createElement("div", {
     className: "footer-bottom"
-  }, /*#__PURE__*/React.createElement("span", null, "\xA9 2026 Refined Recovery Network LLC \xB7 Port Allen, Louisiana \xB7 501(c)(3) Nonprofit"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, "\xA9 2026 Refined Recovery Network LLC \xB7 Port Allen, Louisiana"), /*#__PURE__*/React.createElement("span", {
     className: "footer-ww"
   }, "\"Through the Fire — Refined Recovery Network\""))));
 }
@@ -45612,7 +45429,7 @@ function DonatePage({
     className: "hero-divider"
   }), /*#__PURE__*/React.createElement("p", {
     className: "hero-sub"
-  }, "Refined Recovery is a 501(c)(3) nonprofit. 100% of donations support recovery programs, housing, leadership development, and campus expansion."), /*#__PURE__*/React.createElement("div", {
+  }, "Refined Recovery is a faith-based recovery ministry. 100% of donations support recovery programs, housing, leadership development, and campus expansion."), /*#__PURE__*/React.createElement("div", {
     className: "hero-stats"
   }, [['4', 'Campuses'], ['500+', 'Lives'], ['21yr', 'Ministry'], ['$0', 'Overhead']].map(function ([n, l]) {
     return /*#__PURE__*/React.createElement("div", {
@@ -45735,7 +45552,7 @@ function DonatePage({
       color: 'var(--muted)',
       lineHeight: 1.8
     }
-  }, "Refined Recovery Network LLC is a registered 501(c)(3) tax-exempt nonprofit. All donations are tax-deductible. Contact info@joinrrn.com or 225-333-0330 for questions."))), modal && /*#__PURE__*/React.createElement("div", {
+  }, "Refined Recovery Network LLC is a faith-based recovery ministry. Gifts support recovery programs. Contact info@joinrrn.com or 225-333-0330 for questions."))), modal && /*#__PURE__*/React.createElement("div", {
     className: "modal-overlay open",
     onClick: function (e) {
       if (e.target === e.currentTarget) setModal(null);
@@ -45819,7 +45636,7 @@ function DonatePage({
       color: 'var(--muted)',
       marginTop: '0.75rem'
     }
-  }, "\uD83D\uDD12 RRN is a 501(c)(3) nonprofit \xB7 Tax-deductible")))), /*#__PURE__*/React.createElement(SiteFooter, {
+  }, "\uD83D\uDD12 RRN is a faith-based recovery ministry")))), /*#__PURE__*/React.createElement(SiteFooter, {
     setPage: setPage
   }));
 }
@@ -45864,9 +45681,9 @@ function PartnerPage({ setPage, toast, page, session, mobileOpen, setMobileOpen 
      learnMoreLink:'church'},
     {id:'sponsor',       icon:'\U0001f4b0', label:'Cohort Sponsor',          color:'var(--l5)',
      desc:'Fund a specific training cohort. $5,000 sends 10 people through OSHA-10. Your name on the cohort. First hiring rights.',
-     benefits:['Named cohort sponsorship','Completion certificate with your logo','First hiring access to all graduates','Tax-deductible contribution (501c3)'],
+     benefits:['Named cohort sponsorship','Completion certificate with your logo','First hiring access to all graduates','Gift acknowledgment for your records'],
      cta:'Sponsor a Training Cohort',
-     details:'Cohort Sponsors fund a specific certification training for a group of Refined Recovery Network members. $5,000 sponsors 10 people through OSHA-10 safety certification. $8,500 sponsors a welding fundamentals cohort. $12,000 funds a full CDL prep cohort. Your organization\u2019s name appears on the completion certificate every graduate receives, on RRN marketing materials, and in our annual impact report. Cohort sponsors receive first right of contact for hiring graduates from their sponsored cohort. All contributions are tax-deductible to a 501(c)(3). You do not just fund training — you fund a career that sustains a family.',
+     details:'Cohort Sponsors fund a specific certification training for a group of Refined Recovery Network members. $5,000 sponsors 10 people through OSHA-10 safety certification. $8,500 sponsors a welding fundamentals cohort. $12,000 funds a full CDL prep cohort. Your organization\u2019s name appears on the completion certificate every graduate receives, on RRN marketing materials, and in our annual impact report. Cohort sponsors receive first right of contact for hiring graduates from their sponsored cohort. Every gift is acknowledged for your records. You do not just fund training — you fund a career that sustains a family.',
      learnMoreLink:'sponsor'},
     {id:'housing',       icon:'\U0001f3e0', label:'Housing Partner / Landlord',color:'var(--l3)',
      desc:'Provide safe housing for program members. Continuity occupancy guarantee, assurance fund, and full property support.',
@@ -45876,13 +45693,13 @@ function PartnerPage({ setPage, toast, page, session, mobileOpen, setMobileOpen 
      learnMoreLink:'housing'},
     {id:'transportation', icon:'\U0001f697', label:'Transportation Partner',   color:'var(--l2)',
      desc:'Donate vehicles or transportation resources to help Refined Recovery Network members get to work, meetings, medical appointments, and rebuild independence.',
-     benefits:['Tax-deductible vehicle donation (501c3)','Refined Recovery Network issues official donation receipt for your records','Vehicles distributed to members demonstrating sustained recovery','Transportation barriers are among the top reasons people lose jobs — your donation removes them'],
+     benefits:['Vehicle donation acknowledged for your records','Refined Recovery Network issues an official donation receipt for your records','Vehicles distributed to members demonstrating sustained recovery','Transportation barriers are among the top reasons people lose jobs — your donation removes them'],
      cta:'Donate a Vehicle or Transportation Resource',
      details:'Transportation is one of the most critical barriers to recovery and employment. A working vehicle can be the difference between keeping a job and losing it. Refined Recovery Network Transportation Partners donate cars, motorcycles, trucks, or bicycles that are distributed to members who have demonstrated 90+ days of sobriety and active employment. Every donation is documented, receipted, and acknowledged. No vehicle is too old — if it runs, it changes a life.',
      learnMoreLink:'transportation'},
     {id:'thrift',         icon:'\U0001f455', label:'Thrift Ministry Partner',  color:'var(--l4)',
      desc:'Donate unused clothing, furniture, household goods, or business surplus to outfit Refined Recovery Network members rebuilding their lives from nothing.',
-     benefits:['Tax-deductible in-kind donation receipt provided','Bulk donations accepted from businesses and estates','Items go directly to residents and families in the program','Professional donation acknowledgment for your records'],
+     benefits:['In-kind donation receipt provided','Bulk donations accepted from businesses and estates','Items go directly to residents and families in the program','Professional donation acknowledgment for your records'],
      cta:'Donate Clothing, Furniture, or Business Surplus',
      details:'When someone comes into Refined Recovery Network housing, they often arrive with nothing. Refined Recovery Network Thrift Ministry Partners provide the clothing, household items, and furniture that turn an empty room into a home. We accept clothing in all sizes, household goods, furniture, and business surplus inventory. Every donation is sorted, distributed, and receipted. Businesses clearing out office equipment, seasonal merchandise, or returned goods can make a significant difference with items they would otherwise discard.',
      learnMoreLink:'thrift'},
@@ -45999,7 +45816,7 @@ function PartnerPage({ setPage, toast, page, session, mobileOpen, setMobileOpen 
             fontSize:'1rem',marginBottom:'1rem'}},'How It Works'),
           [['1','Submit Inquiry','Fill out the partner form — name, contact info, and a brief description of what you can donate.'],
            ['2','Coordinates','A Refined Recovery Network team member will contact you within 48 hours to coordinate pickup, delivery, or schedule.'],
-           ['3','Official Receipt','Refined Recovery Network issues a tax-deductible donation receipt for your records with EIN/tax-exempt number, date, and description of donation.'],
+           ['3','Official Receipt','Refined Recovery Network issues a donation receipt for your records with a reference number, date, and description of donation.'],
            ['4','Impact Report','You receive an impact acknowledgment showing how your donation served the community — anonymous member counts, campus-level outcomes, and life milestones — with full privacy protection for all individuals.']
           ].map(function(step,i){
             return React.createElement('div',{key:i,style:{display:'flex',gap:'1rem',alignItems:'flex-start',marginBottom:'0.85rem'}},
@@ -47812,12 +47629,12 @@ function ChariotPanel({ platform, session, toast, setActive }) {
     var tipPct = form._tipPct !== undefined ? form._tipPct : 20;
     var tipAmt = baseCost * (tipPct/100);
     var totalCost = baseCost + tipAmt;
-    var isTaxDeductible = ['recovery','medical','education','employment','community'].includes(form.category);
+    var isMileageEligible = ['recovery','medical','education','employment','community'].includes(form.category);
     var charitableDeduction = miles * CHARITY_RATE;
     var reqId = 'chr-'+Date.now();
 
-    // Generate tax receipt if applicable
-    if(isTaxDeductible && miles > 0){
+    // Generate mileage receipt if applicable
+    if(isMileageEligible && miles > 0){
       var today = new Date();
       var receiptLines = [
         '════════════════════════════════════════════════════',
@@ -47828,8 +47645,6 @@ function ChariotPanel({ platform, session, toast, setActive }) {
         'Receipt No:    '+reqId,
         'Donor:         '+(userName||'Member'),
         'Organization:  Refined Recovery Network LLC',
-        '               (Verify 501(c)(3) status with fiscal',
-        '               sponsor Eagle Summit Ministries)',
         '────────────────────────────────────────────────────',
         'TRIP DETAILS',
         'Purpose:       '+form.purpose,
@@ -47883,7 +47698,7 @@ function ChariotPanel({ platform, session, toast, setActive }) {
       created:new Date().toISOString(), matchedDriver:null,
       // Cost data
       baseCost:baseCost, tipPct:tipPct, tipAmt:tipAmt, totalCost:totalCost,
-      isTaxDeductible:isTaxDeductible, charitableDeduction:charitableDeduction,
+      isMileageEligible:isMileageEligible, charitableDeduction:charitableDeduction,
       // Safety data
       femaleDriverPref:form.femaleDriverPref||false,
       trustedContactName:form.trustedContactName||'',
@@ -47895,7 +47710,7 @@ function ChariotPanel({ platform, session, toast, setActive }) {
       }
     }));
     setForm({category:'',subcategory:'',purpose:'',pickup:'',destination:'',date:'',time:'',notes:'',recurring:false,passengers:1,medicaidId:'',isVeteran:false,isSenior:false,isDisabled:false,employerId:'',mileage:'',femaleDriverPref:false,trustedContactName:'',trustedContactPhone:'',safetyPingEnabled:true,_tipPct:20});
-    toast({icon:'chr',title:'Chariot request submitted',body: isTaxDeductible && miles>0 ? 'Tax receipt downloaded. Driver matched shortly.' : isNemt?'NEMT request queued for Medicaid verification.':'A driver will be matched shortly.'});
+    toast({icon:'chr',title:'Chariot request submitted',body: isMileageEligible && miles>0 ? 'Mileage receipt downloaded. Driver matched shortly.' : isNemt?'NEMT request queued for Medicaid verification.':'A driver will be matched shortly.'});
     setTab('my');
   }
 
@@ -48182,8 +47997,8 @@ function ChariotPanel({ platform, session, toast, setActive }) {
           var tipPct = form._tipPct !== undefined ? form._tipPct : 20;
           var tipAmt = baseCost * (tipPct / 100);
           var total = baseCost + tipAmt;
-          // Tax deductible: recovery, medical, education, employment trips to nonprofit = charitable deduction
-          var isTaxDeductible = ['recovery','medical','education','employment','community'].includes(form.category);
+          // Mileage eligible: recovery, medical, education, employment trips = charitable mileage
+          var isMileageEligible = ['recovery','medical','education','employment','community'].includes(form.category);
           var charitableDeduction = miles > 0 ? (miles * CHARITY_RATE) : 0;
           if (miles === 0) return null;
           return React.createElement('div',{style:{padding:'0.85rem',borderRadius:8,background:'rgba(200,145,58,0.07)',border:'1px solid rgba(200,145,58,0.3)',marginBottom:'0.75rem'}},
@@ -48216,9 +48031,9 @@ function ChariotPanel({ platform, session, toast, setActive }) {
               React.createElement('div',{style:{fontSize:'0.8rem',color:'var(--dtxt)',fontWeight:700}},'Total (est.)'),
               React.createElement('div',{style:{fontSize:'1rem',color:'var(--gold)',fontWeight:800}},'$'+total.toFixed(2))
             ),
-            // Tax deductible badge + info
-            isTaxDeductible && React.createElement('div',{style:{padding:'0.55rem 0.7rem',borderRadius:6,background:'rgba(52,211,153,0.08)',border:'1px solid rgba(52,211,153,0.3)'}},
-              React.createElement('div',{style:{fontSize:'0.72rem',fontWeight:700,color:'#34d399',marginBottom:'0.2rem'}},'✅ Tax-Deductible Mileage Eligible'),
+            // Mileage eligible badge + info
+            isMileageEligible && React.createElement('div',{style:{padding:'0.55rem 0.7rem',borderRadius:6,background:'rgba(52,211,153,0.08)',border:'1px solid rgba(52,211,153,0.3)'}},
+              React.createElement('div',{style:{fontSize:'0.72rem',fontWeight:700,color:'#34d399',marginBottom:'0.2rem'}},'✅ Charitable Mileage Eligible'),
               React.createElement('div',{style:{fontSize:'0.68rem',color:'var(--dmuted)',lineHeight:1.5}},
                 'IRS §170: '+miles+' mi × $0.21/mi = ',
                 React.createElement('strong',{style:{color:'#34d399'}},'$'+charitableDeduction.toFixed(2)+' charitable deduction'),
@@ -57726,7 +57541,7 @@ window._calebContextResponse = function(section, userQuery) {
 
     'unified-finance': function() {
       var h = _calebSystemHealth ? _calebSystemHealth() : {};
-      speak("Financial overview loaded. ESM fiscal fee is 10% of gross, RRN platform fee is 5% — your programs receive 85% net. Proverbs 21:5 says the plans of the diligent lead to profit. What do you need to review?");
+      speak("Financial overview loaded. The RRN platform fee is 5% of gross — your programs receive 95% net. Proverbs 21:5 says the plans of the diligent lead to profit. What do you need to review?");
     },
 
     'overview': function() {
@@ -57841,7 +57656,7 @@ window._calebContextResponse = function(section, userQuery) {
       var active = ops.filter(function(o){return o.status==='active';}).length;
       var pending = ops.filter(function(o){return o.status==='pending-review';}).length;
       if(ops.length === 0) {
-        speak("Sub-operator onboarding open. This is how RRN scales. Every ministry you bring in becomes part of the network — under the Exhibit B agreement. Ten percent to ESM, five percent to RRN, eighty-five percent stays with them. Who is the first ministry you want to onboard?");
+        speak("Sub-operator onboarding open. This is how RRN scales. Every ministry you bring in becomes part of the network — under the Exhibit B agreement. Five percent to RRN, ninety-five percent stays with them. Who is the first ministry you want to onboard?");
       } else {
         speak(ops.length+" sub-operator"+(ops.length!==1?'s':'')+' in the system. '+active+' active, '+pending+' pending review. Every one of them is an outpost of this covenant. What do you need to manage here?');
       }
@@ -58747,7 +58562,7 @@ window._cSend=function(){
     { id:'nav:payroll',        score:0, patterns:['payroll','pay roll','run payroll','pay employees','staff pay','salary rates','payroll system','payroll register','pay schedule','employee pay','wages'] },
     { id:'nav:court-perdiem',  score:0, patterns:['court','per diem','perdiem','court referral','drug court','probation','justice','mou court','court billing','compliance report','court payment','diversion','reentry court'] },
     { id:'nav:grant-os',       score:0, patterns:['grant os','grant simulation','simulate grant','test grant','grant pipeline','grant lifecycle','launch os','grant qa','grant repair','grant audit'] },
-    { id:'nav:unified-finance',score:0, patterns:['finance','financial','money','budget','donation','revenue','esm','fiscal','accounting','ledger','income'] },
+    { id:'nav:unified-finance',score:0, patterns:['finance','financial','money','budget','donation','revenue','fiscal','accounting','ledger','income'] },
     { id:'nav:alerts',         score:0, patterns:['alert','notification','warning','urgent','crisis','emergency','flag','critical'] },
     { id:'nav:community-wall', score:0, patterns:['community','wall','post','share','feed','social','announcement board'] },
     { id:'nav:prayer-requests',score:0, patterns:['prayer request','prayer list','who needs prayer','prayer board','see prayers'] },
@@ -58923,7 +58738,7 @@ window._cSend=function(){
         break;
 
       case 'architecture':
-        var mods = ['Curriculum \u2014 52 lessons','Caleb AI \u2014 voice, actions, command center','RRN Funding Engine \u2014 builder, OS simulation, email','Self-Heal \u2014 auto repair','Financial \u2014 ESM fiscal dashboard','Housing','Workforce','Member management','QA Swarm','Licensing'];
+        var mods = ['Curriculum \u2014 52 lessons','Caleb AI \u2014 voice, actions, command center','RRN Funding Engine \u2014 builder, OS simulation, email','Self-Heal \u2014 auto repair','Financial \u2014 fiscal dashboard','Housing','Workforce','Member management','QA Swarm','Licensing'];
         window._calebSpeak('Refined Recovery Network has '+mods.length+' active modules: '+mods.slice(0,5).join(', ')+', and more.');
         if(ab){ ab.style.display=''; ab.innerHTML='<div style="font-size:0.62rem;color:#2dd4c0;margin-bottom:4px;">ACTIVE MODULES</div>'+mods.map(function(m){ return '<div style="font-size:0.62rem;color:#a0aec0;padding:1px 0;">\u2713 '+m+'</div>'; }).join(''); }
         break;
