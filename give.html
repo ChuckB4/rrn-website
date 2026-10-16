@@ -162,6 +162,14 @@ body{background:#f6f4ee;}
 .verse-strip{background:rgba(200,145,58,.07);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:14px 18px;margin-top:24px;font-family:var(--fd);font-size:1.05rem;color:var(--ink);font-style:italic;line-height:1.6;}
 .verse-strip cite{display:block;font-size:.75rem;font-style:normal;font-weight:700;color:var(--gold);letter-spacing:.08em;margin-top:6px;}
 #giveToast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--gold);padding:10px 22px;border-radius:100px;font-size:13px;font-weight:700;z-index:1000;opacity:0;transition:opacity .3s;pointer-events:none;border:1px solid rgba(200,145,58,.4);}
+/* Campaign budget table */
+.budget-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.92rem;}
+.budget-table caption{font-family:var(--fd);font-size:1.1rem;color:var(--ink);text-align:left;margin-bottom:10px;font-weight:700;}
+.budget-table th,.budget-table td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--gold-br);color:var(--body);}
+.budget-table thead th{font-family:var(--fb);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--gold-br);}
+.budget-table td.amt,.budget-table th.amt{text-align:right;font-variant-numeric:tabular-nums;}
+.budget-table tfoot td{border-top:2px solid var(--gold);border-bottom:none;font-weight:700;color:var(--ink);background:var(--gold-lo);}
+.budget-table tfoot td.amt{color:var(--gold);font-size:1.08rem;}
 
 </style>
 </head>
@@ -374,6 +382,182 @@ body{background:#f6f4ee;}
 
     </div>
   </div>
+  <!-- ============ CAMPAIGN STORY SECTIONS ============ -->
+
+  <!-- Who We Are -->
+  <div class="give-wrap" style="padding-top:0;">
+    <div class="give-card">
+      <div class="give-card-head">
+        <h2>Who We Are</h2>
+        <p>A faith-based peer recovery ministry in Port Allen, Louisiana</p>
+      </div>
+      <div class="give-card-body">
+        <p style="font-size:.9rem;color:#444;line-height:1.6;">Refined Recovery Network is a faith-based peer recovery ministry serving people in and around Port Allen, Louisiana. We walk alongside men and women rebuilding their lives after addiction and incarceration, offering community, encouragement, and practical support rooted in the Word of God. We are not a licensed clinical provider. We are neighbors, volunteers, and people in recovery who believe no one should have to do this alone.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Founder: Chuck Edwards -->
+  <div class="give-wrap" style="padding-top:0;">
+    <div class="give-card">
+      <div class="give-card-head">
+        <h2>Our Founder</h2>
+        <p>Chuck Edwards</p>
+      </div>
+      <div class="give-card-body">
+        <p style="font-size:.9rem;color:#444;line-height:1.6;">Refined Recovery Network was founded by Chuck Edwards out of a conviction to serve people in recovery and the families who love them. The ministry grew from a simple belief that lives can be restored through faith, community, and steady support. Chuck leads the ministry with that same conviction today, keeping its focus on serving people who are often overlooked and on pointing them toward hope.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Our Mission -->
+  <div class="give-wrap" style="padding-top:0;">
+    <div class="give-card">
+      <div class="give-card-head">
+        <h2>Our Mission</h2>
+        <p>Restoration through faith, community, and practical support</p>
+      </div>
+      <div class="give-card-body">
+        <p style="font-size:.9rem;color:#444;line-height:1.6;">Our mission is to help people in recovery find lasting freedom and purpose. We do this by surrounding them with a caring community, grounding them in KJV scripture, and meeting real needs like housing, transportation, job readiness, and family reconnection. We want every person who comes through our doors to know they are seen, valued, and able to build a new life.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Our Programs -->
+  <div class="give-wrap" style="padding-top:0;">
+    <div class="why-section">
+      <h2>Our Programs</h2>
+      <p class="sub">Six ways we serve people in recovery and the community around them.</p>
+      <div class="why-grid">
+        <div class="why-card"><div class="why-label">Refined Radio</div><div class="why-desc">24/7 worship and recovery radio reaching listeners across Louisiana.</div></div>
+        <div class="why-card"><div class="why-label">Refined Place</div><div class="why-desc">Safe recovery housing for men and women coming out of incarceration.</div></div>
+        <div class="why-card"><div class="why-label">Workforce</div><div class="why-desc">Job training, resume building, and employer connections for members.</div></div>
+        <div class="why-card"><div class="why-label">Chariot Transport</div><div class="why-desc">Rides to court, treatment, work, and church for people without transportation.</div></div>
+        <div class="why-card"><div class="why-label">Curriculum</div><div class="why-desc">A 52-lesson faith-based recovery curriculum rooted in KJV scripture.</div></div>
+        <div class="why-card"><div class="why-label">Family Restoration</div><div class="why-desc">Reunification support and community for families affected by addiction.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Refined Place (tiers) -->
+  <div class="give-wrap" style="padding-top:0;">
+    <div class="why-section">
+      <h2>The Refined Place</h2>
+      <p class="sub">Our recovery housing is designed as a series of stages, so members can grow in responsibility and independence as they progress.</p>
+      <div class="why-grid">
+        <div class="why-card"><div class="why-label">Stabilize</div><div class="why-desc">A safe, structured place to land, with close support and daily rhythm as members get their footing.</div></div>
+        <div class="why-card"><div class="why-label">Grow</div><div class="why-desc">Greater responsibility and routine as members build work habits, accountability, and healthy relationships.</div></div>
+        <div class="why-card"><div class="why-label">Launch</div><div class="why-desc">A bridge toward independent living, with continued community and encouragement as members step back into life.</div></div>
+      </div>
+      <p class="sub" style="margin-top:20px;margin-bottom:0;">These stages describe the general path through The Refined Place. Specific placement is handled case by case as space and readiness allow.</p>
+    </div>
+  </div>
+
+  <!-- Our Faith Foundation -->
+  <div class="give-wrap" style="padding-top:0;">
+    <div class="give-card">
+      <div class="give-card-head">
+        <h2>Our Faith Foundation</h2>
+        <p>Rooted in the Word of God</p>
+      </div>
+      <div class="give-card-body">
+        <p style="font-size:.9rem;color:#444;line-height:1.6;">Everything we do flows from our faith. We believe real and lasting change comes through Jesus Christ, and we build our community, our curriculum, and our care on the KJV scriptures. We welcome people wherever they are on their journey, and we point them to the hope and healing found in God.</p>
+        <div class="verse-strip" style="margin-top:20px;">
+          &ldquo;Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new.&rdquo;
+          <cite>2 Corinthians 5:17 KJV</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The $20,000 Budget -->
+  <div class="give-wrap" style="padding-top:0;">
+    <div class="give-card">
+      <div class="give-card-head">
+        <h2>The $20,000 Budget</h2>
+        <p>Our main location is under construction. Here is exactly where your gift goes.</p>
+      </div>
+      <div class="give-card-body">
+        <p style="font-size:.9rem;color:#444;line-height:1.6;margin-bottom:18px;">We are raising a minimum of $20,000 to finish the painting and remodel at our main location and to furnish it so we can welcome members and the community. Every dollar is accounted for in the breakdown below.</p>
+        <table class="budget-table">
+          <caption>Campaign Budget</caption>
+          <thead>
+            <tr><th scope="col">Line Item</th><th scope="col" class="amt">Amount</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Interior Painting</td><td class="amt">$3,000</td></tr>
+            <tr><td>Exterior Painting</td><td class="amt">$4,000</td></tr>
+            <tr><td>Tables and Chairs</td><td class="amt">$5,000</td></tr>
+            <tr><td>Exterior Sign</td><td class="amt">$6,000</td></tr>
+            <tr><td>D&eacute;cor/Finishing</td><td class="amt">$2,000</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td>TOTAL</td><td class="amt">$20,000</td></tr>
+          </tfoot>
+        </table>
+        <p class="give-note" style="margin-top:14px;">Our goal is a minimum of $20,000. Gifts beyond the goal help us keep the doors open and serve more people.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Giving Tiers -->
+  <div class="give-wrap" style="padding-top:0;">
+    <div class="why-section">
+      <h2>Giving Tiers</h2>
+      <p class="sub">Every gift matters. These are suggested giving levels to help you decide what works for you. Give any amount you feel led to give.</p>
+      <div class="why-grid">
+        <div class="why-card"><div class="why-label">Friend &middot; $25</div><div class="why-desc">A suggested gift that helps cover finishing touches and supplies.</div></div>
+        <div class="why-card"><div class="why-label">Partner &middot; $100</div><div class="why-desc">A suggested gift that helps fund paint, decor, and the details that make a space welcoming.</div></div>
+        <div class="why-card"><div class="why-label">Builder &middot; $500</div><div class="why-desc">A suggested gift that moves a full line item of the budget forward.</div></div>
+        <div class="why-card"><div class="why-label">Cornerstone &middot; $1,000</div><div class="why-desc">A suggested leadership gift that makes a major difference toward the goal.</div></div>
+      </div>
+      <p class="sub" style="margin-top:20px;margin-bottom:0;">These amounts are suggestions only. Gifts of any size are received with gratitude.</p>
+    </div>
+  </div>
+
+  <!-- Accountability -->
+  <div class="give-wrap" style="padding-top:0;">
+    <div class="give-card">
+      <div class="give-card-head">
+        <h2>Accountability</h2>
+        <p>How your gift is stewarded</p>
+      </div>
+      <div class="give-card-body">
+        <p style="font-size:.9rem;color:#444;line-height:1.6;">We take the trust behind every gift seriously. Funds raised in this campaign are directed to the construction, remodel, and furnishing work described in the budget above. We aim to keep our supporters informed as the project moves forward, and we welcome questions about how your gift is used. If you ever want an update, please reach out to us directly.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Expanded FAQ -->
+  <div class="give-wrap" style="padding-top:0;">
+    <div class="give-card">
+      <div class="give-card-head">
+        <h2>Frequently Asked Questions</h2>
+        <p>A few things supporters often ask</p>
+      </div>
+      <div class="give-card-body">
+        <p style="font-size:.9rem;color:#444;line-height:1.6;margin-bottom:16px;"><strong>Where does my gift go?</strong><br>Gifts to this campaign go toward finishing the painting and remodel at our main location and furnishing it, as detailed in the $20,000 budget above.</p>
+        <p style="font-size:.9rem;color:#444;line-height:1.6;margin-bottom:16px;"><strong>How do I give?</strong><br>You can give securely through our GiveSendGo campaign using the button below, or scan the QR code near the top of this page.</p>
+        <p style="font-size:.9rem;color:#444;line-height:1.6;margin-bottom:0;"><strong>Who can I contact with questions?</strong><br>Email us at info@joinrrn.com or use the contact form on our main site. We will get back to you within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Closing Invitation -->
+  <div class="give-wrap" style="padding-top:0;">
+    <div class="give-card">
+      <div class="give-card-head">
+        <h2>Will You Help Us Build?</h2>
+        <p>Join us in finishing the work at our main location</p>
+      </div>
+      <div class="give-card-body">
+        <p style="font-size:.9rem;color:#444;line-height:1.6;margin-bottom:18px;">Our main location is under construction, and we need your help to finish it. With a minimum of $20,000, we can complete the painting and remodel, add tables and chairs, raise our sign, and open our doors wider to the people God sends our way. Would you partner with us? Every gift, large or small, moves us closer.</p>
+        <a href="https://www.givesendgo.com/help-build-refined-recovery-network" class="give-btn-primary" target="_blank" rel="noopener">Give Now on GiveSendGo</a>
+        <p class="give-note">Thank you for standing with Refined Recovery Network.</p>
+      </div>
+    </div>
+  </div>
+
   <div id="giveToast"></div>
 </div>
 <footer>
