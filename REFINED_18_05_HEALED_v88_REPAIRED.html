@@ -1005,6 +1005,499 @@ window.RRN_UTILS_READY = true;
 // To enable AI features, set window.RRN_ANTHROPIC_KEY = "sk-ant-..."
 // in your deployment config or backend-config.js
 window.RRN_ANTHROPIC_KEY = window.RRN_ANTHROPIC_KEY || '';
+
+// ========================================
+// CALEB AUDIO CONTROLLER — PHASE 2 REMEDIATION
+// Fixes: DEFECT-001 through DEFECT-005 (audio system, race conditions, watchdog timeout)
+// ========================================
+window._calebAudioController = (function() {
+  var controller = {
+    isReading: false,
+    isPaused: false,
+    currentLessonId: null,
+    currentContext: 'unknown',
+    readPosition: 0,
+    sentences: [],
+    utteranceQueue: [],
+    _currentUtterance: null,
+    _watchdogTimer: null,
+    _visibilityHandler: null,
+    _cachedVoice: null,
+    
+    // Initialize audio system with graceful voice detection
+    init: function() {
+      if (this._initialized) return;
+      this._initialized = true;
+      
+      // Tab visibility detection to pause/resume reading
+      this._visibilityHandler = function() {
+        if (document.hidden && controller.isReading) {
+          controller.pauseReading();
+        } else if (!document.hidden && controller.isPaused && controller.isReading) {
+          controller.resumeReading();
+        }
+      };
+      document.addEventListener('visibilitychange', this._visibilityHandler);
+      
+      console.log('[CALEB AUDIO] Controller initialized');
+    },
+    
+    // Get best available voice (with caching)
+    getBestVoice: function() {
+      if (this._cachedVoice) return this._cachedVoice;
+      
+      var voices = window.speechSynthesis.getVoices();
+      var preferred = ['Microsoft Guy Online (Natural)','Microsoft Guy','Microsoft Davis','Microsoft David Online','Microsoft David','Microsoft Mark Online','Microsoft Mark','Google US English','Alex','Fred'];
+      var bestVoice = null, bestScore = -1;
+      
+      voices.forEach(function(v) {
+        if (v.lang.indexOf('en') !== 0) return;
+        var sc = 0;
+        preferred.forEach(function(name, rank) {
+          if (v.name.indexOf(name) >= 0) sc = Math.max(sc, preferred.length - rank);
+        });
+        if (v.name.toLowerCase().indexOf('online') >= 0) sc += 5;
+        if (v.name.toLowerCase().indexOf('natural') >= 0) sc += 10;
+        if (sc > bestScore) { bestScore = sc; bestVoice = v; }
+      });
+      
+      this._cachedVoice = bestVoice || voices[0] || null;
+      return this._cachedVoice;
+    },
+    
+    // Segment text into readable chunks (DEFECT-002)
+    segmentText: function(text) {
+      if (!text || !text.trim()) return [];
+      
+      function isAllCaps(s) {
+        var t = s.trim();
+        return t.length > 3 && t === t.toUpperCase() && /[A-Z]/.test(t) && !/[a-z]/.test(t);
+      }
+      
+      var lines = text.split(/\r?\n/);
+      var raw = [];
+      
+      lines.forEach(function(line) {
+        var t = line.replace(/\t/g, ' ').replace(/ {2,}/g, ' ').replace(/[#*`]/g, '').trim();
+        if (!t) return;
+        if (isAllCaps(t)) { raw.push(t); return; }
+        
+        // Use fallback split if lookbehind not supported
+        var segs;
+        try {
+          segs = t.split(/(?<=[a-zA-Z\u2019\)])[.!?](?=\s+[A-Z\u201C\u2018"])/g);
+        } catch (e) {
+          segs = t.split(/[.!?]+\s+/g);
+        }
+        
+        segs.forEach(function(seg) {
+          var s = seg.trim();
+          if (s.length < 3) return;
+          if (s.length <= 180) { raw.push(s); return; }
+          
+          // Split long sentences on punctuation
+          var sub = s.split(/(?<=[,;:\u2014\u2013])\s+/g);
+          var cur = '';
+          sub.forEach(function(c) {
+            if (!c.trim()) return;
+            if ((cur ? cur + ' ' : '').length + c.length <= 180) {
+              cur = cur ? cur + ' ' + c : c;
+            } else {
+              if (cur) raw.push(cur.trim());
+              cur = c;
+            }
+          });
+          if (cur) raw.push(cur.trim());
+        });
+      });
+      
+      var out = [], ri = 0;
+      while (ri < raw.length) {
+        var cur = raw[ri];
+        if (isAllCaps(cur)) { out.push(cur.trim()); ri++; continue; }
+        while (cur.length < 42 && ri + 1 < raw.length && !isAllCaps(raw[ri + 1])) {
+          ri++; cur = cur + ' ' + raw[ri];
+        }
+        if (cur.length > 2) out.push(cur.trim());
+        ri++;
+      }
+      
+      return out.length ? out : raw.filter(function(s) { return s && s.length > 2; });
+    },
+    
+    // Highlight current sentence (DEFECT-004)
+    highlightSentence: function(container, index, text) {
+      if (!container) return;
+      
+      container.querySelectorAll('.caleb-hl').forEach(function(el) {
+        el.style.background = '';
+        el.style.outline = '';
+        el.classList.remove('caleb-hl');
+        el.removeAttribute('aria-current');
+      });
+      
+      function isAllCaps(s) {
+        var t = s.trim();
+        return t.length > 3 && t === t.toUpperCase() && /[A-Z]/.test(t) && !/[a-z]/.test(t);
+      }
+      
+      var allEls = Array.from(container.querySelectorAll('span[data-key]')).filter(function(el) {
+        return (el.textContent || '').trim().length > 0 && el.querySelectorAll('span[data-key]').length === 0;
+      });
+      
+      var curIsCaps = isAllCaps(text);
+      var bestMatch = null, bestScore = 0;
+      
+      allEls.forEach(function(el) {
+        var txt = (el.textContent || '').trim();
+        if (!txt || !text) return;
+        var score = 0;
+        if (txt === text) score = 100;
+        else if (txt.indexOf(text) >= 0) score = Math.max(1, 90 - (txt.length - text.length));
+        else if (curIsCaps && txt.toUpperCase().indexOf(text.toUpperCase().substring(0, 25)) >= 0) score = 88;
+        else if (!curIsCaps && text.length >= 8 && txt.indexOf(text.substring(0, 30)) >= 0) score = 70;
+        if (score > bestScore) { bestScore = score; bestMatch = el; }
+      });
+      
+      if (!bestMatch && allEls.length > 0) {
+        bestMatch = allEls[Math.min(Math.floor(index * allEls.length / Math.max(this.sentences.length, 1)), allEls.length - 1)];
+      }
+      
+      if (bestMatch) {
+        var bmCaps = isAllCaps((bestMatch.textContent || '').trim());
+        bestMatch.style.background = bmCaps ? 'rgba(212,175,55,0.18)' : 'rgba(45,212,192,0.18)';
+        bestMatch.style.outline = bmCaps ? '2px solid rgba(212,175,55,0.6)' : '2px solid rgba(45,212,192,0.4)';
+        bestMatch.style.borderRadius = '4px';
+        bestMatch.style.transition = 'background 0.25s,outline 0.25s';
+        bestMatch.classList.add('caleb-hl');
+        bestMatch.setAttribute('aria-current', 'true');
+        
+        var _ann = document.getElementById('aria-announce');
+        if (_ann) { _ann.textContent = ''; setTimeout(function() { _ann.textContent = (bestMatch.textContent || '').trim(); }, 50); }
+        
+        bestMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    },
+    
+    // Speak sentence with proper lifecycle
+    speakSentence: function(text, onComplete) {
+      var self = this;
+      
+      if (!text || !text.trim()) {
+        onComplete();
+        return;
+      }
+      
+      // Clear old watchdog
+      if (this._watchdogTimer) clearInterval(this._watchdogTimer);
+      
+      var u = new SpeechSynthesisUtterance(text);
+      u.rate = 0.87;
+      u.pitch = 1.0;
+      u.volume = 1.0;
+      
+      var voice = this.getBestVoice();
+      if (voice) u.voice = voice;
+      
+      var completed = false;
+      
+      var finalize = function() {
+        if (!completed) {
+          completed = true;
+          if (self._watchdogTimer) { clearInterval(self._watchdogTimer); self._watchdogTimer = null; }
+          self._currentUtterance = null;
+          onComplete();
+        }
+      };
+      
+      // Watchdog timer - prevent hanging (DEFECT-001)
+      this._watchdogTimer = setInterval(function() {
+        if (!self.isReading || completed) {
+          if (self._watchdogTimer) { clearInterval(self._watchdogTimer); self._watchdogTimer = null; }
+          return;
+        }
+        try { window.speechSynthesis.resume(); } catch (e) {}
+      }, 5000);
+      
+      u.onend = finalize;
+      u.onerror = finalize;
+      
+      // Safety timeout
+      var maxWait = Math.max(800, Math.ceil(text.length / (0.87 * 14) * 1000) + 400);
+      setTimeout(finalize, maxWait);
+      
+      this._currentUtterance = u;
+      window.speechSynthesis.speak(u);
+    },
+    
+    // Main reading loop
+    readNextSentence: function(container, btn, lessonId) {
+      var self = this;
+      
+      if (this._watchdogTimer) { clearInterval(this._watchdogTimer); this._watchdogTimer = null; }
+      
+      if (!this.isReading || this.readPosition >= this.sentences.length) {
+        this.finishReading(btn, lessonId);
+        return;
+      }
+      
+      var text = (this.sentences[this.readPosition] || '').trim();
+      this.readPosition++;
+      
+      if (!text) {
+        this.readNextSentence(container, btn, lessonId);
+        return;
+      }
+      
+      this.highlightSentence(container, this.readPosition - 1, text);
+      
+      this.speakSentence(text, function() {
+        setTimeout(function() { self.readNextSentence(container, btn, lessonId); }, 150);
+      });
+    },
+    
+    // Finish reading session
+    finishReading: function(btn, lessonId) {
+      // DEFECT-010 FIX: Completion validation - only mark complete if 95%+ of content played
+      var percentComplete = (this.readPosition / Math.max(this.sentences.length, 1)) * 100;
+      var verification = {
+        startPosition: 0,
+        endPosition: this.sentences.length - 1,
+        actualPosition: this.readPosition - 1,
+        sentenceCount: this.sentences.length,
+        readCount: this.readPosition,
+        percentComplete: percentComplete
+      };
+      
+      console.log('[CALEB AUDIO] Lesson completion verification:', verification);
+      
+      if (percentComplete >= 95 && this.sentences.length > 0) {
+        // Record completion with verification evidence
+        if (window._rrnAPI && window._rrnAPI.recordLessonCompletion) {
+          window._rrnAPI.recordLessonCompletion({
+            lessonId: lessonId,
+            timestamp: new Date().toISOString(),
+            verification: verification,
+            audioDevice: (this.getBestVoice() || {}).name || 'system'
+          });
+        }
+        window._calebSpeak('Lesson complete! Excellent work reading all the way through.');
+      } else if (percentComplete > 0) {
+        window._calebSpeak('Lesson is ' + Math.round(percentComplete) + '% complete. You can continue reading next time.');
+      }
+      
+      this.isReading = false;
+      this.isPaused = false;
+      this.readPosition = 0;
+      this.sentences = [];
+      this.currentLessonId = null;
+      
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      if (this._watchdogTimer) { clearInterval(this._watchdogTimer); this._watchdogTimer = null; }
+      if (this._currentUtterance) this._currentUtterance = null;
+      
+      if (btn) {
+        btn.textContent = '📖 Read Lesson Aloud';
+        btn.style.background = 'rgba(200,145,58,0.12)';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }
+      
+      try { localStorage.removeItem('rrn_read_pos_' + lessonId); } catch (e) {}
+      
+      var cbtn = document.getElementById('caleb-continue-btn-' + lessonId);
+      if (cbtn) cbtn.style.display = 'none';
+      
+      document.querySelectorAll('.caleb-hl').forEach(function(el) {
+        el.style.background = '';
+        el.style.outline = '';
+        el.classList.remove('caleb-hl');
+        el.removeAttribute('aria-current');
+      });
+      
+      console.log('[CALEB AUDIO] Reading finished for lesson', lessonId, 'position:', this.readPosition);
+    },
+    
+    // Pause reading
+    pauseReading: function() {
+      if (!this.isReading) return;
+      this.isPaused = true;
+      try { window.speechSynthesis.pause(); } catch (e) {}
+      console.log('[CALEB AUDIO] Reading paused at position', this.readPosition);
+    },
+    
+    // Resume reading
+    resumeReading: function() {
+      if (!this.isReading || !this.isPaused) return;
+      this.isPaused = false;
+      try { window.speechSynthesis.resume(); } catch (e) {}
+      console.log('[CALEB AUDIO] Reading resumed from position', this.readPosition);
+    },
+    
+    // Start/stop reading
+    toggleReading: function(lessonId, body, btn, container) {
+      var self = this;
+      
+      if (this.isReading) {
+        this.isReading = false;
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+        try { localStorage.setItem('rrn_read_pos_' + lessonId, String(this.readPosition)); } catch (e) {}
+        this.finishReading(btn, lessonId);
+        return;
+      }
+      
+      if (!body || !body.trim()) {
+        window._calebSpeak('This lesson doesn\'t have any content loaded yet. Please refresh and try again.');
+        if (btn) btn.textContent = '📖 Read Lesson Aloud';
+        return;
+      }
+      
+      this.init();
+      this.currentLessonId = lessonId;
+      this.sentences = this.segmentText(body);
+      this.readPosition = 0;
+      this.isReading = true;
+      this.isPaused = false;
+      
+      if (btn) {
+        btn.textContent = '⏹ Stop Reading';
+        btn.style.background = 'rgba(45,212,192,0.15)';
+        btn.style.borderColor = '#2dd4c0';
+        btn.style.color = '#2dd4c0';
+      }
+      
+      var cbtn = document.getElementById('caleb-continue-btn-' + lessonId);
+      if (cbtn) cbtn.style.display = 'none';
+      
+      try { localStorage.removeItem('rrn_read_pos_' + lessonId); } catch (e) {}
+      
+      window._calebSpeak('Starting to read lesson. Follow along as I highlight each sentence.');
+      
+      setTimeout(function() { self.readNextSentence(container, btn, lessonId); }, 300);
+    }
+  };
+  
+  return controller;
+})();
+
+// Expose for lesson continue button
+window._calebReadLesson = function(lessonId, body, btn, container) {
+  window._calebAudioController.toggleReading(lessonId, body, btn, container);
+};
+
+// ========================================
+// STATE SYNCHRONIZATION MANAGER — DEFECT-008
+// Tracks current screen/context so CALEB knows where user is
+// ========================================
+if (!window._rrnStateManager) {
+  window._rrnStateManager = {
+    activeSection: null,
+    currentLesson: null,
+    currentJournal: null,
+    currentUser: null,
+    isLoading: false,
+    
+    setState: function(updates) {
+      Object.assign(this, updates);
+      this._notifyObservers();
+    },
+    
+    getState: function() {
+      return {
+        activeSection: this.activeSection,
+        currentLesson: this.currentLesson,
+        currentJournal: this.currentJournal,
+        currentUser: this.currentUser,
+        isLoading: this.isLoading
+      };
+    },
+    
+    _observers: [],
+    subscribe: function(callback) {
+      this._observers.push(callback);
+    },
+    _notifyObservers: function() {
+      this._observers.forEach(function(cb) {
+        try { cb(window._rrnStateManager.getState()); } catch(e) {}
+      });
+    }
+  };
+  
+  // Subscribe CALEB to state changes
+  window._rrnStateManager.subscribe(function(state) {
+    window._calebAudioController.currentContext = state.activeSection;
+    window._calebAudioController.currentLesson = state.currentLesson;
+    
+    // If navigated away, pause reading
+    if (!state.currentLesson && window._calebAudioController.isReading) {
+      window._calebAudioController.pauseReading();
+    }
+  });
+}
+
+// ========================================
+// ASYNC NAVIGATION HELPERS — DEFECT-009
+// Ensure content loads before actions fire
+// ========================================
+window._rrnNavigateTo = function(section, params) {
+  return new Promise(function(resolve, reject) {
+    try {
+      window._rrnStateManager.setState({ isLoading: true, activeSection: section });
+      
+      // Simulate navigation (actual implementation depends on router)
+      setTimeout(function() {
+        window._rrnStateManager.setState({ isLoading: false });
+        resolve();
+      }, 500);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+window._rrnWaitForLessonReady = function(lessonId) {
+  return new Promise(function(resolve, reject) {
+    var attempts = 0;
+    var maxAttempts = 50; // 5 seconds max
+    
+    var checkReady = setInterval(function() {
+      attempts++;
+      
+      var lesson = window._rrnLessons && window._rrnLessons[lessonId];
+      var lessonContainer = document.getElementById('lesson-body-' + lessonId);
+      
+      if (lesson && lesson.body && lessonContainer && lessonContainer.textContent.length > 0) {
+        clearInterval(checkReady);
+        resolve(lesson);
+        return;
+      }
+      
+      if (attempts >= maxAttempts) {
+        clearInterval(checkReady);
+        reject(new Error('Lesson failed to load after 5 seconds'));
+      }
+    }, 100);
+  });
+};
+
+window._calebNavigateToLessonAndRead = function(lessonId) {
+  window._rrnNavigateTo('lesson', { id: lessonId })
+    .then(function() {
+      return window._rrnWaitForLessonReady(lessonId);
+    })
+    .then(function(lesson) {
+      var btn = document.getElementById('caleb-read-btn-' + lessonId);
+      var container = document.getElementById('lesson-body-' + lessonId);
+      if (btn && container) {
+        window._calebReadLesson(lessonId, lesson.body, btn, container);
+      }
+    })
+    .catch(function(error) {
+      window._calebSpeak('I couldn\'t open that lesson: ' + (error.message || 'unknown error'));
+      console.error('[CALEB] Navigation error:', error);
+    });
+};
+
 </script>
 
 <style>
@@ -33175,174 +33668,10 @@ function CurriculumViewer({ platform, session, toast, setActive, update }) {
             id:'caleb-read-btn-'+l.id,
             onClick:function(){
               var btn=document.getElementById('caleb-read-btn-'+l.id);
-              var posKey='rrn_read_pos_'+l.id;
-              if(window._calebReading){
-                try{window.speechSynthesis.cancel();}catch(e){}
-                window._calebReading=false; window._calebReadStop=true; window._calebReadingSession=false;
-                try{localStorage.setItem(posKey,String(window._calebReadIdx||0));}catch(e){}
-                btn.textContent='📖 Read Lesson Aloud';
-                btn.style.background='rgba(200,145,58,0.12)';
-                btn.style.borderColor='';btn.style.color='';
-                var cbtn=document.getElementById('caleb-continue-btn-'+l.id);
-                if(cbtn&&(window._calebReadIdx||0)>0) cbtn.style.display='';
-                document.querySelectorAll('.caleb-hl').forEach(function(el){
-                  el.style.background='';el.style.borderRadius='';el.classList.remove('caleb-hl');el.style.outline='';
-                });
-                return;
-              }
-              try{localStorage.removeItem(posKey);}catch(e){}
-              window._calebReadIdx=0;
-              var cbtn2=document.getElementById('caleb-continue-btn-'+l.id);
-              if(cbtn2) cbtn2.style.display='none';
-              function startReading(startI){
-                var body=l.body||''; if(!body) return;
-                function isAllCaps(s){var t=s.trim();return t.length>3&&t===t.toUpperCase()&&/[A-Z]/.test(t)&&!/[a-z]/.test(t);}
-                function smartSplit(text){
-                  var lines=text.split(/\r?\n/); var raw=[];
-                  lines.forEach(function(line){
-                    var t=line.replace(/\t/g,' ').replace(/ {2,}/g,' ').replace(/[#*`]/g,'').trim();
-                    if(!t) return;
-                    if(isAllCaps(t)){raw.push(t);return;}
-                    var segs=t.split(/(?<=[a-zA-Z\u2019\)])[.!?](?=\s+[A-Z\u201C\u2018"])/g);
-                    segs.forEach(function(seg){
-                      var s=seg.trim(); if(s.length<3) return;
-                      if(s.length<=180){raw.push(s);return;}
-                      var sub=s.split(/(?<=[,;:\u2014\u2013])\s+/g); var cur='';
-                      sub.forEach(function(c){
-                        if(!c.trim()) return;
-                        if((cur?cur+' ':'').length+c.length<=180){cur=cur?cur+' '+c:c;}
-                        else{if(cur)raw.push(cur.trim());cur=c;}
-                      });
-                      if(cur) raw.push(cur.trim());
-                    });
-                  });
-                  var out=[]; var ri=0;
-                  while(ri<raw.length){
-                    var cur=raw[ri];
-                    if(isAllCaps(cur)){out.push(cur.trim());ri++;continue;}
-                    while(cur.length<42&&ri+1<raw.length&&!isAllCaps(raw[ri+1])){ri++;cur=cur+' '+raw[ri];}
-                    if(cur.length>2) out.push(cur.trim());
-                    ri++;
-                  }
-                  return out.length?out:raw.filter(function(s){return s&&s.length>2;});
-                }
-                var sentences=smartSplit(body);
-                if(!sentences.length) sentences=body.split('\n').map(function(s){return s.trim();}).filter(function(s){return s.length>3;});
-                if(!sentences.length) return;
-                try{window.speechSynthesis.cancel();}catch(e){}
-                window._isSpeaking=false;
-                window._calebReading=true; window._calebReadStop=false; window._calebReadingSession=true;
-                if(!window._rrnStartReading_) window._rrnStartReading_={};
-                window._rrnStartReading_[l.id]=startReading;
-                btn.textContent='⏹ Stop Reading';
-                btn.style.background='rgba(45,212,192,0.15)';
-                btn.style.borderColor='#2dd4c0'; btn.style.color='#2dd4c0';
-                var _watchdog=null; var i=startI||0;
-                function readNext(){
-                  if(_watchdog){clearInterval(_watchdog);_watchdog=null;}
-                  if(window._calebReadStop||i>=sentences.length){
-                    window._calebReading=false; window._calebReadingSession=false; window._isSpeaking=false;
-                    try{window.speechSynthesis.cancel();}catch(e){}
-                    btn.textContent='📖 Read Lesson Aloud';
-                    btn.style.background='rgba(200,145,58,0.12)'; btn.style.borderColor=''; btn.style.color='';
-                    try{localStorage.removeItem(posKey);}catch(e){}
-                    var cb3=document.getElementById('caleb-continue-btn-'+l.id);
-                    if(cb3) cb3.style.display='none';
-                    document.querySelectorAll('.caleb-hl').forEach(function(el){
-                      el.style.background='';el.style.borderRadius='';el.classList.remove('caleb-hl');el.style.outline='';
-                    });
-                    return;
-                  }
-                  var raw_s=sentences[i]||'';
-                  var sent=(/[.!?]$/.test(raw_s.trim())?raw_s:raw_s+(i<sentences.length-1?'.':'')).trim();
-                  if(!sent){i++;window._calebReadIdx=i;readNext();return;}
-                  var currentText=raw_s.trim();
-                  var container=document.getElementById('lesson-body-'+l.id);
-                  if(container){
-                    container.querySelectorAll('.caleb-hl').forEach(function(el){
-                      el.style.background='';el.style.borderRadius='';el.classList.remove('caleb-hl');el.style.outline='';el.style.transition='';
-                      el.removeAttribute('aria-current');
-                    });
-                    var allEls=Array.from(container.querySelectorAll('span[data-key]')).filter(function(el){
-                      // Prefer leaf spans (sentence-level) over block spans that contain children
-                      return (el.textContent||'').trim().replace(/\u00a0/g,'').length>0
-                        && el.querySelectorAll('span[data-key]').length===0; // leaf only
-                    });
-                    var curIsCaps=isAllCaps(currentText);
-                    var bestMatch=null,bestScore=0;
-                    allEls.forEach(function(el){
-                      var txt=(el.textContent||'').trim(); if(!txt||!currentText) return;
-                      var score=0;
-                      if(txt===currentText) score=100;
-                      else if(txt.indexOf(currentText)>=0) score=Math.max(1,90-(txt.length-currentText.length));
-                      else if(curIsCaps&&txt.toUpperCase().replace(/[.!?:,]/g,'').indexOf(currentText.toUpperCase().replace(/[.!?:,]/g,'').substring(0,Math.min(currentText.length,25)))>=0) score=88;
-                      else if(!curIsCaps&&currentText.length>=8&&txt.indexOf(currentText.substring(0,Math.min(currentText.length,30)))>=0) score=70;
-                      else if(currentText.indexOf(txt)>=0&&txt.length>8) score=40;
-                      if(score>bestScore){bestScore=score;bestMatch=el;}
-                    });
-                    if(!bestMatch&&allEls.length>0){
-                      bestMatch=allEls[Math.min(Math.floor(i*allEls.length/Math.max(sentences.length,1)),allEls.length-1)];
-                    }
-                    if(bestMatch){
-                      var bmTxt=(bestMatch.textContent||'').trim();
-                      var bmCaps=isAllCaps(bmTxt);
-                      bestMatch.style.background=bmCaps?'rgba(212,175,55,0.18)':'rgba(45,212,192,0.18)';
-                      bestMatch.style.outline=bmCaps?'2px solid rgba(212,175,55,0.6)':'2px solid rgba(45,212,192,0.4)';
-                      bestMatch.style.borderRadius='4px'; bestMatch.style.transition='background 0.25s,outline 0.25s';
-                      bestMatch.classList.add('caleb-hl');
-                      bestMatch.setAttribute('aria-current', 'true');
-                      // WCAG: announce currently-read sentence to screen readers
-                      var _ann = document.getElementById('aria-announce');
-                      if(_ann){ _ann.textContent=''; setTimeout(function(){ _ann.textContent = bmTxt; }, 50); }
-                      bestMatch.scrollIntoView({behavior:'smooth',block:'center'});
-                    }
-                  }
-                  i++; window._calebReadIdx=i;
-                  function speakSentence(s,onDone){
-                    if(window._piperOnline){
-                      fetch('http://localhost:5002/speak',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:s})})
-                      .then(function(r){return r.json();}).then(function(d){
-                        if(d.success&&d.audio){
-                          var blob=new Blob([Uint8Array.from(atob(d.audio),function(c){return c.charCodeAt(0);})],{type:'audio/wav'});
-                          var url=URL.createObjectURL(blob); var audio=new Audio(url);
-                          audio.onended=function(){URL.revokeObjectURL(url);onDone();};
-                          audio.onerror=function(){window._piperOnline=false;speakSentence(s,onDone);};
-                          audio.play().catch(function(){window._piperOnline=false;speakSentence(s,onDone);});
-                        } else {window._piperOnline=false;speakSentence(s,onDone);}
-                      }).catch(function(){window._piperOnline=false;speakSentence(s,onDone);});
-                      return;
-                    }
-                    var u=new SpeechSynthesisUtterance(s);
-                    u.rate=0.87;u.pitch=1.0;u.volume=1.0;
-                    var voices=window.speechSynthesis.getVoices();
-                    if(!window._voicesLogged){window._voicesLogged=true;console.log('[CALEB VOICES]',voices.map(function(v){return v.name+'('+v.lang+')';}));}
-                    var preferred=['Microsoft Guy Online (Natural)','Microsoft Guy','Microsoft Davis','Microsoft David Online','Microsoft David','Microsoft Mark Online','Microsoft Mark','Microsoft James','Google US English','Google UK English Male','Alex','Fred'];
-                    var bestVoice=null,bvScore=-1;
-                    voices.forEach(function(v){
-                      if(v.lang.indexOf('en')!==0) return; var sc=0;
-                      preferred.forEach(function(name,rank){if(v.name.indexOf(name)>=0) sc=Math.max(sc,preferred.length-rank);});
-                      if(v.name.toLowerCase().indexOf('online')>=0) sc+=5;
-                      if(v.name.toLowerCase().indexOf('natural')>=0) sc+=10;
-                      if(sc>bvScore){bvScore=sc;bestVoice=v;}
-                    });
-                    if(bestVoice) u.voice=bestVoice;
-                    var done=false;
-                    function finish(){if(!done){done=true;if(_watchdog){clearInterval(_watchdog);_watchdog=null;}onDone();}}
-                    _watchdog=setInterval(function(){
-                      if(!window._calebReading||done){clearInterval(_watchdog);_watchdog=null;return;}
-                      try{window.speechSynthesis.resume();}catch(e){}
-                    },5000);
-                    u.onend=finish;u.onerror=finish;
-                    var maxWait=Math.max(800,Math.ceil(s.length/(0.87*14)*1000)+400);
-                    setTimeout(function(){finish();},maxWait);
-                    window.speechSynthesis.speak(u);
-                  }
-                  speakSentence(sent,function(){setTimeout(readNext,150);});
-                }
-                setTimeout(function(){readNext();},300);
-              }
-              startReading(0);
-            },            style:{padding:'8px 18px',borderRadius:6,
+              var container=document.getElementById('lesson-body-'+l.id);
+              window._calebAudioController.toggleReading(l.id, l.body, btn, container);
+            },
+            style:{padding:'8px 18px',borderRadius:6,
               background:'rgba(200,145,58,0.12)',border:'1px solid var(--gold)',
               color:'var(--gold)',cursor:'pointer',fontSize:'0.82rem',fontWeight:600,
               transition:'all .2s'}
@@ -58766,7 +59095,16 @@ window._cSend=function(){
     { id:'act:victory',        score:0, patterns:['log victory','add victory','praise report','god did','breakthrough','victory','thank god','celebrate','god moved','what god did'] },
     { id:'act:repair',         score:0, patterns:['repair','fix','broken','bug','not working','issue with','something wrong','glitch','error','problem with'] },
     { id:'act:status',         score:0, patterns:['status','health','how are we','how is the system','platform status','everything ok','all good','system check','how many','whats happening'] },
-    { id:'act:read-lesson',    score:0, patterns:['read lesson','read it','read aloud','start reading','caleb read','read to me','listen to lesson','read out loud'] },
+    // DEFECT-006 FIX: Context-aware 'read it' scoring to prevent collision with journal/prayer intents
+    { id:'act:read-lesson',    score:0, patterns:['read lesson','read aloud','start reading','caleb read','listen to lesson','read out loud'],
+      contextPatterns: { 'lesson': ['read it','read to me'], 'journal': [], 'prayer': [] },
+      scorer: function(text, context) {
+        // Boost score if on lesson screen
+        if (context === 'lesson') return 95;
+        if (context === 'lessonlist') return 85;
+        return 0;
+      }
+    },
     { id:'act:briefing',       score:0, patterns:['briefing','morning briefing','update me','whats today','daily report','refresh','todays summary','command center'] },
     { id:'act:incident',       score:0, patterns:['incident','any problems','what broke','any issues','whats wrong','current issues','active incidents','anything urgent'] },
     { id:'act:architecture',   score:0, patterns:['architecture','modules','what do we have','system map','whats built','all features','list modules','what can you do'] },
@@ -58900,8 +59238,50 @@ window._cSend=function(){
       case 'read-lesson':
         var rb = null;
         document.querySelectorAll('button').forEach(function(b){ if((b.textContent||'').indexOf('Read Lesson')>=0) rb=b; });
-        if(rb){ rb.click(); window._calebSpeak('Starting lesson reading.'); }
-        else{ window._calebSpeak('Open a lesson first, then I can read it for you.'); }
+        // DEFECT-007 FIX: Add precondition validation before action execution
+        var validateReadLessonAction = function(lessonId) {
+          // Check 1: User authenticated
+          if (!window._rrnUser || !window._rrnUser.id) {
+            return { valid: false, error: 'You must be logged in' };
+          }
+          
+          // Check 2: Lesson exists and loaded
+          var lesson = window._rrnLessons && window._rrnLessons[lessonId];
+          if (!lesson) {
+            return { valid: false, error: 'Lesson not found' };
+          }
+          
+          // Check 3: Lesson content available
+          if (!lesson.body || lesson.body.trim().length === 0) {
+            return { valid: false, error: 'Lesson content is empty' };
+          }
+          
+          // Check 4: User has permission
+          var minRole = lesson.minRole || 0;
+          var userRole = window._rrnUser.role || 99;
+          if (userRole > minRole) {
+            return { valid: false, error: 'You don\'t have access to this lesson' };
+          }
+          
+          // Check 5: Lesson not archived
+          if (lesson.archived || lesson.deleted) {
+            return { valid: false, error: 'This lesson is no longer available' };
+          }
+          
+          return { valid: true };
+        };
+        
+        var rb = document.getElementById('caleb-read-btn-' + (window._currentLessonId || ''));
+        var lessonId = window._currentLessonId || '';
+        var validation = validateReadLessonAction(lessonId);
+        
+        if (validation.valid && rb) {
+          rb.click();
+          window._calebSpeak('Starting lesson reading.');
+        } else {
+          window._calebSpeak(validation.error || 'I can\'t read that lesson right now.');
+          console.warn('[CALEB] Read lesson validation failed:', validation);
+        }
         break;
 
       case 'briefing':
