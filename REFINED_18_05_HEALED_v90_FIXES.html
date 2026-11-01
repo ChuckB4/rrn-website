@@ -755,7 +755,7 @@ window._rrnAPI=window._rrnAPI||{recordLessonCompletion:function(info){
     var p=JSON.parse(localStorage.getItem('rrn_progress')||'{}');
     p[info.lessonId]=Object.assign({completed:false,quizPassed:false,quizScore:0,mentorSigned:false},p[info.lessonId]||{},{audioCompleted:true,audioCompletedAt:info.timestamp||new Date().toISOString(),ts:new Date().toISOString()});
     localStorage.setItem('rrn_progress',JSON.stringify(p));
-    if(typeof window.rrnApi==='function') window.rrnApi('/lms/audio-complete','POST',{lessonId:info.lessonId,timestamp:info.timestamp,verification:info.verification});
+    if(typeof window.rrnApi==='function') window.rrnApi('/lms/progress','POST',{lessonId:info.lessonId,progress:{audioCompleted:true,audioCompletedAt:info.timestamp||new Date().toISOString(),verification:info.verification}});
   }catch(e){console.warn('[RRN] recordLessonCompletion failed',e);}
 }};
 
@@ -997,7 +997,7 @@ var TAX_RULES = {
 
 // classifyTransaction
 var classifyTransaction = function(category, type) {
-  if(TAX_RULES.nonprofit.includes(category)) return {class:'nonprofit', label:'Donation', color:'var(--l5)', deductible:true, taxable:false, ubiRisk:false};
+  if(TAX_RULES.nonprofit.includes(category)) return {class:'nonprofit', label:'Donation', color:'var(--l5)', deductible:false, taxable:false, ubiRisk:false};
   if(TAX_RULES.ubi_risk.includes(category))  return {class:'ubi_risk',  label:'UBI Risk — Review', color:'#fc8181', deductible:false, taxable:true,  ubiRisk:true};
   if(TAX_RULES.taxable.includes(category))   return {class:'taxable',   label:'Taxable Revenue', color:'var(--gold)', deductible:false, taxable:true, ubiRisk:false};
   return {class:'unclassified', label:'Unclassified — Review', color:'var(--dmuted)', deductible:false, taxable:false, ubiRisk:false};
@@ -9251,7 +9251,7 @@ var CONTRIBUTION_PATHS = [
     desc:'Reduced-rate rental supporting recovery.',
     fields:['marketRent','partnerRent','occupancyMonths'],
     legalDoc:'Mission Rental Agreement + Charitable Contribution Letter',
-    taxNote:'Rent reduction below fair market value may qualify as charitable contribution',
+    taxNote:'Rent reduction below fair market value is recorded as an in-kind contribution',
     reportObligation:'Monthly occupancy report + annual impact letter',
     impactCategory:'Housing Access'},
   { id:'charitable-donation', icon:'🏡', label:'Charitable Housing Donation',
@@ -9265,7 +9265,7 @@ var CONTRIBUTION_PATHS = [
     desc:'Short-term housing tied to job placement. Partner provides stable housing for employed program graduates.',
     fields:['marketRent','partnerRent','occupancyMonths','jobLocation'],
     legalDoc:'Workforce Housing Agreement + Employer Coordination MOU',
-    taxNote:'Discounted workforce housing may qualify as charitable contribution or business deduction',
+    taxNote:'Discounted workforce housing is recorded as an in-kind contribution',
     reportObligation:'Employment verification + 90-day retention report',
     impactCategory:'Economic Independence'},
   { id:'sponsored-unit',      icon:'⭐', label:'Sponsored Recovery Unit',
@@ -9279,14 +9279,14 @@ var CONTRIBUTION_PATHS = [
     desc:'Short-term emergency shelter for crisis intake. Highest impact per dollar, priority placement for critical cases.',
     fields:['marketRent','occupancyMonths'],
     legalDoc:'Emergency Housing MOU + Liability Agreement',
-    taxNote:'Emergency shelter provision is highest-priority charitable contribution category',
+    taxNote:'Emergency shelter provision is the highest-priority contribution category',
     reportObligation:'Incident report access + weekly occupancy summary',
     impactCategory:'Crisis Response'},
   { id:'family-reintegration', icon:'👨', label:'Long Term Family Reintegration',
     desc:'Extended housing supporting parent-child reunification. Multi-year commitment with court documentation support.',
     fields:['marketRent','partnerRent','occupancyMonths','reunificationTarget'],
     legalDoc:'Family Reintegration Housing Agreement + Court Letter Template',
-    taxNote:'Long-term charitable housing contributions accumulate maximum deductible value',
+    taxNote:'Long-term housing contributions accumulate the greatest in-kind value',
     reportObligation:'Monthly reunification progress reports + court documentation packets',
     impactCategory:'Family Restoration'},
 ];
@@ -9457,7 +9457,7 @@ function PropertyPartnershipPlatform({ platform, update, toast, session }) {
                   );
                 })
               ),
-              tx.annualDeductible>0&&React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--gold)',fontWeight:600}},'Est. tax advantage: $'+(tx.taxAdvantageMin.toLocaleString())+' – $'+(tx.taxAdvantageMax.toLocaleString())+'/yr')
+              tx.annualDeductible>0&&React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--gold)',fontWeight:600}},'Est. in-kind value: $'+(tx.annualDeductible.toLocaleString())+'/yr')
             )
           );
         })
@@ -9592,16 +9592,16 @@ function PropertyPartnershipPlatform({ platform, update, toast, session }) {
         // Results
         React.createElement('div',null,
           React.createElement('div',{className:'d-card',style:{marginBottom:'1rem'}},
-            React.createElement('div',{className:'d-card-head'},React.createElement('span',{className:'d-card-title'},'TAX ADVANTAGE ESTIMATE')),
+            React.createElement('div',{className:'d-card-head'},React.createElement('span',{className:'d-card-title'},'IN-KIND VALUE ESTIMATE')),
             React.createElement('div',{className:'d-card-body'},
               React.createElement('div',{style:{textAlign:'center',padding:'1.25rem 0',marginBottom:'1rem',borderBottom:'1px solid var(--bdr)'}},
-                React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)',textTransform:'uppercase',letterSpacing:'0.12em',marginBottom:'0.4rem'}},'Estimated Annual Tax Advantage Range'),
+                React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)',textTransform:'uppercase',letterSpacing:'0.12em',marginBottom:'0.4rem'}},'Estimated Annual In-Kind Contribution Value'),
                 React.createElement('div',{style:{fontSize:'2.25rem',fontWeight:700,fontFamily:'var(--font-serif)',color:'var(--gold)'}},
-                  tx.taxAdvantageMin>0 ? ('$'+tx.taxAdvantageMin.toLocaleString()+' – $'+tx.taxAdvantageMax.toLocaleString()) : '—'
+                  tx.annualDeductible>0 ? ('$'+tx.annualDeductible.toLocaleString()) : '—'
                 ),
-                React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)',marginTop:'0.35rem'}},'Based on 22%–37% federal bracket range')
+                React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)',marginTop:'0.35rem'}},'Rent reduction multiplied by occupancy months. No tax benefit is claimed.')
               ),
-              [['Monthly Deductible Amount','$'+tx.deductibleMonthly.toLocaleString(),'var(--l2)'],['Annual Deductible Total','$'+tx.annualDeductible.toLocaleString(),'var(--l5)'],['Occupancy Period',calc.occupancyMonths+' months','var(--dmuted)'],['Impact Category',path.impactCategory,'var(--gold)']].map(function(row){
+              [['Monthly In-Kind Value','$'+tx.deductibleMonthly.toLocaleString(),'var(--l2)'],['Annual In-Kind Value','$'+tx.annualDeductible.toLocaleString(),'var(--l5)'],['Occupancy Period',calc.occupancyMonths+' months','var(--dmuted)'],['Impact Category',path.impactCategory,'var(--gold)']].map(function(row){
                 return React.createElement('div',{key:row[0],style:{display:'flex',justifyContent:'space-between',padding:'0.45rem 0',borderBottom:'1px solid var(--bdr)',fontSize:'0.82rem'}},
                   React.createElement('span',{style:{color:'var(--dmuted)'}},'',row[0]),
                   React.createElement('span',{style:{color:row[2],fontWeight:600}},'',row[1])
@@ -9666,22 +9666,22 @@ function PropertyPartnershipPlatform({ platform, update, toast, session }) {
         )
       ),
 
-      // Two-col: Tax advantage + Risk mitigation
+      // Two-col: In-kind value + Risk mitigation
       React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1.25rem',marginBottom:'1.25rem'}},
         React.createElement('div',{className:'d-card'},
-          React.createElement('div',{className:'d-card-head'},React.createElement('span',{className:'d-card-title'},'💰 TAX ADVANTAGE SUMMARY')),
+          React.createElement('div',{className:'d-card-head'},React.createElement('span',{className:'d-card-title'},'💰 IN-KIND VALUE SUMMARY')),
           React.createElement('div',{className:'d-card-body'},
             React.createElement('div',{style:{textAlign:'center',marginBottom:'0.85rem'}},
-              React.createElement('div',{style:{fontSize:'1.75rem',fontWeight:700,fontFamily:'var(--font-serif)',color:'var(--gold)'}},'$'+tx.taxAdvantageMin.toLocaleString()+' – $'+tx.taxAdvantageMax.toLocaleString()),
-              React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)'}},'Estimated Annual Tax Advantage')
+              React.createElement('div',{style:{fontSize:'1.75rem',fontWeight:700,fontFamily:'var(--font-serif)',color:'var(--gold)'}},'$'+tx.annualDeductible.toLocaleString()),
+              React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)'}},'Estimated Annual In-Kind Value')
             ),
-            [['Annual Deductible','$'+tx.annualDeductible.toLocaleString()],['Monthly Deductible','$'+tx.deductibleMonthly.toLocaleString()],['Occupancy Period',p.occupancyMonths+' months'],['Partner Rent','$'+p.partnerRent+'/mo'],['Market Rate','$'+p.marketRent+'/mo']].map(function(row){
+            [['Annual In-Kind Value','$'+tx.annualDeductible.toLocaleString()],['Monthly In-Kind Value','$'+tx.deductibleMonthly.toLocaleString()],['Occupancy Period',p.occupancyMonths+' months'],['Partner Rent','$'+p.partnerRent+'/mo'],['Market Rate','$'+p.marketRent+'/mo']].map(function(row){
               return React.createElement('div',{key:row[0],style:{display:'flex',justifyContent:'space-between',padding:'0.4rem 0',borderBottom:'1px solid var(--bdr)',fontSize:'0.8rem'}},
                 React.createElement('span',{style:{color:'var(--dmuted)'}},'',row[0]),
                 React.createElement('span',{style:{color:'var(--dtxt)',fontWeight:500}},'',row[1])
               );
             }),
-            React.createElement('button',{onClick:function(){toast({icon:'📄',title:'📄 Tax package generated',body:'Document saved to Mission Vault. Copy mailed to partner.'});var taxNote={id:'tx'+Date.now(),title:'📄 Tax Package Ready — '+p.name,body:'Annual tax documentation prepared for '+p.name+'. Document saved to partner record.',type:'info',sentAt:new Date().toISOString(),requireResponse:false,responses:[]};update('notifications',[...(platform.notifications||[]),taxNote]); },style:{marginTop:'0.85rem',width:'100%',padding:'0.6rem',borderRadius:8,background:'rgba(200,145,58,0.1)',border:'1px solid rgba(200,145,58,0.2)',color:'var(--gold)',cursor:'pointer',fontWeight:700,fontSize:'0.8rem'}},'📄 Generate Annual Tax Package')
+            React.createElement('button',{onClick:function(){toast({icon:'📄',title:'📄 Partner summary generated',body:'Document saved to Mission Vault. Copy mailed to partner.'});var taxNote={id:'tx'+Date.now(),title:'📄 Partner Summary Ready — '+p.name,body:'Annual summary prepared for '+p.name+'. Document saved to partner record.',type:'info',sentAt:new Date().toISOString(),requireResponse:false,responses:[]};update('notifications',[...(platform.notifications||[]),taxNote]); },style:{marginTop:'0.85rem',width:'100%',padding:'0.6rem',borderRadius:8,background:'rgba(200,145,58,0.1)',border:'1px solid rgba(200,145,58,0.2)',color:'var(--gold)',cursor:'pointer',fontWeight:700,fontSize:'0.8rem'}},'📄 Generate Annual Partner Summary')
           )
         ),
         React.createElement('div',{className:'d-card'},
@@ -9864,8 +9864,8 @@ function PropertyPartnershipPlatform({ platform, update, toast, session }) {
                 React.createElement('div',{style:{fontSize:'0.72rem',color:'var(--dmuted)',marginTop:'0.15rem'}},p.yearsActive,' yrs ',p.livesHoused,' lives ',p.reunifications,' reunifications')
               ),
               React.createElement('div',{style:{textAlign:'right'}},
-                React.createElement('div',{style:{fontSize:'0.82rem',color:'var(--gold)',fontWeight:700}},'$'+tx.taxAdvantageMin.toLocaleString()+'–$'+tx.taxAdvantageMax.toLocaleString()),
-                React.createElement('div',{style:{fontSize:'0.65rem',color:'var(--ddim)'}},'est. tax advantage')
+                React.createElement('div',{style:{fontSize:'0.82rem',color:'var(--gold)',fontWeight:700}},'$'+tx.annualDeductible.toLocaleString()),
+                React.createElement('div',{style:{fontSize:'0.65rem',color:'var(--ddim)'}},'est. in-kind value')
               )
             );
           })
@@ -12105,7 +12105,7 @@ function TokenizationPanel({ platform, toast, update, session }) {
      headline:'Tokenized Refined Place Properties',
      yield:'6–10% projected', min:'$50', structure:'Reg CF / Reg D LLC',
      desc:'Own fractional shares of certified Refined Place recovery homes in Louisiana. Earn rental yield from member fees, Section 8/VASH vouchers, and SAMHSA housing grants. Real-time impact dashboard shows occupancy, curriculum completion, and employment placements on your property.',
-     returns:['8–15% projected annual yield','Rental income from member fees + housing vouchers','SAMHSA and state housing grant income stream','Real-time tenant accountability data — no other RE investment shows you this','Tax advantages: charitable donation, LIHTC credits, impact housing incentives'],
+     returns:['8–15% projected annual yield','Rental income from member fees + housing vouchers','SAMHSA and state housing grant income stream','Real-time tenant accountability data — no other RE investment shows you this','Impact housing incentives and in-kind contribution recognition'],
      structure_detail:'Wyoming DAO LLC or Louisiana LLC per property. Tokens issued via Securitize or Lofty. Reg CF (up to $5M/yr, any investor) or Reg D (accredited, no cap). Smart contract distributions.'},
     {id:'chariot',   icon:'🚗', label:'Chariot Fleet',    color:'#2563eb',
      headline:'Tokenized Chariot Transportation Fleet',
@@ -12677,7 +12677,7 @@ function PitchBuilder({ platform, toast, session }) {
       housing:[
         { tag:'The Need',      headline:'Recovery housing is the missing piece.', body:'There is more demand for structured recovery housing in Southern Louisiana than there are beds. RRN\'s housing network currently has '+M.hotelBeds+' beds across '+M.partnerCount+' properties. We need '+city+' landlords to expand that mission.', stat:M.hotelBeds, statLabel:'Current Beds', icon:'🏠' },
         { tag:'How It Works',  headline:'Structured residents. Supervised living. Rent stability.', body:'RRN residents pay consistent program fees. Every home has a dedicated House Supervisor providing daily oversight, behavioral tracking, drug testing coordination, and incident documentation. You receive a professional operations partner — not just a tenant.', stat:'100%', statLabel:'Supervised', icon:'🛡️' },
-        { tag:'Your Benefit',  headline:'Mission-aligned. Financially stable. Professionally managed.', body:'RRN property partners receive: monthly occupancy reporting, annual tax documentation, charitable contribution certification, donor recognition, and full platform access to see the impact of their property. Est. tax advantage: $'+Math.round((850-400)*12*0.28/100)*100+'–$'+Math.round((850-400)*12*0.37/100)*100+'/yr.', stat:'$'+Math.round((850-400)*12*0.28/100)*100+'–$'+Math.round((850-400)*12*0.37/100)*100, statLabel:'Est. Tax Advantage/yr', icon:'💰' },
+        { tag:'Your Benefit',  headline:'Mission-aligned. Financially stable. Professionally managed.', body:'RRN property partners receive: monthly occupancy reporting, annual impact summary, in-kind contribution record, donor recognition, and full platform access to see the impact of their property. Est. in-kind value: $'+Math.round((850-400)*12/100)*100+'/yr.', stat:'$'+Math.round((850-400)*12/100)*100, statLabel:'Est. In-Kind Value/yr', icon:'💰' },
         { tag:'Proof',         headline:'"'+metrics.testimony2.body.slice(0,150)+'..."', body:'— '+metrics.testimony2.author+' '+M.reunifications+' family reunifications enabled by stable housing', stat:M.reunifications, statLabel:'Families Restored', icon:'👨' },
         { tag:'Partner Today', headline:form.cta||'List your property with Refined Recovery Network.', body:'Registration takes 10 minutes. We handle the rest — placement, oversight, reporting, and recognition. Walk well alongside us.', stat:M.partnerCount, statLabel:'Partners Joined', icon:'✅', isCTA:true },
       ],
@@ -17515,7 +17515,7 @@ function GrantApplicationBuilder({ grant, platform, onClose, toast }) {
       method:'POST',
       headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:400,
-        system:'You are a professional grant writer for faith-based nonprofit organizations. Write clearly, specifically, and compellingly. Use active voice. No generic filler. Cite provided platform data as evidence.',
+        system:'You are a professional grant writer for faith-based organizations. Write clearly, specifically, and compellingly. Use active voice. No generic filler. Cite provided platform data as evidence.',
         messages:[{role:'user',content:prompt}]})
     }).then(function(r){return r.json();})
     .then(function(d){
@@ -24248,7 +24248,7 @@ var TAX_RULES = {
 };
 
 var classifyTransaction = function(category, type) {
-  if(TAX_RULES.nonprofit.includes(category)) return {class:'nonprofit', label:'Donation', color:'var(--l5)', deductible:true, taxable:false, ubiRisk:false};
+  if(TAX_RULES.nonprofit.includes(category)) return {class:'nonprofit', label:'Donation', color:'var(--l5)', deductible:false, taxable:false, ubiRisk:false};
   if(TAX_RULES.ubi_risk.includes(category))  return {class:'ubi_risk',  label:'UBI Risk — Review', color:'#fc8181', deductible:false, taxable:true,  ubiRisk:true};
   if(TAX_RULES.taxable.includes(category))   return {class:'taxable',   label:'Taxable Revenue', color:'var(--gold)', deductible:false, taxable:true, ubiRisk:false};
   return {class:'unclassified', label:'Unclassified — Review', color:'var(--dmuted)', deductible:false, taxable:false, ubiRisk:false};
@@ -24285,7 +24285,7 @@ var createZeffyEntry = function(platform, update, donation, session) {
     amount:donation.amount, date:donation.date||today,
     payer:donation.donorName, campus:donation.campus||'General',
     status:'received', taxClass:'nonprofit', taxLabel:'Donation',
-    deductible:true, ubiRisk:false,
+    deductible:false, ubiRisk:false,
     zeffyRef:donation.zeffyRef||'', fundType:donation.fundType||'unrestricted',
     campaign:donation.campaign||'', donorEmail:donation.donorEmail||'',
     notes:donation.notes||''
@@ -24407,7 +24407,7 @@ function UnifiedFinancialOverview({ platform, update, session, toast, setActive 
       React.createElement('div',{className:'lvh-tag'},'Financial'),
       React.createElement('div',{className:'lvh-title'},'Unified Financial Overview'),
       React.createElement('div',{className:'lvh-sub'},
-        '🟢 Zeffy (Nonprofit / Donations) + 🔵 PayPal (Revenue / Invoices) — All money flows in one view. Tax-classified automatically. No fund mixing enforced.')
+        '🟢 Donations + 🔵 PayPal (Revenue / Invoices) — All money flows in one view. Classified automatically. No fund mixing enforced.')
     ),
 
     // UBI risk banner
@@ -24442,7 +24442,7 @@ function UnifiedFinancialOverview({ platform, update, session, toast, setActive 
     ),
 
     React.createElement('div',{style:{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'0.85rem',marginBottom:'1.25rem'}},
-      [{l:'🟢 Zeffy (Nonprofit)',v:fmt(zeffyTotal),c:'var(--l5)',sub:'Donation'},
+      [{l:'🟢 Donations',v:fmt(zeffyTotal),c:'var(--l5)',sub:'Donation'},
        {l:'🔵 PayPal (Revenue)',v:fmt(paypalTotal),c:'var(--l2)',sub:'Taxable earned income'},
        {l:'Total Income',v:fmt(totalIncome),c:'var(--gold)',sub:'All sources combined'},
        {l:'Net Position',v:fmt(netPosition),c:netPosition>=0?'var(--l5)':'#fc8181',sub:'Income minus expenses'},
@@ -24525,7 +24525,7 @@ function UnifiedFinancialOverview({ platform, update, session, toast, setActive 
     tab==='zeffy'&&React.createElement('div',null,
       React.createElement('div',{style:{padding:'0.85rem 1rem',background:'rgba(91,196,110,0.05)',border:'1px solid rgba(91,196,110,0.2)',borderRadius:10,marginBottom:'1.25rem',fontSize:'0.8rem',color:'var(--dmuted)',lineHeight:1.7}},
         React.createElement('span',{style:{fontWeight:700,color:'var(--l5)'}},'🟢 Zeffy Integration: '),
-        'Zeffy is a zero-fee nonprofit donation platform. Donations collected via Zeffy arrive as gifts to RRN. Record each donation below — or import from your Zeffy dashboard export. All Zeffy entries are auto-classified as nonprofit/donation and are ',
+        'Record gifts received through the RRN donation page. Donations collected via Zeffy arrive as gifts to RRN. Record each donation below — or import from your Zeffy dashboard export. All Zeffy entries are auto-classified as nonprofit/donation and are ',
         React.createElement('strong',null,'never mixed'),
         ' with PayPal revenue in reporting or splits.'
       ),
@@ -24610,7 +24610,7 @@ function UnifiedFinancialOverview({ platform, update, session, toast, setActive 
     // -- TAX CLASSIFICATION TAB --
     tab==='tax'&&React.createElement('div',null,
       React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'0.85rem',marginBottom:'1.25rem'}},
-        [{label:'🟢 Nonprofit / Donation',val:fmt(nonprofitTotal),count:filteredLedger.filter(function(e){return e.taxClass==='nonprofit';}).length,color:'var(--l5)',desc:'Donations, grants, restricted/unrestricted gifts. Not taxable to Refined Recovery Network.'},
+        [{label:'🟢 Donations',val:fmt(nonprofitTotal),count:filteredLedger.filter(function(e){return e.taxClass==='nonprofit';}).length,color:'var(--l5)',desc:'Donations, grants, restricted/unrestricted gifts. Not taxable to Refined Recovery Network.'},
          {label:'🔵 Taxable Revenue',val:fmt(taxableTotal),count:filteredLedger.filter(function(e){return e.taxClass==='taxable';}).length,color:'var(--l2)',desc:'Placement fees, license fees, service revenue. Subject to federal/state income tax.'},
          {label:'⚠️ UBI Risk',val:fmt(ubiRiskTotal),count:ubiFlags.length,color:'#fc8181',desc:'Unrelated Business Income. May trigger UBIT. Review with accountant. Housing income is common UBI risk for nonprofits.'},
         ].map(function(s){
@@ -24627,7 +24627,7 @@ function UnifiedFinancialOverview({ platform, update, session, toast, setActive 
         React.createElement('div',{className:'d-card-head'},React.createElement('span',{className:'d-card-title'},'TAX CLASSIFICATION RULES')),
         React.createElement('div',{className:'d-card-body'},
           React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'0.85rem'}},
-            [{label:'NONPROFIT (Tax-Exempt)',color:'var(--l5)',items:TAX_RULES.nonprofit},
+            [{label:'DONATIONS',color:'var(--l5)',items:TAX_RULES.nonprofit},
              {label:'TAXABLE REVENUE',color:'var(--l2)',items:TAX_RULES.taxable},
              {label:'UBI RISK — Review',color:'#fc8181',items:TAX_RULES.ubi_risk},
             ].map(function(col){
@@ -24958,7 +24958,7 @@ function ZeffyDonationForm({ platform, update, toast }) {
         )
       ),
       React.createElement('div',{style:{padding:'0.5rem 0.75rem',background:'rgba(91,196,110,0.06)',borderRadius:6,marginBottom:'0.65rem',fontSize:'0.72rem',color:'var(--l5)',fontWeight:600}},
-        '\uD83D\uDCA1 This donation will be auto-classified as Nonprofit / Donation and will NOT appear in PayPal revenue or splits. Fund type determines how the gift may be used.'),
+        '\uD83D\uDCA1 This donation will be auto-classified as a Donation and will NOT appear in PayPal revenue or splits. Fund type determines how the gift may be used.'),
       React.createElement('button',{onClick:save,
         style:{width:'100%',padding:'0.7rem',borderRadius:9,background:'linear-gradient(135deg,var(--l5),rgba(91,196,110,0.4))',color:'#0a0f1a',border:'none',cursor:'pointer',fontWeight:700,fontSize:'0.9rem',fontFamily:'var(--font-serif)'}},
         '\uD83D\uDC9A Record Zeffy Donation')
@@ -25204,7 +25204,7 @@ var SITE_CONTENT_DEFAULT = {
     courtBody:      'Structured referral programs with compliance reporting, attendance verification, and documented outcomes for drug court, family court, and diversion programs.',
     tradeHeadline:  'Trade School & Education Partners',
     tradeBody:      'Partner with Refined Recovery Network to provide reduced or waived tuition for qualifying referrals with monthly enrollment and completion reporting.',
-    ctaLicense:       'Refined Recovery Network LLC operates as a faith-based nonprofit. Partners must obtain their own licensing and documentation. Contact us for details.',
+    ctaLicense:       'Refined Recovery Network LLC operates as a faith-based ministry. Partners must obtain their own licensing and documentation. Contact us for details.',
     ctaLabel:       'Express Interest →',
     ctaAction:      'guest-signup',
   },
@@ -26469,7 +26469,7 @@ function GuestDonatePanel({ platform, toast, update, session, setActive }) {
 
   var handleSubmit = function() {
     if (!form.name || !form.email) {
-      toast({ icon:'⚠️', title:'Name and email required', body:'So we can send you a tax receipt.' });
+      toast({ icon:'⚠️', title:'Name and email required', body:'So we can send you a donation acknowledgment.' });
       return;
     }
     if (!form.amount && !form.customAmount) {
@@ -26527,7 +26527,7 @@ function GuestDonatePanel({ platform, toast, update, session, setActive }) {
       React.createElement('p', { style:{ fontSize:'0.9rem', color:'var(--dmuted)', lineHeight:1.75,
         marginBottom:'1.5rem' } },
         'Your gift of $' + (form.amt||'').toLocaleString() + ' to ' + form.campaign +
-        ' has been received. A tax receipt (Receipt #' + form.receiptId + ') will be sent to ' +
+        ' has been received. A donation acknowledgment (Reference #' + form.receiptId + ') will be sent to ' +
         form.email + '.'
       ),
       React.createElement('div', { style:{ padding:'1.25rem', background:'rgba(91,196,110,0.07)',
@@ -48201,7 +48201,7 @@ function ChariotPanel({ platform, session, toast, setActive }) {
     var charitableDeduction = miles * CHARITY_RATE;
     var reqId = 'chr-'+Date.now();
 
-    // Generate tax receipt if applicable
+    // Generate trip log acknowledgment if applicable
     if(isEligibleTrip && miles > 0){
       var today = new Date();
       var receiptLines = [
@@ -48213,8 +48213,8 @@ function ChariotPanel({ platform, session, toast, setActive }) {
         'Receipt No:    '+reqId,
         'Donor:         '+(userName||'Member'),
         'Organization:  Refined Recovery Network LLC',
-        '               (Verify nonprofit status with',
-        '               your own advisor)',
+        '               (Trip log only. No tax',
+        '               benefit is claimed.)',
         '────────────────────────────────────────────────────',
         'TRIP DETAILS',
         'Purpose:       '+form.purpose,
@@ -48227,7 +48227,7 @@ function ChariotPanel({ platform, session, toast, setActive }) {
         'MILEAGE VALUE CALCULATION',
         'Charitable mileage rate 2024: $0.21/mile',
         'Qualified miles:  '+miles+' mi',
-        'Deductible amt:   $'+charitableDeduction.toFixed(2),
+        'Mileage value:    $'+charitableDeduction.toFixed(2),
         '',
         'Note: Medical transportation (if applicable) may',
         'qualify at the medical rate of $0.21/mile under',
@@ -48280,7 +48280,7 @@ function ChariotPanel({ platform, session, toast, setActive }) {
       }
     }));
     setForm({category:'',subcategory:'',purpose:'',pickup:'',destination:'',date:'',time:'',notes:'',recurring:false,passengers:1,medicaidId:'',isVeteran:false,isSenior:false,isDisabled:false,employerId:'',mileage:'',femaleDriverPref:false,trustedContactName:'',trustedContactPhone:'',safetyPingEnabled:true,_tipPct:20});
-    toast({icon:'chr',title:'Chariot request submitted',body: isEligibleTrip && miles>0 ? 'Tax receipt downloaded. Driver matched shortly.' : isNemt?'NEMT request queued for Medicaid verification.':'A driver will be matched shortly.'});
+    toast({icon:'chr',title:'Chariot request submitted',body: isEligibleTrip && miles>0 ? 'Trip log saved. Driver matched shortly.' : isNemt?'NEMT request queued for Medicaid verification.':'A driver will be matched shortly.'});
     setTab('my');
   }
 
@@ -48605,9 +48605,9 @@ function ChariotPanel({ platform, session, toast, setActive }) {
             isEligibleTrip && React.createElement('div',{style:{padding:'0.55rem 0.7rem',borderRadius:6,background:'rgba(52,211,153,0.08)',border:'1px solid rgba(52,211,153,0.3)'}},
               React.createElement('div',{style:{fontSize:'0.72rem',fontWeight:700,color:'#34d399',marginBottom:'0.2rem'}},'✅ Mileage Log Eligible'),
               React.createElement('div',{style:{fontSize:'0.68rem',color:'var(--dmuted)',lineHeight:1.5}},
-                'IRS §170: '+miles+' mi × $0.21/mi = ',
-                React.createElement('strong',{style:{color:'#34d399'}},'$'+charitableDeduction.toFixed(2)+' charitable deduction'),
-                '. A receipt will be generated on submit for your tax records.'
+                'Trip log: '+miles+' mi × $0.21/mi = ',
+                React.createElement('strong',{style:{color:'#34d399'}},'$'+charitableDeduction.toFixed(2)+' mileage value'),
+                '. A trip log record will be generated on submit.'
               )
             )
           );
@@ -55978,20 +55978,21 @@ function rrnSaveProgress(lessonId, data) {
     var b = (c && c.BACKEND_URL) ? c.BACKEND_URL.replace(/\/+$/,'') + '/api' : (window.RRN_API_BASE || '');
     return b;
   }
-  function queue(path, method, body){
+  function queue(path, method, body, attempts){
     try {
       var q = JSON.parse(localStorage.getItem('rrn_sync_queue') || '[]');
-      q.push({path: path, method: method, body: body, ts: Date.now()});
+      q.push({path: path, method: method, body: body, ts: Date.now(), attempts: attempts || 0});
       localStorage.setItem('rrn_sync_queue', JSON.stringify(q.slice(-200)));
     } catch(e) {}
   }
-  function rrnApiFn(path, method, body){
+  function rrnApiFn(path, method, body, opts){
+    var noQueue = !!(opts && opts.noQueue);
     method = (method || 'GET').toUpperCase();
     if (typeof path !== 'string') return Promise.resolve({ok:false, error:'bad path'});
     var offline = (typeof navigator !== 'undefined' && navigator.onLine === false) ||
                   (window.location && window.location.protocol === 'file:') ||
                   window._backendOnline === false || typeof fetch !== 'function';
-    if (offline) { if (method !== 'GET') queue(path, method, body); return Promise.resolve({ok:false, queued: method !== 'GET', offline:true}); }
+    if (offline) { if (method !== 'GET' && !noQueue) queue(path, method, body); return Promise.resolve({ok:false, queued: method !== 'GET' && !noQueue, offline:true}); }
     var headers = {'Content-Type':'application/json'};
     try { var t = (typeof _getToken === 'function') ? _getToken() : null; if (t) headers.Authorization = 'Bearer ' + t; } catch(e) {}
     var init = {method: method, headers: headers};
@@ -56000,8 +56001,8 @@ function rrnSaveProgress(lessonId, data) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json().catch(function(){ return {ok:true}; }).then(function(d){ if (d && typeof d === 'object' && d.ok === undefined) d.ok = true; return d; });
     }).catch(function(e){
-      if (method !== 'GET') queue(path, method, body);
-      return {ok:false, queued: method !== 'GET', error: String(e && e.message || e)};
+      if (method !== 'GET' && !noQueue) queue(path, method, body);
+      return {ok:false, queued: method !== 'GET' && !noQueue, error: String(e && e.message || e)};
     });
   }
   var legacy = (typeof window.rrnApi === 'object' && window.rrnApi) || {};
@@ -56266,21 +56267,26 @@ function injectCurriculum() {
 
 // -- 13. SYNC QUEUE FLUSH ----------------------------------------
 function flushSyncQueue() {
-  var queue = JSON.parse(localStorage.getItem('rrn_sync_queue') || '[]');
-  if (!queue.length) return; // (window._rrnToken || window._getToken && window._getToken() || false) gate removed
-  
-  var remaining = [];
-  queue.forEach(function(item) {
-    (item.path ? rrnApi(item.path, item.method || 'POST', item.body) : rrnApi('/lms/progress', 'POST', {lessonId: item.lessonId, progress: item.data}))
-      .then(function(res) {
-        if (!res.ok) remaining.push(item);
-      })
-      .catch(function() { remaining.push(item); });
+  var queue;
+  try { queue = JSON.parse(localStorage.getItem('rrn_sync_queue') || '[]'); } catch(e) { queue = []; }
+  if (!queue.length) return;
+  // v90: take the snapshot out of storage first so entries queued while replaying are kept,
+  // then re-add only the failures (max 5 attempts each) when every replay has settled.
+  var snapshot = queue.slice();
+  localStorage.setItem('rrn_sync_queue', JSON.stringify([]));
+  Promise.all(snapshot.map(function(item) {
+    var p = item.path
+      ? rrnApi(item.path, item.method || 'POST', item.body, {noQueue: true})
+      : rrnApi('/lms/progress', 'POST', {lessonId: item.lessonId, progress: item.data}, {noQueue: true});
+    return p.then(function(res) { return (res && res.ok) ? null : item; }, function() { return item; });
+  })).then(function(results) {
+    var failed = results.filter(Boolean).map(function(it) { it.attempts = (it.attempts || 0) + 1; return it; })
+      .filter(function(it) { return it.attempts < 5; });
+    if (!failed.length) return;
+    var current;
+    try { current = JSON.parse(localStorage.getItem('rrn_sync_queue') || '[]'); } catch(e) { current = []; }
+    localStorage.setItem('rrn_sync_queue', JSON.stringify(failed.concat(current).slice(-200)));
   });
-  
-  setTimeout(function() {
-    localStorage.setItem('rrn_sync_queue', JSON.stringify(remaining));
-  }, 3000);
 }
 
 // -- 14. RRN LESSON VIEWER COMPONENT ----------------------------------------
@@ -59099,6 +59105,41 @@ window._cSend=function(){
   var ql=q.toLowerCase().replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
 
 
+  // v90: distress gate runs FIRST (before the employer fast path and nav/act dispatch) so 988 support is never swallowed.
+  // Phrases are matched on word boundaries to avoid false hits on ordinary nav queries like 'go back to housing'.
+  // ── CALEB UPGRADE: Distress detection (caleb-long-term-memory skill) ──────
+  // Per 42 CFR Part 2: distress_flag memory stored, counselor notified
+  var _DISTRESS_SIGNALS = [
+    'want to die','end it all','kill myself','no reason to live',
+    'i give up','giving up','want to give up','cant do this','can t do this',
+    'relapsed','relapsing','using again','back on drugs','back to using','going back to using',
+    'slipped','fell off the wagon','hopeless','worthless',
+    'not worth it','nobody cares','what is the point'
+  ];
+  /* CALEB_TESTABLE_BEGIN:distress */
+  window._calebIsDistress = function(text){ var t=' '+String(text||'')+' '; return _DISTRESS_SIGNALS.some(function(s){ return t.indexOf(' '+s+' ') >= 0; }); };
+  /* CALEB_TESTABLE_END:distress */
+  var _isDistress = window._calebIsDistress(ql);
+  if(_isDistress){
+    var _crisisMsg = 'Real talk — I hear that. Psalm 34:18 says the LORD is nigh unto them that are of a broken heart. That is you right now. Before anything else — reach out to your pastor or accountability partner today. If you need to talk to someone right now, call or text 988. You are not alone in this.';
+    if(ab){ ab.style.display=''; ab.textContent = _crisisMsg; }
+    window._calebSpeak(_crisisMsg);
+    // Store distress flag in localStorage (Railway sync when available)
+    try{
+      var _df = JSON.parse(localStorage.getItem('caleb_distress_flags')||'[]');
+      _df.unshift({ ts: new Date().toISOString(), signal: q.slice(0,100) });
+      localStorage.setItem('caleb_distress_flags', JSON.stringify(_df.slice(0,20)));
+    }catch(e){}
+    // Emit distress event to bus — counselor notification, QA, telemetry all subscribe independently
+    if(window.RRN_EVENTS) {
+      var _sessId3 = ((window._rrnSession||{}).id||(window._rrnAutoSession||{}).id||'anonymous');
+      RRN_EVENTS.emit('member.distress_detected', { memberId: _sessId3.slice(0,8), signal: 'crisis_language' });
+    }
+    _micSetStatus(window._micGranted ? 'listening' : 'idle');
+    return;
+  }
+
+
   // ── EMPLOYER FAST PATH (42 CFR Part 2) ─────────────────────────────────────
   // Fires immediately — skips intent engine entirely for L7 employers.
   var _empHandled = (function(){
@@ -59154,40 +59195,6 @@ window._cSend=function(){
     return true;
   })();
   if(_empHandled) return;
-
-  // v90: safety gate moved BEFORE nav/act dispatch so crisis language is never swallowed by a nav/act intent.
-  // ── CALEB UPGRADE: Distress detection (caleb-long-term-memory skill) ──────
-  // Per 42 CFR Part 2: distress_flag memory stored, counselor notified
-  var _DISTRESS_SIGNALS = [
-    'want to die','end it all','kill myself','no reason to live',
-    'give up','cant do this',"can't do this",'relapsed','using again',
-    'back on','slipped','fell off','hopeless','worthless',
-    'not worth it','nobody cares','what is the point',
-    'going back','just once','one more time'
-  ];
-  /* CALEB_TESTABLE_BEGIN:distress */
-  window._calebIsDistress = function(text){ return _DISTRESS_SIGNALS.some(function(s){ return text.indexOf(s) >= 0; }); };
-  /* CALEB_TESTABLE_END:distress */
-  var _isDistress = window._calebIsDistress(ql);
-  if(_isDistress){
-    var _crisisMsg = 'Real talk — I hear that. Psalm 34:18 says the LORD is nigh unto them that are of a broken heart. That is you right now. Before anything else — reach out to your pastor or accountability partner today. If you need to talk to someone right now, call or text 988. You are not alone in this.';
-    if(ab){ ab.style.display=''; ab.textContent = _crisisMsg; }
-    window._calebSpeak(_crisisMsg);
-    // Store distress flag in localStorage (Railway sync when available)
-    try{
-      var _df = JSON.parse(localStorage.getItem('caleb_distress_flags')||'[]');
-      _df.unshift({ ts: new Date().toISOString(), signal: q.slice(0,100) });
-      localStorage.setItem('caleb_distress_flags', JSON.stringify(_df.slice(0,20)));
-    }catch(e){}
-    // Emit distress event to bus — counselor notification, QA, telemetry all subscribe independently
-    if(window.RRN_EVENTS) {
-      var _sessId3 = ((window._rrnSession||{}).id||(window._rrnAutoSession||{}).id||'anonymous');
-      RRN_EVENTS.emit('member.distress_detected', { memberId: _sessId3.slice(0,8), signal: 'crisis_language' });
-    }
-    _micSetStatus(window._micGranted ? 'listening' : 'idle');
-    return;
-  }
-
 
   // ═══════════════════════════════════════════════════════════════════════
   // CALEB SCORED INTENT ENGINE

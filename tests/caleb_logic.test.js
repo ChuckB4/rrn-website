@@ -13,7 +13,7 @@ function test(name, fn) {
     (e) => { failed++; console.log('FAIL - ' + name + ': ' + (e && e.message)); });
 }
 // Built from fragments so this file itself does not contain the banned strings.
-const FORBIDDEN_RE = new RegExp('\\b' + 'es' + 'm\\b|es' + 'm[A-Z_]|eagle' + ' summit|jeff' + ' walters|50' + '1\\s*\\(?c\\)?|fiscal' + '\\s*sponsor|tax[-\\s]?' + 'deductible', 'i');
+const FORBIDDEN_RE = new RegExp('\\b' + 'es' + 'm\\b|es' + 'm[A-Z_]|eagle' + ' summit|jeff' + ' walters|50' + '1\\s*\\(?c\\)?|fiscal' + '\\s*sponsor|tax[-\\s]?' + 'deductible|tax\\s+' + 'receipt|tax\\s+' + 'advantage|charitable\\s+' + 'deduction', 'i');
 function assert(c, m) { if (!c) throw new Error(m || 'assertion failed'); }
 function between(a, b) {
   const i = html.indexOf(a); if (i < 0) throw new Error('anchor not found: ' + a);
@@ -44,6 +44,8 @@ function makeStorage() {
     const w = {}; vm.runInNewContext(body + marker('distress'), { window: w });
     assert(w._calebIsDistress('i want to die'), 'should detect');
     assert(!w._calebIsDistress('open my lessons'), 'should not detect');
+    for (const q of ['go back to dashboard', 'get back on track', 'go back to housing', 'give up the draft', 'one more time please', 'just once more']) assert(!w._calebIsDistress(q), 'false positive: ' + q);
+    for (const q of ['i relapsed', 'i give up', 'i m using again', 'i can t do this', 'i want to die']) assert(w._calebIsDistress(q), 'missed: ' + q);
   });
   await test('safety gate ordering: employer + distress run before intent dispatch', () => {
     const iIntents = html.indexOf('var INTENTS = [');
@@ -53,6 +55,7 @@ function makeStorage() {
     assert(iIntents > 0 && iEmp > 0 && iDis > 0 && iNav > 0, 'anchors missing');
     assert(iEmp < iIntents, 'employer gate must precede INTENTS');
     assert(iDis < iIntents && iDis < iNav, 'distress gate must precede nav/act dispatch');
+    assert(iDis < html.indexOf('var _empHandled = (function(){'), 'distress gate must precede the employer gate');
   });
   await test('rrnApi is a function, never throws, falls back to localStorage queue', async () => {
     const code = between('/* v90: rrnApi is a real function', 'function rrnLoadProgressFromApi');
@@ -77,6 +80,19 @@ function makeStorage() {
     const r = await w.rrnApi('/lms/progress', 'POST', {});
     assert(url === 'https://rrn-api-production.up.railway.app/api/lms/progress', 'bad url ' + url);
     assert(r.ok === true, 'ok should be true');
+  });
+  await test('sync queue flush keeps entries queued during replay, caps attempts, does not duplicate', async () => {
+    const code = between('/* v90: rrnApi is a real function', 'function rrnLoadProgressFromApi') + '\n' + between('function flushSyncQueue() {', '// -- 14.');
+    const ls = makeStorage();
+    ls.setItem('rrn_sync_queue', JSON.stringify([{ path: '/lms/progress', method: 'POST', body: { a: 1 }, attempts: 0 }, { path: '/lms/progress', method: 'POST', body: { a: 2 }, attempts: 4 }]));
+    const w = { RRN_BACKEND_CONFIG: { BACKEND_URL: 'https://example.invalid' }, location: { protocol: 'https:' } };
+    const ctx = { window: w, localStorage: ls, navigator: { onLine: true }, JSON, Date, Promise, fetch: () => { ls.setItem('rrn_sync_queue', JSON.stringify([{ path: '/new', method: 'POST', body: {}, attempts: 0 }])); return Promise.reject(new Error('down')); } };
+    vm.runInNewContext(code + '\nvar rrnApi = window.rrnApi; flushSyncQueue();', ctx);
+    await new Promise(r => setTimeout(r, 50));
+    const q = JSON.parse(ls.getItem('rrn_sync_queue'));
+    assert(q.some(i => i.path === '/new'), 'entry queued during replay was lost');
+    assert(q.filter(i => i.body && i.body.a === 1).length === 1 && q.find(i => i.body && i.body.a === 1).attempts === 1, 'failed item should be re-added once with attempts+1');
+    assert(!q.some(i => i.body && i.body.a === 2), 'item at attempt cap should be dropped');
   });
   await test('_rrnAPI.recordLessonCompletion is defined and saves to rrn_progress', () => {
     const code = between('window._rrnAPI=window._rrnAPI||', '\nwindow.');

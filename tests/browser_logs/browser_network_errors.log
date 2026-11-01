@@ -13,3 +13,16 @@ FAILED http://localhost:5003/health net::ERR_CONNECTION_REFUSED
 401 https://rrn-api-production.up.railway.app/api/campuses
 401 https://rrn-api-production.up.railway.app/api/repairs
 401 https://rrn-api-production.up.railway.app/api/repairs
+404 https://rrn-api-production.up.railway.app/api/lms/progress
+401 https://rrn-api-production.up.railway.app/api/members
+401 https://rrn-api-production.up.railway.app/api/members
+401 https://rrn-api-production.up.railway.app/api/housing
+401 https://rrn-api-production.up.railway.app/api/housing
+401 https://rrn-api-production.up.railway.app/api/donations
+401 https://rrn-api-production.up.railway.app/api/donations
+401 https://rrn-api-production.up.railway.app/api/meetings
+401 https://rrn-api-production.up.railway.app/api/meetings
+401 https://rrn-api-production.up.railway.app/api/campuses
+401 https://rrn-api-production.up.railway.app/api/campuses
+401 https://rrn-api-production.up.railway.app/api/repairs
+401 https://rrn-api-production.up.railway.app/api/repairs

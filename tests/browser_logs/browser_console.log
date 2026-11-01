@@ -18,12 +18,11 @@ log: [CALEB BEHAVIOR] Locked: L-015 — Navigation: action-first phrasing — "S
 log: [CALEB] Behavior locking system active — 15 behaviors locked
 log: [CALEB] Engine v19.1 ready
 error: Failed to load resource: net::ERR_CONNECTION_REFUSED
-error: Failed to load resource: net::ERR_CONNECTION_REFUSED
 log: [CALEB] setCalebKey("sk-ant-...") available in console to activate AI.
 log: [RRN] rrnStatus() available — call it anytime to check platform health
 log: [RRN] rrnVoices() — type in console to list available TTS voices
 log: [PWA] Refined Recovery Network PWA Layer v2026.1.0 initializing
-log: [PWA] Init complete. Client ID: client_mpk8661qb_1793557063871
+log: [PWA] Init complete. Client ID: client_upmn6uvgzdi_1793557483275
 log: [PWA] Provision: none
 log: [PWA] Online: true
 log: [PWA] Installed: false
@@ -32,6 +31,7 @@ log: [RRN] Curriculum integrated: 13 courses, 52 lessons
 log: [RRN-HEAL][INFO] RRN Self-Heal Engine v2.0 starting
 info: [SEGE G3] 5 infrastructure service(s) offline — expected in local mode
 log: [SEGE POST-FIX] STABLE {passing: Array(5), failing: Array(0)}
+error: Failed to load resource: net::ERR_CONNECTION_REFUSED
 warning: [RRN] Login returned no token: {error: Invalid credentials}
 log: [CALEB WATCH] Panel changed to: overview
 log: [RRN] Login bridge active
@@ -76,4 +76,40 @@ log: [CALEB WATCH] Panel changed to: housing
 log: [CALEB INTENT] nav:step-lessons (score: 25 ) for: open my lesson
 log: [CALEB WATCH] Panel changed to: step-lessons
 info: [SEGE G3] 20 infrastructure service(s) offline — expected in local mode
-log: [CALEB WATCH] Panel changed to: lessons
+warning: [CALEB CLAP] Mic access failed: Requested device not found
+info: [SEGE G3] 20 infrastructure service(s) offline — expected in local mode
+log: [CALEB AUDIO] Controller initialized
+info: [SEGE G3] 20 infrastructure service(s) offline — expected in local mode
+log: [CALEB AUDIO] Lesson completion verification: {startPosition: 0, endPosition: 50, actualPosition: 50, sentenceCount: 51, readCount: 51}
+log: [CALEB AUDIO] Reading finished for lesson pref-1 position: 0
+log: [CALEB AUDIO] Lesson completion verification: {startPosition: 0, endPosition: -1, actualPosition: -1, sentenceCount: 0, readCount: 0}
+log: [CALEB AUDIO] Reading finished for lesson pref-1 position: 0
+error: Failed to load resource: the server responded with a status of 404 ()
+info: [SEGE G3] 21 infrastructure service(s) offline — expected in local mode
+log: [RRN-HEAL][WARN] No token found — triggering login
+error: Failed to load resource: the server responded with a status of 401 ()
+log: [RRN-HEAL][WARN] 401 on /members — refreshing token
+log: [RRN-HEAL][WARN] No refresh token — re-login required
+error: Failed to load resource: the server responded with a status of 401 ()
+error: Failed to load resource: the server responded with a status of 401 ()
+log: [RRN-HEAL][WARN] 401 on /housing — refreshing token
+log: [RRN-HEAL][WARN] No refresh token — re-login required
+error: Failed to load resource: the server responded with a status of 401 ()
+error: Failed to load resource: the server responded with a status of 401 ()
+log: [RRN-HEAL][WARN] 401 on /donations — refreshing token
+log: [RRN-HEAL][WARN] No refresh token — re-login required
+error: Failed to load resource: the server responded with a status of 401 ()
+error: Failed to load resource: the server responded with a status of 401 ()
+log: [RRN-HEAL][WARN] 401 on /meetings — refreshing token
+log: [RRN-HEAL][WARN] No refresh token — re-login required
+error: Failed to load resource: the server responded with a status of 401 ()
+error: Failed to load resource: the server responded with a status of 401 ()
+log: [RRN-HEAL][WARN] 401 on /campuses — refreshing token
+log: [RRN-HEAL][WARN] No refresh token — re-login required
+error: Failed to load resource: the server responded with a status of 401 ()
+error: Failed to load resource: the server responded with a status of 401 ()
+log: [RRN-HEAL][WARN] 401 on /repairs — refreshing token
+log: [RRN-HEAL][WARN] No refresh token — re-login required
+error: Failed to load resource: the server responded with a status of 401 ()
+log: [CALEB INTENT] nav:housing (score: 20 ) for: go back to housing
+log: [CALEB WATCH] Panel changed to: housing

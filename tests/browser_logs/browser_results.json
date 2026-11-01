@@ -50,14 +50,44 @@
     "detail": "[\"Real talk — I hear that. Psalm 34:18 says the LORD is nigh unto them that are of a broken heart. That is you right now. Before anything else — reach out to your pastor or accountability partner today. If you need to talk to someone right now, call or text 988. You are not alone in this.\"]"
   },
   {
-    "test": "lessons section renders",
+    "test": "real lesson view renders read and continue buttons",
     "ok": true,
-    "detail": "{\"lessonsVisible\":true,\"buttons\":[],\"courses\":13,\"lessons\":52}"
+    "detail": "caleb-read-btn-pref-1 and caleb-continue-btn-pref-1 present"
   },
   {
-    "test": "lesson completion button exercised",
-    "ok": false,
-    "detail": "no complete button visible in the lessons view; NOT TESTED"
+    "test": "Continue button resumes from saved position (3)",
+    "ok": true,
+    "detail": "{\"position\":4,\"reading\":true,\"sentences\":51}"
+  },
+  {
+    "test": "lesson completion recorded through the real Read button (stubbed speech)",
+    "ok": true,
+    "detail": "{\"comp\":true,\"posted\":[{\"u\":\"https://rrn-api-production.up.railway.app/api/lms/progress\",\"m\":\"POST\"}],\"queue\":[{\"path\":\"/lms/progress\",\"attempts\":0}]}"
+  },
+  {
+    "test": "completion posts to /lms/progress (backend refuses, queued with attempts counter)",
+    "ok": true,
+    "detail": "{\"posted\":[{\"u\":\"https://rrn-api-production.up.railway.app/api/lms/progress\",\"m\":\"POST\"}],\"queue\":[{\"path\":\"/lms/progress\",\"attempts\":0}]}"
+  },
+  {
+    "test": "audio bound waits while speechSynthesis is busy (fake engine, not real speech)",
+    "ok": true,
+    "detail": "{\"elapsedMs\":2223}"
+  },
+  {
+    "test": "nav phrase \"go back to housing\" is not a distress hit",
+    "ok": true,
+    "detail": "{\"spoken\":\"Housing is the foundation. 0 of 0 beds occupied — 0% capacity. Without a roof the work falls apart. Proverbs 24:3 says through wisdom is a house builded. What do you need to manage here?\",\"newFlags\":0}"
+  },
+  {
+    "test": "L7 employer in distress gets the 988 response, not the hiring-only reply",
+    "ok": true,
+    "detail": "{\"spoken\":\"Real talk — I hear that. Psalm 34:18 says the LORD is nigh unto them that are of a broken heart. That is you right now. Before anything else — reach out to your pastor or accountability partner today. If you need to talk to someone right now, call or text 988. You are not alone in this.\",\"newFlags\":1}"
+  },
+  {
+    "test": "L7 employer non-distress recovery question still gets hiring-only reply",
+    "ok": true,
+    "detail": "{\"spoken\":\"I can only assist with hiring, candidate pipeline, and workforce matters.\",\"newFlags\":0}"
   },
   {
     "test": "rendered page has no forbidden terms",
