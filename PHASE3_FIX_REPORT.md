@@ -60,3 +60,16 @@ Results on v90 after the review fixes (20 checks): 20 passed, 0 failed. Earlier 
 - The `_calebNavigate` verification was exercised live in the browser run above. `_rrnValidSections` is not set anywhere, so section validation is format-only until a registry is provided.
 - The real Railway backend was not contacted. The `/lms/progress` route is assumed to exist (the legacy sync code already used it); a failure is queued, retried up to 5 times, then dropped.
 - The existing em dashes in moved or copied strings were left as they are. No new prose uses em dashes.
+
+
+## Second review follow-up (2026-11-02-010000 review)
+
+1. **Residual tax-benefit strings**: fixed. Reworded the property form footer (no more IRS deduction or Form 8283 text), the calculator header ("IN-KIND VALUE ESTIMATOR"), the two legal-document labels, the donor receipt header ("Donation Acknowledgment"), the food-program benefit line, and the chariot trip log (title, mileage-rate line, IRS publication note and the IRS section 170 paragraph). The report's earlier "no tax-benefit claims" statement is now true for user-facing text.
+2. **Forbidden-term test**: widened in `tests/caleb_logic.test.js` and in the rendered-page scan in `scripts/browser_test.js` with IRS deduction, Form 8283, tax documentation, charitable contribution, charitable mileage, IRS 170/502 references, "benefit estimator" and "tax benefit" (the disclaimer "No tax benefit is claimed" is allowed). Bare "IRS" and "deduction" are NOT banned because they legitimately appear in WOTC (Form 8850 employer credit) content, budgeting lessons and scoring rules, none of which are donor tax claims. WOTC wording was left alone on purpose.
+3. **Dead tax-bracket computation**: removed `taxAdvantageMin/Max` from the calculator.
+4. **Distress phrases**: added "suicide", "suicidal", "killing myself", "end my life", "ending my life", "about to relapse", "going to relapse", "gonna relapse", "want to relapse". Bare "relapse" was deliberately NOT added, because phrase matching is substring-on-word-boundaries and it would flag "relapse prevention" lesson navigation. "go back to housing" remains a non-trigger. Tests cover both directions.
+5. **Completion route / L7 simulation**: NOT fixed, cannot be verified here. `/lms/progress` is unconfirmed against the real backend, the L7 test sets `window._rrnActiveLevel = 7` rather than logging in, and speech is stubbed. Release notes should say so. Also noted: after 5 failed flushes a queued completion is dropped silently from the backend queue (local `audioCompleted` remains); no user-visible signal was added.
+
+Internal identifiers (`charitableDeduction`, `deductibleMonthly`, `annualDeductible`, `taxClass:'nonprofit'`) remain as previously decided.
+
+Verification: `check_inline_js` 34 scripts, 0 failures; `tests/caleb_logic.test.js` 18 passed, 0 failed; `scripts/browser_test.js` all checks PASS (28 expected network errors from the unreachable backend).

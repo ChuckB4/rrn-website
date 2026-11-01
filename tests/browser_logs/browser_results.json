@@ -72,7 +72,7 @@
   {
     "test": "audio bound waits while speechSynthesis is busy (fake engine, not real speech)",
     "ok": true,
-    "detail": "{\"elapsedMs\":2223}"
+    "detail": "{\"elapsedMs\":2222}"
   },
   {
     "test": "nav phrase \"go back to housing\" is not a distress hit",

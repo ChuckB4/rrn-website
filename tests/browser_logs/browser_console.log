@@ -18,11 +18,12 @@ log: [CALEB BEHAVIOR] Locked: L-015 — Navigation: action-first phrasing — "S
 log: [CALEB] Behavior locking system active — 15 behaviors locked
 log: [CALEB] Engine v19.1 ready
 error: Failed to load resource: net::ERR_CONNECTION_REFUSED
+error: Failed to load resource: net::ERR_CONNECTION_REFUSED
 log: [CALEB] setCalebKey("sk-ant-...") available in console to activate AI.
 log: [RRN] rrnStatus() available — call it anytime to check platform health
 log: [RRN] rrnVoices() — type in console to list available TTS voices
 log: [PWA] Refined Recovery Network PWA Layer v2026.1.0 initializing
-log: [PWA] Init complete. Client ID: client_upmn6uvgzdi_1793557483275
+log: [PWA] Init complete. Client ID: client_dqn3cmu7t6_1793557699799
 log: [PWA] Provision: none
 log: [PWA] Online: true
 log: [PWA] Installed: false
@@ -31,7 +32,6 @@ log: [RRN] Curriculum integrated: 13 courses, 52 lessons
 log: [RRN-HEAL][INFO] RRN Self-Heal Engine v2.0 starting
 info: [SEGE G3] 5 infrastructure service(s) offline — expected in local mode
 log: [SEGE POST-FIX] STABLE {passing: Array(5), failing: Array(0)}
-error: Failed to load resource: net::ERR_CONNECTION_REFUSED
 warning: [RRN] Login returned no token: {error: Invalid credentials}
 log: [CALEB WATCH] Panel changed to: overview
 log: [RRN] Login bridge active

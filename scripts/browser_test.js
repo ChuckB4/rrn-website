@@ -144,7 +144,7 @@ const URL = 'http://localhost:8765/REFINED_18_05_HEALED_v90_FIXES.html';
   rec('L7 employer in distress gets the 988 response, not the hiring-only reply', /988/.test(safety.employerDistress.spoken) && !/only assist with hiring/.test(safety.employerDistress.spoken), JSON.stringify(safety.employerDistress));
   rec('L7 employer non-distress recovery question still gets hiring-only reply', /only assist with hiring/.test(safety.employerHiring.spoken), JSON.stringify(safety.employerHiring));
 
-  const forbidden = await pg.evaluate(() => new RegExp('eagle' + ' summit|jeff' + ' walters|50' + '1\\(c\\)|fiscal' + ' sponsor|tax-' + 'deductible|tax ' + 'receipt|tax ' + 'advantage|charitable ' + 'deduction', 'i').test(document.body.innerText));
+  const forbidden = await pg.evaluate(() => new RegExp('eagle' + ' summit|jeff' + ' walters|50' + '1\\(c\\)|fiscal' + ' sponsor|tax-' + 'deductible|tax ' + 'receipt|tax ' + 'advantage|charitable ' + 'deduction|IRS ' + 'deduction|form ?' + '8283|tax ' + 'documentation|charitable ' + 'contribution|charitable ' + 'mileage|BENEFIT ' + 'ESTIMATOR|tax ' + 'benefit(?! is claimed)', 'i').test(document.body.innerText));
   rec('rendered page has no forbidden terms', !forbidden, '');
 
   const pe = log.filter(l => l.startsWith('PAGEERROR'));

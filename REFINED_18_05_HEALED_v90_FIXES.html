@@ -9250,14 +9250,14 @@ var CONTRIBUTION_PATHS = [
   { id:'mission-discount',   icon:'🤝', label:'Mission Discount Rental',
     desc:'Reduced-rate rental supporting recovery.',
     fields:['marketRent','partnerRent','occupancyMonths'],
-    legalDoc:'Mission Rental Agreement + Charitable Contribution Letter',
+    legalDoc:'Mission Rental Agreement + Donation Acknowledgment Letter',
     taxNote:'Rent reduction below fair market value is recorded as an in-kind contribution',
     reportObligation:'Monthly occupancy report + annual impact letter',
     impactCategory:'Housing Access'},
   { id:'charitable-donation', icon:'🏡', label:'Charitable Housing Donation',
     desc:'Property donated or provided at no cost.',
     fields:['marketRent','occupancyMonths','propertyValue'],
-    legalDoc:'In-Kind Donation Agreement + IRS Form 8283 (if >$500)',
+    legalDoc:'In-Kind Donation Agreement',
     taxNote:'Full fair market rental value recorded as in-kind donation',
     reportObligation:'Annual valuation certification + impact statement',
     impactCategory:'Mission Housing'},
@@ -9357,10 +9357,8 @@ function PropertyPartnershipPlatform({ platform, update, toast, session }) {
     var months = parseInt(p.occupancyMonths)||12;
     var deductibleMonthly = mr - pr;
     var annualDeductible = deductibleMonthly * months;
-    var taxAdvantageMin = Math.round(annualDeductible * 0.22);
-    var taxAdvantageMax = Math.round(annualDeductible * 0.37);
     var impactScore = Math.min(100, Math.round((p.livesHoused||0)*8 + (p.reunifications||0)*15 + (p.jobsEnabled||0)*6 + (p.graduates||0)*10));
-    return { deductibleMonthly, annualDeductible, taxAdvantageMin, taxAdvantageMax, impactScore };
+    return { deductibleMonthly, annualDeductible, impactScore };
   };
 
   // Partner tier logic
@@ -9566,7 +9564,7 @@ function PropertyPartnershipPlatform({ platform, update, toast, session }) {
 
     return React.createElement('div',null,
       React.createElement('div',{style:{marginBottom:'1.25rem'}},
-        React.createElement('div',{style:{fontSize:'0.65rem',color:'var(--dmuted)',fontFamily:'var(--font-mono)',marginBottom:'0.2rem'}},'TAX BENEFIT ESTIMATOR'),
+        React.createElement('div',{style:{fontSize:'0.65rem',color:'var(--dmuted)',fontFamily:'var(--font-mono)',marginBottom:'0.2rem'}},'IN-KIND VALUE ESTIMATOR'),
         React.createElement('h2',{style:{fontFamily:'var(--font-serif)',color:'var(--dtxt)',fontWeight:600}},'Property Contribution Calculator')
       ),
       React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1.5rem'}},
@@ -12414,7 +12412,7 @@ function TokenizationPanel({ platform, toast, update, session }) {
         ])
       ),
       btn('Submit Property for Review →',submitProperty,true),
-      React.createElement('p',{style:{fontSize:'0.72rem',color:'var(--dmuted)',marginTop:'0.65rem',lineHeight:1.65,textAlign:'center'}},'Charitable housing donations may qualify for IRS deduction with Form 8283. All arrangements subject to legal review.')
+      React.createElement('p',{style:{fontSize:'0.72rem',color:'var(--dmuted)',marginTop:'0.65rem',lineHeight:1.65,textAlign:'center'}},'In-kind housing arrangements are subject to legal review. No tax benefit is claimed.')
     );
   };
 
@@ -37147,7 +37145,7 @@ function DonationsPanel({ platform, update, toast, setActive, session }) {
         React.createElement('div',{style:{textAlign:'center',marginBottom:'1.5rem',borderBottom:'1px solid var(--bdr)',paddingBottom:'1.25rem'}},
           React.createElement('div',{style:{fontSize:'1.5rem',marginBottom:'0.25rem'}},'🙏'),
           React.createElement('div',{style:{fontFamily:'var(--font-serif)',fontSize:'1.3rem',fontWeight:700,color:'var(--gold)'}},'Refined Recovery Network'),
-          React.createElement('div',{style:{fontSize:'0.75rem',color:'var(--dmuted)'}},'Charitable Contribution Receipt'),
+          React.createElement('div',{style:{fontSize:'0.75rem',color:'var(--dmuted)'}},'Donation Acknowledgment'),
           React.createElement('div',{style:{fontSize:'0.7rem',color:'var(--dmuted)',marginTop:'0.2rem'}},
             'refinedrecovery.com  ')
         ),
@@ -46273,7 +46271,7 @@ function PartnerPage({ setPage, toast, page, session, mobileOpen, setMobileOpen 
      learnMoreLink:'thrift'},
     {id:'foodbank',       icon:'\U0001f371', label:'Food Ministry Partner',    color:'var(--l5)',
      desc:'Donate food — fresh, packaged, or prepared — to keep RRN households fed while members rebuild their financial foundation.',
-     benefits:['Restaurants, grocers, and caterers can donate surplus daily or weekly','Businesses can sponsor a meal or a week of meals for a full campus','All food donations logged and receipted for tax documentation','Reduces food insecurity — a documented relapse risk factor'],
+     benefits:['Restaurants, grocers, and caterers can donate surplus daily or weekly','Businesses can sponsor a meal or a week of meals for a full campus','All food donations are logged and acknowledged','Reduces food insecurity — a documented relapse risk factor'],
      cta:'Donate Food to RRN',
      details:'Food insecurity is one of the most immediate stressors in early recovery. Refined Recovery Network Food Ministry Partners donate food — canned goods, produce, prepared meals, catered surplus, bakery items, and restaurant overage — to keep RRN households consistently fed. When residents do not have to worry about food, they can focus on recovery, work, and rebuilding their lives. Restaurant partners can set up weekly surplus donation schedules. Grocery partners can donate near-expiration items. Individuals can sponsor a week of meals for a campus.',
      learnMoreLink:'foodbank'},
@@ -48207,7 +48205,7 @@ function ChariotPanel({ platform, session, toast, setActive }) {
       var receiptLines = [
         '════════════════════════════════════════════════════',
         '     REFINED RECOVERY NETWORK — CHARIOT PROGRAM',
-        '          CHARITABLE CONTRIBUTION RECEIPT',
+        '            TRIP LOG ACKNOWLEDGMENT',
         '════════════════════════════════════════════════════',
         'Date:          '+today.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}),
         'Receipt No:    '+reqId,
@@ -48225,23 +48223,19 @@ function ChariotPanel({ platform, session, toast, setActive }) {
         'Miles:         '+miles+' miles',
         '────────────────────────────────────────────────────',
         'MILEAGE VALUE CALCULATION',
-        'Charitable mileage rate 2024: $0.21/mile',
+        'Mileage value rate: $0.21/mile',
         'Qualified miles:  '+miles+' mi',
         'Mileage value:    $'+charitableDeduction.toFixed(2),
         '',
-        'Note: Medical transportation (if applicable) may',
-        'qualify at the medical rate of $0.21/mile under',
-        'IRS Publication 502. Consult your tax advisor.',
+        'Note: This value is informational only.',
         '────────────────────────────────────────────────────',
         'COST SUMMARY',
         'Base fare:        $'+baseCost.toFixed(2)+' ('+miles+' mi × $'+RATE.toFixed(2)+')',
         'Driver tip ('+tipPct+'%): $'+tipAmt.toFixed(2),
         'Total paid:       $'+totalCost.toFixed(2),
         '────────────────────────────────────────────────────',
-        'No goods or services were provided in exchange for',
-        'this charitable contribution beyond the transportation',
-        'service itself. This receipt is provided for your',
-        'tax records per IRS §170 requirements.',
+        'This is an acknowledgment of the trip log only.',
+        'No tax benefit is claimed.',
         '════════════════════════════════════════════════════',
       ].join('\n');
       // Save receipt to localStorage for download
@@ -48561,7 +48555,7 @@ function ChariotPanel({ platform, session, toast, setActive }) {
         // ── COST CALCULATOR ─────────────────────────────────────────────────────
         (function(){
           var RATE = 0.67; // IRS standard mileage rate 2024 — medical/charity = $0.21, but Chariot uses full $0.67 for employer/employment
-          var CHARITY_RATE = 0.21; // IRS §170 charitable contribution rate per mile
+          var CHARITY_RATE = 0.21; // informational per-mile value (not a tax claim)
           var miles = parseFloat(form.mileage) || 0;
           var baseCost = miles > 0 ? (miles * RATE) : 0;
           var tipPct = form._tipPct !== undefined ? form._tipPct : 20;
@@ -59112,7 +59106,7 @@ window._cSend=function(){
   var _DISTRESS_SIGNALS = [
     'want to die','end it all','kill myself','no reason to live',
     'i give up','giving up','want to give up','cant do this','can t do this',
-    'relapsed','relapsing','using again','back on drugs','back to using','going back to using',
+    'relapsed','relapsing','about to relapse','going to relapse','gonna relapse','want to relapse','suicide','suicidal','killing myself','end my life','ending my life','using again','back on drugs','back to using','going back to using',
     'slipped','fell off the wagon','hopeless','worthless',
     'not worth it','nobody cares','what is the point'
   ];

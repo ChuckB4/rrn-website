@@ -13,7 +13,7 @@ function test(name, fn) {
     (e) => { failed++; console.log('FAIL - ' + name + ': ' + (e && e.message)); });
 }
 // Built from fragments so this file itself does not contain the banned strings.
-const FORBIDDEN_RE = new RegExp('\\b' + 'es' + 'm\\b|es' + 'm[A-Z_]|eagle' + ' summit|jeff' + ' walters|50' + '1\\s*\\(?c\\)?|fiscal' + '\\s*sponsor|tax[-\\s]?' + 'deductible|tax\\s+' + 'receipt|tax\\s+' + 'advantage|charitable\\s+' + 'deduction', 'i');
+const FORBIDDEN_RE = new RegExp('\\b' + 'es' + 'm\\b|es' + 'm[A-Z_]|eagle' + ' summit|jeff' + ' walters|50' + '1\\s*\\(?c\\)?|fiscal' + '\\s*sponsor|tax[-\\s]?' + 'deductible|tax\\s+' + 'receipt|tax\\s+' + 'advantage|charitable\\s+' + 'deduction|IRS\\s+' + 'deduction|form\\s*' + '8283|tax\\s+' + 'documentation|charitable\\s+' + 'contribution|charitable\\s+' + 'mileage|IRS\\s*(?:§|publication|pub\\.?)\\s*(?:170|502)|BENEFIT\\s+' + 'ESTIMATOR|tax\\s+' + 'benefit(?!\\s+is\\s+claimed)', 'i');
 function assert(c, m) { if (!c) throw new Error(m || 'assertion failed'); }
 function between(a, b) {
   const i = html.indexOf(a); if (i < 0) throw new Error('anchor not found: ' + a);
@@ -45,7 +45,8 @@ function makeStorage() {
     assert(w._calebIsDistress('i want to die'), 'should detect');
     assert(!w._calebIsDistress('open my lessons'), 'should not detect');
     for (const q of ['go back to dashboard', 'get back on track', 'go back to housing', 'give up the draft', 'one more time please', 'just once more']) assert(!w._calebIsDistress(q), 'false positive: ' + q);
-    for (const q of ['i relapsed', 'i give up', 'i m using again', 'i can t do this', 'i want to die']) assert(w._calebIsDistress(q), 'missed: ' + q);
+    for (const q of ['i relapsed', 'i give up', 'i m using again', 'i can t do this', 'i want to die', 'i am thinking about suicide', 'i feel suicidal', 'i keep killing myself over this', 'i want to end my life', 'i am going to relapse']) assert(w._calebIsDistress(q), 'missed: ' + q);
+    for (const q of ['relapse prevention lesson', 'open the relapse plan']) assert(!w._calebIsDistress(q), 'false positive: ' + q);
   });
   await test('safety gate ordering: employer + distress run before intent dispatch', () => {
     const iIntents = html.indexOf('var INTENTS = [');
