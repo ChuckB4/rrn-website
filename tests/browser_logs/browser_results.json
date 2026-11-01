@@ -1,0 +1,72 @@
+[
+  {
+    "test": "app mounted and hooks present",
+    "ok": true,
+    "detail": "{\"nav\":\"function\",\"set\":\"function\",\"send\":\"function\",\"input\":true,\"active\":\"overview\",\"rootKids\":1}"
+  },
+  {
+    "test": "navigate housing",
+    "ok": true,
+    "detail": "{\"ret\":true,\"active\":\"housing\",\"fail\":null}"
+  },
+  {
+    "test": "navigate workforce",
+    "ok": true,
+    "detail": "{\"ret\":true,\"active\":\"workforce\",\"fail\":null}"
+  },
+  {
+    "test": "navigate lessons",
+    "ok": true,
+    "detail": "{\"ret\":true,\"active\":\"lessons\",\"fail\":null}"
+  },
+  {
+    "test": "navigate dashboard",
+    "ok": true,
+    "detail": "{\"ret\":true,\"active\":\"dashboard\",\"fail\":null}"
+  },
+  {
+    "test": "navigate rejects invalid id",
+    "ok": true,
+    "detail": "{\"r\":false,\"fail\":\"Sorry, I could not find that section.\"}"
+  },
+  {
+    "test": "intent routing: \"I need help with housing\"",
+    "ok": true,
+    "detail": "{\"intents\":[\"nav:housing\"],\"spoken\":[\"Housing is the foundation. 0 of 0 beds occupied — 0% capacity. Without a roof the work falls apart. Proverbs 24:3 says t\"],\"active\":\"housing\"}"
+  },
+  {
+    "test": "intent routing: \"open my lesson\"",
+    "ok": true,
+    "detail": "{\"intents\":[\"nav:step-lessons\"],\"spoken\":[\"This is where it starts. Step 1 — Honest Admission. The Word says in James 5:16, confess your faults one to another. Tha\"],\"active\":\"step-lessons\"}"
+  },
+  {
+    "test": "intent routing: \"asdf qwerty zzzz\"",
+    "ok": true,
+    "detail": "{\"intents\":[],\"spoken\":[\"I didn't catch that. Try saying: check in, open my lesson, or how is the system.\"],\"active\":\"step-lessons\"}"
+  },
+  {
+    "test": "distress phrase gets a spoken response (988)",
+    "ok": true,
+    "detail": "[\"Real talk — I hear that. Psalm 34:18 says the LORD is nigh unto them that are of a broken heart. That is you right now. Before anything else — reach out to your pastor or accountability partner today. If you need to talk to someone right now, call or text 988. You are not alone in this.\"]"
+  },
+  {
+    "test": "lessons section renders",
+    "ok": true,
+    "detail": "{\"lessonsVisible\":true,\"buttons\":[],\"courses\":13,\"lessons\":52}"
+  },
+  {
+    "test": "lesson completion button exercised",
+    "ok": false,
+    "detail": "no complete button visible in the lessons view; NOT TESTED"
+  },
+  {
+    "test": "rendered page has no forbidden terms",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "test": "no uncaught page errors",
+    "ok": true,
+    "detail": ""
+  }
+]
