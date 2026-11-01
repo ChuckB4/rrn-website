@@ -51,6 +51,7 @@ import repairsRoutes from './routes/repairs';
 import memberRoutes from './routes/members';
 import auditRoutes from './routes/audit';
 import progressRoutes from './routes/progress';
+import intakeRoutes from './routes/intake';
 
 initSentry();
 
@@ -124,6 +125,7 @@ app.use('/api/repairs', repairsRoutes);
 app.use('/api/members', memberRoutes);
 app.use('/api/audit', auditRoutes);
 app.use('/api/progress', progressRoutes);
+app.use('/api/intake', intakeRoutes);
 app.get('/api/dashboard', authenticate, async (_req, res, next) => {
   try {
     const monthStart = new Date();

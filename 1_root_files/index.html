@@ -1298,6 +1298,35 @@ footer{background:var(--ink);padding:clamp(44px,6vw,68px) 0 22px;}
   </div>
 </div>
 <script>
+// ============================================================================
+// RRN INTAKE FUNCTION — POST to backend, handle all form intake events
+// Called by: submitBeta, submitContact, submitDonate, and all platform forms
+// ============================================================================
+function rrnIntake(eventType, data) {
+  if (!window.fetch) return; // silent fail if no fetch support
+  const payload = {
+    program: eventType,
+    full_name: data.full_name || '',
+    email: data.email || '',
+    phone: data.phone || '',
+    area: data.area || '',
+    message: data.message || '',
+    email_optin: false,  // default to false; forms can override if they track consent
+    ads_optin: false,    // default to false; forms can override if they track consent
+    payload: data.payload || {}
+  };
+  
+  fetch('/api/intake', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(function(e) {
+    // silent fail — network errors are acceptable per current pattern
+    // log to console only for debugging if needed
+    if (window.console && window.console.error) console.error('[RRN intake] Network error:', e);
+  });
+}
+
 function submitNehProvider(){
   var n=document.getElementById('npName').value,e=document.getElementById('npEmail').value;
   if(!n||!e){alert('Please enter your name and email.');return;}

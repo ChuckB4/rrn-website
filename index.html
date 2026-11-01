@@ -4166,6 +4166,29 @@ function submitContact(){
 }
 setTimeout(function(){document.querySelectorAll('.up').forEach(function(el){var r=el.getBoundingClientRect();if(r.top<window.innerHeight+100){el.classList.add('in');}});},100);
 
+/* ==== RRN Intake Data Capture — routes all form submissions to Railway backend ==== */
+window.rrnIntake = function(program, data){
+  if(!program || !data || !data.email){ console.warn('[RRN intake] incomplete data:', program, data); return; }
+  var payload = {
+    program: program,
+    full_name: data.full_name || '',
+    email: data.email || '',
+    phone: data.phone || '',
+    area: data.area || '',
+    message: data.message || '',
+    email_optin: data.email_optin === true,
+    ads_optin: data.ads_optin === true,
+    payload: data.payload || {}
+  };
+  try {
+    fetch('https://your-railway-backend.up.railway.app/api/intake', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(function(e){ console.warn('[RRN intake] fetch failed:', e); });
+  } catch(e){ console.warn('[RRN intake] error:', e); }
+};
+
 /* ==== grouped-nav dropdown toggle (click/touch; hover handled by CSS) ==== */
 function rrTog(btn){var g=btn.parentElement,open=g.classList.contains('open');document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});if(!open)g.classList.add('open');}
 document.addEventListener('click',function(e){if(!e.target.closest('.nl .grp'))document.querySelectorAll('.nl .grp').forEach(function(x){x.classList.remove('open');});});
