@@ -2,21 +2,52 @@
 //   python3 -m http.server 8765   then   PLAYWRIGHT_PATH=<path to playwright module> node scripts/browser_test.js
 const { chromium } = require(process.env.PLAYWRIGHT_PATH || 'playwright');
 const fs = require('fs'), path = require('path');
-const OUT = path.join(__dirname, '..', 'tests', 'browser_logs');
+// Env: APP_URL (page under test), OUT_DIR (log output), HOME_URL (homepage for the button step, SKIP_HOME=1 to skip)
+const OUT = process.env.OUT_DIR || path.join(__dirname, '..', 'tests', 'browser_logs');
 fs.mkdirSync(OUT, { recursive: true });
-const URL = 'http://localhost:8765/REFINED_18_05_HEALED_v90_FIXES.html';
+const URL = process.env.APP_URL || 'http://localhost:8765/REFINED_18_05_HEALED_v90_FIXES.html';
+const HOME_URL = process.env.HOME_URL || 'https://joinrrn.com/';
 (async () => {
   const b = await chromium.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
   const pg = await b.newPage({ viewport: { width: 1280, height: 900 } });
-  const log = [], res = [];
+  const log = [], res = [], lms = [];
+  const R = [];
+  const rec = (n, ok, d) => { R.push({ test: n, ok, detail: d }); console.log((ok ? 'PASS ' : 'FAIL ') + n + ' :: ' + (d || '')); };
+  pg.on('request', r => { if (/\/lms\/progress/.test(r.url())) lms.push({ url: r.url(), method: r.method() }); });
+  pg.on('response', r => { if (/\/lms\/progress/.test(r.url())) lms.push({ url: r.url(), status: r.status() }); });
   pg.on('console', m => log.push(m.type() + ': ' + m.text()));
   pg.on('pageerror', e => log.push('PAGEERROR: ' + e.message));
   pg.on('response', r => { if (r.status() >= 400) res.push(r.status() + ' ' + r.url()); });
   pg.on('requestfailed', r => res.push('FAILED ' + r.url() + ' ' + (r.failure() || {}).errorText));
+  if (!process.env.SKIP_HOME) {
+    // Homepage step: real mouse click on the CALEB App button, then verify /app/ loads and the app mounts
+    const hp = await b.newPage({ viewport: { width: 1280, height: 900 } });
+    try {
+      await hp.goto(HOME_URL, { waitUntil: 'load', timeout: 60000 });
+      const btn = hp.locator('#calebAppBtn');
+      const found = await btn.count();
+      const info = found ? await btn.first().evaluate(a => ({ text: (a.textContent || '').trim(), href: a.getAttribute('href') })) : null;
+      rec('homepage has Open the CALEB App link (#calebAppBtn)', found === 1 && /Open the CALEB App/i.test(info.text), JSON.stringify({ found, info }));
+      if (found) {
+        await btn.first().scrollIntoViewIfNeeded();
+        const box = await btn.first().boundingBox();
+        await hp.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+        await Promise.all([hp.waitForURL(/\/app\/?(\?|#|$)/, { timeout: 30000 }).catch(() => {}), hp.mouse.down().then(() => hp.mouse.up())]);
+        await hp.waitForTimeout(3000);
+        await hp.waitForFunction(() => typeof window._rrnSetActiveSection === 'function', null, { timeout: 60000 }).catch(() => {});
+        const m = await hp.evaluate(() => ({ url: location.href, nav: typeof window._calebNavigate, set: typeof window._rrnSetActiveSection, send: typeof window._cSend, rootKids: document.getElementById('root') && document.getElementById('root').childElementCount }));
+        rec('homepage click navigates to /app/', /\/app\/?(\?|#|$)/.test(m.url), m.url);
+        rec('homepage click: CALEB app mounts', m.nav === 'function' && m.set === 'function' && m.rootKids > 0, JSON.stringify(m));
+        await hp.screenshot({ path: path.join(OUT, 'homepage_after_click.png') });
+      }
+    } catch (e) { rec('homepage button step', false, 'ERROR: ' + e.message.slice(0, 300)); }
+    await hp.close();
+  }
   await pg.goto(URL, { waitUntil: 'load', timeout: 60000 });
-  await pg.waitForTimeout(8000);
-  const R = [];
-  const rec = (n, ok, d) => { R.push({ test: n, ok, detail: d }); console.log((ok ? 'PASS ' : 'FAIL ') + n + ' :: ' + (d || '')); };
+  await pg.waitForTimeout(3000);
+  const t0 = Date.now();
+  await pg.waitForFunction(() => typeof window._rrnSetActiveSection === 'function', null, { timeout: 20000 }).catch(() => {});
+  console.log('INFO: waited ' + (Date.now() - t0) + 'ms extra for _rrnSetActiveSection');
   const st = await pg.evaluate(() => ({ nav: typeof window._calebNavigate, set: typeof window._rrnSetActiveSection, send: typeof window._cSend, input: !!document.getElementById('caleb-text-input'), active: window._rrnActiveSection, rootKids: document.getElementById('root') && document.getElementById('root').childElementCount }));
   rec('app mounted and hooks present', st.nav === 'function' && st.set === 'function' && st.rootKids > 0, JSON.stringify(st));
   await pg.screenshot({ path: path.join(OUT, 'v90_loaded.png') });
@@ -67,6 +98,19 @@ const URL = 'http://localhost:8765/REFINED_18_05_HEALED_v90_FIXES.html';
     rec('intent routing via text input', false, 'caleb-text-input not in DOM after attempting to open panel; NOT TESTED');
   }
 
+  // Speech check WITHOUT the fake engine (must run before the stub below)
+  const sp = await pg.evaluate(async () => {
+    const ss = window.speechSynthesis; if (!ss) return { supported: false };
+    await new Promise(r => setTimeout(r, 1000));
+    const voices = ss.getVoices().length; const out = { supported: true, voices, events: [] };
+    if (!voices) return out;
+    await new Promise(res => { const u = new SpeechSynthesisUtterance('Testing one two.'); u.onstart = () => out.events.push('start'); u.onend = () => { out.events.push('end'); res(); }; u.onerror = e => { out.events.push('error:' + e.error); res(); }; ss.speak(u); setTimeout(res, 10000); });
+    return out;
+  });
+  if (!sp.supported) rec('real speech playback', false, 'NOT TESTED with real audio: speechSynthesis unsupported');
+  else if (!sp.voices) rec('real speech playback', false, 'NOT TESTED with real audio: getVoices().length = 0 in this headless Chromium');
+  else rec('real speech playback fires start and end', sp.events.includes('start') && sp.events.includes('end'), JSON.stringify(sp));
+
   // Real lesson: open the 12-step curriculum, the preface and its first lesson through the UI so the real
   // read and continue buttons render. speechSynthesis is stubbed because headless Chromium has no voices.
   await pg.evaluate(() => {
@@ -107,7 +151,7 @@ const URL = 'http://localhost:8765/REFINED_18_05_HEALED_v90_FIXES.html';
       comp = await pg.evaluate(() => { const p = JSON.parse(localStorage.getItem('rrn_progress') || '{}')['pref-1']; return p && p.audioCompleted ? p : null; });
     }
     const q = await pg.evaluate(() => ({ posted: window.__posted, queue: JSON.parse(localStorage.getItem('rrn_sync_queue') || '[]').map(x => ({ path: x.path, attempts: x.attempts })) }));
-    rec('lesson completion recorded through the real Read button (stubbed speech)', !!comp, JSON.stringify({ comp: !!comp, posted: q.posted, queue: q.queue }));
+    rec('lesson completion recorded through the real Read button (FAKE speech engine)', !!comp, JSON.stringify({ comp: !!comp, posted: q.posted, queue: q.queue }));
     rec('completion posts to /lms/progress (backend refuses, queued with attempts counter)', !!comp && q.posted.some(x => /\/lms\/progress$/.test(x.u) && x.m === 'POST'), JSON.stringify(q));
   } else {
     rec('Continue button / lesson completion', false, 'NOT TESTED: lesson view did not render');
@@ -123,6 +167,9 @@ const URL = 'http://localhost:8765/REFINED_18_05_HEALED_v90_FIXES.html';
   });
   rec('audio bound waits while speechSynthesis is busy (fake engine, not real speech)', ab.elapsedMs >= 1400 && ab.elapsedMs < 2600, JSON.stringify(ab));
 
+  if (!(await pg.evaluate(() => !!document.getElementById('caleb-text-input')))) {
+    rec('safety checks (distress/L7 routing)', false, 'NOT TESTED: caleb-text-input not in DOM (app not in a logged-in state)');
+  } else {
   // Safety: distress beats the employer-only reply (L7), and nav phrases are not false distress hits
   const safety = await pg.evaluate(async () => {
     const run = async (q) => {
@@ -144,6 +191,8 @@ const URL = 'http://localhost:8765/REFINED_18_05_HEALED_v90_FIXES.html';
   rec('L7 employer in distress gets the 988 response, not the hiring-only reply', /988/.test(safety.employerDistress.spoken) && !/only assist with hiring/.test(safety.employerDistress.spoken), JSON.stringify(safety.employerDistress));
   rec('L7 employer non-distress recovery question still gets hiring-only reply', /only assist with hiring/.test(safety.employerHiring.spoken), JSON.stringify(safety.employerHiring));
 
+  }
+
   const forbidden = await pg.evaluate(() => new RegExp('eagle' + ' summit|jeff' + ' walters|50' + '1\\(c\\)|fiscal' + ' sponsor|tax-' + 'deductible|tax ' + 'receipt|tax ' + 'advantage|charitable ' + 'deduction|IRS ' + 'deduction|form ?' + '8283|tax ' + 'documentation|charitable ' + 'contribution|charitable ' + 'mileage|BENEFIT ' + 'ESTIMATOR|tax ' + 'benefit(?! is claimed)', 'i').test(document.body.innerText));
   rec('rendered page has no forbidden terms', !forbidden, '');
 
@@ -152,6 +201,8 @@ const URL = 'http://localhost:8765/REFINED_18_05_HEALED_v90_FIXES.html';
   fs.writeFileSync(path.join(OUT, 'browser_console.log'), log.join('\n'));
   fs.writeFileSync(path.join(OUT, 'browser_network_errors.log'), res.join('\n'));
   fs.writeFileSync(path.join(OUT, 'browser_results.json'), JSON.stringify(R, null, 2));
+  fs.writeFileSync(path.join(OUT, 'lms_progress_requests.json'), JSON.stringify(lms, null, 2));
+  console.log('lms/progress requests:', JSON.stringify(lms));
   console.log('console msgs:', log.length, 'errors:', log.filter(l => l.startsWith('error')).length, 'network>=400/failed:', res.length);
   await b.close();
 })().catch(e => { console.log('RUN FAIL:', e.message.slice(0, 1500)); process.exit(2); });
